@@ -1,0 +1,8 @@
+Readings/
+*.pdf
+*.pyc
+__pycache__
+*.db
+*.sqlite3
+*.aux
+*.toc
