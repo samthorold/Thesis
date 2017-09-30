@@ -1,32 +1,49 @@
 \documentclass[12pt]{article}
 
+\usepackage[style=numeric, sorting=none]{biblatex}
+\usepackage{booktabs}
+\usepackage{dcolumn}
+\usepackage{float}
 \usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\usepackage{subfig}
+\usepackage{textcomp}
+
+\addbibresource{references.bib}
+
+\title{Title \\
+  \large Norwegian School of Economics \&
+  NOVA School of Business and Economics}
+\author{Sam Thorold}
 
 \begin{document}
 
-\title{Title \\
-  \large Norwegian School of Economics |
-  NOVA School of Business and Economics}
-\author{Sam Thorold}
 \maketitle
+\begin{abstract}
+All sorts of summary goodness
+\end{abstract}
+
 \pagebreak
 
 \tableofcontents
 \pagebreak
 
-\section{Introduction}
+\section{Introduction} \label{sec:Intro}
 \input{Intro/content}
 
-\section{Literature Review}
+\section{Literature Review} \label{sec:LitRev}
 \input{Literature/content}
 
-\section{Data and Method}
+\section{Data and Method} \label{sec:DataMethod}
 \input{DataMethod/content}
 
-\section{Analysis}
+\section{Analysis} \label{sec:Analysis}
 \input{Analysis/content}
 
-\section{Conclusion}
+\section{Conclusion} \label{sec:Conclusion}
 \input{Conclusion/content}
+
+\pagebreak
+
+\printbibliography
 
 \end{document}
