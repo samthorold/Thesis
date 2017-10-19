@@ -1,0 +1,16 @@
+---
+title: "Note - Data Exploration"
+author: "Sam Thorold"
+date: \today
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r libraries}
+library(dplyr)
+library(knitr)
+```
+
