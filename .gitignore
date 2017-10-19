@@ -11,3 +11,6 @@ __pycache__
 *.bcf
 *.bbl
 *.blg
+*.docx
+.Rhistory
+.Rdata

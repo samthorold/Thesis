@@ -1,0 +1,79 @@
+---
+title: "Note - Data Exploration"
+author: "Sam Thorold"
+date: \today
+output:
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r libraries, message=FALSE, warning=FALSE, echo=FALSE}
+library(data.table)
+library(dplyr)
+library(dtplyr)
+library(knitr)
+```
+
+# Background
+
+# CRSP
+
+```{r read.crsp, echo=FALSE}
+# fread much faster than read.csv
+# colClasses='character' prevents scary message about losing data due to
+# changing column types part way through reading the data
+crsp = fread("C:/Data/CRSP/CRSP_196001_201612_d.csv",
+             colClasses='character',
+             showProgress=FALSE)
+```
+
+We only want rows with sharecodes 10 or 11 and exchange codes 1, 2 or 3.
+
+```{r, remove.shrcd.exchcd}
+crsp = crsp %>% filter(SHRCD %in% c(10, 11)) %>% filter(EXCHCD %in% c(1, 2, 3))
+crsp$SHRCD = NULL  # sharecode no longer needed
+```
+
+```{r}
+setnames(crsp,
+         c("EXCHCD", "SICCD", "DLRET", "RET", "PRC", "SHROUT", "vwretd"),
+         c("Exchange", "Industry", "dlri", "ri", "price", "shares", "rm"))
+```
+
+
+```{r as.numeric, include=FALSE}
+crsp$PERMNO = as.numeric(crsp$PERMNO)
+crsp$date = as.numeric(crsp$date)
+crsp$Exchange = as.numeric(crsp$Exchange)
+crsp$Industry = as.numeric(crsp$Industry)
+crsp$dlri = as.numeric(crsp$dlri)
+crsp$price = as.numeric(crsp$price)
+crsp$ri = as.numeric(crsp$ri)
+crsp$shares = as.numeric(crsp$shares)
+crsp$rm = as.numeric(crsp$rm)
+```
+
+There should be no duplicate $PERMNO$-$date$ pairs
+(`r format(sum(duplicated(crsp[,c("PERMNO", "date")])), big.mark=" ")` found).
+CRSP data has `r format(nrow(crsp), big.mark=" ")` rows and
+`r format(ncol(crsp), big.mark=" ")` columns.
+
+```{r duplicates, echo=FALSE}
+# duplicated will omit return FALSE for the first instance of a duplicated row
+# calling from the top and the bottom ensure all instances are caught
+pairs.ix = duplicated(crsp[, c("PERMNO", "date")]) |
+           duplicated(crsp[, c("PERMNO", "date")], fromLast=TRUE)
+if (sum(pairs.ix)>0){
+    kable(head(crsp[pairs.ix], n=10), digits=2, caption="Duplicates")
+}
+```
+
+```{r head}
+kable(head(crsp), digits=2, caption="CRSP")
+```
+
+# COMPUSTAT
+
