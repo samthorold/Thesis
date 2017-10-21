@@ -7,13 +7,14 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, fig.height=3)
 ```
 
 ```{r libraries, message=FALSE, warning=FALSE, echo=FALSE}
 library(data.table)
 library(dplyr)
 library(dtplyr)
+library(ggplot2)
 library(knitr)
 ```
 
@@ -21,39 +22,47 @@ library(knitr)
 
 # CRSP
 
-```{r read.crsp, echo=FALSE}
+```{r read.crsp}
 # fread much faster than read.csv
 # colClasses='character' prevents scary message about losing data due to
 # changing column types part way through reading the data
 crsp = fread("C:/Data/CRSP/CRSP_196001_201612_d.csv",
-             colClasses='character',
-             showProgress=FALSE)
+             colClasses='character', showProgress=FALSE)
 ```
 
 We only want rows with sharecodes 10 or 11 and exchange codes 1, 2 or 3.
 
 ```{r, remove.shrcd.exchcd}
 crsp = crsp %>% filter(SHRCD %in% c(10, 11)) %>% filter(EXCHCD %in% c(1, 2, 3))
+```
+
+```{r, include=FALSE}
 crsp$SHRCD = NULL  # sharecode no longer needed
 ```
 
 ```{r}
 setnames(crsp,
          c("EXCHCD", "SICCD", "DLRET", "RET", "PRC", "SHROUT", "vwretd"),
-         c("Exchange", "Industry", "dlri", "ri", "price", "shares", "rm"))
+         c("Exchange", "Industry", "dl.ri", "ri", "price", "shares", "rm"))
 ```
 
 
 ```{r as.numeric, include=FALSE}
-crsp$PERMNO = as.numeric(crsp$PERMNO)
-crsp$date = as.numeric(crsp$date)
-crsp$Exchange = as.numeric(crsp$Exchange)
-crsp$Industry = as.numeric(crsp$Industry)
-crsp$dlri = as.numeric(crsp$dlri)
+crsp$PERMNO = factor(crsp$PERMNO)
+crsp$date = as.Date(crsp$date, "%Y%m%d")
+crsp$Exchange = factor(crsp$Exchange,
+                       levels=c("1","2","3"),
+                       labels=c("NYSE", "AMEX", "NASDAQ"))
+crsp$Industry = factor(crsp$Industry)
+crsp$dl.ri = as.numeric(crsp$dl.ri)
 crsp$price = as.numeric(crsp$price)
 crsp$ri = as.numeric(crsp$ri)
 crsp$shares = as.numeric(crsp$shares)
 crsp$rm = as.numeric(crsp$rm)
+```
+
+```{r}
+summary(crsp)
 ```
 
 There should be no duplicate $PERMNO$-$date$ pairs
@@ -61,7 +70,7 @@ There should be no duplicate $PERMNO$-$date$ pairs
 CRSP data has `r format(nrow(crsp), big.mark=" ")` rows and
 `r format(ncol(crsp), big.mark=" ")` columns.
 
-```{r duplicates, echo=FALSE}
+```{r duplicates, include=FALSE}
 # duplicated will omit return FALSE for the first instance of a duplicated row
 # calling from the top and the bottom ensure all instances are caught
 pairs.ix = duplicated(crsp[, c("PERMNO", "date")]) |
@@ -71,8 +80,84 @@ if (sum(pairs.ix)>0){
 }
 ```
 
-```{r head}
+```{r head, echo=FALSE}
 kable(head(crsp), digits=2, caption="CRSP")
+```
+
+Average number of missing values each month for selected variables.
+
+```{r missing, include=FALSE}
+missing = crsp %>% group_by(date) %>% summarise(
+    N=as.double(n()),
+    ri.NA.pct=sum(is.na(ri))/n()*100,
+    price.NA.pct=sum(is.na(price))/n()*100,
+    shares.NA.pct=sum(is.na(shares))/n()*100
+)
+```
+
+```{r, echo=FALSE}
+missing.mean = sapply(
+    missing %>% select(-date), mean, na.rm=TRUE
+) %>% as.data.frame
+
+missing.long = melt(missing %>% select(-N), id.vars=c("date"))
+
+kable(missing.mean, digits=0, caption="Monthly Average Missing Values")
+```
+
+```{r, echo=FALSE}
+missing %>% arrange(-ri.NA.pct) %>% head %>%
+    kable(digits=0, caption="Largest Missing Return")
+
+missing %>% arrange(-price.NA.pct) %>% head %>%
+    kable(digits=0, caption="Largest Missing Price")
+
+missing %>% arrange(-shares.NA.pct) %>% head %>%
+    kable(digits=0, caption="Largest Missing Shares")
+```
+
+```{r, echo=FALSE}
+p = ggplot(missing.long)
+p = p + geom_line(aes(date, value, color=variable))
+p = p + labs(title="Whole Sample")
+p + theme(legend.justification=c(1,1), legend.position=c(.9,.9))
+
+p = ggplot(missing.long %>% filter(date>as.Date("19741231", "%Y%m%d")))
+p = p + geom_line(aes(date, value, color=variable))
+p = p + labs(title="1975-")
+p + theme(legend.justification=c(1,1), legend.position=c(.9,.9))
+
+p = ggplot(
+    missing.long %>%
+    filter(date>as.Date("19701231", "%Y%m%d")) %>%
+    filter(date<as.Date("19750101", "%Y%m%d")))
+p = p + geom_line(aes(date, value, color=variable))
+p = p + labs(title="1971-1975")
+p + theme(legend.justification=c(1,1), legend.position=c(.9,.9))
+```
+
+How many firms for each exchange?
+
+```{r, echo=FALSE}
+exch = crsp %>% group_by(Exchange, date) %>% summarise(N=n())
+exch %>% group_by(Exchange) %>% summarise(Avg=mean(N)) %>%
+    kable(digits=0, caption="Monthly Average Number of Firms by Exchange")
+```
+
+```{r, echo=FALSE}
+p = ggplot(exch) + geom_line(aes(date, N, color=Exchange))
+p = p + labs(title="Number of Firms by Exchange")
+p
+```
+
+```{r, echo=FALSE}
+exch %>% filter(Exchange=="NASDAQ") %>% arrange(date) %>%
+    head %>% kable(caption="First Months with NASDAQ Stocks")
+```
+
+```{r, echo=FALSE}
+exch %>% filter(Exchange=="NASDAQ", N>100) %>% arrange(date) %>%
+    head %>% kable(caption="First Months With 100+ NASDAQ Stocks")
 ```
 
 # COMPUSTAT
