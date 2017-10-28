@@ -1,0 +1,283 @@
+\subsection[Markowitz, 1952]{Markowitz, Portfolio Selection
+(1952)\cite{markowitz1952portfolio}}
+
+Selecting a risky portfolio has two stages. First, an investor must decide what they
+believe about the future performance of assets. Second, the investor must construct a
+portfolio given their beliefs on future performance. Markowitz goes on to describe the
+second stage. Investors must rely on expected returns to form their beliefs on the
+performance of assets because the future is uncertain. If investors only wished to
+maximize expected return, no-one would hold diversified portfolios. In practice,
+diversification is common. Furthermore, there would be an infinite amount of short selling
+as investors sought to invest as much as possible in the one asset they expected to have
+the highest future returns. This is the case even if investors discounted future cash
+flows at different rates because they would all have one asset they wished to invest as
+much as possible in. Modelling investors' decision making as a mean-variance problem gives
+a more realistic description of observed investor behaviour. Investors will combine assets
+to minimize the variance, a measurement of risk, of the portfolio for a given level of
+expected return. Similarly, investors can maximize the return for a given level of
+variance. This is achieived by choosing the weights of the assets in the portfolio. Such a
+construction yields an ``efficent frontier" which depicts the combinations of expected
+return and variance that cannot be exceeded, given the assets in the portfolio. Markowitz
+acknowledges the potential difficulty in finding the expected future returns of assets and
+their covariances. Perhaps the greatest insight of mean-variance portfolio construction is
+that the risk of an asset depends on how that asset covaries with other assets in a
+portfolio.
+
+\subsection[Tobin, 1958]{Tobin, Liquidity preference as behaviour towards risk
+(1958)\cite{tobin1958liquidity}}
+
+Using mean-variance as a two parameter method to rank investment preferences is not
+restrictive because not all investors need to have the same beliefs about the probability
+distribution as long as their respective distributions can be described by mean-variance.
+All risk averters are diversifiers.
+
+A portfolio can be described most simply as a combination of a riskless asset and a single
+risky asset. Combining assets in the fashion of Markowitz means all portfolios can be
+described by the weighted mean and variance of the assets they contain. This means
+portfolios of assets can be treated as a single asset. The investment decision is then one
+of allocation between a riskless and a risky asset.
+
+\subsection[Sharpe, 1964]{Sharpe, Capital Asset Prices: A Theory of Market Equilibrium
+under Risk (1964)\cite{sharpe1964capital}}
+
+Market equilibrium given the investor behaviour described by Moskowitz and Tobin. Sharpe
+describes the relationship between an asset and its components of overall risk. Sharpe
+derives indifference curves through the observation that terminal wealth is directly
+linked to the return on assets, whereas Moskowitz and Tobin use a quadtric formula for
+returns without considering terminal wealth explicitly.
+
+Consider a riskless asset and a risky portfolio with returns $r_f$ and $r_p$,
+respectively. If an investor allocates $\gamma$ to the riskless asset, the expected return
+of the overall position is given by $E(r)=\gamma E(r_f)+(1-\gamma)E(r_p)$ and the standard
+deviation by $\sigma_r=(1-\gamma)\sigma_{r_p}$. Sharpe describes the same investment
+process as Tobin. First select the best combination of risky assets and borrow or lend the
+risk free asset to obtain the desired $E(r)$ and $\sigma_r$. Borrowing and lending the
+risk free asset and investing in the best risky portfolio allows an investor to choose
+different efficient combinations of risk and return. However, it is not realistic to
+assume all investors can borrow and lend at the risk free rate. More likely, some
+investors are able to lend the risk free asset, buying government short-term bills for
+example. This problem is not as great as it may seem at first. Most investors will not
+seek to take on more risk than the best risky portfolio. This means it is not too
+important if we assume that investors cannot borrow the risk free asset to invest more in
+the best risky portfolio.
+
+Sharpe assumes a common rate of interest, the risk free asset, available to all investors
+to borrow and lend at and that all investors agree on the future prospects of firms, that
+is the expected returns and covariances. These are highly restrictive conditions. These
+assumptions lead all investors to choose the same risky portfolio and the prices of assets
+in that portfolio will rise. Prices of assets not in the previously chosen risky portfolio
+will drop and investors will change the composition of the risky portfolio. Prices will
+change until every asset is in at least one combination of assets in the capital market
+line. This means there are multiple efficient portfolios and contradicts Tobin's claim
+that there will be a single unique efficient portfolio. The linear relationship between
+expected returns and standard deviation of returns applies to combinations of risky assets
+in equilibrium but does not apply to individual assets.
+
+All individual assets must have an exptected return and standard deviation combination
+that is on the capital market line. If not, the market is not in equilibrium and the
+capital market line does not represent the efficent boundary of expected return and
+standard deviation combinations. Comovement with the efficient risky portfolio that the
+individual is a part of represents the systemic risk of an individual asset that cannot be
+diversified away. But, the asset in question may not be in another efficient risky
+portfolio. We are still able to use the efficient risky portfolio that does not contain
+the individual asset to make statements about the systemic risk of the individual asset
+since all of the efficient risky portfolios are perfectly correlated (otherwise the market
+would not be in equilibrium).
+
+\subsection[Lintner, 1965]{Lintner, The valuation of risk assets and the selection of
+risky investments in stock portfolios and capital budgets
+(1965)\cite{lintner1965valuation}}
+
+Lintner developes similar conclusions to Sharpe and Tobin, although he uses different
+assumptions. The same conclusion under different assumptions add weight to the mean-
+variance portfolio construction hypothesis for investors' behaviour under uncertainty.
+Lintner does not consider the same borrowing constraint as Sharpe. Lintner states that the
+ratio of investment in each individual risk asset is independent of the ratio of total
+investment placed in the risky portfolio as a whole relative to investment in the risk
+free asset. This supports the theory of separation in Tobin and repeated in Sharpe.
+
+The optimal risky portfolio seeks to maximize $\theta=\frac{r_p-
+r_f}{\sigma_p}$, where $r_p$ is the return on the risky portfolio, $r_f$ is
+the return on the risk free asset and $\sigma_p$ is the standard deviation of
+the risky portfolio. The return and standard deviation of the risky portfolio
+are calculated in the same manner as in Tobin and Sharpe. If all investors
+share the same beliefs about the mean and variance of each risky asset, and
+the distribution of the final value of each risky asset is completely
+characterised by the mean and variance, then all investors will arrive at the
+same $\theta$ and hold the same risky portfolio.
+
+\subsection[Fama, 1970]{Fama, Efficient capital markets: A review of theory and empirical
+work (1970)\cite{malkiel1970efficient}}
+
+\subsection[Black, 1972]{Black, Capital market equilibrium with restricted borrowing
+(1972)\cite{black1972capital}}
+
+\subsection[Ross, 1976]{Ross, The Arbitrage Theory of Capital Asset Pricing
+(1976)\cite{ross1976arbitrage}}
+
+\subsection[Roll, 1977]{Roll, A critique of the asset pricing theory's tests Part I: On
+past and potential testability of the theory (1977)\cite{roll1977critique}}
+
+\subsubsection{Efficient Set Mathematics}
+
+Given a sample of N assets we make the following assumptions;
+\begin{itemize}
+    \item A.1: The sample product-moment covariance matrix, V, is non-singular - Assets
+    returns must have at least one period different from the rest
+    \item A.2: At least one asset must have a different mean return from the rest - if
+    there is no variation across asset returns there is nothing to explain
+\end{itemize}
+
+The sample efficient frontier enumerates all the portfolios that had minimum sample
+variation for a given level of sample mean return. From this frontier we can select a
+portfolio, m, that lies on the positively sloped section. We can say the following of m;
+\begin{itemize}
+    \item S.1: There is a unique portfolio, z, that has a correlation of zero with m
+    during the sample period and lies on the negatively sloped section of the efficient
+    frontier, $r_m > r_z$
+    \item S.2: For any asset or portfolio, j, the sample mean return is equal to a
+    weighted average of $r_z$ and $r_m$ where the weight of $m$ is exactly the sample
+    linear regression slope coefficient of $j$ on $m$.
+    $$r_j = (1-\beta_j)r_z + \beta_j r_m = r_z + \beta_j(r_m - r_z)$$
+    where
+    $$\beta_j = \frac{Cov(j, m)}{Var(m)} = \frac{r_j - r_z}{r_m - r_z}$$
+    \item S.3: Every portfolio on the positively sloped section of the frontier is positively correlated with every other one
+    \item S.4 Every sample efficient portfolio except the global minimum variance portfolio has an orthogonal portfolio with finite mean return
+    \item S.5 The investment proportions of any efficient portfolio can be expressed as a
+    weighted average of the proportions in any other two efficient portfolios whose means
+    are different
+\end{itemize}
+
+Suppose $A$ and $B$ are any two efficient portfolios with different sample means. We can
+say the following;
+\begin{itemize}
+    \item S.6: The mean return on any asset, $j$, is given by
+    $$r_j = (1-\beta^*_j)r_A + \beta^*_j r_B = r_A + \beta^*_j(r_B - r_A)$$
+    where
+    $$\beta^*_j = \frac{Cov(A, B)}{Var(B)} =
+        \frac{\sigma_{jB} - \sigma_{AB}}{\sigma_{BB} - \sigma_{AB}}$$
+    where $\sigma_{ik}$ is the covariance between $i$ and $k$
+\end{itemize}
+
+\subsubsection{Review of some asset pricing theory tests}
+
+Fama and MacBeth (1973)\cite{fama1973risk} derive an equation for the return on any asset
+given an efficient portfolio identical to the one above. They claim there are three
+testable implications;
+\begin{itemize}
+    \item C.1: The relationship between the expected returns on an asset an its risk is linear
+    \item C.2: $\beta_i$ is a complete measure of the risk\footnote{This presupposes $\beta_j$ measures risk at all} of an asset, $i$, in portfolio, $m$ - no other risk important
+    \item C.3: In a market of risk-averse investors, higher risk should give higher return
+\end{itemize}
+The word ``risk" has replaced $\beta$ so the above implications are just results from the
+fact that $m$ is efficient. There are two testable hypotheses in Fama-MacBeth;
+\begin{itemize}
+    \item H.1: Investors regard as optimal those portfolios that are mean-variance efficient
+    \item H.2: The market portfolio, value-weighted combination of all assets (Black, 1972\cite{black1972capital}\footnote{
+    Since all investors have identical beliefs and hold efficient portfolios, every investor holds a linear combination of two efficient portfolios. Since the market portfolio is a linear combination of the portfolios of all investors, it is also a linear combination of these two efficient portfolios and is therefore efficient
+    }) is efficient
+\end{itemize}
+The only rejectable hypothesis in Fama-MacBeth is H.2. The assumptions sufficient for H.2
+are; perfect capital markets, homogeneous expectations, two parameter distributions of
+returns AND the market portfolio must be identifiable.
+Somewhat presciently, Fama-MacBeth suggest that the significance of non-linear $\beta$
+terms in regressions may be due to omitted variables.
+
+Black, Jensen and Scholes (1972)\cite{jensen1972capital} create a portfolio to represent
+the ``market" and calculate $\beta$. With individual asset returns, a constant riskless
+asset and their constructed market weightings they regress
+$$r_i-r_f=\hat{\alpha}+\hat{\gamma}\beta_i+\varepsilon$$
+and find that $\hat{\gamma}\neq r_m-r_f$ and $\hat{\alpha}\neq 0$. They cannot reject
+Sharpe-Lintner because if $m$ is not the market we would expect to see their results.
+
+\subsection[Jensen, 1978]{Jensen, Some anomalous evidence regarding market efficiency
+(1978)\cite{jensen1978some}}
+
+There are inconsistencies between the data and the efficient market hypothesis (or
+``rational expectations theory" among macroeconomists). By 1978 there was enough scattered
+information to warrant concern (Ball, 1978\footnote{Proving difficult to find}). Tests of
+market effiency are really tests of a joint hypothesis: market efficiency given a model of
+asset price determination, most frequently a two parameter model such as mean-variance.
+See Fama (1976)\cite{fama1976foundations}\footnote{Book} and Roll
+(1977)\cite{roll1977critique} for criticisms of asset pricing models. Jensen explains that
+a market is efficient with respect to an information set if it is impossible to make
+economic profit by trading based on that information set, where economic profit refers to
+risk adjusted returns net of all costs. With zero transaction costs, asset prices will
+behave as martingales. For financial assets, zero storage costs are a reasonable
+assumption. Weak form efficient markets takes the information set to be only the past
+returns of assets. Semi-strong form efficient markets takes the information set to be all
+publically available information about assets. Strong form efficient markets takes the
+information set to be all available information about assets. The most commonly addressed
+version is the semi-strong.
+
+Jensen (1978) concerns the ``event-study" type of market efficiency.
+
+\subsection[Fama, 1991]{Fama, Efficient Capital Markets: II
+(1991)\cite{fama1991efficient}}
+
+Markets are efficient if asset prices fully reflect all available information. An
+economically sensible definition for ``all available information" may be: information
+where the marginal benefits exceed the marginal costs of acting on that information
+(Jensen, 1978\cite{jensen1978some}). Market efficiency cannot be tested for directly. We
+can only test the joint hypothesis of market efficiency given a model that defines ``fully
+reflect." Market efficiency and asset-pricing models go hand in hand. Tests of return
+predictability are most similar to tests of weak-form efficiency. The former may use other
+variables where the latter only considers past returns. We can test for time series
+predictability of returns as well as cross-sectional predictability. Event studies are
+most similar to tests of semi-strong efficiency and tests of private information are most
+similar to strong-form efficiency. Returns may be predictable because of rational
+variation, irrational deviation of price from fundamental value, or a combination of both.
+Efficient markets says that today's return is not predictable from yesterday's return.
+Returns follow a random walk with information immediately reflected in the price. The best
+forecast of an asset's return is the return observed today.
+
+Over short time horizons, one day to one month, yesterday's returns were found to be
+statistically significant drivers of today's returns. Yesterday's returns accounted for
+less than 1\% of the variation in today's returns (Fama, 1965 and Fisher, 1966) so the
+economic significance of yesterday's returns is limited.
+
+Over longer time horizons, two to ten years, past returns are correlated. We need to
+distinguish between irrational bubbles in asset prices and rational time-varying expected
+returns. Shiller (1984)\cite{shiller1984stock} and Summers (1986)\cite{summers1986does}
+suggest that asset prices follow large and slowly decaying jumps from fundamental value.
+This implies the market is highly inefficient. If the correlation between today's price
+and yesterday's price is close to but below one, prices will appear to follow a random
+walk and short-run tests cannot reject market efficiency. In the long-run prices will be
+negatively correlated as the price slowly returns to fundamental value. Importantly, such
+a theory implies the variance of returns should grow less than proportionally with the
+return horizon. Fama and French (1988a)\cite{fama1988permanent} suggest that swings away
+from fundamental value may not be irrational bubbles. If returns and dividends have
+uncorrelated shocks a shock to returns does not permanently impact dividends. DeBondt and
+Thaler (1985, 1987)\cite{bondt1985does}\cite{de1987further} suggest a story of irrational
+under and over-reaction to past returns. They find the biggest losers of the previous 3 to
+5 years are on average the biggest winners of the next 3 to 5 years and vice versa. Chan
+(1988)\cite{chan1988contrarian} and Ball and Kothari (1989)\cite{ball1989nonstationary}
+suggest that long-term reversals may be dues to a failure to risk-adjust returns. Chan and
+Chen (1991)\cite{chan1991structural} suggest a risk story for long-term reversals.
+
+Returns need not be the only variable that influences returns in the long-run. Fama and
+French (1988b)\cite{fama1988dividend} and Campbell and Schiller
+(1988b)\cite{campbell1988stock} find that dividends-price and earnings-price explain a
+greater fraction of return variances as return horizon grows. They ask if dividend yields
+track autocorrelated variation in expected stock returns - slow mean variation of expected
+returns.
+
+Predictability of returns from other variables is not evidence against efficient markets.
+In an efficient market, the forecast power of the payout ratio says prices are high
+relative to the payout ratio when expected returns are low and vice versa. In a world of
+irrational bubbles, a low payout ratio suggests irrationally high prices that will move
+back to fundamental value in a predictable manner. Fama and French
+(1989)\cite{fama1989business} argue that if variation in expected returns is common to
+different assets then it is probably a result of variations in tastes for current vs.
+future consumption or investment opportunities of firms, see also Keim and Stambaugh
+(1986)\cite{keim1986predicting}, Campbell (1987)\cite{campbell1987stock} and Harvey
+(1991)\cite{harvey1991world}.
+
+Fersen and Harvey (1991)\cite{ferson1991variation} suggest a common expected returns
+hypothesis linking time series variation in expected returns to common factors in returns
+that determine cross-sector of expected returns. They cannot reject the hypothesis that
+all time series variation is common. Fama and French (1989)\cite{fama1989business} find
+that slopes on payout ratio and default correspond to risk across assets while a term
+factor does not, i.e. it has constant risk. See also Chen (1991)\cite{chen1991financial}.
+
+

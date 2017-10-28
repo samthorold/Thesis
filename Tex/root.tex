@@ -1,21 +1,22 @@
 \documentclass[12pt]{report}
 
 \usepackage[style=numeric, sorting=none]{biblatex}
-\usepackage{booktabs}
-\usepackage{dcolumn}
-\usepackage{float}
+\usepackage{booktabs}       % tables
+\usepackage{dcolumn}        % table cells alignment
+\usepackage{float}          % unsure
 \usepackage[margin=1in]{geometry}
-\usepackage{subfig}
-\usepackage{textcomp}
-\usepackage[utf8]{inputenc}
+\usepackage{import}         % nested files
+\usepackage{subfig}         % table alignment
+\usepackage{textcomp}       % unsure
+\usepackage[utf8]{inputenc} % unsure
 
 \addbibresource{references.bib}
 
-\renewcommand{\baselinestretch}{1.15}
-%\renewcommand{\familydefault}{\sfdefault}
+% \renewcommand{\baselinestretch}{1.5}
+% \renewcommand{\familydefault}{\sfdefault}
 
 \title{
-  {Factors and Anomalies: Turtles All The Way Down}\\
+  {Efficient Markets: Turtles all the way down}\\
   {\large Norwegian School of Economics}\\
   {\large NOVA School of Business and Economics}
 }
@@ -32,25 +33,28 @@ All sorts of summary goodness.
 
 \tableofcontents
 
-\chapter{Introduction} \label{sec:Intro}
-\input{Intro/content}
+\chapter{Introduction} \label{ch:Intro}
+\import{Intro/}{content}
 
-\chapter{Literature Review} \label{sec:LitRev}
-\input{Literature/content}
+\chapter{Literature Review} \label{ch:LitRev}
+\import{Literature/}{content}
 
-\chapter{Data and Method} \label{sec:DataMethod}
-\input{DataMethod/content}
+\chapter{Data and Method} \label{ch:DataMethod}
+\import{DataMethod/}{content}
 
-\chapter{Analysis} \label{sec:Analysis}
-\input{Analysis/content}
+\chapter{Analysis} \label{ch:Analysis}
+\import{Analysis/}{content}
 
-\chapter{Conclusion} \label{sec:Conclusion}
-\input{Conclusion/content}
+\chapter{Conclusion} \label{ch:Conclusion}
+\import{Conclusion/}{content}
 
 \appendix
 
-\chapter{Appendix}
-\input{Appendix/content}
+\chapter{Appendix A} \label{ch:AppendixRepl}
+\import{Appendix/}{content-replication}
+
+\chapter{Appendix B} \label{ch:AppendixB}
+\import{Appendix/}{content-something-else}
 
 \printbibliography
 
