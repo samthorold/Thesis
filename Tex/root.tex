@@ -1,14 +1,18 @@
-\documentclass[12pt]{report}
+\documentclass[a4paper]{report}
 
+\usepackage{amsmath, amsthm}
 \usepackage[style=numeric, sorting=none]{biblatex}
 \usepackage{booktabs}       % tables
 \usepackage{dcolumn}        % table cells alignment
+\usepackage{fancyhdr}
 \usepackage{float}          % unsure
 \usepackage[margin=1in]{geometry}
 \usepackage{import}         % nested files
 \usepackage{subfig}         % table alignment
 \usepackage{textcomp}       % unsure
 \usepackage[utf8]{inputenc} % unsure
+
+\pagestyle{fancy}
 
 \addbibresource{references.bib}
 
@@ -50,10 +54,10 @@ All sorts of summary goodness.
 
 \appendix
 
-\chapter{Appendix A} \label{ch:AppendixRepl}
+\chapter{Replication} \label{ch:AppendixRepl}
 \import{Appendix/}{content-replication}
 
-\chapter{Appendix B} \label{ch:AppendixB}
+\chapter{Something Else} \label{ch:AppendixB}
 \import{Appendix/}{content-something-else}
 
 \printbibliography
