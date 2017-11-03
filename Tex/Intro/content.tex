@@ -15,3 +15,81 @@
   \item Gibbons, Ross and Shanken test $H_0$: Excess returns are jointly zero
 
 \end{itemize}
+
+\section{Story so far}
+
+How would an investor allocate their money between risky assets?
+\begin{itemize}
+  \item They would minimize the portfolio variance for a given level of return.
+  Markowitz, 1952\cite{markowitz1952portfolio}
+  \item Two stage process, they would choose risky a risky portfolio then allocate between
+  the risky portfolio and a risk free asset. Tobin, 1958\cite{tobin1958liquidity}
+\end{itemize}
+How would equilibrium prices work if everyone was a child of Markowitz and Tobin?
+\begin{itemize}
+  \item Assuming all investors share beliefs about the expected future returns and future
+  covariances, everyone would hold a portfolio on the efficient frontier.
+  Sharpe, 1964\cite{sharpe1964capital} and Lintner, 1965\cite{lintner1965valuation}
+  \item The efficient frontier can be replicated with any two portfolios in opposite
+  ``hemispheres." The market is a linear combination of all portfolios and all
+  portfolios are efficient under our assumptions. Therefore, the market is the optimum
+  risky portfolio. Black, 1972\cite{black1972capital}
+  \item An asset's expected return is a linear function of the asset's covariance with the
+  market portfolio
+  \begin{equation}
+    E(R_i) = \alpha + \beta_M E(R_M)
+  \end{equation}
+\end{itemize}
+
+Analysis found that actual compensation for risk was too flat.
+Fama and MacBeth, 1973\cite{fama1973risk} and Jensen, 1978\cite{jensen1978some}.
+Further \emph{anomalies}, trading strategies that could not be explained by market
+covariance, emerged.
+\begin{itemize}
+  \item Size (Banz, 1981\cite{banz1981relationship})
+  \item Value
+  \item Quality (Graham and Dodd, 1934\cite{graham1934security})
+\end{itemize}
+
+Fama and French, 1993\cite{fama1993common}, suggested a three factor model with three
+betas; the market, size, value.
+\begin{equation}
+  E(R_i) = \alpha + \beta_M E(R_M) + \beta_S SMB + \beta_V HML
+\end{equation}
+
+Analysis and intuition continued to throw up more unexplained anomalies that resulted in
+significant and tradeable alpha in the three factor model.
+\begin{itemize}
+  \item Momentum (Jegadeesh and Titman, 1993\cite{jegadeesh1993returns} and
+  Carhart, 1997\cite{carhart1997persistence})
+  \item Accruals (Sloan, 1996\cite{sloan1996stock})
+  \item Liquidity
+  \item Volatility (Ang et. al., 2006\cite{ang2006cross})
+  \item Earnings
+  \item Dividends
+  \item Net Share Issues
+\end{itemize}
+
+Motivated by the dividend discount model (gordon growth), Fama and French,
+2015\cite{fama2015five}, suggest the inclusion of profitability and investment factors.
+\begin{equation}
+  E(R_i) = \alpha + \beta_mE(R_m) + \beta_SSMB + \beta_VHML + \beta_PRMW + \beta_ICMA
+\end{equation}
+The new factors decreased the number of anomalies unexplained by the asset pricing model.
+Furthermore, the anomalies that remain can grouped together as those portfolios whose
+returns behave like those of small firms who invest aggresively despite weak profits.
+Interestingly, the five factor model underperforms a model which omits the profitibility
+factor when attempting to explain the accruals anomaly.
+
+Operating profit includes information about management's ability to use earnings and their
+decisions regarding firm structure (through the level of interest payments). This is an
+important metric but does not reflect \emph{true} profitability. Novy-Marx,
+2013\cite{novy2013other} suggests using gross profits as a proxy for true profitability.
+This specification of factor has the attractive qualities of reviving the value factor and
+providing a hedge for value. Moreover, much of the analysis of asset pricing models uses
+the intercept from regressions as the measure of a model's performance. Barillas and
+Shanken, 2016\cite{barillas2016alpha}, suggest a more general method. Given the implied
+problems with operating profitability and the attractive qualities of newer tests of a
+model's marginal power when explaining anomaly returns, Fama and French,
+2016\cite{fama2016dissecting}, consider a five factor model with operating profit replaced
+with a cash measure of profitability. This is our current ``state of the art."

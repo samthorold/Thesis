@@ -286,7 +286,89 @@ factor does not, i.e. it has constant risk. See also Chen (1991)\cite{chen1991fi
 
 Asset pricing vs. expected returning
 
-\subsection[Novy-Marx, 2014]{Novy-Marx, Understanding defensive equity (2014)\cite{novy2014understanding}}
+\subsection[Asnsess, Frazzini and Pedersen, 2014]{Ansess, Frazzini and Pedersen: Quality Minus Junk (2014)\cite{asness2014quality}}
+
+\subsubsection{Abstract}
+
+Quality: safe, profitable, growing and well-managed firms. Stocks with these
+characteristics are more expensive on average but not as much as theory would have us
+believe. A ``Quality-minus-Junk" factor, $QMJ$, earns sigificant returns globally. The
+price of quality varies over time. High returns to quality stocks are a problem for risk
+stories.
+
+\subsubsection{Paper}
+
+Asset pricing literature focusses on expected returns and their drivers but the economic
+consequences of market efficiency ultimately depend on prices. See Summers
+(1986)\cite{summers1986does} and Cochrane (2011)\cite{cochrane2011presidential}.
+
+The gordon growth model suggests
+\[
+\frac{P}{B}=
+\frac{1}{B}\cdot\frac{dividend}{r^e-growth}=
+\frac{\frac{profitability}{B}\cdot\frac{dividend}{profitability}}{r^e-growth}=
+\frac{profitability\cdot payout}{r^e-growth}
+\]
+where; $profitability$ is profits per unit of book value measured in a number of ways and
+combined with a z-score, $growth$ is the prior 5-year growth in each measure of
+profitability. Safety is measured by market safety, low-$\beta$, and fundamental safety,
+low volatility of profits, low leverage and low credit risk. The authors allow
+characteristics to vary through time to show that prices increase with quality.
+Large firms are more expensive when controlling for quality, this mirrors return findings
+in Banz (1981). $p_t=\frac{p_{t+1}}{r^e}$ so higher price today means lower return, all
+else the same.
+
+Quality does not explain much of the variation in the cross-section of price-book ratios. There are three possible reasons;
+\begin{enumerate}
+  \item Prices are determined by quality characteristics not considered here
+  \item Failure to account for risk factors that are correlated with quality
+  \item Market prices do not fully reflect characteristics for behavioural reasons
+\end{enumerate}
+The returns of quality stocks behave like those of large firms with low valuations. During
+a downturn, $QMJ$ performs even better (flight to quality) which suggests explanation 3.
+\begin{itemize}
+  \item $QMJ$ is buying \emph{good} stocks regardless of price
+  \item $HML$ is buying \emph{cheap} stocks regardless of quality
+\end{itemize}
+Therefore, they are negatively correlated. They can be combined to create a ``quality at a
+reasonable price" factor similar to growth at a reasonable price of Graham and Dodd
+(1934). Analysts target prices imply systematic pricing errors in return expectations
+about quality suggesting behavioural story of explanation 3.
+
+Pricing Kernel leads to equation for fundamental value, $V_t$
+\[
+V_t=B_t+v^ee_t+v-V^ae^a_t+v^g(g_t-\bar{g})-v^\pi(\pi_t-\bar{\pi})
+\]
+where
+\[
+v=\frac{1+r_f}{r^2_f}(\bar{g}-\bar{\pi}),
+v^e=\frac{1}{r_f},
+v^g=\frac{\phi_g(1+r_f)}{r_f(1+r_f-\phi_g)},
+v^\pi=\frac{\phi_\pi(1+r_f)}{r_f(1+r_f-\phi_\pi)}
+\]
+This function is increasing in profits adjusted for accruals and growth in sustainable
+profits while decreasing in market risk (increasing in ``safety").
+
+Quality is persistent and forecasts future fundamentals. This is important because prices
+should relate to future fundamentals. This is still consistent with efficient markets
+because \emph{returns} should be unpredictable. Profitability is the most persistent component of quality. The price of quality is from the cross-sectional regression
+$p^i_t=a+b\cdot Quality^i_t+controls+\varepsilon^i_t$.
+
+Analysts' prices for quality stocks are higher than junk stocks. But they have lower
+return relative to junk stocks. This is not consistent with the findings in the paper.
+This could be because the \emph{required} rate of return is lower for quality stocks than
+junk stocks. There could be a greater risk premium for junk stocks.
+
+The price of quality varies over time as shown by the time series of regression
+coefficients from Fama-MacBeth regressions. But, standard equal weighting problems and
+size and quality are correlated. The $QMJ$ factor decreases performance of standard factor
+models because of the backwards relationship between risk and $QMJ$. Nevertheless the
+returns on the $QMJ$ factor are significant and global.
+
+
+
+\subsection[Novy-Marx, 2014]{Novy-Marx, Understanding defensive equity
+(2014)\cite{novy2014understanding}}
 
 \subsubsection{Abstract}
 
@@ -302,7 +384,7 @@ defensive equity.
 Ang et al. (2006)\cite{ang2006cross} show a negative correlation between idiosyncratic
 volatility\footnote{volatility of what? Returns, price, ???} and stock returns. Subsequent
 work; Blitz and van Vliet (2007)\cite{blitz2007volatility} considered portfolios sorted on
-total volatility; Backer, Bradley and Wurgler (2011)\cite{backer2011benchmarks} document
+total volatility; Backer, Bradley and Wurgler (2011)\cite{baker2011benchmarks} document
 recent performance of low-$\beta$ and low-vol strategies; and Frazzini and Pedersen
 (2014)\cite{frazzini2014betting} introduces a dynamic version of Black's $\beta$
 arbitrage, ``betting against $\beta$."
