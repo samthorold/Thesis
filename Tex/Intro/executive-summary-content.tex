@@ -1,0 +1,105 @@
+
+Markowitz\cite{markowitz1952portfolio} demonstrated how a risk averse investor 
+would allocate their assets across a portfolio of risky assets by minimizing 
+the variance for a given level of return.
+Tobin\cite{tobin1958liquidity} showed that each investor will separate their 
+investment decision into two stages.
+First, the investor will decide how to allocate resources between risky assets.
+Second, the investor will decide how much to allocate to the risk free asset 
+and the total risky portfolio.
+Sharpe\cite{sharpe1964capital} and Lintner\cite{lintner1965valuation} used 
+mean-variance individual investors to motivate a model of equilibrium, the 
+Capital Asset Pricing Model (CAPM).
+Assuming all investors shared beliefs about the expected returns and 
+covariances of all assets, they would all hold a portfolio on the efficient 
+frontier.
+Black\cite{black1972capital} explained that, since the market consists of all 
+portfolios and all portfolios are efficient, the market is the optimum risky 
+portfolio.
+An asset's return is a linear function of its covariance with the market.
+\begin{equation} \label{eq:mktmodel}
+  E(r_i) = \alpha + \beta_M E(r_m)
+\end{equation}
+
+Empirical work showed the CAPM did not match reality.
+Fama and MacBeth, 1973\cite{fama1973risk} and Jensen, 
+1978\cite{jensen1978some} found that returns are flatter than predicted by the 
+CAPM.
+Furthermore, Roll\cite{roll1977critique} questioned the nature of tests of the 
+CAPM. Roll points out that tests of the CAPM are not tests of market 
+efficiency 
+since we cannot know the true market portfolio of all assets.
+Any test of the CAPM is really a test of a joint hypothesis of market 
+efficiency and some asset pricing model.
+We cannot, with the tools and tests available at present, reject market 
+efficiency.
+Sorts on; size, value, quality and dividends could all create returns 
+unexplainable by the CAPM.
+
+Fama and French\cite{fama1993common}, suggested a three factor model.
+\begin{equation} \label{eq:FF3F}
+  E(R_i) = \alpha + \beta_M E(R_M) + \beta_S SMB + \beta_V HML
+\end{equation}
+where; $R$ stands for return in excess of the risk free rate, $SMB$ is a time 
+series of returns on a portfolio long small stocks and short big stocks and 
+$HML$ is a time series of the returns on a portfolio long high book-to-market 
+stocks and short low book-to-market stocks.
+The three factor model struggled to explain returns on portfolios constructed 
+from sorts on size and; net share issues, momentum, accruals, volatility, 
+liquidity and  book-to-market.
+
+Motivated by the dividend discount model (gordon growth), Fama and 
+French\cite{fama2015five}, suggest the inclusion of profitability and 
+investment factors.
+\begin{equation} \label{eq:FF5F}
+  E(R_i)=\alpha+\beta_mE(R_m)+\beta_SSMB+\beta_VHML+\beta_PRMW+\beta_ICMA
+\end{equation}
+The new factors decreased the number of anomalies unexplained by the asset 
+pricing model.
+Furthermore, the anomalies that remain can grouped together as those 
+portfolios whose returns behave like those of small firms who invest 
+aggressively despite weak profits.
+Interestingly, the five factor model under performs a model which omits the 
+profitability factor when attempting to explain the accruals anomaly.
+
+Operating profit includes information about management's ability to use 
+earnings and their decisions regarding firm structure (through the level of 
+interest payments).
+This is an important metric but does not reflect \emph{true} profitability.
+Moreover, operating profit is a big source of accruals. 
+Novy-Marx\cite{novy2013other} suggests using gross profits as a proxy for true 
+profitability.
+Ball et al.\cite{ball2016accruals} suggest a cash measure of operating 
+profitability.
+They find that the cash component of earnings is more persistent than the 
+accrual component.
+Much of the analysis of asset pricing models uses the intercept from 
+regressions as the measure of a model's performance.
+Barillas and Shanken\cite{barillas2016alpha}, suggest a more general method.
+Strong asset pricing models will leave residuals with small sharpe ratios.
+We cannot know the true market portfolio but we know that it must contain all 
+assets.
+This means the true market portfolio contains the factors we use in our models.
+The factors cannot improve the sharpe ratio of the true market.
+With this in mind, the sharpe ratio of the residuals is made smaller by 
+increasing the sharpe ratio of the factors. This provides a simple method 
+comparing factors without knowin the true market portfolio.
+
+Given the implied problems with operating profitability and the attractive 
+qualities of newer tests of a model's marginal power when explaining anomaly 
+returns, Fama and French\cite{fama2016dissecting} consider a five factor model 
+with operating profit replaced with a cash measure of profitability.
+This is our current ``state of the art."
+
+I consider two extensions to Fama and French's ``Choosing Factors" paper.
+Firstly, Ansess et al.\cite{asness2013devil} and Fama and 
+French\cite{fama2015incremental} suggests a $HML$ factor that adjusts the 
+market value of equity monthly. This specification of factor captures some of 
+the momentum effects of changing stock returns. As explained by Fama and 
+French\cite{fama2015incremental}, this is because $HML$ and momentum are 
+negatively correlated. Fama and French\cite{fama2016choosing} do not consider 
+and momentum factor in their tests. Momentum is a successful strategy in 
+industry.
+Secondly, I consider competing models under typical industry constraints such 
+as 130:30 funds. Fama and French find that the loadings on factors with 
+maximum sharpe ratios can become unrealistic to be put into practice.
