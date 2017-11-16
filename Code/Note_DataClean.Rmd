@@ -1,9 +1,10 @@
 ---
 title: "Note - Data Munge"
 author: "Sam Thorold"
-date: \today
 output:
-  pdf_document: default
+  html_document:
+    toc: true
+    toc_float: true
 ---
 
 ```{r setup, include=FALSE}
@@ -24,8 +25,9 @@ library(knitr)
 # fread much faster than read.csv
 # colClasses='character' prevents scary message about losing data due to
 # changing column types part way through reading the data
-crsp = fread("C:/Data/CRSP/CRSP_196001_201612_d.csv",
-             colClasses='character', showProgress=FALSE)
+crsp = fread(
+    "C:/Data/CRSP/CRSP_196001_201612_d.csv", colClasses='character', showProgress=FALSE
+)
 ```
 
 ```{r}

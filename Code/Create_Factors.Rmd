@@ -1,0 +1,1234 @@
+---
+title: "Create Factors"
+author: "Sam Thorold"
+output:
+  html_document:
+    df_print: paged
+    code_folding: show
+    toc: true
+    toc_float: true
+    number_sections: true
+---
+
+```{r setup}
+knitr::opts_chunk$set(echo = TRUE, fig.height=4)
+```
+
+# Definitions and Links
+
+- **[Variables](http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/variable_definitions.html)**
+- **[Factors](http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/f-f_5_factors_2x3.html)**
+
+
+- [Size breakpoints](http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/det_me_breakpoints.html)
+- [Size returns](http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/det_port_form_sz.html)
+
+
+- [Book-to-Market breakpoints](http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/det_beme_breakpoints.html)
+- [Book-to-Market returns](http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/det_form_btm.html)
+
+
+- [Operating Profit breakpoints](http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/det_op_breakpoints.html)
+- [Operating Profit returns](http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/det_port_form_op.html)
+
+
+- [Investment breakpoints](http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/det_inv_breakpoints.html)
+- [Investment returns](http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/det_port_form_inv.html)
+
+
+- [Momentum breakpoints](http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/det_2-12_breakpoints.html)
+- [Momentum returns](http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/det_10_port_form_pr_12_2.html)
+
+```{r libraries, message=FALSE, warning=FALSE}
+library(data.table)
+library(dplyr)
+library(dtplyr)
+library(ggplot2)
+library(knitr)
+```
+
+# Functions
+
+```{r define.stats.helpers}
+se = function(x) sd(x, na.rm=TRUE)/sqrt(length(x))
+
+t.stat = function(x) t.test(x)$statistic
+```
+
+```{r define.combine.sources}
+combine.sources = function(crsp, comp){
+
+    df = left_join(
+        crsp,
+        comp %>% select(PERMNO, Period, BE, D1.BE, OP, OP.OK, GP, INV),
+        by=c("PERMNO", "Period"))
+
+    df$BM = df$BE/df$M              # Annual, Lagged
+    df$bm = log(df$BM)              # Log Annual, Lagged
+    df$BMC = df$BE/df$Size          # Annual, Current
+    df$BMM = df$BE/df$L1.ME         # Monthly, Current
+    
+    df$BM[is.infinite(df$BM)] = NA
+    df$bm[is.infinite(df$bm)] = NA
+    df$BMC[is.infinite(df$BMC)] = NA
+    df$BMM[is.infinite(df$BMM)] = NA
+
+    return(df %>% filter(Date>as.Date("1963-06-30")))
+}
+```
+
+```{r define.assign.bkts}
+assign.bkts = function(df, var, quantiles){
+
+    bkt.col = paste0(var, ".B")
+
+    df[,bkt.col] = NA
+
+    brk.cols = paste0("D", quantiles*100)
+
+    for (i in 0:(length(quantiles) - 1)){
+        if (i==0){
+            ix = df[,var]<=df[,brk.cols[1]]
+        } else {
+            ix = (df[,var]>df[,brk.cols[i]]) & (df[,var]<=df[,brk.cols[i+1]])
+        }
+
+        df[,bkt.col][ix] = i+1
+    }
+
+    df[, brk.cols] = NULL
+
+    return(df)
+}
+```
+
+```{r define.ri.adj}
+ri.adj.Size = function(df){
+
+    df$adj.L1.ri = 1 + df$L1.ri
+    df$adj.L1.ri[df$Month==7] = 1
+
+    df = df %>% group_by(PERMNO, Period) %>% mutate(
+        adj.Size=Size*cumprod(adj.L1.ri)
+    ) %>% as.data.frame
+
+    return(df)
+}
+```
+
+# CRSP
+
+```{r read.crsp}
+# fread much faster than read.csv
+# colClasses='character' prevents scary message about losing data due to
+# changing column types part way through reading the data
+crsp = fread(
+    "C:/Data/CRSP/CRSP_196001_201612_d.csv", colClasses='character', showProgress=FALSE
+)
+```
+
+```{r munge.crsp, warning=FALSE}
+crsp = crsp %>% filter(SHRCD %in% c(10, 11)) %>% filter(EXCHCD %in% c(1, 2, 3))
+
+crsp$SHRCD = NULL  # sharecode no longer needed
+
+setnames(crsp,
+         c("EXCHCD", "SICCD", "DLRET", "RET", "PRC", "SHROUT", "vwretd"),
+         c("Exchange", "Industry", "dl.ri", "ri", "price", "shares", "rm"))
+
+crsp$PERMNO = factor(crsp$PERMNO)
+crsp$Date = as.Date(crsp$date, "%Y%m%d")
+crsp$Year = as.numeric(format(crsp$Date, "%Y"))
+crsp$Month = as.numeric(format(crsp$Date, "%m"))
+crsp$Exchange = factor(crsp$Exchange,
+                       levels=c("1","2","3"),
+                       labels=c("NYSE", "AMEX", "NASDAQ"))
+crsp$Industry = factor(crsp$Industry)
+crsp$dl.ri = as.numeric(crsp$dl.ri)
+crsp$price = as.numeric(crsp$price)
+crsp$ri = as.numeric(crsp$ri)
+crsp$shares = as.numeric(crsp$shares) / 1000
+crsp$rm = as.numeric(crsp$rm)
+
+summary(crsp %>% select(Date, ri, price, shares))
+```
+
+```{r dl.ret}
+no.return = is.na(crsp$ri) & is.na(crsp$dl.ri)
+crsp$ri[is.na(crsp$ri)] = 0
+crsp$dl.ri[is.na(crsp$dl.ri)] = 0
+crsp$ri = (1 + crsp$ri) * (1 + crsp$dl.ri) - 1
+crsp$ri[no.return] = NA
+```
+
+There should be no duplicate $PERMNO$-$date$ pairs
+(`r format(sum(duplicated(crsp[,c("PERMNO", "date")])), big.mark=" ")` found).
+CRSP data has `r format(nrow(crsp), big.mark=" ")` rows and
+`r format(ncol(crsp), big.mark=" ")` columns.
+
+```{r crsp.duplicates}
+# duplicated will omit return FALSE for the first instance of a duplicated row
+# calling from the top and the bottom ensure all instances are caught
+pairs.ix = duplicated(crsp[, c("PERMNO", "date")]) |
+           duplicated(crsp[, c("PERMNO", "date")], fromLast=TRUE)
+if (sum(pairs.ix)>0){
+    kable(head(crsp[pairs.ix], n=10), digits=2, caption="Duplicates")
+    crsp = crsp %>% filter(!duplicated(crsp[,c("PERMNO", "date")]))
+}
+```
+
+## Return on the Market
+
+```{r rm}
+rm = crsp %>% select(Date, rm) %>% filter(!duplicated(c(Date))) %>%
+    arrange(Date)
+crsp$rm = NULL
+summary(rm)
+```
+
+## Market Equity, $ME$
+
+```{r me}
+crsp$ME = abs(crsp$price) * crsp$shares
+summary(crsp$ME)
+```
+
+## Holding Period
+
+Most portfolios will be reformed at the end of every June and held for 12 months.
+
+```{r period}
+crsp$Period = crsp$Year
+crsp$Period[crsp$Month<7] = crsp$Period[crsp$Month<7] - 1
+```
+
+## Lagged Market Equity
+
+For portfolios reformed monthly we need the lagged market equity.
+
+```{r l1.me}
+crsp = crsp %>% group_by(PERMNO) %>%
+    mutate(L1.ME=lag(ME)) %>% as.data.frame
+```
+
+## June and December Market Equity, $Size$ and $M$
+
+We need the market equity in June for the $Size$ variable in July
+and the market equity in December for the $BM$ variable.
+
+```{r jun.me}
+ME = crsp %>% filter(Month==6) %>% select(PERMNO, Period, ME)
+ME$Period = ME$Period + 1
+ME$Size = ME$ME
+ME$ME = NULL
+summary(ME)
+```
+
+```{r}
+missing = ME %>% group_by(Period) %>% summarise(Missing=sum(is.na(Size)))
+missing.pct = ME %>% group_by(Period) %>% summarise(Missing=sum(is.na(Size))/n())
+ggplot(missing, aes(x=Period, y=Missing)) + geom_line()
+ggplot(missing.pct, aes(x=Period, y=Missing)) + geom_line()
+```
+
+```{r}
+dim(crsp)
+```
+
+```{r}
+crsp = left_join(crsp, ME, by=c("PERMNO", "Period"))
+```
+
+```{r dec.me}
+ME = crsp %>% filter(Month==12) %>% select(PERMNO, Period, ME)
+ME$Period = ME$Period + 1
+ME$M = ME$ME
+ME$ME = NULL
+summary(ME)
+```
+
+```{r}
+missing = ME %>% group_by(Period) %>% summarise(Missing=sum(is.na(M)))
+missing.pct = ME %>% group_by(Period) %>% summarise(Missing=sum(is.na(M))/n())
+ggplot(missing, aes(x=Period, y=Missing)) + geom_line()
+ggplot(missing.pct, aes(x=Period, y=Missing)) + geom_line()
+```
+
+```{r}
+crsp = left_join(crsp, ME, by=c("PERMNO", "Period"))
+```
+
+```{r}
+dim(crsp)
+```
+
+## Prior Returns, $Prior$
+
+```{r prior}
+crsp$old.ri = crsp$ri
+crsp$ri[is.null(crsp$ri)] = -.9999
+crsp = crsp %>% group_by(PERMNO) %>%
+    mutate(Prior.sum=
+        lag(ri, 2) + lag(ri, 3) + lag(ri, 4) + lag(ri, 5) + lag(ri, 6) +
+        lag(ri, 7) + lag(ri, 8) + lag(ri, 9) + lag(ri, 10) + lag(ri, 11) +
+        lag(ri, 12),
+        Prior.cum=log(
+        (1+lag(ri, 2))*(1+lag(ri, 3))*(1+lag(ri, 4))*(1+lag(ri, 5))*(1+lag(ri, 6))*
+        (1+lag(ri, 7))*(1+lag(ri, 8))*(1+lag(ri, 9))*(1+lag(ri, 10))*(1+lag(ri, 11))*
+        (1+lag(ri, 12))),
+        L13.price=lag(price, 13),
+        L1.ri=lag(ri),
+        L1.ME=lag(ME)
+    ) %>% as.data.frame
+crsp$ri = crsp$old.ri
+crsp$old.ri = NULL
+
+crsp$Prior = crsp$Prior.sum
+
+summary(crsp %>% select(L1.ri, L13.price, Prior.sum, Prior.cum))
+```
+
+## Adjusted Size
+
+We hold portfolios for 12 months but the return each month will alter weights.
+We only need to do this once because we hold all annual portfolios for the same
+period.
+Monthly portfolios do not require a size adjustment.
+
+```{r}
+crsp = ri.adj.Size(crsp)
+```
+
+# COMPUSTAT
+
+```{r read.compustat}
+# Don't need to use colClasses here
+comp = fread("C:/Data/CRSP/COMP_196001_201612_c.csv", showProgress=FALSE)
+```
+
+```{r}
+comp$GVKEY = NULL
+
+setnames(comp, c("LPERMNO"), c("PERMNO"))
+
+comp$PERMNO = factor(comp$PERMNO)
+comp$Date = as.Date(as.character(comp$datadate), "%Y%m%d")
+```
+
+## Short Years
+
+There should be no duplicate $PERMNO$-$fyear$ pairs
+(`r format(sum(duplicated(comp[,c("PERMNO", "fyear")])), big.mark=" ")` found).
+CRSP data has `r format(nrow(comp), big.mark=" ")` rows and
+`r format(ncol(comp), big.mark=" ")` columns.
+
+```{r comp.duplicates}
+# duplicated will omit return FALSE for the first instance of a duplicated row
+# calling from the top and the bottom ensure all instances are caught
+pairs.ix = duplicated(comp[, c("PERMNO", "fyear")]) |
+           duplicated(comp[, c("PERMNO", "fyear")], fromLast=TRUE)
+comp[pairs.ix] %>% arrange(PERMNO, fyear, fyr)
+comp = comp %>% filter(!duplicated(comp[,c("PERMNO", "fyear")]))
+```
+
+## Holding Period
+
+```{r}
+comp$Period = comp$fyear + 1
+```
+
+## Book Equity, $BE$
+
+```{r}
+comp$ps = comp$pstkrv                                   # Redemption
+comp$ps[is.na(comp$ps)] = comp$pstkl[is.na(comp$ps)]    # Liquidation
+comp$ps[is.na(comp$ps)] = comp$pstk[is.na(comp$ps)]     # Book
+comp$ps[is.na(comp$ps)] = 0
+
+comp$txditc[is.na(comp$txditc)] = 0
+
+# Asness and Frazzini use only seq
+
+comp$BE = comp$seq + comp$txditc - comp$ps
+
+comp$upstk[is.na(comp$upstk)] = 0
+
+# Common Equity PLUS Par Value of Preferred Stock?
+comp$BE[is.na(comp$BE)] = comp$ceq[is.na(comp$BE)] + comp$upstk[is.na(comp$BE)]
+
+comp$BE[is.na(comp$BE)] = comp$at[is.na(comp$BE)] - comp$lt[is.na(comp$BE)]
+
+comp = comp %>% group_by(PERMNO) %>% mutate(D1.BE=BE-lag(BE)) %>% as.data.frame
+
+summary(comp[,c("BE", "D1.BE")])
+```
+
+## Operating Profit, $OP$
+
+```{r}
+exp.OK = !is.na(comp$cogs) | !is.na(!comp$xsga) | !is.na(comp$xint)
+comp$cogs[is.na(comp$cogs)] = 0
+comp$xsga[is.na(comp$xsga)] = 0
+comp$xint[is.na(comp$xint)] = 0
+
+comp$op.OK = !is.na(comp$revt) & exp.OK
+comp$OP.OK = (comp$BE > 0) & comp$op.OK
+comp$OP.OK[is.na(comp$OP.OK)] = FALSE
+comp$OP = (comp$revt - comp$cogs - comp$xsga - comp$xint)/comp$BE
+summary(comp$OP)
+summary(comp$OP[comp$OP.OK])
+```
+
+## Gross Profit, $GP$
+
+```{r}
+comp$GP = comp$gp / comp$at
+summary(comp$GP)
+ix = is.na(comp$GP)
+comp$GP[ix] = comp$revt[ix] - comp$cogs[ix]
+summary(comp$GP)
+```
+
+## Investment, $INV$
+
+```{r}
+comp = comp %>% group_by(PERMNO) %>% mutate(INV=(at-lag(at))/lag(at)) %>%
+    as.data.frame
+comp$INV[(comp$INV==Inf) | (comp$INV==-Inf)] = NA
+summary(comp$INV)
+```
+
+## Missing Values
+
+```{r comp.missing.val}
+missing = comp %>% filter(Date>as.Date("1963-06-30")) %>%
+    group_by(Period) %>% summarise(
+        BE=sum(is.na(BE)),
+        OP=sum(!op.OK),
+        GP=sum(is.na(GP)),
+        OP_BE=sum(!OP.OK),
+        INV=sum(is.na(INV))
+) %>% melt(id="Period") %>% filter(!is.na(Period))
+
+ggplot(missing, aes(x=Period, color=variable)) + geom_line(aes(y=value))
+```
+
+```{r comp.missing.pct}
+missing = comp %>% filter(Date>as.Date("1963-06-30")) %>%
+    group_by(Period) %>% summarise(
+        BE=sum(is.na(BE))/n(),
+        OP=sum(!op.OK)/n(),
+        GP=sum(is.na(GP))/n(),
+        OP_BE=sum(!OP.OK)/n(),
+        INV=sum(is.na(INV))/n()
+) %>% melt(id="Period") %>% filter(!is.na(Period))
+
+ggplot(missing, aes(x=Period, color=variable)) + geom_line(aes(y=value))
+```
+
+# Univariate Sorts
+
+## $Size$
+
+* Annual rebalance
+
+```{r, warning=FALSE}
+df = combine.sources(crsp, comp)
+```
+
+### $ME$ Decile Breakpoints
+
+```{r me.deciles}
+quantiles = 1:10/10
+
+nyse = df %>% filter(Exchange=="NYSE", !is.na(ME)) %>% select(Date, PERMNO, ME)
+
+breakpoints = nyse %>% arrange(Date, ME) %>% group_by(Date) %>% summarize(
+    D10=ME[.1*n()], D20=ME[.2*n()],
+    D30=ME[.3*n()], D40=ME[.4*n()],
+    D50=ME[.5*n()], D60=ME[.6*n()],
+    D70=ME[.7*n()], D80=ME[.8*n()],
+    D90=ME[.9*n()], D100=ME[n()]) %>% as.data.frame
+write.csv(breakpoints, "C:/Data/Thesis/ME_Decile_Breakpoints.csv")
+```
+
+### $Size$ Deciles
+
+```{r size.deciles}
+quantiles = 1:10/10
+
+nyse = df %>% filter(
+    Exchange=="NYSE", Month==7, !is.na(Size)
+    ) %>% select(Period, PERMNO, Size)
+
+breakpoints = nyse %>% arrange(Period, Size) %>% group_by(Period) %>% summarize(
+    D10=Size[.1*n()], D20=Size[.2*n()],
+    D30=Size[.3*n()], D40=Size[.4*n()],
+    D50=Size[.5*n()], D60=Size[.6*n()],
+    D70=Size[.7*n()], D80=Size[.8*n()],
+    D90=Size[.9*n()], D100=Size[n()]) %>% as.data.frame
+
+breakpoints$Period = breakpoints$Period + 1
+
+breakpoints[, c("PERMNO", "Size")] = NULL
+
+df = left_join(df, breakpoints, by=c("Period"))
+```
+
+```{r}
+df = assign.bkts(df, "Size", quantiles)
+```
+
+```{r}
+df %>% group_by(Size.B, Date) %>% summarize(N=n()) %>% group_by(Size.B) %>%
+    summarise(avg.N=mean(N))
+```
+
+$Size$ adjusted for last month's return
+
+```{r}
+# df = ri.adj.Size(df)
+
+df = df %>% group_by(Size.B, Date) %>% mutate(
+    adj.bkt.Size=sum(adj.Size, na.rm=TRUE)
+) %>% as.data.frame
+df$wt.ri = df$ri * df$adj.Size / df$adj.bkt.Size
+```
+
+### Returns
+
+```{r}
+decile.returns = df %>%
+    dcast(Date ~ Size.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
+write.csv(decile.returns, "C:/Data/Thesis/Size_Decile_Returns.csv")
+round(colMeans(decile.returns %>% select(-Date)) * 100, 2)
+```
+
+![French Website $Size$ Decile Returns](C:/Data/FrenchDartmouth/10_ME.JPG)
+
+## $BM$ (Annual, Lagged)
+
+* Annual rebalance
+
+```{r, warning=FALSE}
+df = combine.sources(crsp, comp)
+df = df %>% filter(!is.na(BM), !is.na(Size), BE>0)
+```
+
+### $BM$ Decile Breakpoints
+
+```{r bm.deciles}
+quantiles = 1:10/10
+
+nyse = df %>% filter(Exchange=="NYSE", Month==7) %>% select(Period, PERMNO, BM)
+
+breakpoints = nyse %>% arrange(Period, BM) %>% group_by(Period) %>% summarize(
+    D10=BM[.1*n()], D20=BM[.2*n()],
+    D30=BM[.3*n()], D40=BM[.4*n()],
+    D50=BM[.5*n()], D60=BM[.6*n()],
+    D70=BM[.7*n()], D80=BM[.8*n()],
+    D90=BM[.9*n()], D100=BM[n()]) %>% as.data.frame
+write.csv(breakpoints, "C:/Data/Thesis/BM_Decile_Breakpoints.csv")
+
+breakpoints$Period = breakpoints$Period + 1
+
+breakpoints[, c("PERMNO", "BM")] = NULL
+
+df = left_join(df, breakpoints, by=c("Period"))
+
+df = assign.bkts(df, "BM", quantiles)
+```
+
+```{r}
+df %>% group_by(BM.B, Date) %>% summarize(N=n()) %>% group_by(BM.B) %>%
+    summarise(avg.N=mean(N))
+```
+
+```{r}
+# df = ri.adj.Size(df)
+
+df = df %>% group_by(BM.B, Date) %>% mutate(
+    adj.bkt.Size=sum(adj.Size, na.rm=TRUE)
+) %>% as.data.frame
+df$wt.ri = df$ri * df$adj.Size / df$adj.bkt.Size
+```
+
+### Returns
+
+```{r}
+decile.returns = df %>%
+    dcast(Date ~ BM.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
+write.csv(decile.returns, "C:/Data/Thesis/BM_Decile_Returns.csv")
+round(colMeans(decile.returns %>% select(-Date)) * 100, 2)
+```
+
+![French Website $BM$ Decile Returns](C:/Data/FrenchDartmouth/10_BM.JPG)
+
+```{r}
+bm = decile.returns$`10` - decile.returns$`1`
+```
+
+### $ME$
+
+```{r}
+df %>% group_by(BM.B, Date) %>% summarise(avg.ME=mean(ME, na.rm=TRUE)) %>%
+    group_by(BM.B) %>% summarise(avg.ME=mean(avg.ME)) %>% round(2)
+```
+
+### $Size$
+
+```{r}
+df %>% group_by(BM.B, Date) %>% summarise(avg.Size=mean(Size, na.rm=TRUE)) %>%
+    group_by(BM.B) %>% summarise(avg.Size=mean(avg.Size)) %>% round(2)
+```
+
+### $Prior$
+
+```{r}
+df %>% group_by(BM.B, Date) %>% summarise(avg.Prior=mean(Prior, na.rm=TRUE)) %>%
+    group_by(BM.B) %>% summarise(avg.Prior=mean(avg.Prior)) %>% round(2)
+```
+
+## Forecasting $BE$
+
+We want to distinguish between changes in price and changes in expected $BE$.
+
+Exhibit 4 from Asness and Frazzini (2013).
+
+$$BM_t = \beta_0 + \beta_1\cdot BM_{t-1} + \beta_2\cdot BM_{t-1}^{Current ME}$$
+
+```{r, warning=FALSE}
+df = combine.sources(crsp, comp)
+df = df %>% filter(!is.na(BM), Month==7)
+```
+
+```{r}
+df = df %>% group_by(PERMNO) %>% mutate(
+    L1.BM=lag(BM),
+    L1.BMC=lag(BMC),
+    L1.BMC_L1.BM=L1.BMC-L1.BM) %>% as.data.frame
+```
+
+```{r}
+summary(df %>% select(PERMNO, L1.BM, L1.BMC, L1.BMC_L1.BM))
+```
+
+```{r}
+formula.str = "BM ~ L1.BM + L1.BMC_L1.BM"
+results = c()
+for (period in 1964:2016){
+    dt = df %>% filter(Period==period)
+    results = rbind(results, lm(formula(formula.str), data=dt)$coefficients)
+}
+
+results = as.data.frame(results)
+results$diff = results$L1.BM - results$L1.BMC_L1.BM
+
+rbind(sapply(results, mean), sapply(results, se), sapply(results, t.stat))
+
+```
+
+
+## $\Delta log(Book Price/Share)$
+
+Exhibit 5 from Asness and Frazzini (2013).
+
+We want to forecast unobserved changes in book value per share.
+Regress changes in book value per share on the lagged prior returns.
+Prior returns are already lagged but the change in book value per share uses a
+lag. Also see Sloan et al. (2017).
+
+```{r, warning=FALSE}
+df = combine.sources(crsp, comp)
+
+df$bp = log(df$BE / df$shares)
+
+df = df %>% filter(!is.na(bp), !is.infinite(bp), Month==7) %>% group_by(PERMNO) %>%
+    mutate(D1.bp=bp-lag(bp), L1.Prior=lag(Prior.cum)) %>% as.data.frame
+```
+
+```{r}
+summary(df %>% select(PERMNO, Period, D1.bp, L1.Prior))
+```
+
+```{r}
+df %>% group_by(Period) %>% summarise(N=n())
+```
+
+```{r}
+formula.str = "D1.bp ~ L1.Prior"
+
+results = c()
+for (period in 1964:2016){
+    dt = df %>% filter(Period==period)
+    results = rbind(results, lm(formula(formula.str), data=dt)$coefficients)
+}
+
+results = as.data.frame(results)
+
+rbind(sapply(results, mean), sapply(results, se), sapply(results, t.stat))
+```
+
+## $BM_C$ (Annual, Current)
+
+* Annual rebalance
+
+```{r, warning=FALSE}
+df = combine.sources(crsp, comp)
+df = df %>% filter(!is.na(BMC), !is.na(Size), BE>0)
+```
+
+### $BM$ Decile Breakpoints
+
+```{r bmc.deciles}
+quantiles = 1:10/10
+
+nyse = df %>% filter(Exchange=="NYSE", Month==7) %>% select(Period, PERMNO, BMC)
+
+breakpoints = nyse %>% arrange(Period, BMC) %>% group_by(Period) %>% summarize(
+    D10=BMC[.1*n()], D20=BMC[.2*n()],
+    D30=BMC[.3*n()], D40=BMC[.4*n()],
+    D50=BMC[.5*n()], D60=BMC[.6*n()],
+    D70=BMC[.7*n()], D80=BMC[.8*n()],
+    D90=BMC[.9*n()], D100=BMC[n()]) %>% as.data.frame
+write.csv(breakpoints, "C:/Data/Thesis/BMC_Decile_Breakpoints.csv")
+
+breakpoints$Period = breakpoints$Period + 1
+
+breakpoints[, c("PERMNO", "BMC")] = NULL
+
+df = left_join(df, breakpoints, by=c("Period"))
+
+df = assign.bkts(df, "BMC", quantiles)
+```
+
+```{r}
+df %>% group_by(BMC.B, Date) %>% summarize(N=n()) %>% group_by(BMC.B) %>%
+    summarise(avg.N=mean(N))
+```
+
+```{r}
+# df = ri.adj.Size(df)
+
+df = df %>% group_by(BMC.B, Date) %>% mutate(
+    adj.bkt.Size=sum(adj.Size, na.rm=TRUE)
+) %>% as.data.frame
+df$wt.ri = df$ri * df$adj.Size / df$adj.bkt.Size
+```
+
+### Returns
+
+```{r}
+decile.returns = df %>%
+    dcast(Date ~ BMC.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
+write.csv(decile.returns, "C:/Data/Thesis/BMC_Decile_Returns.csv")
+round(colMeans(decile.returns %>% select(-Date)) * 100, 2)
+```
+
+```{r}
+bmc = decile.returns$`10` - decile.returns$`1`
+```
+
+### $ME$
+
+```{r}
+df %>% group_by(BMC.B, Date) %>% summarise(avg.ME=mean(ME, na.rm=TRUE)) %>%
+    group_by(BMC.B) %>% summarise(avg.ME=mean(avg.ME)) %>% round(2)
+```
+
+### $Size$
+
+```{r}
+df %>% group_by(BMC.B, Date) %>% summarise(avg.Size=mean(Size, na.rm=TRUE)) %>%
+    group_by(BMC.B) %>% summarise(avg.Size=mean(avg.Size)) %>% round(2)
+```
+
+### $Prior$
+
+```{r}
+df %>% group_by(BMC.B, Date) %>% summarise(avg.Prior=mean(Prior, na.rm=TRUE)) %>%
+    group_by(BMC.B) %>% summarise(avg.Prior=mean(avg.Prior)) %>% round(2)
+```
+
+## $BM_M$ (Monthly, Current)
+
+* Monthly rebalance
+
+```{r, warning=FALSE}
+df = combine.sources(crsp, comp)
+df = df %>% filter(!is.na(BMM), !is.na(L1.ME), BE>0)
+```
+
+### $BMM$ Decile Breakpoints
+
+```{r bmm.deciles}
+quantiles = 1:10/10
+
+nyse = df %>% filter(Exchange=="NYSE") %>% select(Date, PERMNO, BMM)
+
+breakpoints = nyse %>% arrange(Date, BMM) %>% group_by(Date) %>% summarize(
+    D10=BMM[.1*n()], D20=BMM[.2*n()],
+    D30=BMM[.3*n()], D40=BMM[.4*n()],
+    D50=BMM[.5*n()], D60=BMM[.6*n()],
+    D70=BMM[.7*n()], D80=BMM[.8*n()],
+    D90=BMM[.9*n()], D100=BMM[n()]) %>% as.data.frame
+write.csv(breakpoints, "C:/Data/Thesis/BMM_Decile_Breakpoints.csv")
+
+# breakpoints$Period = breakpoints$Period + 1
+
+breakpoints[, c("PERMNO", "BMM")] = NULL
+
+df = left_join(df, breakpoints, by=c("Date"))
+
+df = assign.bkts(df, "BMM", quantiles)
+```
+
+```{r}
+df %>% group_by(BMM.B, Date) %>% summarize(N=n()) %>% group_by(BMM.B) %>%
+    summarise(avg.N=mean(N))
+```
+
+```{r}
+# df = ri.adj.Size(df)
+
+df = df %>% group_by(BMM.B, Date) %>% mutate(
+    bkt.L1.ME=sum(L1.ME, na.rm=TRUE)
+) %>% as.data.frame
+df$wt.ri = df$ri * df$L1.ME / df$bkt.L1.ME
+```
+
+### Returns
+
+```{r}
+decile.returns = df %>%
+    dcast(Date ~ BMM.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
+write.csv(decile.returns, "C:/Data/Thesis/BMM_Decile_Returns.csv")
+round(colMeans(decile.returns %>% select(-Date)) * 100, 2)
+```
+
+```{r}
+bmm = decile.returns$`10` - decile.returns$`1`
+```
+
+```{r}
+x = bmm - bm
+mean(x*100)
+se(x*100)
+```
+
+```{r}
+x = bmc - bm
+mean(x*100)
+se(x*100)
+```
+
+```{r}
+x = bmm - bmc
+mean(x*100)
+se(x*100)
+```
+
+### $ME$
+
+```{r}
+df %>% group_by(BMM.B, Date) %>% summarise(avg.ME=mean(ME, na.rm=TRUE)) %>%
+    group_by(BMM.B) %>% summarise(avg.ME=mean(avg.ME)) %>% round(2)
+```
+
+### $Size$
+
+```{r}
+df %>% group_by(BMM.B, Date) %>% summarise(avg.Size=mean(Size, na.rm=TRUE)) %>%
+    group_by(BMM.B) %>% summarise(avg.Size=mean(avg.Size)) %>% round(2)
+```
+
+### $Prior$
+
+```{r}
+df %>% group_by(BMM.B, Date) %>% summarise(avg.Prior=mean(Prior, na.rm=TRUE)) %>%
+    group_by(BMM.B) %>% summarise(avg.Prior=mean(avg.Prior)) %>% round(2)
+```
+
+## $OP$
+
+* Annual rebalance
+
+```{r, warning=FALSE}
+df = combine.sources(crsp, comp)
+df = df %>% filter(OP.OK, !is.na(Size))
+```
+
+### $OP$ Decile Breakpoints
+
+```{r op.deciles}
+quantiles = 1:10/10
+
+nyse = df %>% filter(Exchange=="NYSE", Month==7) %>% select(Period, PERMNO, OP)
+
+breakpoints = nyse %>% arrange(Period, OP) %>% group_by(Period) %>% summarize(
+    D10=OP[.1*n()], D20=OP[.2*n()],
+    D30=OP[.3*n()], D40=OP[.4*n()],
+    D50=OP[.5*n()], D60=OP[.6*n()],
+    D70=OP[.7*n()], D80=OP[.8*n()],
+    D90=OP[.9*n()], D100=OP[n()]) %>% as.data.frame
+write.csv(breakpoints, "C:/Data/Thesis/OP_Decile_Breakpoints.csv")
+
+breakpoints$Period = breakpoints$Period + 1
+
+breakpoints[, c("PERMNO", "OP")] = NULL
+
+df = left_join(df, breakpoints, by=c("Period"))
+```
+
+```{r}
+df = assign.bkts(df, "OP", quantiles)
+```
+
+```{r}
+df %>% group_by(OP.B, Date) %>% summarize(N=n()) %>% group_by(OP.B) %>%
+    summarise(avg.N=mean(N))
+```
+
+```{r}
+# df = ri.adj.Size(df)
+
+df = df %>% group_by(OP.B, Date) %>% mutate(
+    adj.bkt.Size=sum(adj.Size, na.rm=TRUE)
+) %>% as.data.frame
+df$wt.ri = df$ri * df$adj.Size / df$adj.bkt.Size
+```
+
+### Returns
+
+```{r}
+decile.returns = df %>%
+    dcast(Date ~ OP.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
+write.csv(decile.returns, "C:/Data/Thesis/OP_Decile_Returns.csv")
+round(colMeans(decile.returns %>% select(-Date)) * 100, 2)
+```
+
+![French Website $OP$ Decile Returns](C:/Data/FrenchDartmouth/10_OP.JPG)
+
+### $BM$
+
+```{r}
+df %>% group_by(OP.B, Date) %>% summarise(avg.BM=mean(BM, na.rm=TRUE)) %>%
+    group_by(OP.B) %>% summarise(avg.BM=mean(avg.BM)) %>% round(2)
+```
+
+### Monthly $BM$
+
+```{r}
+df %>% group_by(OP.B, Date) %>% summarise(avg.BMM=mean(BMM, na.rm=TRUE)) %>%
+    group_by(OP.B) %>% summarise(avg.BMM=mean(avg.BMM)) %>% round(2)
+```
+
+### $Prior$
+
+```{r}
+df %>% group_by(OP.B, Date) %>% summarise(avg.Prior=mean(Prior, na.rm=TRUE)) %>%
+    group_by(OP.B) %>% summarise(avg.Prior=mean(avg.Prior)) %>% round(2)
+```
+
+### $INV$
+
+```{r}
+df %>% group_by(OP.B, Date) %>% summarise(avg.INV=mean(INV, na.rm=TRUE)) %>%
+    group_by(OP.B) %>% summarise(avg.INV=mean(avg.INV)) %>% round(2)
+```
+
+## $GP$
+
+* Annual rebalance
+
+```{r, warning=FALSE}
+df = combine.sources(crsp, comp)
+df = df %>% filter(!is.na(GP), !is.na(Size))
+```
+
+### $GP$ Decile Breakpoints
+
+```{r gp.deciles}
+quantiles = 1:10/10
+
+nyse = df %>% filter(Exchange=="NYSE", Month==7) %>% select(Period, PERMNO, GP)
+
+breakpoints = nyse %>% arrange(Period, GP) %>% group_by(Period) %>% summarize(
+    D10=GP[.1*n()], D20=GP[.2*n()],
+    D30=GP[.3*n()], D40=GP[.4*n()],
+    D50=GP[.5*n()], D60=GP[.6*n()],
+    D70=GP[.7*n()], D80=GP[.8*n()],
+    D90=GP[.9*n()], D100=GP[n()]) %>% as.data.frame
+write.csv(breakpoints, "C:/Data/Thesis/GP_Decile_Breakpoints.csv")
+
+breakpoints$Period = breakpoints$Period + 1
+
+breakpoints[, c("PERMNO", "GP")] = NULL
+
+df = left_join(df, breakpoints, by=c("Period"))
+```
+
+```{r}
+df = assign.bkts(df, "GP", quantiles)
+```
+
+```{r}
+df %>% group_by(GP.B, Date) %>% summarize(N=n()) %>% group_by(GP.B) %>%
+    summarise(avg.N=mean(N))
+```
+
+```{r}
+# df = ri.adj.Size(df)
+
+df = df %>% group_by(GP.B, Date) %>% mutate(
+    adj.bkt.Size=sum(adj.Size, na.rm=TRUE)
+) %>% as.data.frame
+df$wt.ri = df$ri * df$adj.Size / df$adj.bkt.Size
+```
+
+### Returns
+
+```{r}
+decile.returns = df %>%
+    dcast(Date ~ GP.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
+write.csv(decile.returns, "C:/Data/Thesis/GP_Decile_Returns.csv")
+round(colMeans(decile.returns %>% select(-Date)) * 100, 2)
+```
+
+### $BM$
+
+```{r}
+df %>% group_by(GP.B, Date) %>% summarise(avg.BM=mean(BM, na.rm=TRUE)) %>%
+    group_by(GP.B) %>% summarise(avg.BM=mean(avg.BM)) %>% round(2)
+```
+
+```{r}
+x= df %>% filter(Month==7) %>%
+    dcast(Date ~ GP.B, fun.aggregate=mean, value.var="BM", na.rm=TRUE)
+x$diff = x$`1` - x$`10`
+mean(x$diff, na.rm=TRUE)
+se(x$diff)
+```
+
+### Monthly $BM$
+
+```{r}
+df %>% group_by(GP.B, Date) %>% summarise(avg.BMM=mean(BMM, na.rm=TRUE)) %>%
+    group_by(GP.B) %>% summarise(avg.BMM=mean(avg.BMM)) %>% round(2)
+```
+
+## $CP$
+
+* Annual rebalance?
+
+```{r, warning=FALSE}
+df = combine.sources(crsp, comp)
+```
+
+### Returns
+
+## $INV$
+
+* Annual rebalance
+
+* Annual rebalance
+
+```{r, warning=FALSE}
+df = combine.sources(crsp, comp)
+df = df %>% filter(!is.na(INV), !is.na(Size))
+```
+
+### INV Decile Breakpoints
+
+```{r inv.deciles}
+quantiles = 1:10/10
+
+nyse = df %>% filter(Exchange=="NYSE", Month==7) %>% select(Period, PERMNO, INV)
+
+breakpoints = nyse %>% arrange(Period, INV) %>% group_by(Period) %>% summarize(
+    D10=INV[.1*n()], D20=INV[.2*n()],
+    D30=INV[.3*n()], D40=INV[.4*n()],
+    D50=INV[.5*n()], D60=INV[.6*n()],
+    D70=INV[.7*n()], D80=INV[.8*n()],
+    D90=INV[.9*n()], D100=INV[n()]) %>% as.data.frame
+write.csv(breakpoints, "C:/Data/Thesis/INV_Decile_Breakpoints.csv")
+
+breakpoints$Period = breakpoints$Period + 1
+
+breakpoints[, c("PERMNO", "INV")] = NULL
+
+df = left_join(df, breakpoints, by=c("Period"))
+```
+
+```{r}
+df = assign.bkts(df, "INV", quantiles)
+```
+
+```{r}
+df %>% group_by(INV.B, Date) %>% summarize(N=n()) %>% group_by(INV.B) %>%
+    summarise(avg.N=mean(N))
+```
+
+```{r}
+df = ri.adj.Size(df)
+
+df = df %>% group_by(INV.B, Date) %>% mutate(
+    adj.bkt.Size=sum(adj.Size, na.rm=TRUE)
+) %>% as.data.frame
+df$wt.ri = df$ri * df$adj.Size / df$adj.bkt.Size
+```
+
+### Returns
+
+```{r}
+decile.returns = df %>%
+    dcast(Date ~ INV.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
+write.csv(decile.returns, "C:/Data/Thesis/INV_Decile_Returns.csv")
+round(colMeans(decile.returns %>% select(-Date)) * 100, 2)
+```
+
+![French Website $INV$ Decile Returns](C:/Data/FrenchDartmouth/10_INV.JPG)
+
+### $Size$
+
+```{r}
+df %>% group_by(INV.B, Date) %>% summarise(avg.Size=mean(Size, na.rm=TRUE)) %>%
+    group_by(INV.B) %>% summarise(avg.Size=mean(avg.Size)) %>% round(2)
+```
+
+### $BM$
+
+```{r}
+df %>% group_by(INV.B, Date) %>% summarise(avg.BM=mean(BM, na.rm=TRUE)) %>%
+    group_by(INV.B) %>% summarise(avg.BM=mean(avg.BM)) %>% round(2)
+```
+
+### Monthly $BM$
+
+```{r}
+df %>% group_by(INV.B, Date) %>% summarise(avg.BMM=mean(BMM, na.rm=TRUE)) %>%
+    group_by(INV.B) %>% summarise(avg.BMM=mean(avg.BMM)) %>% round(2)
+```
+
+### $OP$
+
+```{r}
+df %>% group_by(INV.B, Date) %>% summarise(avg.OP=mean(OP, na.rm=TRUE)) %>%
+    group_by(INV.B) %>% summarise(avg.OP=mean(avg.OP)) %>% round(2)
+```
+
+### $GP$
+
+```{r}
+df %>% group_by(INV.B, Date) %>% summarise(avg.GP=mean(GP, na.rm=TRUE)) %>%
+    group_by(INV.B) %>% summarise(avg.GP=mean(avg.GP)) %>% round(2)
+```
+
+### $Prior$
+
+```{r}
+df %>% group_by(INV.B, Date) %>% summarise(avg.Prior=mean(Prior, na.rm=TRUE)) %>%
+    group_by(INV.B) %>% summarise(avg.Prior=mean(avg.Prior)) %>% round(2)
+```
+
+## $Prior$
+
+* Monthly rebalance
+
+```{r, warning=FALSE}
+df = combine.sources(crsp, comp)
+df = df %>% filter(!is.na(Prior), !is.na(L13.price), !is.na(L1.ri), !is.na(L1.ME))
+```
+
+### $Prior$ Decile Breakpoints
+
+```{r prior.deciles}
+quantiles = 1:10/10
+
+nyse = df %>% filter(Exchange=="NYSE") %>% select(Date, PERMNO, Prior)
+
+breakpoints = nyse %>% arrange(Date, Prior) %>% group_by(Date) %>% summarize(
+    D10=Prior[.1*n()], D20=Prior[.2*n()],
+    D30=Prior[.3*n()], D40=Prior[.4*n()],
+    D50=Prior[.5*n()], D60=Prior[.6*n()],
+    D70=Prior[.7*n()], D80=Prior[.8*n()],
+    D90=Prior[.9*n()], D100=Prior[n()]) %>% as.data.frame
+write.csv(breakpoints, "C:/Data/Thesis/Prior_Decile_Breakpoints.csv")
+
+# breakpoints$Period = breakpoints$Period + 1
+
+breakpoints[, c("PERMNO", "Prior")] = NULL
+
+df = left_join(df, breakpoints, by=c("Date"))
+
+df = assign.bkts(df, "Prior", quantiles)
+```
+
+```{r}
+df %>% group_by(Prior.B, Date) %>% summarize(N=n()) %>% group_by(Prior.B) %>%
+    summarise(avg.N=mean(N))
+```
+
+```{r}
+# df = ri.adj.Size(df)
+
+df = df %>% group_by(Prior.B, Date) %>% mutate(
+    bkt.L1.ME=sum(L1.ME, na.rm=TRUE)
+) %>% as.data.frame
+df$wt.ri = df$ri * df$L1.ME / df$bkt.L1.ME
+```
+
+### Returns
+
+```{r}
+decile.returns = df %>%
+    dcast(Date ~ Prior.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
+write.csv(decile.returns, "C:/Data/Thesis/Prior_Decile_Returns.csv")
+round(colMeans(decile.returns %>% select(-Date)) * 100, 2)
+```
+
+### $ME$
+
+```{r}
+df %>% group_by(Prior.B, Date) %>% summarise(avg.ME=mean(ME, na.rm=TRUE)) %>%
+    group_by(Prior.B) %>% summarise(avg.ME=mean(avg.ME)) %>% round(2)
+```
+
+### $Size$
+
+```{r}
+df %>% group_by(Prior.B, Date) %>% summarise(avg.Size=mean(Size, na.rm=TRUE)) %>%
+    group_by(Prior.B) %>% summarise(avg.Size=mean(avg.Size)) %>% round(2)
+```
+
+### $BM$
+
+```{r}
+df %>% group_by(Prior.B, Date) %>% summarise(avg.BM=mean(BM, na.rm=TRUE)) %>%
+    group_by(Prior.B) %>% summarise(avg.BM=mean(avg.BM)) %>% round(2)
+```
+
+### Monthly $BM$
+
+```{r}
+df %>% group_by(Prior.B, Date) %>% summarise(avg.BMM=mean(BMM, na.rm=TRUE)) %>%
+    group_by(Prior.B) %>% summarise(avg.BMM=mean(avg.BMM)) %>% round(2)
+```
+
+## Accruals
+
+* Annual rebalance
+
+```{r, warning=FALSE}
+df = combine.sources(crsp, comp)
+```
+
+### Returns
+
+## $Vol$
+
+* Daily data
+* Residuals from three factor model
+
+### Returns
+

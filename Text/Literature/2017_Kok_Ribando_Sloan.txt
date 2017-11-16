@@ -1,0 +1,62 @@
+
+@kok2017facts
+=============
+
+**Value investing** is buying securities  for a good value.
+It is not the quantitative strategies of @lakonishok1994contrarian nor @chan2004value which focus on ratios of common fundamental metrics such as book-to-market or price-earnings.
+Quantitative strategy proponents claim to identify temporarily underpriced securities^[Do they? Or do they claim it is risk?].
+
+*The common fundamentals approach only works for small stocks*. These stocks tend to be capacity constrained and illiquid.
+
+Instead of identifying underpriced securities, the fundamentals approach identifies securities with inflated accounting numbers.
+
+Brief History
+------------------
+
+@graham1934security said that investors should buy stocks that are trading at a significant discount to intrinsic value.
+Where intrinsic value is measured as future earnings power.
+Multiples began gaining traction in the 1980s.
+High book-to-market stocks began being referred to as "value" stocks in @fama1992cross.
+Indexes popped up representing different "styles" such as the Russel value index among others.
+Academics and practitioners found that these indexes were not amazing (@loughran1997book and @asness2015fact).
+In fact, fundamental value has gotten weaker since publication (@mclean2016does).
+
+Returns to fundamental value is concetrated in small high-growth stocks with short sale constraints (@nagel2005short).
+
+Construction of common 2x3 factors equal weight small and big halves which overweights small stocks^[Does it? They're zero investment portfolios].
+
+@asness2015fact writes
+
+> There is no strong stand-alone value premium among large caps.
+
+Value indexes often underperform their standard counterparts.
+
+If fundamental value does not identify underpriced securities what does it identify then?
+
+- Fundamental metric in the numerator represents intrinsic value
+- The price in the denominator tells us how much we have to pay for that intrinsic value
+- A high ratio therefore implies a "cheap" security
+
+A high fundamental value measure may revert to intrinsic value for one of two reasons;
+a price increase (what investors want) or
+a decrease in the fundamental numerator (@graham1934security warning) because the security was not cheap
+
+Fundamental ratios exhibit mean reversion
+$$
+\frac{F_{t+1}}{P_{t+1}}=\frac{F_t}{P_t}\cdot\frac{F_{t+1}}{F_t}\cdot\frac{P_{t+1}}{P_t}
+$$
+taking logs
+$$
+ln\left(\frac{F_{t+1}}{P_{t+1}}\right) =ln\left(\frac{F_t}{P_t}\right) +ln\left(\frac{F_{t+1}}{F_t}\right) -ln\left(\frac{P_{t+1}}{P_t}\right)
+$$
+The ending ratio value equals the beginning value plus the change in the fundamental metric minus the change in the price.
+
+Fundamental Value and Momentum
+------------------------------------------------------
+
+Positive momentum stocks exhibit less mean reversion.
+That is to say they exhibit smaller reductions in the fundamental metric.
+By using a combined fundamental value and momentum strategy one weeds out stocks that recently had bad news that is not yet reflected in accounting numbers.
+A book-to-market measure is useful *if* one can back out expected changes in book equity.
+Unfortunately this requires perfect foresight.
+HML-Momentum is a compromise.
