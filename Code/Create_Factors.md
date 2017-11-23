@@ -58,6 +58,14 @@ library(rlang)
 se = function(x) sd(x, na.rm=TRUE)/sqrt(length(x))
 
 t.stat = function(x) t.test(x)$statistic
+
+sr = function(x) mean(x, na.rm=TRUE) / sd(x, na.rm=TRUE)
+
+stat.summary = function(df){
+    return(
+        rbind(sapply(df, mean), sapply(df, se), sapply(df, t.stat), sapply(df, sr))
+    )
+}
 ```
 
 
@@ -66,7 +74,9 @@ combine.sources = function(crsp, comp){
 
     df = left_join(
         crsp,
-        comp %>% select(PERMNO, Period, BE, D1.BE, OP, OP.OK, GP, INV),
+        comp %>% select(
+            PERMNO, Period, BE, D1.BE, OP, OP.2, OP.OK, CP, GP, Acc, INV, INV.ppe
+        ),
         by=c("PERMNO", "Period"))
 
     df$BM = df$BE/df$M              # Annual, Lagged
@@ -408,7 +418,7 @@ crsp = ri.adj.Size(crsp)
 
 ```r
 # Don't need to use colClasses here
-comp = fread("C:/Data/CRSP/COMP_196001_201612_c.csv", showProgress=FALSE)
+comp = fread("C:/Data/CRSP/20171123_COMP_196001_201612.csv", showProgress=FALSE)
 ```
 
 
@@ -425,8 +435,8 @@ comp$Date = as.Date(as.character(comp$datadate), "%Y%m%d")
 
 There should be no duplicate $PERMNO$-$fyear$ pairs
 (5 found).
-CRSP data has 287 067 rows and
-27 columns.
+CRSP data has 287 083 rows and
+54 columns.
 
 
 ```r
@@ -439,7 +449,7 @@ comp[pairs.ix] %>% arrange(PERMNO, fyear, fyr)
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["PERMNO"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["datadate"],"name":[2],"type":["int"],"align":["right"]},{"label":["fyear"],"name":[3],"type":["int"],"align":["right"]},{"label":["indfmt"],"name":[4],"type":["chr"],"align":["left"]},{"label":["consol"],"name":[5],"type":["chr"],"align":["left"]},{"label":["popsrc"],"name":[6],"type":["chr"],"align":["left"]},{"label":["datafmt"],"name":[7],"type":["chr"],"align":["left"]},{"label":["curcd"],"name":[8],"type":["chr"],"align":["left"]},{"label":["fyr"],"name":[9],"type":["int"],"align":["right"]},{"label":["at"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["ceq"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["cogs"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["gp"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["lt"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["pstk"],"name":[15],"type":["dbl"],"align":["right"]},{"label":["pstkl"],"name":[16],"type":["dbl"],"align":["right"]},{"label":["pstkrv"],"name":[17],"type":["dbl"],"align":["right"]},{"label":["revt"],"name":[18],"type":["dbl"],"align":["right"]},{"label":["seq"],"name":[19],"type":["dbl"],"align":["right"]},{"label":["txditc"],"name":[20],"type":["dbl"],"align":["right"]},{"label":["upstk"],"name":[21],"type":["dbl"],"align":["right"]},{"label":["xint"],"name":[22],"type":["dbl"],"align":["right"]},{"label":["xintd"],"name":[23],"type":["dbl"],"align":["right"]},{"label":["xsga"],"name":[24],"type":["dbl"],"align":["right"]},{"label":["costat"],"name":[25],"type":["chr"],"align":["left"]},{"label":["fyrc"],"name":[26],"type":["int"],"align":["right"]},{"label":["Date"],"name":[27],"type":["date"],"align":["right"]}],"data":[{"1":"22074","2":"19870630","3":"1987","4":"INDL","5":"C","6":"D","7":"STD","8":"USD","9":"6","10":"149.379","11":"63.262","12":"341.350","13":"79.229","14":"86.117","15":"0.000","16":"0.000","17":"0.000","18":"420.579","19":"63.262","20":"0","21":"NA","22":"12.969","23":"NA","24":"67.039","25":"I","26":"6","27":"1987-06-30"},{"1":"22074","2":"19871231","3":"1987","4":"INDL","5":"C","6":"D","7":"STD","8":"USD","9":"12","10":"1056.500","11":"153.900","12":"NA","13":"NA","14":"902.600","15":"0.000","16":"0.000","17":"0.000","18":"NA","19":"153.900","20":"0","21":"NA","22":"NA","23":"NA","24":"NA","25":"I","26":"12","27":"1987-12-31"},{"1":"67563","2":"19980630","3":"1998","4":"INDL","5":"C","6":"D","7":"STD","8":"USD","9":"6","10":"18116.737","11":"1234.060","12":"716.058","13":"546.775","14":"16878.060","15":"4.617","16":"115.425","17":"4.617","18":"1262.833","19":"1238.677","20":"NA","21":"NA","22":"NA","23":"NA","24":"185.259","25":"I","26":"6","27":"1998-06-30"},{"1":"67563","2":"19981231","3":"1998","4":"INDL","5":"C","6":"D","7":"STD","8":"USD","9":"12","10":"54868.984","11":"1581.778","12":"1859.545","13":"1057.442","14":"52693.768","15":"0.000","16":"0.000","17":"0.000","18":"2916.987","19":"1581.778","20":"NA","21":"NA","22":"NA","23":"NA","24":"393.728","25":"I","26":"12","27":"1998-12-31"},{"1":"75228","2":"19871031","3":"1987","4":"INDL","5":"C","6":"D","7":"STD","8":"USD","9":"10","10":"17.970","11":"7.217","12":"8.045","13":"5.446","14":"10.753","15":"0.000","16":"0.000","17":"0.000","18":"13.491","19":"7.217","20":"0","21":"NA","22":"0.184","23":"NA","24":"4.193","25":"I","26":"10","27":"1987-10-31"},{"1":"75228","2":"19871231","3":"1987","4":"INDL","5":"C","6":"D","7":"STD","8":"USD","9":"12","10":"45.769","11":"33.247","12":"2.044","13":"2.196","14":"12.522","15":"0.000","16":"0.000","17":"0.000","18":"4.240","19":"33.247","20":"0","21":"NA","22":"0.147","23":"NA","24":"3.478","25":"I","26":"12","27":"1987-12-31"},{"1":"85531","2":"19980630","3":"1998","4":"INDL","5":"C","6":"D","7":"STD","8":"USD","9":"6","10":"NA","11":"NA","12":"90.868","13":"16.265","14":"NA","15":"NA","16":"NA","17":"NA","18":"107.133","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"12.021","25":"I","26":"6","27":"1998-06-30"},{"1":"85531","2":"19981231","3":"1998","4":"INDL","5":"C","6":"D","7":"STD","8":"USD","9":"12","10":"91.463","11":"53.380","12":"177.740","13":"31.632","14":"38.083","15":"0.000","16":"0.000","17":"0.000","18":"209.372","19":"53.380","20":"0","21":"NA","22":"NA","23":"NA","24":"18.972","25":"A","26":"12","27":"1998-12-31"},{"1":"88031","2":"19900630","3":"1990","4":"INDL","5":"C","6":"D","7":"STD","8":"USD","9":"6","10":"1.613","11":"1.569","12":"0.089","13":"0.043","14":"0.044","15":"0.000","16":"0.000","17":"0.000","18":"0.132","19":"1.569","20":"0","21":"NA","22":"NA","23":"NA","24":"NA","25":"I","26":"6","27":"1990-06-30"},{"1":"88031","2":"19901231","3":"1990","4":"INDL","5":"C","6":"D","7":"STD","8":"USD","9":"12","10":"7.139","11":"6.924","12":"NA","13":"NA","14":"0.215","15":"0.000","16":"0.000","17":"0.000","18":"NA","19":"6.924","20":"0","21":"NA","22":"NA","23":"NA","24":"NA","25":"A","26":"12","27":"1990-12-31"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["PERMNO"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["datadate"],"name":[2],"type":["int"],"align":["right"]},{"label":["fyear"],"name":[3],"type":["int"],"align":["right"]},{"label":["indfmt"],"name":[4],"type":["chr"],"align":["left"]},{"label":["consol"],"name":[5],"type":["chr"],"align":["left"]},{"label":["popsrc"],"name":[6],"type":["chr"],"align":["left"]},{"label":["datafmt"],"name":[7],"type":["chr"],"align":["left"]},{"label":["curcd"],"name":[8],"type":["chr"],"align":["left"]},{"label":["fyr"],"name":[9],"type":["int"],"align":["right"]},{"label":["aco"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["act"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["ap"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["apc"],"name":[13],"type":["lgl"],"align":["right"]},{"label":["arc"],"name":[14],"type":["lgl"],"align":["right"]},{"label":["artfs"],"name":[15],"type":["lgl"],"align":["right"]},{"label":["at"],"name":[16],"type":["dbl"],"align":["right"]},{"label":["ceq"],"name":[17],"type":["dbl"],"align":["right"]},{"label":["ch"],"name":[18],"type":["dbl"],"align":["right"]},{"label":["che"],"name":[19],"type":["dbl"],"align":["right"]},{"label":["cogs"],"name":[20],"type":["dbl"],"align":["right"]},{"label":["cshpri"],"name":[21],"type":["dbl"],"align":["right"]},{"label":["dlc"],"name":[22],"type":["dbl"],"align":["right"]},{"label":["dp"],"name":[23],"type":["dbl"],"align":["right"]},{"label":["drc"],"name":[24],"type":["dbl"],"align":["right"]},{"label":["drlt"],"name":[25],"type":["dbl"],"align":["right"]},{"label":["gp"],"name":[26],"type":["dbl"],"align":["right"]},{"label":["invfg"],"name":[27],"type":["dbl"],"align":["right"]},{"label":["invt"],"name":[28],"type":["dbl"],"align":["right"]},{"label":["ivst"],"name":[29],"type":["dbl"],"align":["right"]},{"label":["lct"],"name":[30],"type":["dbl"],"align":["right"]},{"label":["lt"],"name":[31],"type":["dbl"],"align":["right"]},{"label":["ppegt"],"name":[32],"type":["dbl"],"align":["right"]},{"label":["ppent"],"name":[33],"type":["dbl"],"align":["right"]},{"label":["pstk"],"name":[34],"type":["dbl"],"align":["right"]},{"label":["pstkl"],"name":[35],"type":["dbl"],"align":["right"]},{"label":["pstkrv"],"name":[36],"type":["dbl"],"align":["right"]},{"label":["rect"],"name":[37],"type":["dbl"],"align":["right"]},{"label":["rectr"],"name":[38],"type":["dbl"],"align":["right"]},{"label":["revt"],"name":[39],"type":["dbl"],"align":["right"]},{"label":["sale"],"name":[40],"type":["dbl"],"align":["right"]},{"label":["seq"],"name":[41],"type":["dbl"],"align":["right"]},{"label":["txditc"],"name":[42],"type":["dbl"],"align":["right"]},{"label":["upstk"],"name":[43],"type":["dbl"],"align":["right"]},{"label":["urect"],"name":[44],"type":["dbl"],"align":["right"]},{"label":["xacc"],"name":[45],"type":["dbl"],"align":["right"]},{"label":["xinst"],"name":[46],"type":["dbl"],"align":["right"]},{"label":["xint"],"name":[47],"type":["dbl"],"align":["right"]},{"label":["xintd"],"name":[48],"type":["dbl"],"align":["right"]},{"label":["xpp"],"name":[49],"type":["dbl"],"align":["right"]},{"label":["xrd"],"name":[50],"type":["dbl"],"align":["right"]},{"label":["xsga"],"name":[51],"type":["dbl"],"align":["right"]},{"label":["costat"],"name":[52],"type":["chr"],"align":["left"]},{"label":["fyrc"],"name":[53],"type":["int"],"align":["right"]},{"label":["Date"],"name":[54],"type":["date"],"align":["right"]}],"data":[{"1":"22074","2":"19870630","3":"1987","4":"INDL","5":"C","6":"D","7":"STD","8":"USD","9":"6","10":"44.777","11":"140.682","12":"0.000","13":"NA","14":"NA","15":"NA","16":"149.379","17":"63.262","18":"0.025","19":"95.701","20":"341.350","21":"13.953","22":"0.000","23":"5.031","24":"NA","25":"NA","26":"79.229","27":"0.000","28":"0.000","29":"95.676","30":"3.724","31":"86.117","32":"0.000","33":"0.000","34":"0.000","35":"0.000","36":"0.000","37":"0.204","38":"0.204","39":"420.579","40":"420.579","41":"63.262","42":"0","43":"NA","44":"NA","45":"3.724","46":"NA","47":"12.969","48":"NA","49":"0.000","50":"0.000","51":"67.039","52":"I","53":"6","54":"1987-06-30"},{"1":"22074","2":"19871231","3":"1987","4":"INDL","5":"C","6":"D","7":"STD","8":"USD","9":"12","10":"10.900","11":"223.200","12":"187.100","13":"NA","14":"NA","15":"NA","16":"1056.500","17":"153.900","18":"NA","19":"3.300","20":"NA","21":"NA","22":"3.000","23":"NA","24":"NA","25":"NA","26":"NA","27":"NA","28":"182.500","29":"NA","30":"310.300","31":"902.600","32":"478.000","33":"460.300","34":"0.000","35":"0.000","36":"0.000","37":"26.500","38":"26.500","39":"NA","40":"NA","41":"153.900","42":"0","43":"NA","44":"NA","45":"120.200","46":"NA","47":"NA","48":"NA","49":"0.000","50":"NA","51":"NA","52":"I","53":"12","54":"1987-12-31"},{"1":"67563","2":"19980630","3":"1998","4":"INDL","5":"C","6":"D","7":"STD","8":"USD","9":"6","10":"NA","11":"NA","12":"10698.265","13":"NA","14":"NA","15":"NA","16":"18116.737","17":"1234.060","18":"311.278","19":"485.478","20":"716.058","21":"52.354","22":"4148.551","23":"74.582","24":"NA","25":"NA","26":"546.775","27":"NA","28":"70.182","29":"174.200","30":"NA","31":"16878.060","32":"NA","33":"146.893","34":"4.617","35":"115.425","36":"4.617","37":"13742.673","38":"NA","39":"1262.833","40":"1262.833","41":"1238.677","42":"NA","43":"NA","44":"NA","45":"NA","46":"NA","47":"NA","48":"NA","49":"0.000","50":"NA","51":"185.259","52":"I","53":"6","54":"1998-06-30"},{"1":"67563","2":"19981231","3":"1998","4":"INDL","5":"C","6":"D","7":"STD","8":"USD","9":"12","10":"NA","11":"NA","12":"24620.066","13":"NA","14":"NA","15":"NA","16":"54868.984","17":"1581.778","18":"854.954","19":"907.625","20":"1859.545","21":"79.557","22":"12394.326","23":"238.298","24":"NA","25":"NA","26":"1057.442","27":"NA","28":"2446.651","29":"52.671","30":"NA","31":"52693.768","32":"NA","33":"336.874","34":"0.000","35":"0.000","36":"0.000","37":"30280.944","38":"NA","39":"2916.987","40":"2916.987","41":"1581.778","42":"NA","43":"NA","44":"NA","45":"NA","46":"NA","47":"NA","48":"NA","49":"NA","50":"NA","51":"393.728","52":"I","53":"12","54":"1998-12-31"},{"1":"75228","2":"19871031","3":"1987","4":"INDL","5":"C","6":"D","7":"STD","8":"USD","9":"10","10":"0.135","11":"8.502","12":"2.200","13":"NA","14":"NA","15":"NA","16":"17.970","17":"7.217","18":"0.790","19":"0.790","20":"8.045","21":"3.936","22":"6.935","23":"0.228","24":"NA","25":"NA","26":"5.446","27":"2.392","28":"3.748","29":"0.000","30":"10.374","31":"10.753","32":"3.769","33":"3.177","34":"0.000","35":"0.000","36":"0.000","37":"3.829","38":"3.738","39":"13.491","40":"13.491","41":"7.217","42":"0","43":"NA","44":"NA","45":"1.170","46":"NA","47":"0.184","48":"NA","49":"0.135","50":"NA","51":"4.193","52":"I","53":"10","54":"1987-10-31"},{"1":"75228","2":"19871231","3":"1987","4":"INDL","5":"C","6":"D","7":"STD","8":"USD","9":"12","10":"1.840","11":"14.113","12":"3.342","13":"NA","14":"NA","15":"NA","16":"45.769","17":"33.247","18":"3.617","19":"3.617","20":"2.044","21":"8.385","22":"7.657","23":"0.223","24":"NA","25":"NA","26":"2.196","27":"2.668","28":"4.026","29":"0.000","30":"12.075","31":"12.522","32":"8.642","33":"8.225","34":"0.000","35":"0.000","36":"0.000","37":"4.630","38":"4.630","39":"4.240","40":"4.240","41":"33.247","42":"0","43":"NA","44":"NA","45":"NA","46":"NA","47":"0.147","48":"NA","49":"0.000","50":"0.864","51":"3.478","52":"I","53":"12","54":"1987-12-31"},{"1":"85531","2":"19980630","3":"1998","4":"INDL","5":"C","6":"D","7":"STD","8":"USD","9":"6","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA","16":"NA","17":"NA","18":"NA","19":"NA","20":"90.868","21":"3.797","22":"NA","23":"NA","24":"NA","25":"NA","26":"16.265","27":"NA","28":"NA","29":"NA","30":"NA","31":"NA","32":"NA","33":"NA","34":"NA","35":"NA","36":"NA","37":"NA","38":"NA","39":"107.133","40":"107.133","41":"NA","42":"NA","43":"NA","44":"NA","45":"NA","46":"NA","47":"NA","48":"NA","49":"NA","50":"NA","51":"12.021","52":"I","53":"6","54":"1998-06-30"},{"1":"85531","2":"19981231","3":"1998","4":"INDL","5":"C","6":"D","7":"STD","8":"USD","9":"12","10":"6.099","11":"42.083","12":"1.394","13":"NA","14":"NA","15":"NA","16":"91.463","17":"53.380","18":"20.439","19":"20.439","20":"177.740","21":"11.172","22":"0.067","23":"3.923","24":"NA","25":"NA","26":"31.632","27":"0.000","28":"0.000","29":"0.000","30":"30.043","31":"38.083","32":"41.030","33":"31.482","34":"0.000","35":"0.000","36":"0.000","37":"15.545","38":"13.302","39":"209.372","40":"209.372","41":"53.380","42":"0","43":"NA","44":"NA","45":"20.365","46":"NA","47":"NA","48":"NA","49":"0.000","50":"NA","51":"18.972","52":"A","53":"12","54":"1998-12-31"},{"1":"88031","2":"19900630","3":"1990","4":"INDL","5":"C","6":"D","7":"STD","8":"USD","9":"6","10":"0.000","11":"1.571","12":"0.000","13":"NA","14":"NA","15":"NA","16":"1.613","17":"1.569","18":"NA","19":"1.571","20":"0.089","21":"1.257","22":"0.000","23":"0.000","24":"NA","25":"NA","26":"0.043","27":"0.000","28":"0.000","29":"NA","30":"0.004","31":"0.044","32":"0.000","33":"0.000","34":"0.000","35":"0.000","36":"0.000","37":"0.000","38":"0.000","39":"0.132","40":"0.132","41":"1.569","42":"0","43":"NA","44":"NA","45":"0.004","46":"NA","47":"NA","48":"NA","49":"0.000","50":"NA","51":"NA","52":"I","53":"6","54":"1990-06-30"},{"1":"88031","2":"19901231","3":"1990","4":"INDL","5":"C","6":"D","7":"STD","8":"USD","9":"12","10":"0.000","11":"7.134","12":"0.072","13":"NA","14":"NA","15":"NA","16":"7.139","17":"6.924","18":"7.116","19":"7.116","20":"NA","21":"NA","22":"0.000","23":"NA","24":"NA","25":"NA","26":"NA","27":"0.000","28":"0.000","29":"0.000","30":"0.178","31":"0.215","32":"0.000","33":"0.000","34":"0.000","35":"0.000","36":"0.000","37":"0.018","38":"0.000","39":"NA","40":"NA","41":"6.924","42":"0","43":"NA","44":"NA","45":"0.106","46":"NA","47":"NA","48":"NA","49":"0.000","50":"NA","51":"NA","52":"A","53":"12","54":"1990-12-31"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
@@ -484,42 +494,131 @@ summary(comp[,c("BE", "D1.BE")])
 ```
 ##        BE               D1.BE          
 ##  Min.   :-96620.0   Min.   :-99618.00  
-##  1st Qu.:    13.6   1st Qu.:    -1.01  
+##  1st Qu.:    13.6   1st Qu.:    -1.02  
 ##  Median :    63.3   Median :     2.92  
 ##  Mean   :  1036.6   Mean   :    67.66  
 ##  3rd Qu.:   309.8   3rd Qu.:    26.02  
 ##  Max.   :359960.0   Max.   :223210.69  
-##  NA's   :19539      NA's   :43665
+##  NA's   :19540      NA's   :43668
 ```
 
 ## Operating Profit, $OP$
 
+Compustat has $REVT$ and $SALE$ values.
 
 ```r
-exp.OK = !is.na(comp$cogs) | !is.na(!comp$xsga) | !is.na(comp$xint)
+summary(comp %>% select(revt, sale))
+```
+
+```
+##       revt               sale         
+##  Min.   :-15009.3   Min.   :-15009.3  
+##  1st Qu.:    25.5   1st Qu.:    25.5  
+##  Median :   114.2   Median :   114.2  
+##  Mean   :  1762.0   Mean   :  1762.0  
+##  3rd Qu.:   571.3   3rd Qu.:   571.3  
+##  Max.   :483521.0   Max.   :483521.0  
+##  NA's   :19880      NA's   :19880
+```
+
+Whichever one we use the expenses check is the same.
+
+
+```r
+expenses.OK = !is.na(comp$cogs) | !is.na(!comp$xsga) | !is.na(comp$xint)
 comp$cogs[is.na(comp$cogs)] = 0
 comp$xsga[is.na(comp$xsga)] = 0
 comp$xint[is.na(comp$xint)] = 0
 
-comp$op.OK = !is.na(comp$revt) & exp.OK
-comp$OP.OK = (comp$BE > 0) & comp$op.OK
-comp$OP.OK[is.na(comp$OP.OK)] = FALSE
-comp$OP = (comp$revt - comp$cogs - comp$xsga - comp$xint)/comp$BE
-summary(comp$OP)
+comp$op.revt.OK = !is.na(comp$revt) & expenses.OK
+comp$op.sale.OK = !is.na(comp$sale) & expenses.OK
+
+comp$OP.revt.OK = (comp$BE > 0) & comp$op.revt.OK
+comp$OP.sale.OK = (comp$BE > 0) & comp$op.sale.OK
+
+comp$OP.revt.OK[is.na(comp$OP.revt.OK)] = FALSE
+comp$OP.sale.OK[is.na(comp$OP.sale.OK)] = FALSE
+
+comp$OP.revt = (comp$revt - comp$cogs - comp$xsga - comp$xint)/comp$BE
+comp$OP.sale = (comp$sale - comp$cogs - comp$xsga - comp$xint)/comp$BE
+
+summary(comp %>% select(OP.revt, OP.sale))
 ```
 
 ```
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-##    -Inf   0.057   0.196     NaN   0.315     Inf   20722
+##     OP.revt         OP.sale     
+##  Min.   : -Inf   Min.   : -Inf  
+##  1st Qu.:0.057   1st Qu.:0.057  
+##  Median :0.196   Median :0.196  
+##  Mean   :  NaN   Mean   :  NaN  
+##  3rd Qu.:0.315   3rd Qu.:0.315  
+##  Max.   :  Inf   Max.   :  Inf  
+##  NA's   :20724   NA's   :20724
 ```
 
 ```r
-summary(comp$OP[comp$OP.OK])
+summary(comp$OP.revt[comp$OP.revt.OK])
 ```
 
 ```
 ##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
 ## -1941.000     0.062     0.196     0.132     0.310  9424.000
+```
+
+```r
+summary(comp$OP.sale[comp$OP.sale.OK])
+```
+
+```
+##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+## -1941.000     0.062     0.196     0.132     0.310  9424.000
+```
+
+```r
+comp %>% select(revt, OP.revt, sale, OP.sale) %>% filter(revt!=sale) %>% head %>% round(3)
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["revt"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["OP.revt"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["sale"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["OP.sale"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+They seem to be the same.
+
+
+```r
+comp$op.OK = comp$op.revt.OK
+comp$OP.OK = comp$OP.revt.OK
+comp$OP = comp$OP.revt
+```
+
+### RnD
+
+
+```r
+summary(comp$xrd)
+```
+
+```
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max.     NA's 
+##    -0.65     0.10     2.30    68.56    15.64 16080.00   162030
+```
+
+```r
+comp$xrd[is.na(comp$xrd)] = 0
+comp$OP.2 = (comp$revt - comp$cogs - comp$xsga - comp$xint + comp$xrd)/comp$BE
+summary(comp %>% filter(OP.OK) %>% select(OP, OP.2))
+```
+
+```
+##        OP                 OP.2         
+##  Min.   :-1941.333   Min.   :-945.333  
+##  1st Qu.:    0.062   1st Qu.:   0.092  
+##  Median :    0.196   Median :   0.223  
+##  Mean   :    0.132   Mean   :   0.255  
+##  3rd Qu.:    0.310   3rd Qu.:   0.346  
+##  Max.   : 9423.750   Max.   :9423.750
 ```
 
 ## Gross Profit, $GP$
@@ -532,18 +631,220 @@ summary(comp$GP)
 
 ```
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-##    -Inf   0.097   0.266     NaN   0.460     Inf   20234
+##    -Inf   0.097   0.266     NaN   0.460     Inf   20236
 ```
 
 ```r
 ix = is.na(comp$GP)
-comp$GP[ix] = comp$revt[ix] - comp$cogs[ix]
+comp$GP[ix] = (comp$revt[ix] - comp$cogs[ix]) / comp$at[ix]
+comp$GP[is.infinite(comp$GP)] = NA
 summary(comp$GP)
 ```
 
 ```
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max.     NA's 
+## -134.200    0.097    0.266    0.308    0.460  227.400    20006
+```
+
+## Cash Profit, $CP$
+
+
+```r
+summary(comp %>% select(rect, xpp, ap, invt, drc, xacc))
+```
+
+```
+##       rect                xpp                 ap           
+##  Min.   :      0.0   Min.   :    0.00   Min.   :      0.0  
+##  1st Qu.:      3.9   1st Qu.:    0.00   1st Qu.:      1.9  
+##  Median :     21.4   Median :    0.02   Median :      9.5  
+##  Mean   :   1678.8   Mean   :   14.81   Mean   :   1603.4  
+##  3rd Qu.:    142.3   3rd Qu.:    1.06   3rd Qu.:     76.1  
+##  Max.   :2080955.3   Max.   :20091.00   Max.   :1974374.5  
+##  NA's   :26245       NA's   :129342     NA's   :31584      
+##       invt               drc                xacc         
+##  Min.   :    -2.7   Min.   :    0.00   Min.   :  -20.27  
+##  1st Qu.:     0.3   1st Qu.:    0.00   1st Qu.:    1.09  
+##  Median :     6.9   Median :    0.00   Median :    5.63  
+##  Mean   :   307.3   Mean   :   50.83   Mean   :  110.61  
+##  3rd Qu.:    47.3   3rd Qu.:    4.31   3rd Qu.:   31.85  
+##  Max.   :472266.2   Max.   :27468.00   Max.   :65614.00  
+##  NA's   :26346      NA's   :217718     NA's   :99451
+```
+
+```r
+apply(
+    comp %>% select(rect, xpp, ap, invt, drc, xacc),
+    2,
+    function(x) sum(is.na(x)/length(x)*100)
+) %>% round(2)
+```
+
+```
+##  rect   xpp    ap  invt   drc  xacc 
+##  9.14 45.05 11.00  9.18 75.84 34.64
+```
+
+Let's assume for now that firms don't need all of these values.
+We'll set everything that is missing, except $revt$ and $ap$, to 0.
+This essentially requires firms to have both Receivables and Payables to consider their accruals.
+
+
+```r
+comp$xpp[is.na(comp$xpp)] = 0
+comp$invt[is.na(comp$invt)] = 0
+comp$drc[is.na(comp$drc)] = 0
+comp$xacc[is.na(comp$xacc)] = 0
+```
+
+
+```r
+comp = comp %>% group_by(PERMNO) %>% mutate(
+    D1.rect=rect-lag(rect), D1.xpp=xpp-lag(xpp),
+    D1.ap=ap-lag(ap), D1.invt=invt-lag(invt),
+    D1.drc=drc-lag(drc), D1.xacc=xacc-lag(xacc)
+) %>% as.data.frame
+```
+
+
+```r
+summary(comp %>% select(D1.rect, D1.xpp, D1.ap, D1.invt, D1.drc, D1.xacc))
+```
+
+```
+##     D1.rect              D1.xpp               D1.ap          
+##  Min.   :-600169.0   Min.   :-10503.170   Min.   :-662237.4  
+##  1st Qu.:     -0.6   1st Qu.:     0.000   1st Qu.:     -0.5  
+##  Median :      0.9   Median :     0.000   Median :      0.4  
+##  Mean   :    100.2   Mean   :     0.373   Mean   :    108.9  
+##  3rd Qu.:     10.5   3rd Qu.:     0.000   3rd Qu.:      5.8  
+##  Max.   : 709139.0   Max.   :  6937.000   Max.   : 580318.3  
+##  NA's   :50375       NA's   :25137        NA's   :55590      
+##     D1.invt              D1.drc             D1.xacc         
+##  Min.   :-379695.5   Min.   :-5280.000   Min.   :-65614.00  
+##  1st Qu.:     -0.1   1st Qu.:    0.000   1st Qu.:     0.00  
+##  Median :      0.0   Median :    0.000   Median :     0.00  
+##  Mean   :     16.0   Mean   :    1.647   Mean   :     4.26  
+##  3rd Qu.:      2.5   3rd Qu.:    0.000   3rd Qu.:     0.86  
+##  Max.   : 224230.5   Max.   :12323.000   Max.   : 44511.00  
+##  NA's   :25137       NA's   :25137       NA's   :25137
+```
+
+```r
+apply(
+    comp %>% select(D1.rect, D1.xpp, D1.ap, D1.invt, D1.drc, D1.xacc),
+    2,
+    function(x) sum(is.na(x)/length(x)*100)
+) %>% round(2)
+```
+
+```
+## D1.rect  D1.xpp   D1.ap D1.invt  D1.drc D1.xacc 
+##   17.55    8.76   19.36    8.76    8.76    8.76
+```
+
+
+```r
+comp = comp %>% mutate(OP.AccFama=D1.rect+D1.xpp-D1.ap-D1.invt-D1.drc-D1.xacc)
+comp = comp %>% mutate(OP.Acc=-D1.rect-D1.invt-D1.xpp+D1.drc+D1.ap+D1.xacc)
+summary(comp %>% select(OP.AccFama, OP.Acc))
+```
+
+```
+##    OP.AccFama            OP.Acc         
+##  Min.   :-702558.3   Min.   :-403256.0  
+##  1st Qu.:     -8.2   1st Qu.:     -7.9  
+##  Median :     -0.3   Median :     -0.4  
+##  Mean   :    -32.0   Mean   :     -4.0  
+##  3rd Qu.:      3.4   3rd Qu.:      3.5  
+##  Max.   : 394654.8   Max.   : 704184.1  
+##  NA's   :61215       NA's   :61215
+```
+
+Now for years with missing accruals we don't want this to alter the non-missing operating profits we have.
+
+
+```r
+comp$OP.Acc[is.na(comp$OP.Acc)] = 0
+summary(comp$OP.Acc)
+```
+
+```
+##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+## -403300.0      -4.0       0.0      -3.1       1.3  704200.0
+```
+
+
+```r
+comp$CP = (comp$revt-comp$cogs-comp$xsga-comp$xint+comp$xrd+comp$OP.Acc)/comp$BE
+summary(comp %>% filter(OP.OK) %>% select(OP, OP.2, GP, CP))
+```
+
+```
+##        OP                 OP.2                GP           
+##  Min.   :-1941.333   Min.   :-945.333   Min.   :-31.58693  
+##  1st Qu.:    0.062   1st Qu.:   0.092   1st Qu.:  0.09808  
+##  Median :    0.196   Median :   0.223   Median :  0.26675  
+##  Mean   :    0.132   Mean   :   0.255   Mean   :  0.31175  
+##  3rd Qu.:    0.310   3rd Qu.:   0.346   3rd Qu.:  0.45893  
+##  Max.   : 9423.750   Max.   :9423.750   Max.   :227.44910  
+##                                         NA's   :12         
+##        CP           
+##  Min.   :-1270.000  
+##  1st Qu.:    0.042  
+##  Median :    0.200  
+##  Mean   :    0.283  
+##  3rd Qu.:    0.352  
+##  Max.   : 8683.125  
+## 
+```
+
+## Accruals, $Ac$
+
+
+```r
+summary(comp %>% select(act, ch, lct, dlc))
+```
+
+```
+##       act                  ch                lct          
+##  Min.   :     0.00   Min.   :  -279.1   Min.   :     0.0  
+##  1st Qu.:    13.50   1st Qu.:     1.3   1st Qu.:     5.7  
+##  Median :    54.11   Median :     7.7   Median :    23.6  
+##  Mean   :   649.02   Mean   :   247.7   Mean   :   495.2  
+##  3rd Qu.:   237.83   3rd Qu.:    46.0   3rd Qu.:   120.9  
+##  Max.   :161978.00   Max.   :380619.4   Max.   :329795.0  
+##  NA's   :62161       NA's   :50779      NA's   :58554     
+##       dlc          
+##  Min.   : -3753.5  
+##  1st Qu.:     0.1  
+##  Median :     2.4  
+##  Mean   :   549.8  
+##  3rd Qu.:    21.2  
+##  Max.   :575319.4  
+##  NA's   :21507
+```
+
+We will require that firms have both current assets and liabilities.
+
+
+```r
+comp$ch[is.na(comp$ch)] = 0
+comp$dlc[is.na(comp$dlc)] = 0
+
+comp$WC = comp$act - comp$ch - comp$lct + comp$dlc
+comp = comp %>% group_by(PERMNO) %>% mutate(D1.WC=WC-lag(WC)) %>% as.data.frame
+
+comp$Acc = comp$D1.WC / comp$BE
+
+comp$Acc[is.infinite(comp$Acc)] = 0
+
+summary(comp$Acc[comp$BE>0])
+```
+
+```
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-##    -Inf   0.097   0.266     NaN   0.460     Inf   19878
+## -713.50   -0.06    0.02   -0.03    0.11 2317.00   82093
 ```
 
 ## Investment, $INV$
@@ -558,7 +859,23 @@ summary(comp$INV)
 
 ```
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-##   -1.00   -0.03    0.07    0.22    0.19 7898.00   42927
+##   -1.00   -0.03    0.07    0.22    0.19 7898.00   42930
+```
+
+Makes more sense to define investment as the change in PPE plus depreciation.
+
+
+```r
+comp = comp %>% group_by(PERMNO) %>%
+    mutate(INV.ppe=(ppent-lag(ppent)+dp)/lag(ppent)) %>%
+    as.data.frame
+comp$INV.ppe[(comp$INV.ppe==Inf) | (comp$INV.ppe==-Inf)] = NA
+summary(comp$INV.ppe)
+```
+
+```
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max.     NA's 
+##    -1.00     0.11     0.24     1.77     0.50 74240.00    60234
 ```
 
 ## Missing Values
@@ -736,7 +1053,7 @@ df %>% group_by(BM.B, Date) %>% summarize(N=n()) %>% group_by(BM.B) %>%
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["BM.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["avg.N"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"611.34762"},{"1":"2","2":"405.57619"},{"1":"3","2":"358.21905"},{"1":"4","2":"338.89841"},{"1":"5","2":"314.99683"},{"1":"6","2":"314.39048"},{"1":"7","2":"313.62540"},{"1":"8","2":"331.68413"},{"1":"9","2":"367.40317"},{"1":"10","2":"512.98730"},{"1":"NA","2":"27.38312"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["BM.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["avg.N"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"611.34762"},{"1":"2","2":"405.57619"},{"1":"3","2":"358.21905"},{"1":"4","2":"338.89841"},{"1":"5","2":"314.99683"},{"1":"6","2":"314.40000"},{"1":"7","2":"313.61587"},{"1":"8","2":"331.68413"},{"1":"9","2":"367.40317"},{"1":"10","2":"512.98730"},{"1":"NA","2":"27.38312"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
@@ -777,7 +1094,7 @@ df %>% group_by(BM.B, Date) %>% summarise(avg.ME=mean(ME, na.rm=TRUE)) %>%
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["BM.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["avg.ME"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"2912.77"},{"1":"2","2":"2747.47"},{"1":"3","2":"2262.03"},{"1":"4","2":"1917.49"},{"1":"5","2":"1511.77"},{"1":"6","2":"1421.29"},{"1":"7","2":"1070.03"},{"1":"8","2":"989.19"},{"1":"9","2":"829.94"},{"1":"10","2":"538.97"},{"1":"NA","2":"86.83"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["BM.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["avg.ME"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"2912.77"},{"1":"2","2":"2747.47"},{"1":"3","2":"2262.03"},{"1":"4","2":"1917.49"},{"1":"5","2":"1511.77"},{"1":"6","2":"1421.14"},{"1":"7","2":"1070.20"},{"1":"8","2":"989.19"},{"1":"9","2":"829.94"},{"1":"10","2":"538.97"},{"1":"NA","2":"86.83"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
@@ -791,7 +1108,7 @@ df %>% group_by(BM.B, Date) %>% summarise(avg.Size=mean(Size, na.rm=TRUE)) %>%
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["BM.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["avg.Size"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"2822.42"},{"1":"2","2":"2637.25"},{"1":"3","2":"2182.41"},{"1":"4","2":"1851.00"},{"1":"5","2":"1441.03"},{"1":"6","2":"1380.53"},{"1":"7","2":"1031.46"},{"1":"8","2":"952.41"},{"1":"9","2":"798.66"},{"1":"10","2":"510.55"},{"1":"NA","2":"73.10"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["BM.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["avg.Size"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"2822.42"},{"1":"2","2":"2637.25"},{"1":"3","2":"2182.41"},{"1":"4","2":"1851.00"},{"1":"5","2":"1441.03"},{"1":"6","2":"1380.39"},{"1":"7","2":"1031.62"},{"1":"8","2":"952.41"},{"1":"9","2":"798.66"},{"1":"10","2":"510.55"},{"1":"NA","2":"73.10"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
@@ -872,9 +1189,9 @@ rbind(sapply(results, mean), sapply(results, se), sapply(results, t.stat))
 
 ```
 ##      (Intercept)       L1.BM L1.BMC_L1.BM       diff
-## [1,]  0.04856159  0.97066786    0.8661963 0.10447156
-## [2,]  0.04379398  0.06168039    0.0938937 0.06856958
-## [3,]  1.10886447 15.73705791    9.2252863 1.52358478
+## [1,]  0.04856730  0.97066528    0.8661930 0.10447230
+## [2,]  0.04379381  0.06168036    0.0938941 0.06856986
+## [3,]  1.10899914 15.73702434    9.2252117 1.52358931
 ```
 
 
@@ -940,10 +1257,10 @@ rbind(sapply(results, mean), sapply(results, se), sapply(results, t.stat))
 ```
 
 ```
-##       (Intercept)    L1.Prior
-## [1,] 0.0007513482  0.18009355
-## [2,] 0.0060705228  0.01173963
-## [3,] 0.1237699282 15.34065448
+##       (Intercept)   L1.Prior
+## [1,] 0.0007512468  0.1800933
+## [2,] 0.0060705153  0.0117396
+## [3,] 0.1237533899 15.3406703
 ```
 
 ## $BM_C$ (Annual, Current)
@@ -1220,7 +1537,7 @@ df %>% group_by(OP.B, Date) %>% summarize(N=n()) %>% group_by(OP.B) %>%
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["OP.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["avg.N"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"970.95873"},{"1":"2","2":"419.43968"},{"1":"3","2":"328.84444"},{"1":"4","2":"316.16508"},{"1":"5","2":"314.91905"},{"1":"6","2":"317.07937"},{"1":"7","2":"298.27937"},{"1":"8","2":"289.59841"},{"1":"9","2":"292.37460"},{"1":"10","2":"323.49841"},{"1":"NA","2":"23.95506"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["OP.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["avg.N"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"970.95873"},{"1":"2","2":"419.43968"},{"1":"3","2":"328.86349"},{"1":"4","2":"316.15556"},{"1":"5","2":"314.90952"},{"1":"6","2":"317.05238"},{"1":"7","2":"298.30635"},{"1":"8","2":"289.59841"},{"1":"9","2":"292.37460"},{"1":"10","2":"323.49841"},{"1":"NA","2":"23.95506"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
@@ -1307,6 +1624,81 @@ df %>% group_by(OP.B, Date) %>% summarise(avg.INV=mean(INV, na.rm=TRUE)) %>%
   </script>
 </div>
 
+## $OP.2$
+
+* Annual rebalance
+
+
+```r
+df = combine.sources(crsp, comp)
+df = df %>% filter(OP.OK, !is.na(Size))
+```
+
+### $OP.2$ Decile Breakpoints
+
+
+```r
+quantiles = 1:10/10
+
+nyse = df %>% filter(Exchange=="NYSE", Month==7) %>% select(Period, PERMNO, OP.2)
+
+breakpoints = nyse %>% arrange(Period, OP.2) %>% group_by(Period) %>% summarize(
+    D10=OP.2[.1*n()], D20=OP.2[.2*n()],
+    D30=OP.2[.3*n()], D40=OP.2[.4*n()],
+    D50=OP.2[.5*n()], D60=OP.2[.6*n()],
+    D70=OP.2[.7*n()], D80=OP.2[.8*n()],
+    D90=OP.2[.9*n()], D100=OP.2[n()]) %>% as.data.frame
+write.csv(breakpoints, "C:/Data/Thesis/OP_RnD_Decile_Breakpoints.csv")
+
+breakpoints$Period = breakpoints$Period + 1
+
+breakpoints[, c("PERMNO", "OP.2")] = NULL
+
+df = left_join(df, breakpoints, by=c("Period"))
+```
+
+
+```r
+df = assign.bkts(df, "OP.2", quantiles)
+```
+
+
+```r
+df %>% group_by(OP.2.B, Date) %>% summarize(N=n()) %>% group_by(OP.2.B) %>%
+    summarise(avg.N=mean(N))
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["OP.2.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["avg.N"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"860.39048"},{"1":"2","2":"405.51111"},{"1":"3","2":"328.80476"},{"1":"4","2":"333.99841"},{"1":"5","2":"331.84603"},{"1":"6","2":"326.82222"},{"1":"7","2":"313.13651"},{"1":"8","2":"306.40317"},{"1":"9","2":"316.33651"},{"1":"10","2":"347.59048"},{"1":"NA","2":"23.79487"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+
+```r
+# df = ri.adj.Size(df)
+
+df = df %>% group_by(OP.2.B, Date) %>% mutate(
+    adj.bkt.Size=sum(adj.Size, na.rm=TRUE)
+) %>% as.data.frame
+df$wt.ri = df$ri * df$adj.Size / df$adj.bkt.Size
+```
+
+### Returns
+
+
+```r
+decile.returns = df %>%
+    dcast(Date ~ OP.2.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
+write.csv(decile.returns, "C:/Data/Thesis/OP_RnD_Decile_Returns.csv")
+round(colMeans(decile.returns %>% select(-Date)) * 100, 2)
+```
+
+```
+##    1    2    3    4    5    6    7    8    9   10   NA 
+## 0.54 0.76 0.81 0.82 0.92 0.91 0.91 0.94 0.98 0.97 1.56
+```
+
 ## $GP$
 
 * Annual rebalance
@@ -1353,7 +1745,7 @@ df %>% group_by(GP.B, Date) %>% summarize(N=n()) %>% group_by(GP.B) %>%
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["GP.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["avg.N"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"688.37619"},{"1":"2","2":"300.24286"},{"1":"3","2":"277.24603"},{"1":"4","2":"309.23968"},{"1":"5","2":"336.13810"},{"1":"6","2":"342.24603"},{"1":"7","2":"380.61429"},{"1":"8","2":"403.84921"},{"1":"9","2":"449.83333"},{"1":"10","2":"497.57460"},{"1":"NA","2":"24.39347"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["GP.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["avg.N"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"688.70952"},{"1":"2","2":"299.91270"},{"1":"3","2":"276.88413"},{"1":"4","2":"309.33968"},{"1":"5","2":"336.20476"},{"1":"6","2":"341.92222"},{"1":"7","2":"380.61587"},{"1":"8","2":"403.11429"},{"1":"9","2":"449.77302"},{"1":"10","2":"497.65873"},{"1":"NA","2":"25.33677"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
@@ -1379,7 +1771,7 @@ round(colMeans(decile.returns %>% select(-Date)) * 100, 2)
 
 ```
 ##    1    2    3    4    5    6    7    8    9   10   NA 
-## 0.80 0.82 0.84 0.79 0.88 0.96 0.77 0.97 0.97 1.07 1.03
+## 0.80 0.82 0.84 0.79 0.87 0.94 0.79 0.99 0.94 1.08 1.32
 ```
 
 ### $BM$
@@ -1405,7 +1797,7 @@ mean(x$diff, na.rm=TRUE)
 ```
 
 ```
-## [1] 0.3134514
+## [1] 0.3128316
 ```
 
 ```r
@@ -1413,7 +1805,7 @@ se(x$diff)
 ```
 
 ```
-## [1] 0.02726606
+## [1] 0.02731812
 ```
 
 ### Monthly $BM$
@@ -1426,30 +1818,239 @@ df %>% group_by(GP.B, Date) %>% summarise(avg.BMM=mean(BMM, na.rm=TRUE)) %>%
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["GP.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["avg.BMM"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"1.02"},{"1":"2","2":"1.12"},{"1":"3","2":"1.12"},{"1":"4","2":"1.07"},{"1":"5","2":"0.96"},{"1":"6","2":"0.90"},{"1":"7","2":"0.82"},{"1":"8","2":"0.76"},{"1":"9","2":"0.68"},{"1":"10","2":"0.63"},{"1":"NA","2":"NaN"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["GP.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["avg.BMM"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"1.02"},{"1":"2","2":"1.12"},{"1":"3","2":"1.12"},{"1":"4","2":"1.07"},{"1":"5","2":"0.96"},{"1":"6","2":"0.91"},{"1":"7","2":"0.82"},{"1":"8","2":"0.76"},{"1":"9","2":"0.68"},{"1":"10","2":"0.63"},{"1":"NA","2":"NaN"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
 ## $CP$
 
-* Annual rebalance?
+* Annual rebalance
 
 
 ```r
 df = combine.sources(crsp, comp)
+df = df %>% filter(OP.OK, !is.na(Size))
+```
+
+### $CP$ Decile Breakpoints
+
+
+```r
+quantiles = 1:10/10
+
+nyse = df %>% filter(Exchange=="NYSE", Month==7) %>% select(Period, PERMNO, CP)
+
+breakpoints = nyse %>% arrange(Period, CP) %>% group_by(Period) %>% summarize(
+    D10=CP[.1*n()], D20=CP[.2*n()],
+    D30=CP[.3*n()], D40=CP[.4*n()],
+    D50=CP[.5*n()], D60=CP[.6*n()],
+    D70=CP[.7*n()], D80=CP[.8*n()],
+    D90=CP[.9*n()], D100=CP[n()]) %>% as.data.frame
+write.csv(breakpoints, "C:/Data/Thesis/CP_Decile_Breakpoints.csv")
+
+breakpoints$Period = breakpoints$Period + 1
+
+breakpoints[, c("PERMNO", "CP")] = NULL
+
+df = left_join(df, breakpoints, by=c("Period"))
+```
+
+
+```r
+df = assign.bkts(df, "CP", quantiles)
+```
+
+
+```r
+df %>% group_by(CP.B, Date) %>% summarize(N=n()) %>% group_by(CP.B) %>%
+    summarise(avg.N=mean(N))
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["CP.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["avg.N"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"827.13810"},{"1":"2","2":"454.92063"},{"1":"3","2":"345.31905"},{"1":"4","2":"303.11905"},{"1":"5","2":"302.30476"},{"1":"6","2":"305.77143"},{"1":"7","2":"305.44762"},{"1":"8","2":"311.27619"},{"1":"9","2":"326.83333"},{"1":"10","2":"388.91746"},{"1":"NA","2":"24.49714"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+
+```r
+# df = ri.adj.Size(df)
+
+df = df %>% group_by(CP.B, Date) %>% mutate(
+    adj.bkt.Size=sum(adj.Size, na.rm=TRUE)
+) %>% as.data.frame
+df$wt.ri = df$ri * df$adj.Size / df$adj.bkt.Size
 ```
 
 ### Returns
+
+
+```r
+decile.returns = df %>%
+    dcast(Date ~ CP.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
+write.csv(decile.returns, "C:/Data/Thesis/CP_Decile_Returns.csv")
+round(colMeans(decile.returns %>% select(-Date)) * 100, 2)
+```
+
+```
+##    1    2    3    4    5    6    7    8    9   10   NA 
+## 0.68 0.69 0.77 0.81 0.88 0.85 0.90 0.95 1.01 1.05 1.43
+```
 
 ## $INV$
 
 * Annual rebalance
 
-* Annual rebalance
+### Assets
 
 
 ```r
 df = combine.sources(crsp, comp)
+df = df %>% filter(!is.na(INV), !is.na(Size))
+```
+
+### INV Decile Breakpoints
+
+
+```r
+quantiles = 1:10/10
+
+nyse = df %>% filter(Exchange=="NYSE", Month==7) %>% select(Period, PERMNO, INV)
+
+breakpoints = nyse %>% arrange(Period, INV) %>% group_by(Period) %>% summarize(
+    D10=INV[.1*n()], D20=INV[.2*n()],
+    D30=INV[.3*n()], D40=INV[.4*n()],
+    D50=INV[.5*n()], D60=INV[.6*n()],
+    D70=INV[.7*n()], D80=INV[.8*n()],
+    D90=INV[.9*n()], D100=INV[n()]) %>% as.data.frame
+write.csv(breakpoints, "C:/Data/Thesis/INV_Assets_Decile_Breakpoints.csv")
+
+breakpoints$Period = breakpoints$Period + 1
+
+breakpoints[, c("PERMNO", "INV")] = NULL
+
+df = left_join(df, breakpoints, by=c("Period"))
+```
+
+
+```r
+df = assign.bkts(df, "INV", quantiles)
+```
+
+
+```r
+df %>% group_by(INV.B, Date) %>% summarize(N=n()) %>% group_by(INV.B) %>%
+    summarise(avg.N=mean(N))
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["INV.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["avg.N"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"589.37460"},{"1":"2","2":"343.32063"},{"1":"3","2":"292.83492"},{"1":"4","2":"284.89524"},{"1":"5","2":"279.06984"},{"1":"6","2":"294.33968"},{"1":"7","2":"301.65079"},{"1":"8","2":"332.08730"},{"1":"9","2":"384.62698"},{"1":"10","2":"547.25397"},{"1":"NA","2":"22.89604"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+
+```r
+# df = ri.adj.Size(df)
+
+df = df %>% group_by(INV.B, Date) %>% mutate(
+    adj.bkt.Size=sum(adj.Size, na.rm=TRUE)
+) %>% as.data.frame
+df$wt.ri = df$ri * df$adj.Size / df$adj.bkt.Size
+```
+
+### Returns
+
+
+```r
+decile.returns = df %>%
+    dcast(Date ~ INV.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
+write.csv(decile.returns, "C:/Data/Thesis/INV_Assets_Decile_Returns.csv")
+round(colMeans(decile.returns %>% select(-Date)) * 100, 2)
+```
+
+```
+##     1     2     3     4     5     6     7     8     9    10    NA 
+##  1.11  1.10  1.07  0.95  0.96  0.89  0.90  0.80  0.86  0.77 -0.45
+```
+
+### Assets
+
+
+```r
+df = combine.sources(crsp, comp)
+df = df %>% filter(!is.na(INV.ppe), !is.na(Size))
+```
+
+### INV Decile Breakpoints
+
+
+```r
+quantiles = 1:10/10
+
+nyse = df %>% filter(Exchange=="NYSE", Month==7) %>% select(Period, PERMNO, INV.ppe)
+
+breakpoints = nyse %>% arrange(Period, INV.ppe) %>% group_by(Period) %>% summarize(
+    D10=INV.ppe[.1*n()], D20=INV.ppe[.2*n()],
+    D30=INV.ppe[.3*n()], D40=INV.ppe[.4*n()],
+    D50=INV.ppe[.5*n()], D60=INV.ppe[.6*n()],
+    D70=INV.ppe[.7*n()], D80=INV.ppe[.8*n()],
+    D90=INV.ppe[.9*n()], D100=INV.ppe[n()]) %>% as.data.frame
+write.csv(breakpoints, "C:/Data/Thesis/INV_PPE_Decile_Breakpoints.csv")
+
+breakpoints$Period = breakpoints$Period + 1
+
+breakpoints[, c("PERMNO", "INV.ppe")] = NULL
+
+df = left_join(df, breakpoints, by=c("Period"))
+```
+
+
+```r
+df = assign.bkts(df, "INV.ppe", quantiles)
+```
+
+
+```r
+df %>% group_by(INV.ppe.B, Date) %>% summarize(N=n()) %>% group_by(INV.ppe.B) %>%
+    summarise(avg.N=mean(N))
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["INV.ppe.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["avg.N"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"394.57143"},{"1":"2","2":"304.95079"},{"1":"3","2":"275.06825"},{"1":"4","2":"268.02222"},{"1":"5","2":"268.01746"},{"1":"6","2":"280.50952"},{"1":"7","2":"300.92381"},{"1":"8","2":"339.78413"},{"1":"9","2":"410.18095"},{"1":"10","2":"640.34921"},{"1":"NA","2":"29.05498"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+
+```r
+# df = ri.adj.Size(df)
+
+df = df %>% group_by(INV.ppe.B, Date) %>% mutate(
+    adj.bkt.Size=sum(adj.Size, na.rm=TRUE)
+) %>% as.data.frame
+df$wt.ri = df$ri * df$adj.Size / df$adj.bkt.Size
+```
+
+### Returns
+
+
+```r
+decile.returns = df %>%
+    dcast(Date ~ INV.ppe.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
+write.csv(decile.returns, "C:/Data/Thesis/INV_PPE_Decile_Returns.csv")
+round(colMeans(decile.returns %>% select(-Date)) * 100, 2)
+```
+
+```
+##     1     2     3     4     5     6     7     8     9    10    NA 
+##  1.04  0.97  0.92  0.91  0.92  0.93  0.87  0.95  0.77  0.81 -0.19
+```
+
+
+```r
+df = combine.sources(crsp, comp)
+df$INV = df$INV
 df = df %>% filter(!is.na(INV), !is.na(Size))
 ```
 
@@ -1495,7 +2096,7 @@ df %>% group_by(INV.B, Date) %>% summarize(N=n()) %>% group_by(INV.B) %>%
 
 
 ```r
-df = ri.adj.Size(df)
+# df = ri.adj.Size(df)
 
 df = df %>% group_by(INV.B, Date) %>% mutate(
     adj.bkt.Size=sum(adj.Size, na.rm=TRUE)
@@ -1586,7 +2187,7 @@ df %>% group_by(INV.B, Date) %>% summarise(avg.GP=mean(GP, na.rm=TRUE)) %>%
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["INV.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["avg.GP"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"0.35"},{"1":"2","2":"0.44"},{"1":"3","2":"0.43"},{"1":"4","2":"0.54"},{"1":"5","2":"0.77"},{"1":"6","2":"0.36"},{"1":"7","2":"0.36"},{"1":"8","2":"0.77"},{"1":"9","2":"0.38"},{"1":"10","2":"0.37"},{"1":"NA","2":"0.19"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["INV.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["avg.GP"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"0.28"},{"1":"2","2":"0.33"},{"1":"3","2":"0.33"},{"1":"4","2":"0.32"},{"1":"5","2":"0.33"},{"1":"6","2":"0.34"},{"1":"7","2":"0.36"},{"1":"8","2":"0.37"},{"1":"9","2":"0.38"},{"1":"10","2":"0.32"},{"1":"NA","2":"0.17"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
@@ -1989,7 +2590,7 @@ df %>% group_by(Size.B, OP.B, Date) %>% summarize(N=n()) %>% group_by(Size.B, OP
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Size.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["1"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["3"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["4"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["5"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["NA"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"1072","3":"343","4":"302","5":"240","6":"258","7":"3"},{"1":"2","2":"151","3":"112","4":"114","5":"108","6":"102","7":"1"},{"1":"3","2":"79","3":"76","4":"88","5":"88","6":"86","7":"1"},{"1":"4","2":"52","3":"62","4":"70","5":"78","6":"78","7":"1"},{"1":"5","2":"37","3":"52","4":"58","5":"75","6":"90","7":"1"},{"1":"NA","2":"NaN","3":"1","4":"1","5":"1","6":"1","7":"908"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["Size.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["1"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["3"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["4"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["5"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["NA"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"1072","3":"343","4":"302","5":"239","6":"258","7":"3"},{"1":"2","2":"151","3":"112","4":"114","5":"108","6":"102","7":"1"},{"1":"3","2":"79","3":"76","4":"88","5":"88","6":"86","7":"1"},{"1":"4","2":"52","3":"62","4":"70","5":"78","6":"78","7":"1"},{"1":"5","2":"37","3":"52","4":"58","5":"75","6":"90","7":"1"},{"1":"NA","2":"NaN","3":"1","4":"1","5":"1","6":"1","7":"908"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
@@ -2353,16 +2954,60 @@ df = assign.bkts(df, "BM", quantiles)
 
 
 ```r
-df %>% group_by(Size.B, BM.B, Date) %>% summarize(N=n()) %>% group_by(Size.B, BM.B) %>%
-    dcast(Size.B ~ BM.B, value.var="N", fun.aggregate=mean, na.rm=TRUE) %>%
-    round(0)
+summary(df %>% select(Size.B, BM.B))
 ```
 
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Size.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["1"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["3"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["NA"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"983","3":"976","4":"1062","5":"4"},{"1":"2","2":"391","3":"305","4":"150","5":"1"},{"1":"NA","2":"2","3":"1","4":"1","5":"911"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+```
+##      Size.B           BM.B      
+##  Min.   :1.000   Min.   :1.000  
+##  1st Qu.:1.000   1st Qu.:1.000  
+##  Median :1.000   Median :2.000  
+##  Mean   :1.219   Mean   :1.958  
+##  3rd Qu.:1.000   3rd Qu.:3.000  
+##  Max.   :2.000   Max.   :3.000  
+##  NA's   :11646   NA's   :12651
+```
+
+```r
+typeof(df$Size.B)
+```
+
+```
+## [1] "double"
+```
+
+
+```r
+df$Size.B = factor(df$Size.B, labels=c("S", "B"))
+df$BM.B = factor(df$BM.B, labels=c("L", "M", "H"))
+```
+
+
+```r
+summary(df %>% select(Size.B, BM.B))
+```
+
+```
+##   Size.B          BM.B       
+##  S   :1905499   L   :866340  
+##  B   : 533057   M   :807604  
+##  NA's:  11646   H   :763607  
+##                 NA's: 12651
+```
+
+```r
+typeof(df$Size.B)
+```
+
+```
+## [1] "integer"
+```
+
+
+```r
+#df %>% group_by(Size.B, BM.B, Date) %>% summarize(N=n()) %>% group_by(Size.B, BM.B) %>%
+#    dcast(Size.B ~ BM.B, value.var="N", fun.aggregate=mean, na.rm=TRUE)
+```
 
 
 ```r
@@ -2378,40 +3023,36 @@ df$wt.ri = df$ri * df$adj.Size / df$adj.bkt.Size
 
 
 ```r
-df$Size.BM.B = interaction(df$Size.B, df$BM.B)
+df$Size.BM.B = interaction(df$Size.B, df$BM.B, sep="")
 df$wt.ri = df$wt.ri * 100
 
 returns = df %>% dcast(Date ~ Size.BM.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
-write.csv(returns, "C:/Data/Thesis/6_Size_BM_Returns.csv")
 
-df %>% group_by(Size.B, BM.B, Date) %>% summarise(rp=sum(wt.ri, na.rm=TRUE)) %>%
-    dcast(Size.B ~ BM.B, fun.aggregate=mean, value.var="rp", na.rm=TRUE) %>%
-    select(-`NA`) %>% filter(!is.na(Size.B)) %>% round(digits=2)
+#df %>% group_by(Size.B, BM.B, Date) %>% summarise(rp=sum(wt.ri, na.rm=TRUE)) %>%
+#    dcast(Size.B ~ BM.B, fun.aggregate=mean, value.var="rp", na.rm=TRUE) %>%
+#    select(-`NA`) %>% filter(!is.na(Size.B))
+
+returns$HMLs = returns$SH - returns$SL
+returns$HMLb = returns$BH - returns$BL
+returns$HML = (returns$SH+returns$BH)/2 - (returns$SL+returns$BL)/2
+returns$SMB.HML = ((returns$SL+returns$SM+returns$SH)/3 -
+               (returns$BL+returns$BM+returns$BH)/3)
+HML = returns %>% select(Date, HML, SMB.HML)
+
+stat.summary(returns %>% select(-c(Date, `NA`))) %>% round(2)
 ```
 
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Size.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["1"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["3"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"0.89","3":"1.28","4":"1.36"},{"1":"2","2":"0.86","3":"0.93","4":"1.02"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-
+```
+##        SL   BL   SM   BM   SH   BH HMLs HMLb  HML SMB.HML
+## [1,] 0.88 0.85 1.25 0.91 1.34 1.00 0.46 0.16 0.31    0.24
+## [2,] 0.27 0.18 0.21 0.17 0.21 0.18 0.13 0.12 0.11    0.12
+## [3,] 3.31 4.66 5.94 5.42 6.35 5.58 3.59 1.30 2.76    1.99
+## [4,] 0.13 0.18 0.23 0.21 0.25 0.22 0.14 0.05 0.11    0.08
+```
 
 ```r
-returns$HML = (returns$`1.3`+returns$`2.3`)/2 - (returns$`1.1`+returns$`2.1`)/2
-returns$SMB.HML = ((returns$`1.3`+returns$`1.2`+returns$`1.1`)/3 -
-               (returns$`2.3`+returns$`2.2`+returns$`2.1`)/3)
-HML = returns %>% select(Date, HML, SMB.HML)
-returns = returns %>% select(-c(Date, `NA`))
-rbind(sapply(returns, mean), sapply(returns, se), sapply(returns, t.stat)) %>% round(2)
+write.csv(returns, "C:/Data/Thesis/6_Size_BM_Returns.csv")
 ```
-
-```
-##       1.1  2.1  1.2  2.2  1.3  2.3  HML SMB.HML
-## [1,] 0.88 0.85 1.25 0.91 1.34 1.00 0.31    0.24
-## [2,] 0.27 0.18 0.21 0.17 0.21 0.18 0.11    0.12
-## [3,] 3.31 4.66 5.94 5.42 6.35 5.58 2.76    1.99
-```
-
 
 ![French Website 6 $Size-BM$ Returns](C:/Data/FrenchDartmouth/6_Size_BM.JPG)
 
@@ -2467,16 +3108,9 @@ df = assign.bkts(df, "BMM", quantiles)
 
 
 ```r
-df %>% group_by(L1.ME.B, BMM.B, Date) %>% summarize(N=n()) %>% group_by(L1.ME.B, BMM.B) %>%
-    dcast(L1.ME.B ~ BMM.B, value.var="N", fun.aggregate=mean, na.rm=TRUE) %>%
-    round(0)
+df$L1.ME.B = factor(df$L1.ME.B, labels=c("S", "B"))
+df$BMM.B = factor(df$BMM.B, labels=c("Lm", "Mm", "Hm"))
 ```
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["L1.ME.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["1"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["3"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["NA"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"903","3":"1026","4":"1101","5":"4"},{"1":"2","2":"369","3":"307","4":"134","5":"NaN"},{"1":"NA","2":"1","3":"NaN","4":"NaN","5":"NaN"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
 
 
 ```r
@@ -2492,39 +3126,36 @@ df$wt.ri = df$ri * df$L1.ME / df$bkt.L1.ME
 
 
 ```r
-df$L1.ME.BMM.B = interaction(df$L1.ME.B, df$BMM.B)
+df$L1.ME.BMM.B = interaction(df$L1.ME.B, df$BMM.B, sep="")
 df$wt.ri = df$wt.ri * 100
 
 returns = df %>% dcast(Date ~ L1.ME.BMM.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
-write.csv(returns, "C:/Data/Thesis/6_L1ME_BMM_Returns.csv")
 
-df %>% group_by(L1.ME.B, BMM.B, Date) %>% summarise(rp=sum(wt.ri, na.rm=TRUE)) %>%
-    dcast(L1.ME.B ~ BMM.B, fun.aggregate=mean, value.var="rp", na.rm=TRUE) %>%
-    select(-`NA`) %>% filter(!is.na(L1.ME.B)) %>% round(digits=2)
+returns$HMLms = returns$SHm - returns$SLm
+returns$HMLmb = returns$BHm - returns$BLm
+returns$HMLm = (returns$SHm+returns$BHm)/2 - (returns$SLm+returns$BLm)/2
+returns$SMB.HMLm = ((returns$SLm+returns$SMm+returns$SHm)/3 -
+               (returns$BLm+returns$BMm+returns$BHm)/3)
+HMLm = returns %>% select(Date, HMLm, SMB.HMLm)
+
+stat.summary(returns %>% select(-c(Date, `NA`))) %>% round(2)
 ```
 
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["L1.ME.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["1"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["3"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"0.97","3":"1.17","4":"1.43"},{"1":"2","2":"0.86","3":"0.93","4":"1.14"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-
+```
+##       SLm  BLm  SMm  BMm  SHm  BHm HMLms HMLmb HMLm SMB.HMLm
+## [1,] 0.97 0.86 1.17 0.93 1.43 1.14  0.46  0.29 0.37     0.22
+## [2,] 0.27 0.18 0.21 0.17 0.25 0.20  0.15  0.14 0.14     0.12
+## [3,] 3.67 4.73 5.51 5.41 5.85 5.85  3.02  2.04 2.73     1.81
+## [4,] 0.14 0.19 0.22 0.21 0.23 0.23  0.12  0.08 0.11     0.07
+```
 
 ```r
-returns$HMLm = (returns$`1.3`+returns$`2.3`)/2 - (returns$`1.1`+returns$`2.1`)/2
-returns$SMB.HMLm = ((returns$`1.3`+returns$`1.2`+returns$`1.1`)/3 -
-               (returns$`2.3`+returns$`2.2`+returns$`2.1`)/3)
-HMLm = returns %>% select(Date, HMLm, SMB.HMLm)
-returns = returns %>% select(-c(Date, `NA`))
-rbind(sapply(returns, mean), sapply(returns, se), sapply(returns, t.stat)) %>% round(2)
+write.csv(returns, "C:/Data/Thesis/6_L1ME_BMM_Returns.csv")
 ```
 
-```
-##       1.1  2.1  1.2  2.2  1.3  2.3 HMLm SMB.HMLm
-## [1,] 0.97 0.86 1.17 0.93 1.43 1.14 0.37     0.22
-## [2,] 0.27 0.18 0.21 0.17 0.25 0.20 0.14     0.12
-## [3,] 3.67 4.73 5.51 5.41 5.85 5.85 2.73     1.81
-```
+
+
+
 
 ## $Size$ and $OP$
 
@@ -2576,16 +3207,9 @@ df = assign.bkts(df, "OP", quantiles)
 
 
 ```r
-df %>% group_by(Size.B, OP.B, Date) %>% summarize(N=n()) %>% group_by(Size.B, OP.B) %>%
-    dcast(Size.B ~ OP.B, value.var="N", fun.aggregate=mean, na.rm=TRUE) %>%
-    round(0)
+df$Size.B = factor(df$Size.B, labels=c("S", "B"))
+df$OP.B = factor(df$OP.B, labels=c("Wo", "Mo", "Ro"))
 ```
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Size.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["1"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["3"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["NA"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"1525","3":"908","4":"594","5":"3"},{"1":"2","2":"195","3":"338","4":"311","5":"2"},{"1":"NA","2":"1","3":"1","4":"1","5":"908"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
 
 
 ```r
@@ -2597,45 +3221,136 @@ df = df %>% group_by(Size.B, OP.B, Date) %>% mutate(
 df$wt.ri = df$ri * df$adj.Size / df$adj.bkt.Size
 ```
 
+
+
+
+
 ### Returns
 
 
 ```r
-df$Size.OP.B = interaction(df$Size.B, df$OP.B)
+df$Size.OP.B = interaction(df$Size.B, df$OP.B, sep="")
 df$wt.ri = df$wt.ri * 100
 
 returns = df %>% dcast(Date ~ Size.OP.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
-write.csv(returns, "C:/Data/Thesis/6_Size_OP_Returns.csv")
 
-df %>% group_by(Size.B, OP.B, Date) %>% summarise(rp=sum(wt.ri, na.rm=TRUE)) %>%
-    dcast(Size.B ~ OP.B, fun.aggregate=mean, value.var="rp", na.rm=TRUE) %>%
-    select(-`NA`) %>% filter(!is.na(Size.B)) %>% round(digits=2)
+returns$RMWos = returns$SRo - returns$SWo
+returns$RMWob = returns$BRo - returns$BWo
+returns$RMWo = (returns$SRo+returns$BRo)/2 - (returns$SWo+returns$BWo)/2
+returns$SMB.RMWo = ((returns$SWo+returns$SMo+returns$SRo)/3 -
+               (returns$BWo+returns$BMo+returns$BRo)/3)
+RMWo = returns %>% select(Date, RMWo, SMB.RMWo)
+
+stat.summary(returns %>% select(-c(Date, `NA`))) %>% round(2)
 ```
 
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Size.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["1"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["3"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"0.96","3":"1.25","4":"1.29"},{"1":"2","2":"0.75","3":"0.88","4":"0.96"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-
+```
+##       SWo  BWo  SMo  BMo  SRo  BRo RMWos RMWob RMWo SMB.RMWo
+## [1,] 0.94 0.73 1.23 0.86 1.26 0.94  0.32  0.21 0.27     0.30
+## [2,] 0.25 0.20 0.20 0.17 0.23 0.17  0.11  0.09 0.09     0.11
+## [3,] 3.70 3.74 6.00 5.03 5.54 5.56  3.07  2.19 3.09     2.63
+## [4,] 0.15 0.15 0.24 0.20 0.22 0.22  0.12  0.09 0.12     0.10
+```
 
 ```r
-returns$RMWo = (returns$`1.3`+returns$`2.3`)/2 - (returns$`1.1`+returns$`2.1`)/2
-returns$SMB.RMWo = ((returns$`1.3`+returns$`1.2`+returns$`1.1`)/3 -
-               (returns$`2.3`+returns$`2.2`+returns$`2.1`)/3)
-RMWo = returns %>% select(Date, RMWo, SMB.RMWo)
-returns = returns %>% select(-c(Date, `NA`))
-rbind(sapply(returns, mean), sapply(returns, se), sapply(returns, t.stat))  %>% round(2)
-```
-
-```
-##       1.1  2.1  1.2  2.2  1.3  2.3 RMWo SMB.RMWo
-## [1,] 0.94 0.73 1.23 0.86 1.26 0.94 0.27     0.30
-## [2,] 0.25 0.20 0.20 0.17 0.23 0.17 0.09     0.11
-## [3,] 3.70 3.74 6.00 5.03 5.54 5.56 3.09     2.63
+write.csv(returns, "C:/Data/Thesis/6_Size_OP_Returns.csv")
 ```
 
 ![French Website 6 $Size-OP$ Returns](C:/Data/FrenchDartmouth/6_Size_OP.JPG)
+
+## $Size$ and $OP.2$
+
+* Annual rebalance
+
+
+```r
+df = combine.sources(crsp, comp)
+df = df %>% filter(!is.na(Size), OP.OK)
+```
+
+### $Size$ Median
+
+
+```r
+quantiles = 1:2/2
+
+nyse = df %>% filter(Exchange=="NYSE", Month==7) %>% select(Period, PERMNO, Size, OP.2)
+
+breakpoints = nyse %>% arrange(Period, Size) %>% group_by(Period) %>% summarize(
+    D10=Size[.1*n()], D20=Size[.2*n()],
+    D30=Size[.3*n()], D40=Size[.4*n()],
+    D50=Size[.5*n()], D60=Size[.6*n()],
+    D70=Size[.7*n()], D80=Size[.8*n()],
+    D90=Size[.9*n()], D100=Size[n()]) %>% as.data.frame
+breakpoints$Period = breakpoints$Period + 1
+breakpoints[, c("PERMNO", "Size")] = NULL
+df = left_join(df, breakpoints, by=c("Period"))
+df = assign.bkts(df, "Size", quantiles)
+```
+
+### $OP.2$ Quantiles
+
+
+```r
+quantiles =c(.3, .7, 1.)
+
+breakpoints = nyse %>% arrange(Period, OP.2) %>% group_by(Period) %>% summarize(
+    D10=OP.2[.1*n()], D20=OP.2[.2*n()],
+    D30=OP.2[.3*n()], D40=OP.2[.4*n()],
+    D50=OP.2[.5*n()], D60=OP.2[.6*n()],
+    D70=OP.2[.7*n()], D80=OP.2[.8*n()],
+    D90=OP.2[.9*n()], D100=OP.2[n()]) %>% as.data.frame
+breakpoints$Period = breakpoints$Period + 1
+breakpoints[, c("PERMNO", "OP.2")] = NULL
+df = left_join(df, breakpoints, by=c("Period"))
+df = assign.bkts(df, "OP.2", quantiles)
+```
+
+
+```r
+df$Size.B = factor(df$Size.B, labels=c("S", "B"))
+df$OP.2.B = factor(df$OP.2.B, labels=c("Wor", "Mor", "Ror"))
+
+df = df %>% group_by(Size.B, OP.2.B, Date) %>% mutate(
+    adj.bkt.Size=sum(adj.Size, na.rm=TRUE)
+) %>% as.data.frame
+df$wt.ri = df$ri * df$adj.Size / df$adj.bkt.Size
+```
+
+
+
+
+
+### Returns
+
+
+```r
+df$Size.OP.2.B = interaction(df$Size.B, df$OP.2.B, sep="")
+df$wt.ri = df$wt.ri * 100
+
+returns = df %>% dcast(Date ~ Size.OP.2.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
+
+returns$RMWors = returns$SRor - returns$SWor
+returns$RMWorb = returns$BRor - returns$BWor
+returns$RMWor = (returns$SRor+returns$BRor)/2 - (returns$SWor+returns$BWor)/2
+returns$SMB.RMWor = ((returns$SWor+returns$SMor+returns$SRor)/3 -
+               (returns$BWor+returns$BMor+returns$BRor)/3)
+RMWor = returns %>% select(Date, RMWor, SMB.RMWor)
+
+stat.summary(returns %>% select(-c(Date, `NA`))) %>% round(2)
+```
+
+```
+##      SWor BWor SMor BMor SRor BRor RMWors RMWorb RMWor SMB.RMWor
+## [1,] 0.90 0.70 1.19 0.86 1.34 0.94   0.44   0.24  0.34      0.31
+## [2,] 0.24 0.19 0.21 0.17 0.24 0.17   0.07   0.09  0.07      0.12
+## [3,] 3.70 3.78 5.75 5.04 5.53 5.42   5.99   2.69  5.05      2.57
+## [4,] 0.15 0.15 0.23 0.20 0.22 0.21   0.24   0.11  0.20      0.10
+```
+
+```r
+write.csv(returns, "C:/Data/Thesis/6_Size_OP_RnD_Returns.csv")
+```
 
 ## $Size$ and $GP$
 
@@ -2687,16 +3402,9 @@ df = assign.bkts(df, "GP", quantiles)
 
 
 ```r
-df %>% group_by(Size.B, GP.B, Date) %>% summarize(N=n()) %>% group_by(Size.B, GP.B) %>%
-    dcast(Size.B ~ GP.B, value.var="N", fun.aggregate=mean, na.rm=TRUE) %>%
-    round(0)
+df$Size.B = factor(df$Size.B, labels=c("S", "B"))
+df$GP.B = factor(df$GP.B, labels=c("Wg", "Mg", "Rg"))
 ```
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Size.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["1"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["3"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["NA"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"979","3":"1051","4":"1083","5":"6"},{"1":"2","2":"287","3":"317","4":"267","5":"1"},{"1":"NA","2":"1","3":"1","4":"1","5":"930"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
 
 
 ```r
@@ -2712,43 +3420,232 @@ df$wt.ri = df$ri * df$adj.Size / df$adj.bkt.Size
 
 
 ```r
-df$Size.GP.B = interaction(df$Size.B, df$GP.B)
+df$Size.GP.B = interaction(df$Size.B, df$GP.B, sep="")
 df$wt.ri = df$wt.ri * 100
 
 returns = df %>% dcast(Date ~ Size.GP.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
-write.csv(returns, "C:/Data/Thesis/6_Size_GP_Returns.csv")
 
-df %>% group_by(Size.B, GP.B, Date) %>% summarise(rp=sum(wt.ri, na.rm=TRUE)) %>%
-    dcast(Size.B ~ GP.B, fun.aggregate=mean, value.var="rp", na.rm=TRUE) %>%
-    select(-`NA`) %>% filter(!is.na(Size.B)) %>% round(digits=2)
+returns$RMWgs = returns$SRg - returns$SWg
+returns$RMWgb = returns$BRg - returns$BWg
+returns$RMWg = (returns$SRg+returns$BRg)/2 - (returns$SWg+returns$BWg)/2
+returns$SMB.RMWg = ((returns$SWg+returns$SMg+returns$SRg)/3 -
+               (returns$BWg+returns$BMg+returns$BRg)/3)
+RMWg = returns %>% select(Date, RMWg, SMB.RMWg)
+
+stat.summary(returns %>% select(-c(Date, `NA`))) %>% round(2)
 ```
 
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Size.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["1"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["3"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"1.01","3":"1.14","4":"1.29"},{"1":"2","2":"0.82","3":"0.84","4":"1.00"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+```
+##       SWg  BWg  SMg  BMg  SRg  BRg RMWgs RMWgb RMWg SMB.RMWg
+## [1,] 0.99 0.81 1.12 0.82 1.27 0.98  0.28  0.18 0.23     0.25
+## [2,] 0.21 0.18 0.24 0.18 0.24 0.18  0.09  0.11 0.09     0.12
+## [3,] 4.66 4.39 4.67 4.63 5.24 5.59  2.94  1.60 2.58     2.09
+## [4,] 0.18 0.17 0.18 0.18 0.21 0.22  0.12  0.06 0.10     0.08
+```
+
+```r
+write.csv(returns, "C:/Data/Thesis/6_Size_GP_Returns.csv")
+```
+
+
+## $Size$ and $CP$
+
+* Annual rebalance
 
 
 ```r
-returns$RMWg = (returns$`1.3`+returns$`2.3`)/2 - (returns$`1.1`+returns$`2.1`)/2
-returns$SMB.RMWg = ((returns$`1.3`+returns$`1.2`+returns$`1.1`)/3 -
-               (returns$`2.3`+returns$`2.2`+returns$`2.1`)/3)
-RMWg = returns %>% select(Date, RMWg, SMB.RMWg)
-returns = returns %>% select(-c(Date, `NA`))
-rbind(sapply(returns, mean), sapply(returns, se), sapply(returns, t.stat))  %>% round(2)
+df = combine.sources(crsp, comp)
+df = df %>% filter(!is.na(Size), OP.OK)
+```
+
+### $Size$ Median
+
+
+```r
+quantiles = 1:2/2
+
+nyse = df %>% filter(Exchange=="NYSE", Month==7) %>% select(Period, PERMNO, Size, CP)
+
+breakpoints = nyse %>% arrange(Period, Size) %>% group_by(Period) %>% summarize(
+    D10=Size[.1*n()], D20=Size[.2*n()],
+    D30=Size[.3*n()], D40=Size[.4*n()],
+    D50=Size[.5*n()], D60=Size[.6*n()],
+    D70=Size[.7*n()], D80=Size[.8*n()],
+    D90=Size[.9*n()], D100=Size[n()]) %>% as.data.frame
+breakpoints$Period = breakpoints$Period + 1
+breakpoints[, c("PERMNO", "Size")] = NULL
+df = left_join(df, breakpoints, by=c("Period"))
+df = assign.bkts(df, "Size", quantiles)
+```
+
+### $CP$ Quantiles
+
+
+```r
+quantiles =c(.3, .7, 1.)
+
+breakpoints = nyse %>% arrange(Period, CP) %>% group_by(Period) %>% summarize(
+    D10=CP[.1*n()], D20=CP[.2*n()],
+    D30=CP[.3*n()], D40=CP[.4*n()],
+    D50=CP[.5*n()], D60=CP[.6*n()],
+    D70=CP[.7*n()], D80=CP[.8*n()],
+    D90=CP[.9*n()], D100=CP[n()]) %>% as.data.frame
+breakpoints$Period = breakpoints$Period + 1
+breakpoints[, c("PERMNO", "CP")] = NULL
+df = left_join(df, breakpoints, by=c("Period"))
+df = assign.bkts(df, "CP", quantiles)
+```
+
+
+```r
+df$Size.B = factor(df$Size.B, labels=c("S", "B"))
+df$CP.B = factor(df$CP.B, labels=c("Wc", "Mc", "Rc"))
+```
+
+
+```r
+# df = ri.adj.Size(df)
+
+df = df %>% group_by(Size.B, CP.B, Date) %>% mutate(
+    adj.bkt.Size=sum(adj.Size, na.rm=TRUE)
+) %>% as.data.frame
+df$wt.ri = df$ri * df$adj.Size / df$adj.bkt.Size
+```
+
+
+
+
+
+### Returns
+
+
+```r
+df$Size.CP.B = interaction(df$Size.B, df$CP.B, sep="")
+df$wt.ri = df$wt.ri * 100
+
+returns = df %>% dcast(Date ~ Size.CP.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
+
+returns$RMWcs = returns$SRc - returns$SWc
+returns$RMWcb = returns$BRc - returns$BWc
+returns$RMWc = (returns$SRc+returns$BRc)/2 - (returns$SWc+returns$BWc)/2
+returns$SMB.RMWc = ((returns$SWc+returns$SMc+returns$SRc)/3 -
+               (returns$BWc+returns$BMc+returns$BRc)/3)
+RMWc = returns %>% select(Date, RMWc, SMB.RMWc)
+
+stat.summary(returns %>% select(-c(Date, `NA`))) %>% round(2)
 ```
 
 ```
-##       1.1  2.1  1.2  2.2  1.3  2.3 RMWg SMB.RMWg
-## [1,] 0.99 0.81 1.12 0.82 1.27 0.99 0.23     0.25
-## [2,] 0.21 0.18 0.24 0.18 0.24 0.18 0.09     0.12
-## [3,] 4.66 4.39 4.66 4.63 5.24 5.59 2.59     2.09
+##       SWc  BWc  SMc  BMc  SRc  BRc RMWcs RMWcb RMWc SMB.RMWc
+## [1,] 0.84 0.71 1.22 0.81 1.39 1.00  0.55  0.29 0.42     0.31
+## [2,] 0.24 0.19 0.21 0.17 0.23 0.17  0.06  0.08 0.06     0.12
+## [3,] 3.46 3.62 5.72 4.85 6.05 5.80  9.09  3.51 7.54     2.62
+## [4,] 0.14 0.14 0.23 0.19 0.24 0.23  0.36  0.14 0.30     0.10
+```
+
+```r
+write.csv(returns, "C:/Data/Thesis/6_Size_CP_Returns.csv")
 ```
 
 ## $Size$ and $INV$
 
 * Annual rebalance
+
+### PPE
+
+
+```r
+df = combine.sources(crsp, comp)
+df$INV = df$INV.ppe
+df = df %>% filter(!is.na(Size), !is.na(INV))
+```
+
+### $Size$ Median
+
+
+```r
+quantiles = 1:2/2
+
+nyse = df %>% filter(Exchange=="NYSE", Month==7) %>% select(Period, PERMNO, Size, INV)
+
+breakpoints = nyse %>% arrange(Period, Size) %>% group_by(Period) %>% summarize(
+    D10=Size[.1*n()], D20=Size[.2*n()],
+    D30=Size[.3*n()], D40=Size[.4*n()],
+    D50=Size[.5*n()], D60=Size[.6*n()],
+    D70=Size[.7*n()], D80=Size[.8*n()],
+    D90=Size[.9*n()], D100=Size[n()]) %>% as.data.frame
+breakpoints$Period = breakpoints$Period + 1
+breakpoints[, c("PERMNO", "Size")] = NULL
+df = left_join(df, breakpoints, by=c("Period"))
+df = assign.bkts(df, "Size", quantiles)
+```
+
+### $INV$ Quantiles
+
+
+```r
+quantiles = c(.3, .7, 1.)
+
+breakpoints = nyse %>% arrange(Period, INV) %>% group_by(Period) %>% summarize(
+    D10=INV[.1*n()], D20=INV[.2*n()],
+    D30=INV[.3*n()], D40=INV[.4*n()],
+    D50=INV[.5*n()], D60=INV[.6*n()],
+    D70=INV[.7*n()], D80=INV[.8*n()],
+    D90=INV[.9*n()], D100=INV[n()]) %>% as.data.frame
+breakpoints$Period = breakpoints$Period + 1
+breakpoints[, c("PERMNO", "INV")] = NULL
+df = left_join(df, breakpoints, by=c("Period"))
+df = assign.bkts(df, "INV", quantiles)
+```
+
+
+```r
+df$Size.B = factor(df$Size.B, labels=c("S", "B"))
+df$INV.B = factor(df$INV.B, labels=c("C", "M", "A"))
+```
+
+
+```r
+# df = ri.adj.Size(df)
+
+df = df %>% group_by(Size.B, INV.B, Date) %>% mutate(
+    adj.bkt.Size=sum(adj.Size, na.rm=TRUE)
+) %>% as.data.frame
+df$wt.ri = df$ri * df$adj.Size / df$adj.bkt.Size
+```
+
+### Returns
+
+
+```r
+df$Size.INV.B = interaction(df$Size.B, df$INV.B, sep="")
+df$wt.ri = df$wt.ri * 100
+
+returns = df %>% dcast(Date ~ Size.INV.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
+
+returns$CMAs = returns$SC - returns$SA
+returns$CMAb = returns$BC - returns$BA
+returns$CMA = (returns$SC+returns$BC)/2 - (returns$SA+returns$BA)/2
+returns$SMB.CMA = ((returns$SC+returns$SM+returns$SA)/3 -
+               (returns$BC+returns$BM+returns$BA)/3)
+CMA = returns %>% select(Date, CMA, SMB.CMA)
+
+stat.summary(returns %>% select(-c(Date, `NA`))) %>% round(2)
+```
+
+```
+##        SC   BC   SM   BM   SA   BA CMAs CMAb  CMA SMB.CMA
+## [1,] 1.25 0.90 1.27 0.90 0.98 0.84 0.26 0.06 0.16    0.29
+## [2,] 0.21 0.16 0.22 0.16 0.26 0.20 0.08 0.12 0.09    0.12
+## [3,] 5.89 5.72 5.89 5.59 3.84 4.10 3.11 0.56 1.80    2.38
+## [4,] 0.23 0.23 0.23 0.22 0.15 0.16 0.12 0.02 0.07    0.09
+```
+
+```r
+write.csv(returns, "C:/Data/Thesis/6_Size_INV_PPE_Returns.csv")
+```
+
+### Assets
 
 
 ```r
@@ -2796,16 +3693,9 @@ df = assign.bkts(df, "INV", quantiles)
 
 
 ```r
-df %>% group_by(Size.B, INV.B, Date) %>% summarize(N=n()) %>% group_by(Size.B, INV.B) %>%
-    dcast(Size.B ~ INV.B, value.var="N", fun.aggregate=mean, na.rm=TRUE) %>%
-    round(0)
+df$Size.B = factor(df$Size.B, labels=c("S", "B"))
+df$INV.B = factor(df$INV.B, labels=c("C", "M", "A"))
 ```
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Size.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["1"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["3"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["NA"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"1046","3":"813","4":"955","5":"10"},{"1":"2","2":"180","3":"346","4":"309","5":"4"},{"1":"NA","2":"1","3":"1","4":"1","5":"566"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
 
 
 ```r
@@ -2821,41 +3711,38 @@ df$wt.ri = df$ri * df$adj.Size / df$adj.bkt.Size
 
 
 ```r
-df$Size.INV.B = interaction(df$Size.B, df$INV.B)
+df$Size.INV.B = interaction(df$Size.B, df$INV.B, sep="")
 df$wt.ri = df$wt.ri * 100
 
 returns = df %>% dcast(Date ~ Size.INV.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
-write.csv(returns, "C:/Data/Thesis/6_Size_INV_Returns.csv")
 
-df %>% group_by(Size.B, INV.B, Date) %>% summarise(rp=sum(wt.ri, na.rm=TRUE)) %>%
-    dcast(Size.B ~ INV.B, fun.aggregate=mean, value.var="rp", na.rm=TRUE) %>%
-    select(-`NA`) %>% filter(!is.na(Size.B)) %>% round(digits=2)
+returns$CMAs = returns$SC - returns$SA
+returns$CMAb = returns$BC - returns$BA
+returns$CMA = (returns$SC+returns$BC)/2 - (returns$SA+returns$BA)/2
+returns$SMB.CMA = ((returns$SC+returns$SM+returns$SA)/3 -
+               (returns$BC+returns$BM+returns$BA)/3)
+CMA = returns %>% select(Date, CMA, SMB.CMA)
+
+stat.summary(returns %>% select(-c(Date, `NA`))) %>% round(2)
 ```
 
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Size.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["1"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["3"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"1.30","3":"1.29","4":"0.98"},{"1":"2","2":"1.07","3":"0.92","4":"0.80"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-
+```
+##        SC   BC   SM   BM   SA   BA CMAs CMAb  CMA SMB.CMA
+## [1,] 1.27 1.05 1.27 0.90 0.97 0.79 0.31 0.26 0.28    0.26
+## [2,] 0.24 0.17 0.20 0.16 0.25 0.20 0.07 0.10 0.07    0.12
+## [3,] 5.37 6.12 6.36 5.65 3.93 4.01 4.16 2.66 3.93    2.14
+## [4,] 0.21 0.24 0.25 0.22 0.16 0.16 0.16 0.10 0.16    0.08
+```
 
 ```r
-returns$CMA = (returns$`1.1`+returns$`2.1`)/2 - (returns$`1.3`+returns$`2.3`)/2
-returns$SMB.CMA = ((returns$`1.3`+returns$`1.2`+returns$`1.1`)/3 -
-               (returns$`2.3`+returns$`2.2`+returns$`2.1`)/3)
-CMA = returns %>% select(Date, CMA, SMB.CMA)
-returns = returns %>% select(-c(Date, `NA`))
-rbind(sapply(returns, mean), sapply(returns, se), sapply(returns, t.stat)) %>% round(2)
-```
-
-```
-##       1.1  2.1  1.2  2.2  1.3  2.3  CMA SMB.CMA
-## [1,] 1.27 1.05 1.27 0.90 0.97 0.79 0.28    0.26
-## [2,] 0.24 0.17 0.20 0.16 0.25 0.20 0.07    0.12
-## [3,] 5.37 6.12 6.36 5.65 3.93 4.01 3.93    2.14
+write.csv(returns, "C:/Data/Thesis/6_Size_INV_Returns.csv")
 ```
 
 ![French Website 6 $Size-INV$ Returns](C:/Data/FrenchDartmouth/6_Size_INV.JPG)
+
+
+
+
 
 ## $Size$ and $Prior$
 
@@ -2907,16 +3794,9 @@ df = assign.bkts(df, "Prior", quantiles)
 
 
 ```r
-df %>% group_by(L1.ME.B, Prior.B, Date) %>% summarize(N=n()) %>% group_by(L1.ME.B, Prior.B) %>%
-    dcast(L1.ME.B ~ Prior.B, value.var="N", fun.aggregate=mean, na.rm=TRUE) %>%
-    round(0)
+df$L1.ME.B = factor(df$L1.ME.B, labels=c("S", "B"))
+df$Prior.B = factor(df$Prior.B, labels=c("L", "M", "W"))
 ```
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["L1.ME.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["1"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["3"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["NA"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"1292","3":"964","4":"1113","5":"23"},{"1":"2","2":"199","3":"371","4":"287","5":"3"},{"1":"NA","2":"1","3":"1","4":"1","5":"NaN"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
 
 
 ```r
@@ -2932,41 +3812,37 @@ df$wt.ri = df$ri * df$L1.ME / df$bkt.L1.ME
 
 
 ```r
-df$L1.ME.Prior.B = interaction(df$L1.ME.B, df$Prior.B)
+df$L1.ME.Prior.B = interaction(df$L1.ME.B, df$Prior.B, sep="")
 df$wt.ri = df$wt.ri * 100
 
 returns = df %>% dcast(Date ~ L1.ME.Prior.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
-write.csv(returns, "C:/Data/Thesis/25_L1ME_Prior_Returns.csv")
 
-df %>% group_by(L1.ME.B, Prior.B, Date) %>% summarise(rp=sum(wt.ri, na.rm=TRUE)) %>%
-    dcast(L1.ME.B ~ Prior.B, fun.aggregate=mean, value.var="rp", na.rm=TRUE) %>%
-    select(-`NA`) %>% filter(!is.na(L1.ME.B)) %>% round(digits=2)
+returns$WMLs = returns$SW - returns$SL
+returns$WMLb = returns$BW - returns$BL
+returns$WML = (returns$SW+returns$BW)/2 - (returns$SL+returns$BL)/2
+returns$SMB.WML = ((returns$SL+returns$SM+returns$SW)/3 -
+               (returns$BL+returns$BM+returns$BW)/3)
+WML = returns %>% select(Date, WML, SMB.WML)
+
+stat.summary(returns %>% select(-c(Date, `NA`))) %>% round(2)
 ```
 
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["L1.ME.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["1"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["3"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"0.69","3":"1.18","4":"1.53"},{"1":"2","2":"0.76","3":"0.84","4":"1.13"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-
+```
+##        SL   BL   SM   BM   SW   BW WMLs WMLb  WML SMB.WML
+## [1,] 0.69 0.76 1.18 0.84 1.53 1.13 0.84 0.37 0.61    0.22
+## [2,] 0.27 0.22 0.20 0.16 0.25 0.20 0.16 0.18 0.16    0.11
+## [3,] 2.55 3.46 5.77 5.09 6.16 5.81 5.38 2.09 3.82    1.93
+## [4,] 0.10 0.14 0.23 0.20 0.24 0.23 0.21 0.08 0.15    0.08
+```
 
 ```r
-returns$WML = (returns$`1.3`+returns$`2.3`)/2 - (returns$`1.1`+returns$`2.1`)/2
-returns$SMB.WML = ((returns$`1.3`+returns$`1.2`+returns$`1.1`)/3 -
-               (returns$`2.3`+returns$`2.2`+returns$`2.1`)/3)
-WML = returns %>% select(Date, WML, SMB.WML)
-returns = returns %>% select(-c(Date, `NA`))
-rbind(sapply(returns, mean), sapply(returns, se), sapply(returns, t.stat))  %>% round(2)
-```
-
-```
-##       1.1  2.1  1.2  2.2  1.3  2.3  WML SMB.WML
-## [1,] 0.69 0.76 1.18 0.84 1.53 1.13 0.61    0.22
-## [2,] 0.27 0.22 0.20 0.16 0.25 0.20 0.16    0.11
-## [3,] 2.55 3.46 5.77 5.09 6.16 5.81 3.82    1.93
+write.csv(returns, "C:/Data/Thesis/25_L1ME_Prior_Returns.csv")
 ```
 
 ![French Website 6 $Size-Prior$ Returns](C:/Data/FrenchDartmouth/6_Size_Prior.JPG)
+
+
+
 
 # Summarise Factors
 
@@ -2974,65 +3850,91 @@ rbind(sapply(returns, mean), sapply(returns, se), sapply(returns, t.stat))  %>% 
 ```r
 f = left_join(HML, HMLm, by="Date")
 f = left_join(f, RMWo, by="Date")
+f = left_join(f, RMWor, by="Date")
 f = left_join(f, RMWg, by="Date")
+f = left_join(f, RMWc, by="Date")
 f = left_join(f, CMA, by="Date")
 f = left_join(f, WML, by="Date")
 f = left_join(f, rm, by="Date")
 f$SMB = (f$SMB.HML + f$SMB.RMWo + f$SMB.CMA) / 3
+
+stat.summary(
+    f %>% select(
+        -c(Date, SMB.HML, SMB.HMLm, SMB.RMWo, SMB.RMWor, SMB.RMWg, SMB.CMA, SMB.WML)
+    )
+) %>% round(2)
 ```
 
+```
+##       HML HMLm RMWo RMWor RMWg RMWc SMB.RMWc  CMA  WML   Rm  SMB
+## [1,] 0.31 0.37 0.27  0.34 0.23 0.42     0.31 0.28 0.61 0.50 0.26
+## [2,] 0.11 0.14 0.09  0.07 0.09 0.06     0.12 0.07 0.16 0.17 0.12
+## [3,] 2.76 2.73 3.09  5.05 2.58 7.54     2.62 3.93 3.82 2.84 2.28
+## [4,] 0.11 0.11 0.12  0.20 0.10 0.30     0.10 0.16 0.15 0.11 0.09
+```
+
+```r
+stat.summary(
+    f[13:630,] %>% select(
+        -c(Date, SMB.HML, SMB.HMLm, SMB.RMWo, SMB.RMWor, SMB.RMWg, SMB.CMA, SMB.WML)
+    )
+) %>% round(2)
+```
+
+```
+##       HML HMLm RMWo RMWor RMWg RMWc SMB.RMWc  CMA  WML   Rm  SMB
+## [1,] 0.29 0.34 0.27  0.35 0.25 0.44     0.31 0.28 0.64 0.47 0.26
+## [2,] 0.12 0.14 0.09  0.07 0.09 0.06     0.12 0.07 0.16 0.18 0.12
+## [3,] 2.52 2.39 3.05  5.10 2.77 7.61     2.53 3.78 3.95 2.62 2.17
+## [4,] 0.10 0.10 0.12  0.21 0.11 0.31     0.10 0.15 0.16 0.11 0.09
+```
 
 ```r
 write.csv(f, "C:/Data/Thesis/factors.csv")
-f = f %>% select(-c(Date, SMB.HML, SMB.HMLm, SMB.RMWo, SMB.RMWg, SMB.CMA, SMB.WML))
-rbind(sapply(f, mean), sapply(f, se), sapply(f, t.stat))  %>% round(2)
-```
-
-```
-##       HML HMLm RMWo RMWg  CMA  WML   Rm  SMB
-## [1,] 0.31 0.37 0.27 0.23 0.28 0.61 0.50 0.26
-## [2,] 0.11 0.14 0.09 0.09 0.07 0.16 0.17 0.12
-## [3,] 2.76 2.73 3.09 2.59 3.93 3.82 2.84 2.28
 ```
 
 
 ```r
-cor(f) %>% round(2) %>% as.data.frame
+cor(
+    f %>% select(
+        -c(Date, SMB.HML, SMB.HMLm, SMB.RMWo, SMB.RMWor, SMB.RMWg, SMB.CMA, SMB.WML)
+    )
+) %>% round(2) %>% as.data.frame
 ```
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["HML"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["HMLm"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["RMWo"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["RMWg"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["CMA"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["WML"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Rm"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["SMB"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"1.00","2":"0.79","3":"0.13","4":"-0.59","5":"0.65","6":"-0.22","7":"-0.33","8":"-0.12","_rn_":"HML"},{"1":"0.79","2":"1.00","3":"0.03","4":"-0.51","5":"0.48","6":"-0.68","7":"-0.16","8":"-0.06","_rn_":"HMLm"},{"1":"0.13","2":"0.03","3":"1.00","4":"0.24","5":"-0.14","6":"0.01","7":"-0.23","8":"-0.35","_rn_":"RMWo"},{"1":"-0.59","2":"-0.51","3":"0.24","4":"1.00","5":"-0.41","6":"0.13","7":"0.14","8":"0.16","_rn_":"RMWg"},{"1":"0.65","2":"0.48","3":"-0.14","4":"-0.41","5":"1.00","6":"-0.07","7":"-0.35","8":"-0.04","_rn_":"CMA"},{"1":"-0.22","2":"-0.68","3":"0.01","4":"0.13","5":"-0.07","6":"1.00","7":"-0.05","8":"0.04","_rn_":"WML"},{"1":"-0.33","2":"-0.16","3":"-0.23","4":"0.14","5":"-0.35","6":"-0.05","7":"1.00","8":"0.27","_rn_":"Rm"},{"1":"-0.12","2":"-0.06","3":"-0.35","4":"0.16","5":"-0.04","6":"0.04","7":"0.27","8":"1.00","_rn_":"SMB"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["HML"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["HMLm"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["RMWo"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["RMWor"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["RMWg"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["RMWc"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["SMB.RMWc"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["CMA"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["WML"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["Rm"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["SMB"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"1.00","2":"0.79","3":"0.13","4":"-0.33","5":"-0.59","6":"-0.22","7":"-0.12","8":"0.65","9":"-0.22","10":"-0.33","11":"-0.12","_rn_":"HML"},{"1":"0.79","2":"1.00","3":"0.03","4":"-0.37","5":"-0.51","6":"-0.33","7":"-0.08","8":"0.48","9":"-0.68","10":"-0.16","11":"-0.06","_rn_":"HMLm"},{"1":"0.13","2":"0.03","3":"1.00","4":"0.78","5":"0.24","6":"0.62","7":"-0.35","8":"-0.14","9":"0.01","10":"-0.23","11":"-0.35","_rn_":"RMWo"},{"1":"-0.33","2":"-0.37","3":"0.78","4":"1.00","5":"0.62","6":"0.77","7":"-0.11","8":"-0.36","9":"0.16","10":"-0.01","11":"-0.13","_rn_":"RMWor"},{"1":"-0.59","2":"-0.51","3":"0.24","4":"0.62","5":"1.00","6":"0.54","7":"0.17","8":"-0.41","9":"0.13","10":"0.14","11":"0.16","_rn_":"RMWg"},{"1":"-0.22","2":"-0.33","3":"0.62","4":"0.77","5":"0.54","6":"1.00","7":"-0.19","8":"-0.14","9":"0.24","10":"-0.24","11":"-0.24","_rn_":"RMWc"},{"1":"-0.12","2":"-0.08","3":"-0.35","4":"-0.11","5":"0.17","6":"-0.19","7":"1.00","8":"-0.02","9":"0.07","10":"0.26","11":"0.99","_rn_":"SMB.RMWc"},{"1":"0.65","2":"0.48","3":"-0.14","4":"-0.36","5":"-0.41","6":"-0.14","7":"-0.02","8":"1.00","9":"-0.07","10":"-0.35","11":"-0.04","_rn_":"CMA"},{"1":"-0.22","2":"-0.68","3":"0.01","4":"0.16","5":"0.13","6":"0.24","7":"0.07","8":"-0.07","9":"1.00","10":"-0.05","11":"0.04","_rn_":"WML"},{"1":"-0.33","2":"-0.16","3":"-0.23","4":"-0.01","5":"0.14","6":"-0.24","7":"0.26","8":"-0.35","9":"-0.05","10":"1.00","11":"0.27","_rn_":"Rm"},{"1":"-0.12","2":"-0.06","3":"-0.35","4":"-0.13","5":"0.16","6":"-0.24","7":"0.99","8":"-0.04","9":"0.04","10":"0.27","11":"1.00","_rn_":"SMB"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
 
 ```r
-summary(lm(SMB~Rm+HML+RMWo+CMA, data=f))
+summary(lm(SMB~Rm+HML+RMWor+CMA, data=f))
 ```
 
 ```
 ## 
 ## Call:
-## lm(formula = SMB ~ Rm + HML + RMWo + CMA, data = f)
+## lm(formula = SMB ~ Rm + HML + RMWor + CMA, data = f)
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
-## -10.7844  -1.6237  -0.1829   1.5452   9.6914 
+## -13.5983  -1.6409  -0.1819   1.6552  14.5734 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  0.30777    0.11126   2.766  0.00584 ** 
-## Rm           0.13284    0.02694   4.931 1.05e-06 ***
-## HML         -0.02475    0.05136  -0.482  0.63012    
-## RMWo        -0.40109    0.05324  -7.533 1.70e-13 ***
-## CMA          0.01386    0.08295   0.167  0.86740    
+## (Intercept)  0.25989    0.11817   2.199 0.028218 *  
+## Rm           0.17056    0.02733   6.242  7.9e-10 ***
+## HML         -0.15162    0.05205  -2.913 0.003705 ** 
+## RMWor       -0.23630    0.07125  -3.317 0.000963 ***
+## CMA          0.16147    0.08308   1.943 0.052404 .  
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 2.689 on 637 degrees of freedom
-## Multiple R-squared:  0.1617,	Adjusted R-squared:  0.1564 
-## F-statistic: 30.72 on 4 and 637 DF,  p-value: < 2.2e-16
+## Residual standard error: 2.782 on 637 degrees of freedom
+## Multiple R-squared:  0.1025,	Adjusted R-squared:  0.09687 
+## F-statistic: 18.19 on 4 and 637 DF,  p-value: 3.695e-14
 ```
 
 
@@ -3047,15 +3949,15 @@ summary(lm(HML~Rm+SMB+RMWo+CMA, data=f))
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -9.1806 -1.3132  0.0842  1.3023  8.2127 
+## -9.1804 -1.3132  0.0842  1.3023  8.2126 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept) -0.02635    0.08632  -0.305   0.7602    
+## (Intercept) -0.02636    0.08632  -0.305   0.7601    
 ## Rm          -0.03481    0.02113  -1.648   0.0999 .  
-## SMB         -0.01472    0.03055  -0.482   0.6301    
-## RMWo         0.25957    0.04160   6.240    8e-10 ***
-## CMA          1.01983    0.04960  20.560   <2e-16 ***
+## SMB         -0.01471    0.03055  -0.481   0.6303    
+## RMWo         0.25959    0.04160   6.240 7.99e-10 ***
+## CMA          1.01984    0.04960  20.560  < 2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -3076,15 +3978,15 @@ summary(lm(RMWo~Rm+SMB+HML+CMA, data=f))
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
-## -11.2814  -1.0167  -0.0550   0.9572  13.2037 
+## -11.2810  -1.0167  -0.0550   0.9573  13.2038 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  0.43698    0.07792   5.608 3.05e-08 ***
-## Rm          -0.09764    0.01919  -5.088 4.76e-07 ***
-## SMB         -0.20396    0.02707  -7.533 1.70e-13 ***
-## HML          0.22190    0.03556   6.240 8.00e-10 ***
-## CMA         -0.48663    0.05592  -8.702  < 2e-16 ***
+## (Intercept)  0.43699    0.07792   5.609 3.04e-08 ***
+## Rm          -0.09763    0.01919  -5.088 4.77e-07 ***
+## SMB         -0.20397    0.02707  -7.534 1.69e-13 ***
+## HML          0.22191    0.03556   6.240 7.99e-10 ***
+## CMA         -0.48664    0.05592  -8.702  < 2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -3105,15 +4007,15 @@ summary(lm(CMA~Rm+SMB+HML+RMWo, data=f))
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -3.8992 -0.8241 -0.0380  0.7211  5.0107 
+## -3.8992 -0.8241 -0.0380  0.7211  5.0109 
 ## 
 ## Coefficients:
 ##              Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  0.260830   0.052454   4.973 8.51e-07 ***
-## Rm          -0.085870   0.012662  -6.781 2.72e-11 ***
-## SMB          0.003161   0.018924   0.167    0.867    
-## HML          0.391137   0.019024  20.560  < 2e-16 ***
-## RMWo        -0.218322   0.025089  -8.702  < 2e-16 ***
+## (Intercept)  0.260836   0.052454   4.973 8.50e-07 ***
+## Rm          -0.085868   0.012662  -6.781 2.72e-11 ***
+## SMB          0.003154   0.018924   0.167    0.868    
+## HML          0.391138   0.019024  20.560  < 2e-16 ***
+## RMWo        -0.218334   0.025090  -8.702  < 2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -3134,21 +4036,21 @@ summary(lm(RMWg~Rm+SMB+HML+CMA, data=f))
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -5.1599 -1.0990 -0.0922  1.0735  7.3794 
+## -5.1494 -1.1059 -0.0929  1.0787  7.3719 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  0.39922    0.07224   5.527 4.76e-08 ***
-## Rm          -0.05660    0.01779  -3.182 0.001536 ** 
-## SMB          0.09027    0.02510   3.596 0.000348 ***
-## HML         -0.44208    0.03297 -13.408  < 2e-16 ***
-## CMA         -0.10594    0.05185  -2.043 0.041436 *  
+## (Intercept)  0.39910    0.07223   5.525  4.8e-08 ***
+## Rm          -0.05677    0.01779  -3.191 0.001485 ** 
+## SMB          0.08986    0.02510   3.580 0.000369 ***
+## HML         -0.44192    0.03297 -13.405  < 2e-16 ***
+## CMA         -0.10656    0.05184  -2.055 0.040244 *  
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Residual standard error: 1.778 on 637 degrees of freedom
 ## Multiple R-squared:  0.3715,	Adjusted R-squared:  0.3675 
-## F-statistic: 94.12 on 4 and 637 DF,  p-value: < 2.2e-16
+## F-statistic: 94.11 on 4 and 637 DF,  p-value: < 2.2e-16
 ```
 
 
@@ -3163,20 +4065,20 @@ summary(lm(HML~Rm+SMB+RMWg+CMA, data=f))
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
-## -12.5899  -0.9739  -0.0326   0.9441  11.5949 
+## -12.5857  -0.9736  -0.0355   0.9523  11.5919 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  0.27083    0.07774   3.484 0.000528 ***
-## Rm          -0.07796    0.01878  -4.152 3.75e-05 ***
-## SMB         -0.01105    0.02690  -0.411 0.681478    
-## RMWg        -0.49790    0.03713 -13.408  < 2e-16 ***
-## CMA          0.68669    0.04803  14.297  < 2e-16 ***
+## (Intercept)  0.27077    0.07775   3.483  0.00053 ***
+## Rm          -0.07805    0.01878  -4.156 3.68e-05 ***
+## SMB         -0.01126    0.02690  -0.419  0.67565    
+## RMWg        -0.49787    0.03714 -13.405  < 2e-16 ***
+## CMA          0.68647    0.04804  14.289  < 2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Residual standard error: 1.887 on 637 degrees of freedom
-## Multiple R-squared:  0.5595,	Adjusted R-squared:  0.5567 
+## Multiple R-squared:  0.5594,	Adjusted R-squared:  0.5566 
 ## F-statistic: 202.2 on 4 and 637 DF,  p-value: < 2.2e-16
 ```
 
@@ -3192,15 +4094,15 @@ summary(lm(HMLm~Rm+SMB+RMWo+CMA, data=f))
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
-## -19.0098  -1.5739  -0.1471   1.3854  21.2073 
+## -19.0096  -1.5741  -0.1471   1.3854  21.2073 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  0.04079    0.12579   0.324  0.74584    
+## (Intercept)  0.04078    0.12579   0.324  0.74590    
 ## Rm           0.04014    0.03079   1.304  0.19272    
-## SMB         -0.02872    0.04452  -0.645  0.51917    
-## RMWo         0.16454    0.06062   2.714  0.00682 ** 
-## CMA          0.98238    0.07228  13.591  < 2e-16 ***
+## SMB         -0.02871    0.04452  -0.645  0.51928    
+## RMWo         0.16455    0.06062   2.714  0.00682 ** 
+## CMA          0.98239    0.07228  13.591  < 2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -3221,14 +4123,14 @@ summary(lm(HMLm~Rm+SMB+RMWo+CMA+WML, data=f))
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -9.5971 -1.1546  0.0676  1.1452  8.7403 
+## -9.5971 -1.1546  0.0676  1.1451  8.7403 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)    
 ## (Intercept)  0.43449    0.08543   5.086 4.82e-07 ***
-## Rm          -0.01306    0.02071  -0.630 0.528603    
-## SMB          0.02259    0.02988   0.756 0.449864    
-## RMWo         0.15618    0.04061   3.846 0.000132 ***
+## Rm          -0.01306    0.02071  -0.631 0.528578    
+## SMB          0.02260    0.02988   0.756 0.449778    
+## RMWo         0.15619    0.04061   3.846 0.000132 ***
 ## CMA          0.84545    0.04867  17.372  < 2e-16 ***
 ## WML         -0.56183    0.02007 -27.991  < 2e-16 ***
 ## ---
@@ -3251,21 +4153,21 @@ summary(lm(HMLm~Rm+SMB+RMWg+CMA, data=f))
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
-## -21.0359  -1.2403  -0.1273   1.0338  21.0813 
+## -21.0310  -1.2374  -0.1258   1.0426  21.0840 
 ## 
 ## Coefficients:
 ##              Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  0.322160   0.115811   2.782  0.00557 ** 
-## Rm           0.005425   0.027972   0.194  0.84627    
-## SMB          0.005270   0.040077   0.131  0.89543    
-## RMWg        -0.575081   0.055318 -10.396  < 2e-16 ***
-## CMA          0.634964   0.071552   8.874  < 2e-16 ***
+## (Intercept)  0.322159   0.115807   2.782  0.00556 ** 
+## Rm           0.005316   0.027972   0.190  0.84934    
+## SMB          0.005048   0.040073   0.126  0.89979    
+## RMWg        -0.575250   0.055324 -10.398  < 2e-16 ***
+## CMA          0.634604   0.071563   8.868  < 2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 2.811 on 637 degrees of freedom
+## Residual standard error: 2.81 on 637 degrees of freedom
 ## Multiple R-squared:  0.3472,	Adjusted R-squared:  0.3431 
-## F-statistic:  84.7 on 4 and 637 DF,  p-value: < 2.2e-16
+## F-statistic: 84.71 on 4 and 637 DF,  p-value: < 2.2e-16
 ```
 
 
@@ -3280,22 +4182,22 @@ summary(lm(HMLm~Rm+SMB+RMWg+CMA+WML, data=f))
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
-## -11.9615  -0.8948  -0.0017   0.9045   8.7770 
+## -11.9589  -0.9006   0.0023   0.9068   8.7748 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  0.65633    0.07598   8.638   <2e-16 ***
-## Rm          -0.04153    0.01822  -2.280   0.0229 *  
-## SMB          0.04278    0.02603   1.643   0.1008    
-## RMWg        -0.46519    0.03608 -12.893   <2e-16 ***
-## CMA          0.56368    0.04649  12.126   <2e-16 ***
-## WML         -0.53830    0.01817 -29.619   <2e-16 ***
+## (Intercept)  0.65614    0.07599   8.634   <2e-16 ***
+## Rm          -0.04161    0.01822  -2.283   0.0227 *  
+## SMB          0.04255    0.02604   1.634   0.1027    
+## RMWg        -0.46495    0.03609 -12.881   <2e-16 ***
+## CMA          0.56360    0.04650  12.120   <2e-16 ***
+## WML         -0.53823    0.01818 -29.608   <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 1.823 on 636 degrees of freedom
-## Multiple R-squared:  0.7256,	Adjusted R-squared:  0.7235 
-## F-statistic: 336.4 on 5 and 636 DF,  p-value: < 2.2e-16
+## Residual standard error: 1.824 on 636 degrees of freedom
+## Multiple R-squared:  0.7255,	Adjusted R-squared:  0.7234 
+## F-statistic: 336.3 on 5 and 636 DF,  p-value: < 2.2e-16
 ```
 
 
@@ -3310,23 +4212,23 @@ summary(lm(HMLm~Rm+SMB+HML+RMWg+CMA+WML, data=f))
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -5.4714 -0.5801 -0.0130  0.5565  7.4709 
+## -5.4712 -0.5792 -0.0132  0.5566  7.4714 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  0.39406    0.04683   8.415 2.61e-16 ***
-## Rm           0.02667    0.01126   2.369 0.018115 *  
-## SMB          0.04591    0.01581   2.903 0.003822 ** 
-## HML          0.78570    0.02381  32.998  < 2e-16 ***
-## RMWg        -0.09026    0.02469  -3.656 0.000277 ***
-## CMA          0.03470    0.03247   1.069 0.285565    
-## WML         -0.45860    0.01130 -40.583  < 2e-16 ***
+## (Intercept)  0.39395    0.04683   8.412 2.66e-16 ***
+## Rm           0.02667    0.01126   2.369 0.018128 *  
+## SMB          0.04585    0.01581   2.900 0.003865 ** 
+## HML          0.78582    0.02381  33.005  < 2e-16 ***
+## RMWg        -0.09004    0.02469  -3.647 0.000287 ***
+## CMA          0.03467    0.03247   1.068 0.286114    
+## WML         -0.45858    0.01130 -40.579  < 2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Residual standard error: 1.108 on 635 degrees of freedom
 ## Multiple R-squared:  0.8989,	Adjusted R-squared:  0.898 
-## F-statistic: 941.4 on 6 and 635 DF,  p-value: < 2.2e-16
+## F-statistic: 941.3 on 6 and 635 DF,  p-value: < 2.2e-16
 ```
 
 
@@ -3374,7 +4276,7 @@ summary(lm(HMLm~Rm+SMB, data=f))
 ##             Estimate Std. Error t value Pr(>|t|)    
 ## (Intercept)  0.44069    0.13638   3.231 0.001295 ** 
 ## Rm          -0.12060    0.03183  -3.789 0.000166 ***
-## SMB         -0.02687    0.04807  -0.559 0.576320    
+## SMB         -0.02687    0.04807  -0.559 0.576330    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 

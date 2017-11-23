@@ -2850,70 +2850,87 @@ library(Rsolnp)</code></pre>
 
 t.stat = function(x) t.test(x)$statistic
 
-sr = function(x) mean(x, na.rm=TRUE) / sd(x, na.rm=TRUE)</code></pre>
+sr = function(x) mean(x, na.rm=TRUE) / sd(x, na.rm=TRUE)
+
+stat.summary = function(df){
+    return(
+        rbind(sapply(df, mean), sapply(df, se), sapply(df, t.stat), sapply(df, sr))
+    )
+}</code></pre>
 </section>
 <section id="my-factors" class="level1">
 <h1><span class="header-section-number">2</span> My Factors</h1>
 <pre class="r"><code>f = fread(&quot;C:/Data/Thesis/factors.csv&quot;)
 
-f = f %&gt;% select(Rm, SMB, HML, HMLm, RMWo, RMWg, CMA, WML)
+colnames(f)</code></pre>
+<pre><code>##  [1] &quot;V1&quot;        &quot;Date&quot;      &quot;HML&quot;       &quot;SMB.HML&quot;   &quot;HMLm&quot;     
+##  [6] &quot;SMB.HMLm&quot;  &quot;RMWo&quot;      &quot;SMB.RMWo&quot;  &quot;RMWor&quot;     &quot;SMB.RMWor&quot;
+## [11] &quot;RMWg&quot;      &quot;SMB.RMWg&quot;  &quot;RMWc&quot;      &quot;SMB.RMWc&quot;  &quot;CMA&quot;      
+## [16] &quot;SMB.CMA&quot;   &quot;WML&quot;       &quot;SMB.WML&quot;   &quot;Rm&quot;        &quot;SMB&quot;</code></pre>
+<pre class="r"><code>f = f[1:630,]  %&gt;% select(
+    -c(V1, Date, SMB.HML, SMB.HMLm, SMB.RMWo, SMB.RMWor, SMB.RMWg, SMB.RMWc, SMB.CMA, SMB.WML)
+)
 
 rbind(sapply(f, mean), sapply(f, se), sapply(f, t.stat), sapply(f, sr))  %&gt;% round(2)</code></pre>
-<pre><code>##        Rm  SMB  HML HMLm RMWo RMWg  CMA  WML
-## [1,] 0.50 0.26 0.31 0.37 0.27 0.23 0.28 0.61
-## [2,] 0.17 0.12 0.11 0.14 0.09 0.09 0.07 0.16
-## [3,] 2.84 2.28 2.76 2.73 3.09 2.59 3.93 3.82
-## [4,] 0.11 0.09 0.11 0.11 0.12 0.10 0.16 0.15</code></pre>
+<pre><code>##       HML HMLm RMWo RMWor RMWg RMWc  CMA  WML   Rm  SMB
+## [1,] 0.29 0.34 0.27  0.35 0.25 0.43 0.27 0.65 0.49 0.25
+## [2,] 0.11 0.14 0.09  0.07 0.09 0.06 0.07 0.16 0.18 0.12
+## [3,] 2.52 2.46 3.05  5.10 2.77 7.60 3.78 4.04 2.74 2.17
+## [4,] 0.10 0.10 0.12  0.20 0.11 0.30 0.15 0.16 0.11 0.09</code></pre>
 </section>
 <section id="french-dartmouth-web-factors" class="level1">
 <h1><span class="header-section-number">3</span> French Dartmouth Web Factors</h1>
 <pre class="r"><code>ff = fread(&quot;C:/Data/FrenchDartmouth/FF_factors.csv&quot;)
 
-ff = ff %&gt;% select(-c(Date))
+ff = ff[1:630,] %&gt;% select(-c(Date))
 setnames(ff,
          c(&quot;Mkt-RF&quot;, &quot;SMB&quot;, &quot;HML&quot;, &quot;RMW&quot;, &quot;CMA&quot;),
          c(&quot;FF.Rm&quot;, &quot;FF.SMB&quot;, &quot;FF.HML&quot;, &quot;FF.RMW&quot;, &quot;FF.CMA&quot;))
 
 rbind(sapply(ff, mean), sapply(ff, se), sapply(ff, t.stat))  %&gt;% round(2)</code></pre>
 <pre><code>##      FF.Rm FF.SMB FF.HML FF.RMW FF.CMA    RF
-## [1,]  0.51   0.26   0.37   0.25   0.31  0.39
-## [2,]  0.17   0.12   0.11   0.09   0.08  0.01
-## [3,]  2.92   2.19   3.32   2.79   3.88 37.63</code></pre>
+## [1,]  0.50   0.25   0.35   0.24   0.30  0.40
+## [2,]  0.18   0.12   0.11   0.09   0.08  0.01
+## [3,]  2.82   2.09   3.09   2.75   3.74 38.35</code></pre>
 <pre class="r"><code>f = cbind(f, ff)</code></pre>
 </section>
 <section id="factor-correlation" class="level1">
 <h1><span class="header-section-number">4</span> Factor Correlation</h1>
-<pre class="r"><code>cor(f) %&gt;% round(2)</code></pre>
-<pre><code>##           Rm   SMB   HML  HMLm  RMWo  RMWg   CMA   WML FF.Rm FF.SMB FF.HML
-## Rm      1.00  0.27 -0.33 -0.16 -0.23  0.14 -0.35 -0.05  1.00   0.28  -0.26
-## SMB     0.27  1.00 -0.12 -0.06 -0.35  0.16 -0.04  0.04  0.27   0.99  -0.07
-## HML    -0.33 -0.12  1.00  0.79  0.13 -0.59  0.65 -0.22 -0.34  -0.13   0.95
-## HMLm   -0.16 -0.06  0.79  1.00  0.03 -0.51  0.48 -0.68 -0.16  -0.07   0.80
-## RMWo   -0.23 -0.35  0.13  0.03  1.00  0.24 -0.14  0.01 -0.22  -0.35   0.08
-## RMWg    0.14  0.16 -0.59 -0.51  0.24  1.00 -0.41  0.13  0.14   0.16  -0.60
-## CMA    -0.35 -0.04  0.65  0.48 -0.14 -0.41  1.00 -0.07 -0.35  -0.04   0.63
-## WML    -0.05  0.04 -0.22 -0.68  0.01  0.13 -0.07  1.00 -0.04   0.04  -0.24
-## FF.Rm   1.00  0.27 -0.34 -0.16 -0.22  0.14 -0.35 -0.04  1.00   0.28  -0.26
-## FF.SMB  0.28  0.99 -0.13 -0.07 -0.35  0.16 -0.04  0.04  0.28   1.00  -0.08
-## FF.HML -0.26 -0.07  0.95  0.80  0.08 -0.60  0.63 -0.24 -0.26  -0.08   1.00
-## FF.RMW -0.24 -0.35  0.14  0.02  0.96  0.24 -0.13  0.03 -0.23  -0.35   0.07
-## FF.CMA -0.38 -0.10  0.70  0.53 -0.02 -0.46  0.92 -0.08 -0.38  -0.11   0.70
-## RF     -0.08 -0.05  0.07  0.04  0.01 -0.04  0.06  0.05 -0.08  -0.05   0.06
-##        FF.RMW FF.CMA    RF
-## Rm      -0.24  -0.38 -0.08
-## SMB     -0.35  -0.10 -0.05
-## HML      0.14   0.70  0.07
-## HMLm     0.02   0.53  0.04
-## RMWo     0.96  -0.02  0.01
-## RMWg     0.24  -0.46 -0.04
-## CMA     -0.13   0.92  0.06
-## WML      0.03  -0.08  0.05
-## FF.Rm   -0.23  -0.38 -0.08
-## FF.SMB  -0.35  -0.11 -0.05
-## FF.HML   0.07   0.70  0.06
-## FF.RMW   1.00  -0.03  0.00
-## FF.CMA  -0.03   1.00  0.06
-## RF       0.00   0.06  1.00</code></pre>
+<pre class="r"><code>cor(f[1:630,]) %&gt;% round(2)</code></pre>
+<pre><code>##          HML  HMLm  RMWo RMWor  RMWg  RMWc   CMA   WML    Rm   SMB FF.Rm
+## HML     1.00  0.79  0.13 -0.33 -0.59 -0.21  0.65 -0.22 -0.34 -0.13 -0.34
+## HMLm    0.79  1.00  0.03 -0.37 -0.50 -0.33  0.48 -0.68 -0.17 -0.07 -0.17
+## RMWo    0.13  0.03  1.00  0.78  0.23  0.62 -0.15  0.01 -0.23 -0.35 -0.22
+## RMWor  -0.33 -0.37  0.78  1.00  0.62  0.77 -0.36  0.16 -0.01 -0.13  0.00
+## RMWg   -0.59 -0.50  0.23  0.62  1.00  0.54 -0.42  0.13  0.15  0.17  0.15
+## RMWc   -0.21 -0.33  0.62  0.77  0.54  1.00 -0.14  0.24 -0.24 -0.24 -0.23
+## CMA     0.65  0.48 -0.15 -0.36 -0.42 -0.14  1.00 -0.07 -0.35 -0.04 -0.35
+## WML    -0.22 -0.68  0.01  0.16  0.13  0.24 -0.07  1.00 -0.04  0.05 -0.04
+## Rm     -0.34 -0.17 -0.23 -0.01  0.15 -0.24 -0.35 -0.04  1.00  0.27  1.00
+## SMB    -0.13 -0.07 -0.35 -0.13  0.17 -0.24 -0.04  0.05  0.27  1.00  0.26
+## FF.Rm  -0.34 -0.17 -0.22  0.00  0.15 -0.23 -0.35 -0.04  1.00  0.26  1.00
+## FF.SMB -0.13 -0.07 -0.35 -0.13  0.18 -0.24 -0.05  0.05  0.28  0.99  0.27
+## FF.HML  0.95  0.80  0.08 -0.34 -0.60 -0.25  0.64 -0.23 -0.26 -0.08 -0.27
+## FF.RMW  0.15  0.02  0.96  0.74  0.24  0.61 -0.14  0.03 -0.24 -0.35 -0.23
+## FF.CMA  0.70  0.53 -0.02 -0.29 -0.46 -0.11  0.92 -0.08 -0.39 -0.11 -0.39
+## RF      0.09  0.06  0.01 -0.04 -0.05  0.04  0.06  0.03 -0.08 -0.05 -0.08
+##        FF.SMB FF.HML FF.RMW FF.CMA    RF
+## HML     -0.13   0.95   0.15   0.70  0.09
+## HMLm    -0.07   0.80   0.02   0.53  0.06
+## RMWo    -0.35   0.08   0.96  -0.02  0.01
+## RMWor   -0.13  -0.34   0.74  -0.29 -0.04
+## RMWg     0.18  -0.60   0.24  -0.46 -0.05
+## RMWc    -0.24  -0.25   0.61  -0.11  0.04
+## CMA     -0.05   0.64  -0.14   0.92  0.06
+## WML      0.05  -0.23   0.03  -0.08  0.03
+## Rm       0.28  -0.26  -0.24  -0.39 -0.08
+## SMB      0.99  -0.08  -0.35  -0.11 -0.05
+## FF.Rm    0.27  -0.27  -0.23  -0.39 -0.08
+## FF.SMB   1.00  -0.09  -0.35  -0.12 -0.05
+## FF.HML  -0.09   1.00   0.07   0.70  0.08
+## FF.RMW  -0.35   0.07   1.00  -0.03  0.01
+## FF.CMA  -0.12   0.70  -0.03   1.00  0.06
+## RF      -0.05   0.08   0.01   0.06  1.00</code></pre>
 </section>
 <section id="maximum-sharpe-ratio" class="level1">
 <h1><span class="header-section-number">5</span> Maximum Sharpe Ratio</h1>
@@ -2926,7 +2943,8 @@ Var(R_p) = w^T \Omega w
 \]</span></p>
 <pre class="r"><code>VAR = function(w, covar.mat) t(w)%*%covar.mat%*%w
 SD = function(w, covar.mat) sqrt(VAR(w, covar.mat))</code></pre>
-<pre class="r"><code>SR = function(w, factor.mat, covar.mat){
+<pre class="r"><code># Objective function passed to one of R's minimizing thingies
+SR.obj = function(w, factor.mat, covar.mat){
 
     w = matrix(w, nrow=length(w), ncol=1)
 
@@ -2947,109 +2965,366 @@ SD = function(w, covar.mat) sqrt(VAR(w, covar.mat))</code></pre>
 sum.constraint = function(w, factor.mat, covar.mat){
     return(sum(w))
 }</code></pre>
-<section id="f-rm-smb-hml" class="level2">
-<h2><span class="header-section-number">5.1</span> <span class="math inline">\(f = [Rm, SMB, HML]\)</span></h2>
-<pre class="r"><code>factor.mat = f %&gt;% select(FF.Rm, FF.SMB, FF.HML)
+</section>
+<section id="fama-and-french-2016-table-3" class="level1">
+<h1><span class="header-section-number">6</span> Fama and French (2016) Table 3</h1>
+<section id="rm-smb-hml-rmwor-cma" class="level2">
+<h2><span class="header-section-number">6.1</span> Rm, SMB, HML, RMWor, CMA</h2>
+<pre class="r"><code>factor.mat = f %&gt;% select(FF.Rm, FF.SMB, FF.HML, RMWor, FF.CMA)
+factor.mat = factor.mat[1:630,]  # through 2015-12
 
 R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
 covar.mat = cov(factor.mat)
 
-sqrt(SR.sq.mat(R, covar.mat)) %&gt;% round(4)</code></pre>
-<pre><code>##        [,1]
-## [1,] 0.2109</code></pre>
+# Max Sharpe Ratio
+Sh2 = rbind(SR.sq.mat(R, covar.mat), sqrt(SR.sq.mat(R, covar.mat)[1]))[1]
+
+# Marginal contributions from spanning regression
+
+fit = lm(FF.Rm ~ FF.SMB + FF.HML + RMWor + FF.CMA, data=factor.mat)
+# round(coef(fit), 3)
+# round(sd(fit$residuals), 3)
+Mkt = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(FF.SMB ~ FF.Rm + FF.HML + RMWor + FF.CMA, data=factor.mat)
+# round(coef(fit), 3)
+# round(sd(fit$residuals), 3)
+Size = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(FF.HML ~ FF.Rm + FF.SMB + RMWor + FF.CMA, data=factor.mat)
+# round(coef(fit), 3)
+# round(sd(fit$residuals), 3)
+Val = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(RMWor ~ FF.Rm + FF.SMB + FF.HML + FF.CMA, data=factor.mat)
+# round(coef(fit), 3)
+# round(sd(fit$residuals), 3)
+Prof = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(FF.CMA ~ FF.Rm + FF.SMB + FF.HML + RMWor, data=factor.mat)
+# round(coef(fit), 3)
+# round(sd(fit$residuals), 3)
+Inv = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+RMWor = cbind(Sh2, Mkt, Size, Val, Prof, Inv)
+rownames(RMWor) = c(&quot;Mkt, SMB, HML, RMWor, CMA&quot;)
+# round(RMWor, 3)</code></pre>
 </section>
-<section id="f-rm-smb-rmw-cma" class="level2">
-<h2><span class="header-section-number">5.2</span> <span class="math inline">\(f = [Rm, SMB, RMW, CMA]\)</span></h2>
-<pre class="r"><code>factor.mat = f %&gt;% select(FF.Rm, FF.SMB, FF.HML, FF.RMW, FF.CMA)
+<section id="rm-smb-hml-rmwc-cma" class="level2">
+<h2><span class="header-section-number">6.2</span> Rm, SMB, HML, RMWc, CMA</h2>
+<pre class="r"><code>factor.mat = f %&gt;% select(FF.Rm, FF.SMB, FF.HML, RMWc, FF.CMA)
+factor.mat = factor.mat[1:630,]  # through 2015-12
 
 R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
 covar.mat = cov(factor.mat)
 
-sqrt(SR.sq.mat(R, covar.mat)) %&gt;% round(4)</code></pre>
-<pre><code>##        [,1]
-## [1,] 0.3188</code></pre>
+# Max Sharpe Ratio
+Sh2 = rbind(SR.sq.mat(R, covar.mat), sqrt(SR.sq.mat(R, covar.mat)[1]))[1]
+
+# Marginal contributions from spanning regression
+
+fit = lm(FF.Rm ~ FF.SMB + FF.HML + RMWc + FF.CMA, data=factor.mat)
+Mkt = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(FF.SMB ~ FF.Rm + FF.HML + RMWc + FF.CMA, data=factor.mat)
+Size = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(FF.HML ~ FF.Rm + FF.SMB + RMWc + FF.CMA, data=factor.mat)
+Val = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(RMWc ~ FF.Rm + FF.SMB + FF.HML + FF.CMA, data=factor.mat)
+Prof = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(FF.CMA ~ FF.Rm + FF.SMB + FF.HML + RMWc, data=factor.mat)
+Inv = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+RMWc = cbind(Sh2, Mkt, Size, Val, Prof, Inv)
+rownames(RMWc) = c(&quot;Mkt, SMB, HML, RMWc, CMA&quot;)
+res = rbind(RMWor, RMWc)
+# round(res, 3)</code></pre>
 </section>
-<section id="f-rm-smb-rmw-cma-1" class="level2">
-<h2><span class="header-section-number">5.3</span> <span class="math inline">\(f = [Rm, SMB, RMW, CMA]\)</span></h2>
-<pre class="r"><code>factor.mat = f %&gt;% select(FF.Rm, FF.SMB, FF.RMW, FF.CMA)
+<section id="rm-smb-hml-rmwg-cma" class="level2">
+<h2><span class="header-section-number">6.3</span> Rm, SMB, HML, RMWg, CMA</h2>
+<pre class="r"><code>factor.mat = f %&gt;% select(FF.Rm, FF.SMB, FF.HML, RMWg, FF.CMA)
+factor.mat = factor.mat[1:630,]  # through 2015-12
 
 R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
 covar.mat = cov(factor.mat)
 
-sqrt(SR.sq.mat(R, covar.mat)) %&gt;% round(4)</code></pre>
-<pre><code>##        [,1]
-## [1,] 0.3187</code></pre>
+# Max Sharpe Ratio
+Sh2 = rbind(SR.sq.mat(R, covar.mat), sqrt(SR.sq.mat(R, covar.mat)[1]))[1]
+
+# Marginal contributions from spanning regression
+
+fit = lm(FF.Rm ~ FF.SMB + FF.HML + RMWg + FF.CMA, data=factor.mat)
+Mkt = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(FF.SMB ~ FF.Rm + FF.HML + RMWg + FF.CMA, data=factor.mat)
+Size = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(FF.HML ~ FF.Rm + FF.SMB + RMWg + FF.CMA, data=factor.mat)
+Val = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(RMWg ~ FF.Rm + FF.SMB + FF.HML + FF.CMA, data=factor.mat)
+Prof = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(FF.CMA ~ FF.Rm + FF.SMB + FF.HML + RMWg, data=factor.mat)
+Inv = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+RMWg = cbind(Sh2, Mkt, Size, Val, Prof, Inv)
+rownames(RMWg) = c(&quot;Mkt, SMB, HML, RMWg, CMA&quot;)
+res = rbind(RMWor, RMWc, RMWg)
+# round(res, 3)</code></pre>
 </section>
-<section id="f-rm-smb-rmw-cma-wml" class="level2">
-<h2><span class="header-section-number">5.4</span> <span class="math inline">\(f = [Rm, SMB, RMW, CMA, WML]\)</span></h2>
-<pre class="r"><code>factor.mat = f %&gt;% select(FF.Rm, FF.SMB, FF.RMW, FF.CMA, WML)
+<section id="rm-smb-hml-rmwor-cma-wml" class="level2">
+<h2><span class="header-section-number">6.4</span> Rm, SMB, HML, RMWor, CMA, WML</h2>
+<pre class="r"><code>factor.mat = f %&gt;% select(FF.Rm, FF.SMB, FF.HML, RMWor, FF.CMA, WML)
+factor.mat = factor.mat[1:630,]  # through 2015-12
 
 R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
 covar.mat = cov(factor.mat)
 
-sqrt(SR.sq.mat(R, covar.mat)) %&gt;% round(4)</code></pre>
-<pre><code>##        [,1]
-## [1,] 0.3623</code></pre>
+# Max Sharpe Ratio
+Sh2 = rbind(SR.sq.mat(R, covar.mat), sqrt(SR.sq.mat(R, covar.mat)[1]))[1]
+
+# Marginal contributions from spanning regression
+
+fit = lm(FF.Rm ~ FF.SMB + FF.HML + RMWor + FF.CMA + WML, data=factor.mat)
+# round(coef(fit), 3)
+# round(sd(fit$residuals), 3)
+Mkt = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(FF.SMB ~ FF.Rm + FF.HML + RMWor + FF.CMA + WML, data=factor.mat)
+# round(coef(fit), 3)
+# round(sd(fit$residuals), 3)
+Size = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(FF.HML ~ FF.Rm + FF.SMB + RMWor + FF.CMA + WML, data=factor.mat)
+# round(coef(fit), 3)
+# round(sd(fit$residuals), 3)
+Val = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(RMWor ~ FF.Rm + FF.SMB + FF.HML + FF.CMA + WML, data=factor.mat)
+# round(coef(fit), 3)
+# round(sd(fit$residuals), 3)
+Prof = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(FF.CMA ~ FF.Rm + FF.SMB + FF.HML + RMWor + WML, data=factor.mat)
+# round(coef(fit), 3)
+# round(sd(fit$residuals), 3)
+Inv = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(WML ~ FF.Rm + FF.SMB + FF.HML + RMWor + FF.CMA, data=factor.mat)
+# round(coef(fit), 3)
+# round(sd(fit$residuals), 3)
+Mom = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+RMWor = cbind(Sh2, Mkt, Size, Val, Prof, Inv, Mom)
+rownames(RMWor) = c(&quot;Mkt, SMB, HML, RMWor, CMA, WML&quot;)
+res = rbind(cbind(res, NA), RMWor)
+colnames(res) = c(&quot;Sh2&quot;, &quot;Mkt&quot;, &quot;Size&quot;, &quot;Val&quot;, &quot;Prof&quot;, &quot;Inv&quot;, &quot;Mom&quot;)
+# round(res, 3)</code></pre>
 </section>
-<section id="f-rm-smb-hml-rmw-cma-wml" class="level2">
-<h2><span class="header-section-number">5.5</span> <span class="math inline">\(f = [Rm, SMB, HML, RMW, CMA, WML]\)</span></h2>
-<pre class="r"><code>factor.mat = f %&gt;% select(FF.Rm, FF.SMB, FF.HML, FF.RMW, FF.CMA, WML)
+<section id="rm-smb-hml-rmwc-cma-wml" class="level2">
+<h2><span class="header-section-number">6.5</span> Rm, SMB, HML, RMWc, CMA, WML</h2>
+<pre class="r"><code>factor.mat = f %&gt;% select(FF.Rm, FF.SMB, FF.HML, RMWc, FF.CMA, WML)
+factor.mat = factor.mat[1:630,]  # through 2015-12
 
 R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
 covar.mat = cov(factor.mat)
 
-sqrt(SR.sq.mat(R, covar.mat)) %&gt;% round(4)</code></pre>
-<pre><code>##        [,1]
-## [1,] 0.3659</code></pre>
+# Max Sharpe Ratio
+Sh2 = rbind(SR.sq.mat(R, covar.mat), sqrt(SR.sq.mat(R, covar.mat)[1]))[1]
+
+# Marginal contributions from spanning regression
+
+fit = lm(FF.Rm ~ FF.SMB + FF.HML + RMWc + FF.CMA + WML, data=factor.mat)
+Mkt = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(FF.SMB ~ FF.Rm + FF.HML + RMWc + FF.CMA + WML, data=factor.mat)
+Size = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(FF.HML ~ FF.Rm + FF.SMB + RMWc + FF.CMA + WML, data=factor.mat)
+Val = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(RMWc ~ FF.Rm + FF.SMB + FF.HML + FF.CMA + WML, data=factor.mat)
+Prof = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(FF.CMA ~ FF.Rm + FF.SMB + FF.HML + RMWc + WML, data=factor.mat)
+Inv = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(WML ~ FF.Rm + FF.SMB + FF.HML + RMWc + FF.CMA, data=factor.mat)
+Mom = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+RMWc = cbind(Sh2, Mkt, Size, Val, Prof, Inv, Mom)
+rownames(RMWc) = c(&quot;Mkt, SMB, HML, RMWc, CMA, WML&quot;)
+res = rbind(res, RMWc)
+# round(res, 3)</code></pre>
 </section>
-<section id="f-rm-smb-hml_m-rmw-cma-wml" class="level2">
-<h2><span class="header-section-number">5.6</span> <span class="math inline">\(f = [Rm, SMB, HML_M, RMW, CMA, WML]\)</span></h2>
-<pre class="r"><code>factor.mat = f %&gt;% select(FF.Rm, FF.SMB, HMLm, FF.RMW, FF.CMA, WML)
+<section id="rm-smb-hml-rmwg-cma-wml" class="level2">
+<h2><span class="header-section-number">6.6</span> Rm, SMB, HML, RMWg, CMA, WML</h2>
+<pre class="r"><code>factor.mat = f %&gt;% select(FF.Rm, FF.SMB, FF.HML, RMWg, FF.CMA, WML)
+factor.mat = factor.mat[1:630,]  # through 2015-12
 
 R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
 covar.mat = cov(factor.mat)
 
-sqrt(SR.sq.mat(R, covar.mat)) %&gt;% round(4)</code></pre>
-<pre><code>##       [,1]
-## [1,] 0.423</code></pre>
+# Max Sharpe Ratio
+Sh2 = rbind(SR.sq.mat(R, covar.mat), sqrt(SR.sq.mat(R, covar.mat)[1]))[1]
+
+# Marginal contributions from spanning regression
+
+fit = lm(FF.Rm ~ FF.SMB + FF.HML + RMWg + FF.CMA + WML, data=factor.mat)
+Mkt = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(FF.SMB ~ FF.Rm + FF.HML + RMWg + FF.CMA + WML, data=factor.mat)
+Size = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(FF.HML ~ FF.Rm + FF.SMB + RMWg + FF.CMA + WML, data=factor.mat)
+Val = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(RMWg ~ FF.Rm + FF.SMB + FF.HML + FF.CMA + WML, data=factor.mat)
+Prof = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(FF.CMA ~ FF.Rm + FF.SMB + FF.HML + RMWg + WML, data=factor.mat)
+Inv = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(WML ~ FF.Rm + FF.SMB + FF.HML + RMWg + FF.CMA, data=factor.mat)
+Inv = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+RMWg = cbind(Sh2, Mkt, Size, Val, Prof, Inv, Mom)
+rownames(RMWg) = c(&quot;Mkt, SMB, HML, RMWg, CMA, WML&quot;)
+res = rbind(res, RMWg)
+# round(res, 3)</code></pre>
 </section>
-<section id="f-rm-smb-hml_m-rmw_g-cma-wml" class="level2">
-<h2><span class="header-section-number">5.7</span> <span class="math inline">\(f = [Rm, SMB, HML_M, RMW_g, CMA, WML]\)</span></h2>
+<section id="rm-smb-hmlm-rmwor-cma-wml" class="level2">
+<h2><span class="header-section-number">6.7</span> Rm, SMB, HMLm, RMWor, CMA, WML</h2>
+<pre class="r"><code>factor.mat = f %&gt;% select(FF.Rm, FF.SMB, HMLm, RMWor, FF.CMA, WML)
+factor.mat = factor.mat[1:630,]  # through 2015-12
+
+R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
+covar.mat = cov(factor.mat)
+
+# Max Sharpe Ratio
+Sh2 = rbind(SR.sq.mat(R, covar.mat), sqrt(SR.sq.mat(R, covar.mat)[1]))[1]
+
+# Marginal contributions from spanning regression
+
+fit = lm(FF.Rm ~ FF.SMB + HMLm + RMWor + FF.CMA + WML, data=factor.mat)
+# round(coef(fit), 3)
+# round(sd(fit$residuals), 3)
+Mkt = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(FF.SMB ~ FF.Rm + HMLm + RMWor + FF.CMA + WML, data=factor.mat)
+# round(coef(fit), 3)
+# round(sd(fit$residuals), 3)
+Size = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(HMLm ~ FF.Rm + FF.SMB + RMWor + FF.CMA + WML, data=factor.mat)
+# round(coef(fit), 3)
+# round(sd(fit$residuals), 3)
+Val = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(RMWor ~ FF.Rm + FF.SMB + HMLm + FF.CMA + WML, data=factor.mat)
+# round(coef(fit), 3)
+# round(sd(fit$residuals), 3)
+Prof = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(FF.CMA ~ FF.Rm + FF.SMB + HMLm + RMWor + WML, data=factor.mat)
+# round(coef(fit), 3)
+# round(sd(fit$residuals), 3)
+Inv = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(WML ~ FF.Rm + FF.SMB + HMLm + RMWor + FF.CMA, data=factor.mat)
+# round(coef(fit), 3)
+# round(sd(fit$residuals), 3)
+Mom = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+RMWor = cbind(Sh2, Mkt, Size, Val, Prof, Inv, Mom)
+rownames(RMWor) = c(&quot;Mkt, SMB, HMLm, RMWor, CMA, WML&quot;)
+res = rbind(res, RMWor)
+# round(res, 3)</code></pre>
+</section>
+<section id="rm-smb-hmlm-rmwc-cma-wml" class="level2">
+<h2><span class="header-section-number">6.8</span> Rm, SMB, HMLm, RMWc, CMA, WML</h2>
+<pre class="r"><code>factor.mat = f %&gt;% select(FF.Rm, FF.SMB, HMLm, RMWc, FF.CMA, WML)
+factor.mat = factor.mat[1:630,]  # through 2015-12
+
+R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
+covar.mat = cov(factor.mat)
+
+# Max Sharpe Ratio
+Sh2 = rbind(SR.sq.mat(R, covar.mat), sqrt(SR.sq.mat(R, covar.mat)[1]))[1]
+
+# Marginal contributions from spanning regression
+
+fit = lm(FF.Rm ~ FF.SMB + HMLm + RMWc + FF.CMA + WML, data=factor.mat)
+Mkt = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(FF.SMB ~ FF.Rm + HMLm + RMWc + FF.CMA + WML, data=factor.mat)
+Size = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(HMLm ~ FF.Rm + FF.SMB + RMWc + FF.CMA + WML, data=factor.mat)
+Val = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(RMWc ~ FF.Rm + FF.SMB + HMLm + FF.CMA + WML, data=factor.mat)
+Prof = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(FF.CMA ~ FF.Rm + FF.SMB + HMLm + RMWc + WML, data=factor.mat)
+Inv = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(WML ~ FF.Rm + FF.SMB + HMLm + RMWc + FF.CMA, data=factor.mat)
+Mom = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+RMWc = cbind(Sh2, Mkt, Size, Val, Prof, Inv, Mom)
+rownames(RMWc) = c(&quot;Mkt, SMB, HMLm, RMWc, CMA, WML&quot;)
+res = rbind(res, RMWc)
+# round(res, 3)</code></pre>
+</section>
+<section id="rm-smb-hmlm-rmwg-cma-wml" class="level2">
+<h2><span class="header-section-number">6.9</span> Rm, SMB, HMLm, RMWg, CMA, WML</h2>
 <pre class="r"><code>factor.mat = f %&gt;% select(FF.Rm, FF.SMB, HMLm, RMWg, FF.CMA, WML)
+factor.mat = factor.mat[1:630,]  # through 2015-12
 
 R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
 covar.mat = cov(factor.mat)
 
-sqrt(SR.sq.mat(R, covar.mat)) %&gt;% round(4)</code></pre>
-<pre><code>##        [,1]
-## [1,] 0.4954</code></pre>
-<pre class="r"><code>#w0 = c(1/3, 1/3, 1/3)
-#results = solnp(
-#    w0, SR, factor.mat=factor.mat, covar.mat=covar.mat,
-#    eqfun=sum.constraint, eqB=c(1), control=list(trace=0))
-#results$pars %&gt;% round(4)
-#sum(results$par)
-#-results$values %&gt;% round(4)</code></pre>
-<pre class="r"><code>#factor.mat = f %&gt;% select(RF, FF.Rm, FF.SMB, FF.HML)
+# Max Sharpe Ratio
+Sh2 = rbind(SR.sq.mat(R, covar.mat), sqrt(SR.sq.mat(R, covar.mat)[1]))[1]
 
-#R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
-#covar.mat = cov(factor.mat)
+# Marginal contributions from spanning regression
 
-#w0 = c(1/4, 1/4, 1/4, 1/4)
-#SR(w0, factor.mat, covar.mat)
+fit = lm(FF.Rm ~ FF.SMB + HMLm + RMWg + FF.CMA + WML, data=factor.mat)
+Mkt = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
 
-#sqrt(SR.sq.mat(R, covar.mat)) %&gt;% round(4)
+fit = lm(FF.SMB ~ FF.Rm + HMLm + RMWg + FF.CMA + WML, data=factor.mat)
+Size = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
 
-#results = solnp(
-#    pars=w0, SR, factor.mat=factor.mat, covar.mat=covar.mat,
-#    eqfun=sum.constraint, eqB=1, control=list(trace=0))
-#results$pars %&gt;% round(4)
-#sum(results$par)
-#-results$values %&gt;% round(4)
+fit = lm(HMLm ~ FF.Rm + FF.SMB + RMWg + FF.CMA + WML, data=factor.mat)
+Val = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
 
-#w.star = results$pars
-#ER(w.star, R)
-#w.star.mat(R[1], R, covar.mat) %&gt;% round(4)</code></pre>
+fit = lm(RMWg ~ FF.Rm + FF.SMB + HMLm + FF.CMA + WML, data=factor.mat)
+Prof = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(FF.CMA ~ FF.Rm + FF.SMB + HMLm + RMWg + WML, data=factor.mat)
+Inv = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+fit = lm(WML ~ FF.Rm + FF.SMB + HMLm + RMWg + FF.CMA, data=factor.mat)
+Inv = (coef(fit)[&quot;(Intercept)&quot;] / sd(fit$residuals))^2
+
+RMWg = cbind(Sh2, Mkt, Size, Val, Prof, Inv, Mom)
+rownames(RMWg) = c(&quot;Mkt, SMB, HMLm, RMWg, CMA, WML&quot;)
+res = rbind(res, RMWg)
+# round(res, 3) %&gt;% as.data.frame</code></pre>
+</section>
+<section id="results" class="level2">
+<h2><span class="header-section-number">6.10</span> Results</h2>
+<pre class="r"><code>round(res, 3) %&gt;% as.data.frame</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Sh2"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Mkt"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Size"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Val"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Prof"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Inv"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Mom"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.154","2":"0.037","3":"0.010","4":"0.007","5":"0.094","6":"0.030","7":"NA","_rn_":"Mkt, SMB, HML, RMWor, CMA"},{"1":"0.250","2":"0.075","3":"0.021","4":"0.018","5":"0.190","6":"0.020","7":"NA","_rn_":"Mkt, SMB, HML, RMWc, CMA"},{"1":"0.116","2":"0.033","3":"0.000","4":"0.016","5":"0.056","6":"0.025","7":"NA","_rn_":"Mkt, SMB, HML, RMWg, CMA"},{"1":"0.182","2":"0.042","3":"0.008","4":"0.015","5":"0.083","6":"0.024","7":"0.028","_rn_":"Mkt, SMB, HML, RMWor, CMA, WML"},{"1":"0.265","2":"0.077","3":"0.018","4":"0.025","5":"0.166","6":"0.017","7":"0.014","_rn_":"Mkt, SMB, HML, RMWc, CMA, WML"},{"1":"0.157","2":"0.039","3":"0.000","4":"0.029","5":"0.057","6":"0.041","7":"0.014","_rn_":"Mkt, SMB, HML, RMWg, CMA, WML"},{"1":"0.263","2":"0.047","3":"0.008","4":"0.095","5":"0.113","6":"0.006","7":"0.106","_rn_":"Mkt, SMB, HMLm, RMWor, CMA, WML"},{"1":"0.356","2":"0.088","3":"0.018","4":"0.116","5":"0.207","6":"0.002","7":"0.097","_rn_":"Mkt, SMB, HMLm, RMWc, CMA, WML"},{"1":"0.246","2":"0.044","3":"0.000","4":"0.118","5":"0.097","6":"0.138","7":"0.097","_rn_":"Mkt, SMB, HMLm, RMWg, CMA, WML"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </section>
 </section>
 
