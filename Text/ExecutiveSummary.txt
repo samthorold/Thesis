@@ -10,6 +10,17 @@ fontsize: 12pt
 language: en-US
 ...
 
+1. Do $HML_m$, $RMW_G$ and $WML$ improve sharpe ratio?
+    * Spread factors
+    * Long components (Implications for industry)
+2. Do the best intuitive factors outperform PCA out-of-sample (define; best, outperform and out-of-sample)
+    * Guard against overfitting
+    * Outperform: predict further into the future, smaller residuals out of sample, different country
+3. Do the different specifications of best factors allow us to say any more about the "lethal" combination?
+    * Particularly loadings on different profitability factors
+    * Investment dies with cash and momentum so different specification of investment may help here
+
+
 Recent tests of factor models (See @barillas2016alpha and @fama2016choosing) have moved away from the traditional regressions using "anomalous" porfolios.
 Instead, analysis has focused on the maximum sharpe ratio a set of factors can produce.
 Combining new results with intuition from previous regression-based analyses (See @fama1993common and @fama2015five), a five factor model comprised of; market, size, value, profitibility and investment emerged.
@@ -41,4 +52,14 @@ Principal component analysis can guide us when choosing a parsimonious model.
 @kozak2017interpreting demonstrates how principal component analysis can replicate closely the size and fundamental value factors by fitting the first two principal components to returns.
 This provides an opportunity to confirm our model is somewhat parmsimonious by comparing to the number of components.
 We can also confirm our factors derived from intuition outperform those derived from statistics in principal component analysis.
+
+The five factor model of @fama2015five struggles to explain the returns on portfolios whose returns behave like those of small, unprofitable firms which invest aggressively.
+This is the so-called "lethal" combination of negative profitability and investment loadings that many anomalies share (See @fama2016dissecting).
+Perhaps different portfolios with similarly high sharpe ratios can shed light on why this is the case.
+For example, competing "successful" models may have different loadings on their respective profitability and investment factors.
+Furthermore, the investment factor in $R_M$, $SMB$, $HML_m$, $RMW_C$, $CMA$ and $WML$ adds very little to the sharpe ratio.
+Investment is typically defined in the manner of @fama2015five as the percentage change in assets.
+This is not a particularly clean measure of investment.
+Perhaps a more intuitive measure of investment involves the change in PPE plus depreciation expense for the period.
+Even a non-result here would shed light on the role of the investment factor in explaining returns on small, unprofitable but somehow aggressively investing firms.
 

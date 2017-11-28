@@ -1,0 +1,13 @@
+---
+title: Thesis
+author: Sam Thorold
+bibliography: ./references.bib
+link-citations: true
+documentclass: article
+papersize: a4
+geometry: margin=1in
+fontsize: 12pt
+language: en-US
+
+abstract: A five-factor model comprised of; market, size,  monthly value, cash profitibility and momentum factors gives a monthly sharpe ratio 0.35. The largest marginal contributions are from monthly value and cash profitability. Momentum absorbs the information in the investment factor.
+...

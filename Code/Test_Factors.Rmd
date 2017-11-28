@@ -64,6 +64,11 @@ stat.summary = function(df){
 }
 ```
 
+```{r}
+i = 13   # 1964-07
+j = 630  # 2015-12
+```
+
 # My Factors
 
 ```{r}
@@ -71,7 +76,7 @@ f = fread("C:/Data/Thesis/factors.csv")
 
 colnames(f)
 
-f = f[1:630,]  %>% select(
+f = f[i:j,]  %>% select(
     -c(V1, Date, SMB.HML, SMB.HMLm, SMB.RMWo, SMB.RMWor, SMB.RMWg, SMB.RMWc, SMB.CMA, SMB.WML)
 )
 
@@ -83,7 +88,7 @@ rbind(sapply(f, mean), sapply(f, se), sapply(f, t.stat), sapply(f, sr))  %>% rou
 ```{r}
 ff = fread("C:/Data/FrenchDartmouth/FF_factors.csv")
 
-ff = ff[1:630,] %>% select(-c(Date))
+ff = ff[i:j,] %>% select(-c(Date))
 setnames(ff,
          c("Mkt-RF", "SMB", "HML", "RMW", "CMA"),
          c("FF.Rm", "FF.SMB", "FF.HML", "FF.RMW", "FF.CMA"))
@@ -92,13 +97,29 @@ rbind(sapply(ff, mean), sapply(ff, se), sapply(ff, t.stat))  %>% round(2)
 ```
 
 ```{r}
-f = cbind(f, ff)
+f = cbind(f, ff)  # i:j
+```
+
+```{r}
+fit = lm(FF.HML~FF.Rm+FF.SMB+FF.RMW+FF.CMA, data=f)
+round(as.data.frame(coef(summary(fit))), 2)
+
+f$HMLo = fit$residuals
+
+fit = lm(FF.HML~FF.Rm+FF.SMB+RMWor+FF.CMA, data=f)
+round(as.data.frame(coef(summary(fit))), 2)
+
+fit = lm(FF.HML~FF.Rm+FF.SMB+RMWg+FF.CMA, data=f)
+round(as.data.frame(coef(summary(fit))), 2)
+
+fit = lm(FF.HML~FF.Rm+FF.SMB+RMWc+FF.CMA, data=f)
+round(as.data.frame(coef(summary(fit))), 2)
 ```
 
 # Factor Correlation
 
 ```{r}
-cor(f[1:630,]) %>% round(2)
+cor(f) %>% round(2)
 ```
 
 # Maximum Sharpe Ratio
@@ -160,7 +181,7 @@ sum.constraint = function(w, factor.mat, covar.mat){
 
 ```{r}
 factor.mat = f %>% select(FF.Rm, FF.SMB, FF.HML, RMWor, FF.CMA)
-factor.mat = factor.mat[1:630,]  # through 2015-12
+factor.mat = factor.mat
 
 R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
 covar.mat = cov(factor.mat)
@@ -204,7 +225,7 @@ rownames(RMWor) = c("Mkt, SMB, HML, RMWor, CMA")
 
 ```{r}
 factor.mat = f %>% select(FF.Rm, FF.SMB, FF.HML, RMWc, FF.CMA)
-factor.mat = factor.mat[1:630,]  # through 2015-12
+factor.mat = factor.mat
 
 R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
 covar.mat = cov(factor.mat)
@@ -239,7 +260,7 @@ res = rbind(RMWor, RMWc)
 
 ```{r}
 factor.mat = f %>% select(FF.Rm, FF.SMB, FF.HML, RMWg, FF.CMA)
-factor.mat = factor.mat[1:630,]  # through 2015-12
+factor.mat = factor.mat
 
 R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
 covar.mat = cov(factor.mat)
@@ -274,7 +295,7 @@ res = rbind(RMWor, RMWc, RMWg)
 
 ```{r}
 factor.mat = f %>% select(FF.Rm, FF.SMB, FF.HML, RMWor, FF.CMA, WML)
-factor.mat = factor.mat[1:630,]  # through 2015-12
+factor.mat = factor.mat
 
 R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
 covar.mat = cov(factor.mat)
@@ -325,7 +346,7 @@ colnames(res) = c("Sh2", "Mkt", "Size", "Val", "Prof", "Inv", "Mom")
 
 ```{r}
 factor.mat = f %>% select(FF.Rm, FF.SMB, FF.HML, RMWc, FF.CMA, WML)
-factor.mat = factor.mat[1:630,]  # through 2015-12
+factor.mat = factor.mat
 
 R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
 covar.mat = cov(factor.mat)
@@ -363,7 +384,7 @@ res = rbind(res, RMWc)
 
 ```{r}
 factor.mat = f %>% select(FF.Rm, FF.SMB, FF.HML, RMWg, FF.CMA, WML)
-factor.mat = factor.mat[1:630,]  # through 2015-12
+factor.mat = factor.mat
 
 R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
 covar.mat = cov(factor.mat)
@@ -401,7 +422,7 @@ res = rbind(res, RMWg)
 
 ```{r}
 factor.mat = f %>% select(FF.Rm, FF.SMB, HMLm, RMWor, FF.CMA, WML)
-factor.mat = factor.mat[1:630,]  # through 2015-12
+factor.mat = factor.mat
 
 R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
 covar.mat = cov(factor.mat)
@@ -451,7 +472,7 @@ res = rbind(res, RMWor)
 
 ```{r}
 factor.mat = f %>% select(FF.Rm, FF.SMB, HMLm, RMWc, FF.CMA, WML)
-factor.mat = factor.mat[1:630,]  # through 2015-12
+factor.mat = factor.mat
 
 R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
 covar.mat = cov(factor.mat)
@@ -485,11 +506,46 @@ res = rbind(res, RMWc)
 # round(res, 3)
 ```
 
+## Rm, SMB, HMLm, RMWc, WML
+
+```{r}
+factor.mat = f %>% select(FF.Rm, FF.SMB, HMLm, RMWc, WML)
+factor.mat = factor.mat
+
+R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
+covar.mat = cov(factor.mat)
+
+# Max Sharpe Ratio
+Sh2 = rbind(SR.sq.mat(R, covar.mat), sqrt(SR.sq.mat(R, covar.mat)[1]))[1]
+
+# Marginal contributions from spanning regression
+
+fit = lm(FF.Rm ~ FF.SMB + HMLm + RMWc + WML, data=factor.mat)
+Mkt = (coef(fit)["(Intercept)"] / sd(fit$residuals))^2
+
+fit = lm(FF.SMB ~ FF.Rm + HMLm + RMWc + WML, data=factor.mat)
+Size = (coef(fit)["(Intercept)"] / sd(fit$residuals))^2
+
+fit = lm(HMLm ~ FF.Rm + FF.SMB + RMWc + WML, data=factor.mat)
+Val = (coef(fit)["(Intercept)"] / sd(fit$residuals))^2
+
+fit = lm(RMWc ~ FF.Rm + FF.SMB + HMLm + WML, data=factor.mat)
+Prof = (coef(fit)["(Intercept)"] / sd(fit$residuals))^2
+
+fit = lm(WML ~ FF.Rm + FF.SMB + HMLm + RMWc, data=factor.mat)
+Mom = (coef(fit)["(Intercept)"] / sd(fit$residuals))^2
+
+RMWc = cbind(Sh2, Mkt, Size, Val, Prof, NA, Mom)
+rownames(RMWc) = c("Mkt, SMB, HMLm, RMWc, WML")
+res = rbind(res, RMWc)
+# round(res, 3)
+```
+
 ## Rm, SMB, HMLm, RMWg, CMA, WML
 
 ```{r}
 factor.mat = f %>% select(FF.Rm, FF.SMB, HMLm, RMWg, FF.CMA, WML)
-factor.mat = factor.mat[1:630,]  # through 2015-12
+factor.mat = factor.mat
 
 R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
 covar.mat = cov(factor.mat)
@@ -529,4 +585,250 @@ res = rbind(res, RMWg)
 round(res, 3) %>% as.data.frame
 ```
 
+# Anomalies
+
+Downloaded from Dr. Kenneth French's
+[website](http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html#Research)
+
+Unconditional sorts (US)
+
+* 25 Size BM
+* 25 Size BMm
+* 25 Size OP
+* 25 Size GP
+* 25 Size CP
+* 25 Size INV
+* 25 Size Mom
+* 25 Size $\beta$
+* 35 Size Net Share Issues (quintiles plus 0 and negative NI)
+* 25 Size Variance
+* 25 Size Residual Variance
+* 25 Size Accruals
+* (25 BM OP)
+* (25 BM INV)
+* (25 OP INV)
+
+Conditional on Size sorts (US)
+
+* 32 Size BM OP
+* 32 Size BM INV
+* 32 Size OP INV
+
+```{r}
+a = fread("C:/Data/FrenchDartmouth/25_Portfolios_5x5.CSV")[i:j,]
+
+bmm = fread("C:/Data/Thesis/25_L1ME_BMM_Returns.CSV")[,-1]
+bmm$Date = as.integer(substr(bmm$Date, 1, 4))*100 + as.integer(substr(bmm$Date, 6, 7))
+a = left_join(a, bmm, by="Date")
+
+a = left_join(a, fread("C:/Data/FrenchDartmouth/25_Portfolios_ME_OP_5x5.CSV"), by="Date")
+
+gp = fread("C:/Data/Thesis/25_Size_GP_Returns.CSV")[,-1]
+gp$Date = as.integer(substr(gp$Date, 1, 4))*100 + as.integer(substr(gp$Date, 6, 7))
+a = left_join(a, gp, by="Date")
+
+cp = fread("C:/Data/Thesis/25_Size_CP_Returns.CSV")[,-1]
+cp$Date = as.integer(substr(cp$Date, 1, 4))*100 + as.integer(substr(cp$Date, 6, 7))
+a = left_join(a, cp, by="Date")
+
+a = left_join(a, fread("C:/Data/FrenchDartmouth/25_Portfolios_ME_INV_5x5.CSV"), by="Date")
+a = left_join(a, fread("C:/Data/FrenchDartmouth/25_Portfolios_ME_Prior_12_2.CSV"), by="Date")
+a = left_join(a, fread("C:/Data/FrenchDartmouth/25_Portfolios_ME_BETA_5x5.csv"), by="Date")
+a = left_join(a, fread("C:/Data/FrenchDartmouth/25_Portfolios_ME_NI_5x5.csv"), by="Date")
+a = left_join(a, fread("C:/Data/FrenchDartmouth/25_Portfolios_ME_VAR_5x5.csv"), by="Date")
+a = left_join(a, fread("C:/Data/FrenchDartmouth/25_Portfolios_ME_RESVAR_5x5.csv"), by="Date")
+a = left_join(a, fread("C:/Data/FrenchDartmouth/25_Portfolios_ME_AC_5x5.csv"), by="Date")
+#a = left_join(a, fread("C:/Data/FrenchDartmouth/25_Portfolios_BEME_OP_5x5.csv"), by="Date")
+#a = left_join(a, fread("C:/Data/FrenchDartmouth/25_Portfolios_BEME_INV_5x5.csv"), by="Date")
+#a = left_join(a, fread("C:/Data/FrenchDartmouth/25_Portfolios_OP_INV_5x5.csv"), by="Date")
+
+a = left_join(a, fread("C:/Data/FrenchDartmouth/32_Portfolios_ME_BEME_OP_2x4x4.CSV"), by="Date")
+a = left_join(a, fread("C:/Data/FrenchDartmouth/32_Portfolios_ME_BEME_INV_2x4x4.CSV"), by="Date")
+a = left_join(a, fread("C:/Data/FrenchDartmouth/32_Portfolios_ME_OP_INV_2x4x4.CSV"), by="Date")
+
+dim(a)
+summary(a$Date)
+```
+
+```{r}
+a = a[,-1]
+```
+
+## FF.Rm+FF.SMB+HMLo+FF.RMW+FF.CMA
+
+```{r}
+cs = c()
+ts = c()
+reg.resid = c()
+
+for (p in colnames(a)){  # not Date column
+    model = paste0("`", p, "` -RF ~ FF.Rm+FF.SMB+HMLo+FF.RMW+FF.CMA")
+    fit = lm(model, data=cbind(f, a))
+    cs = rbind(cs, coef(fit))
+    ts = rbind(ts, coef(summary(fit))[,3])
+    reg.resid = cbind(reg.resid, fit$residuals)
+}
+colnames(cs) = c("a", "Rm", "s", "h", "r", "c")
+colnames(ts) = c("a", "Rm", "s", "h", "r", "c")
+colnames(ts) = paste0("t(", colnames(ts), ")")
+
+regs = as.data.frame(cbind(cs, ts))
+rownames(regs) = colnames(a)
+write.csv(regs, "C:/Data/Thesis/FF-Rm_FF-SMB_HMLo_FF-RMW_FF-CMA_Anomalies.csv")
+round(summary(abs(regs$a)), 2)
+sum(abs(regs["t(a)"])>2)
+
+# Sharpe squared intercepts
+SR.sq.mat(regs$a, cov(reg.resid))
+# Average absolute intercepts
+(mean(abs(regs$a)))
+```
+
+## FF.Rm+FF.SMB+FF.HML+RMWor+FF.CMA
+
+```{r}
+cs = c()
+ts = c()
+reg.resid = c()
+
+for (p in colnames(a)){
+    model = paste0("`", p, "` -RF~ FF.Rm+FF.SMB+FF.HML+RMWor+FF.CMA")
+    fit = lm(model, data=cbind(f, a))
+    cs = rbind(cs, coef(fit))
+    ts = rbind(ts, coef(summary(fit))[,3])
+    reg.resid = cbind(reg.resid, fit$residuals)
+}
+colnames(cs) = c("a", "Rm", "s", "h", "r", "c")
+colnames(ts) = c("a", "Rm", "s", "h", "r", "c")
+colnames(ts) = paste0("t(", colnames(ts), ")")
+
+regs = as.data.frame(cbind(cs, ts))
+rownames(regs) = colnames(a)
+write.csv(regs, "C:/Data/Thesis/FF-Rm_FF-SMB_FF-HML_RMWor_FF-CMA_Anomalies.csv")
+round(summary(abs(regs$a)), 2)
+sum(abs(regs["t(a)"])>2)
+
+# Sharpe squared intercepts
+SR.sq.mat(regs$a, cov(reg.resid))
+# Average absolute intercepts
+(mean(abs(regs$a)))
+```
+
+## FF.Rm+FF.SMB+FF.HML+RMWc+FF.CMA
+
+```{r}
+cs = c()
+ts = c()
+reg.resid = c()
+
+for (p in colnames(a)){
+    model = paste0("`", p, "` -RF~ FF.Rm+FF.SMB+FF.HML+RMWc+FF.CMA")
+    fit = lm(model, data=cbind(f, a))
+    cs = rbind(cs, coef(fit))
+    ts = rbind(ts, coef(summary(fit))[,3])
+    reg.resid = cbind(reg.resid, fit$residuals)
+}
+colnames(cs) = c("a", "Rm", "s", "h", "r", "c")
+colnames(ts) = c("a", "Rm", "s", "h", "r", "c")
+colnames(ts) = paste0("t(", colnames(ts), ")")
+
+regs = as.data.frame(cbind(cs, ts))
+rownames(regs) = colnames(a)
+write.csv(regs, "C:/Data/Thesis/FF-Rm_FF-SMB_FF-HML_RMWc_FF-CMA_Anomalies.csv")
+round(summary(abs(regs$a)), 2)
+sum(abs(regs["t(a)"])>2)
+
+# Sharpe squared intercepts
+SR.sq.mat(regs$a, cov(reg.resid))
+# Average absolute intercepts
+(mean(abs(regs$a)))
+```
+
+## FF.Rm+FF.SMB+HMLm+RMWg+FF.CMA+WML
+
+```{r}
+cs = c()
+ts = c()
+reg.resid = c()
+
+for (p in colnames(a)){
+    model = paste0("`", p, "` -RF~ FF.Rm+FF.SMB+HMLm+RMWg+FF.CMA+WML")
+    fit = lm(model, data=cbind(f, a))
+    cs = rbind(cs, coef(fit))
+    ts = rbind(ts, coef(summary(fit))[,3])
+    reg.resid = cbind(reg.resid, fit$residuals)
+}
+colnames(cs) = c("a", "Rm", "s", "h", "r", "c", "w")
+colnames(ts) = c("a", "Rm", "s", "h", "r", "c", "w")
+colnames(ts) = paste0("t(", colnames(ts), ")")
+
+regs = as.data.frame(cbind(cs, ts))
+rownames(regs) = colnames(a)
+write.csv(regs, "C:/Data/Thesis/FF-Rm_FF-SMB_HMLm_RMWg_FF-CMA_WML_Anomalies.csv")
+round(summary(abs(regs$a)), 2)
+sum(abs(regs["t(a)"])>2)
+
+# Sharpe squared intercepts
+SR.sq.mat(regs$a, cov(reg.resid))
+# Average absolute intercepts
+(mean(abs(regs$a)))
+```
+
+## FF.Rm+FF.SMB+HMLm+RMWc+FF.CMA+WML
+
+```{r}
+cs = c()
+ts = c()
+
+for (p in colnames(a)){
+    model = paste0("`", p, "` -RF~ FF.Rm+FF.SMB+HMLm+RMWc+FF.CMA+WML")
+    fit = lm(model, data=cbind(f, a))
+    cs = rbind(cs, coef(fit))
+    ts = rbind(ts, coef(summary(fit))[,3])
+}
+colnames(cs) = c("a", "Rm", "s", "h", "r", "c", "w")
+colnames(ts) = c("a", "Rm", "s", "h", "r", "c", "w")
+colnames(ts) = paste0("t(", colnames(ts), ")")
+
+regs = as.data.frame(cbind(cs, ts))
+rownames(regs) = colnames(a)
+write.csv(regs, "C:/Data/Thesis/FF-Rm_FF-SMB_HMLm_RMWc_FF-CMA_WML_Anomalies.csv")
+round(summary(abs(regs$a)), 2)
+sum(abs(regs["t(a)"])>2)
+
+# Sharpe squared intercepts
+SR.sq.mat(regs$a, cov(reg.resid))
+# Average absolute intercepts
+(mean(abs(regs$a)))
+```
+
+## FF.Rm+FF.SMB+HMLm+RMWc+WML
+
+```{r}
+cs = c()
+ts = c()
+reg.resid = c()
+
+for (p in colnames(a)){
+    model = paste0("`", p, "` -RF~ FF.Rm+FF.SMB+HMLm+RMWc+WML")
+    fit = lm(model, data=cbind(f, a))
+    cs = rbind(cs, coef(fit))
+    ts = rbind(ts, coef(summary(fit))[,3])
+    reg.resid = cbind(reg.resid, fit$residuals)
+}
+colnames(cs) = c("a", "Rm", "s", "h", "r", "w")
+colnames(ts) = c("a", "Rm", "s", "h", "r", "w")
+colnames(ts) = paste0("t(", colnames(ts), ")")
+
+regs = as.data.frame(cbind(cs, ts))
+rownames(regs) = colnames(a)
+write.csv(regs, "C:/Data/Thesis/FF-Rm_FF-SMB_HMLm_RMWc_WML_Anomalies.csv")
+round(summary(abs(regs$a)), 2)
+sum(abs(regs["t(a)"])>2)
+
+# Sharpe squared intercepts
+SR.sq.mat(regs$a, cov(reg.resid))
+# Average absolute intercepts
+(mean(abs(regs$a)))
+```
 

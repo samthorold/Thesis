@@ -1,0 +1,23 @@
+
+Introduction
+==========
+
+A five-factor model comprised of; market, size,  monthly value, cash profitibility and momentum factors gives a maximum monthly sharpe ratio of 0.35.
+Monthly value and cash profitability have similar marginal contributions to the sharpe ratio of around 0.2.
+The market and momentum contribute around 0.1 while size contributes 0.02.
+An investment factor contributes only 0.002 to the maximum sharpe ratio of a six-factor model and it is omitted for parsimony.
+The time series regression for the model is
+$$
+R_{it} = R_{Mt} + s_iSMB_t + h_iHML_{mt} + r_iRMW_{ct} + w_iWML_t
+$$ {#eq:regmodel}
+where;
+$R_{it}$ is the return on asset $i$ for month $t$ in excess of the risk free rate,
+$R_{Mt}$ is the return on the value-weighted portfolio of NYSE-AMEX-NASDAQ stocks in excess of the risk free rate,
+$SMB_t$ is the return on a portfolio long small stocks and short big stocks,
+$HML_{mt}$ is the return on a portfolio long stocks with high book to market equity and short stocks with low book to market equity,
+$RWM_{ct}$ is the return on a portfolio long stocks with high profits and short stocks with low profits and
+$WML_t$ is the return on a portfolio long stocks with high returns over the last twelve months and short stocks with low returns over the past twelve months.
+Long-short portfolios are 2x3 sorts in the style of @fama1993common.
+Book-to-market and prior return portfolios are sorted every month while size and profitibility portfolios are sorted every June.
+
+@fama2016choosing find a sharpe ratio of 0.24 from a similar five-factor model comprised of; market, size, value, cash profitability and investment factors.

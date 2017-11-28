@@ -67,6 +67,12 @@ stat.summary = function(df){
 }
 ```
 
+
+```r
+i = 13   # 1964-07
+j = 630  # 2015-12
+```
+
 # My Factors
 
 
@@ -84,7 +90,7 @@ colnames(f)
 ```
 
 ```r
-f = f[1:630,]  %>% select(
+f = f[i:j,]  %>% select(
     -c(V1, Date, SMB.HML, SMB.HMLm, SMB.RMWo, SMB.RMWor, SMB.RMWg, SMB.RMWc, SMB.CMA, SMB.WML)
 )
 
@@ -93,10 +99,10 @@ rbind(sapply(f, mean), sapply(f, se), sapply(f, t.stat), sapply(f, sr))  %>% rou
 
 ```
 ##       HML HMLm RMWo RMWor RMWg RMWc  CMA  WML   Rm  SMB
-## [1,] 0.29 0.34 0.27  0.35 0.25 0.43 0.27 0.65 0.49 0.25
-## [2,] 0.11 0.14 0.09  0.07 0.09 0.06 0.07 0.16 0.18 0.12
-## [3,] 2.52 2.46 3.05  5.10 2.77 7.60 3.78 4.04 2.74 2.17
-## [4,] 0.10 0.10 0.12  0.20 0.11 0.30 0.15 0.16 0.11 0.09
+## [1,] 0.29 0.34 0.27  0.35 0.25 0.44 0.28 0.64 0.47 0.26
+## [2,] 0.12 0.14 0.09  0.07 0.09 0.06 0.07 0.16 0.18 0.12
+## [3,] 2.52 2.39 3.05  5.10 2.77 7.61 3.78 3.95 2.62 2.17
+## [4,] 0.10 0.10 0.12  0.21 0.11 0.31 0.15 0.16 0.11 0.09
 ```
 
 # French Dartmouth Web Factors
@@ -105,7 +111,7 @@ rbind(sapply(f, mean), sapply(f, se), sapply(f, t.stat), sapply(f, sr))  %>% rou
 ```r
 ff = fread("C:/Data/FrenchDartmouth/FF_factors.csv")
 
-ff = ff[1:630,] %>% select(-c(Date))
+ff = ff[i:j,] %>% select(-c(Date))
 setnames(ff,
          c("Mkt-RF", "SMB", "HML", "RMW", "CMA"),
          c("FF.Rm", "FF.SMB", "FF.HML", "FF.RMW", "FF.CMA"))
@@ -115,21 +121,68 @@ rbind(sapply(ff, mean), sapply(ff, se), sapply(ff, t.stat))  %>% round(2)
 
 ```
 ##      FF.Rm FF.SMB FF.HML FF.RMW FF.CMA    RF
-## [1,]  0.50   0.25   0.35   0.24   0.30  0.40
+## [1,]  0.49   0.27   0.33   0.25   0.30  0.40
 ## [2,]  0.18   0.12   0.11   0.09   0.08  0.01
-## [3,]  2.82   2.09   3.09   2.75   3.74 38.35
+## [3,]  2.69   2.17   2.92   2.77   3.70 37.91
 ```
 
 
 ```r
-f = cbind(f, ff)
+f = cbind(f, ff)  # i:j
 ```
+
+
+```r
+fit = lm(FF.HML~FF.Rm+FF.SMB+FF.RMW+FF.CMA, data=f)
+round(as.data.frame(coef(summary(fit))), 2)
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Estimate"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Std. Error"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["t value"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Pr(>|t|)"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"-0.02","2":"0.08","3":"-0.27","4":"0.79","_rn_":"(Intercept)"},{"1":"0.02","2":"0.02","3":"0.84","4":"0.40","_rn_":"FF.Rm"},{"1":"0.03","2":"0.03","3":"1.02","4":"0.31","_rn_":"FF.SMB"},{"1":"0.14","2":"0.04","3":"3.69","4":"0.00","_rn_":"FF.RMW"},{"1":"1.00","2":"0.04","3":"22.91","4":"0.00","_rn_":"FF.CMA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+```r
+f$HMLo = fit$residuals
+
+fit = lm(FF.HML~FF.Rm+FF.SMB+RMWor+FF.CMA, data=f)
+round(as.data.frame(coef(summary(fit))), 2)
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Estimate"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Std. Error"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["t value"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Pr(>|t|)"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.15","2":"0.09","3":"1.81","4":"0.07","_rn_":"(Intercept)"},{"1":"-0.01","2":"0.02","3":"-0.36","4":"0.72","_rn_":"FF.Rm"},{"1":"-0.02","2":"0.03","3":"-0.83","4":"0.40","_rn_":"FF.SMB"},{"1":"-0.24","2":"0.05","3":"-4.93","4":"0.00","_rn_":"RMWor"},{"1":"0.91","2":"0.05","3":"19.98","4":"0.00","_rn_":"FF.CMA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+```r
+fit = lm(FF.HML~FF.Rm+FF.SMB+RMWg+FF.CMA, data=f)
+round(as.data.frame(coef(summary(fit))), 2)
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Estimate"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Std. Error"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["t value"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Pr(>|t|)"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.21","2":"0.08","3":"2.78","4":"0.01","_rn_":"(Intercept)"},{"1":"-0.01","2":"0.02","3":"-0.72","4":"0.47","_rn_":"FF.Rm"},{"1":"0.04","2":"0.03","3":"1.66","4":"0.10","_rn_":"FF.SMB"},{"1":"-0.45","2":"0.04","3":"-11.90","4":"0.00","_rn_":"RMWg"},{"1":"0.75","2":"0.04","3":"16.88","4":"0.00","_rn_":"FF.CMA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+```r
+fit = lm(FF.HML~FF.Rm+FF.SMB+RMWc+FF.CMA, data=f)
+round(as.data.frame(coef(summary(fit))), 2)
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Estimate"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Std. Error"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["t value"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Pr(>|t|)"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.25","2":"0.09","3":"2.87","4":"0.00","_rn_":"(Intercept)"},{"1":"-0.03","2":"0.02","3":"-1.56","4":"0.12","_rn_":"FF.Rm"},{"1":"-0.04","2":"0.03","3":"-1.40","4":"0.16","_rn_":"FF.SMB"},{"1":"-0.39","2":"0.06","3":"-6.49","4":"0.00","_rn_":"RMWc"},{"1":"0.91","2":"0.04","3":"20.94","4":"0.00","_rn_":"FF.CMA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 
 # Factor Correlation
 
 
 ```r
-cor(f[1:630,]) %>% round(2)
+cor(f) %>% round(2)
 ```
 
 ```
@@ -137,36 +190,38 @@ cor(f[1:630,]) %>% round(2)
 ## HML     1.00  0.79  0.13 -0.33 -0.59 -0.21  0.65 -0.22 -0.34 -0.13 -0.34
 ## HMLm    0.79  1.00  0.03 -0.37 -0.50 -0.33  0.48 -0.68 -0.17 -0.07 -0.17
 ## RMWo    0.13  0.03  1.00  0.78  0.23  0.62 -0.15  0.01 -0.23 -0.35 -0.22
-## RMWor  -0.33 -0.37  0.78  1.00  0.62  0.77 -0.36  0.16 -0.01 -0.13  0.00
+## RMWor  -0.33 -0.37  0.78  1.00  0.62  0.77 -0.37  0.16 -0.01 -0.13  0.00
 ## RMWg   -0.59 -0.50  0.23  0.62  1.00  0.54 -0.42  0.13  0.15  0.17  0.15
-## RMWc   -0.21 -0.33  0.62  0.77  0.54  1.00 -0.14  0.24 -0.24 -0.24 -0.23
-## CMA     0.65  0.48 -0.15 -0.36 -0.42 -0.14  1.00 -0.07 -0.35 -0.04 -0.35
+## RMWc   -0.21 -0.33  0.62  0.77  0.54  1.00 -0.15  0.24 -0.24 -0.24 -0.23
+## CMA     0.65  0.48 -0.15 -0.37 -0.42 -0.15  1.00 -0.07 -0.35 -0.04 -0.35
 ## WML    -0.22 -0.68  0.01  0.16  0.13  0.24 -0.07  1.00 -0.04  0.05 -0.04
 ## Rm     -0.34 -0.17 -0.23 -0.01  0.15 -0.24 -0.35 -0.04  1.00  0.27  1.00
 ## SMB    -0.13 -0.07 -0.35 -0.13  0.17 -0.24 -0.04  0.05  0.27  1.00  0.26
 ## FF.Rm  -0.34 -0.17 -0.22  0.00  0.15 -0.23 -0.35 -0.04  1.00  0.26  1.00
 ## FF.SMB -0.13 -0.07 -0.35 -0.13  0.18 -0.24 -0.05  0.05  0.28  0.99  0.27
-## FF.HML  0.95  0.80  0.08 -0.34 -0.60 -0.25  0.64 -0.23 -0.26 -0.08 -0.27
-## FF.RMW  0.15  0.02  0.96  0.74  0.24  0.61 -0.14  0.03 -0.24 -0.35 -0.23
-## FF.CMA  0.70  0.53 -0.02 -0.29 -0.46 -0.11  0.92 -0.08 -0.39 -0.11 -0.39
+## FF.HML  0.95  0.80  0.08 -0.34 -0.60 -0.25  0.64 -0.24 -0.27 -0.08 -0.27
+## FF.RMW  0.15  0.03  0.97  0.74  0.24  0.61 -0.14  0.03 -0.24 -0.35 -0.24
+## FF.CMA  0.71  0.53 -0.02 -0.29 -0.46 -0.11  0.92 -0.08 -0.39 -0.11 -0.39
 ## RF      0.09  0.06  0.01 -0.04 -0.05  0.04  0.06  0.03 -0.08 -0.05 -0.08
-##        FF.SMB FF.HML FF.RMW FF.CMA    RF
-## HML     -0.13   0.95   0.15   0.70  0.09
-## HMLm    -0.07   0.80   0.02   0.53  0.06
-## RMWo    -0.35   0.08   0.96  -0.02  0.01
-## RMWor   -0.13  -0.34   0.74  -0.29 -0.04
-## RMWg     0.18  -0.60   0.24  -0.46 -0.05
-## RMWc    -0.24  -0.25   0.61  -0.11  0.04
-## CMA     -0.05   0.64  -0.14   0.92  0.06
-## WML      0.05  -0.23   0.03  -0.08  0.03
-## Rm       0.28  -0.26  -0.24  -0.39 -0.08
-## SMB      0.99  -0.08  -0.35  -0.11 -0.05
-## FF.Rm    0.27  -0.27  -0.23  -0.39 -0.08
-## FF.SMB   1.00  -0.09  -0.35  -0.12 -0.05
-## FF.HML  -0.09   1.00   0.07   0.70  0.08
-## FF.RMW  -0.35   0.07   1.00  -0.03  0.01
-## FF.CMA  -0.12   0.70  -0.03   1.00  0.06
-## RF      -0.05   0.08   0.01   0.06  1.00
+## HMLo    0.62  0.60  0.00 -0.29 -0.42 -0.31  0.00 -0.26  0.00  0.01  0.00
+##        FF.SMB FF.HML FF.RMW FF.CMA    RF  HMLo
+## HML     -0.13   0.95   0.15   0.71  0.09  0.62
+## HMLm    -0.07   0.80   0.03   0.53  0.06  0.60
+## RMWo    -0.35   0.08   0.97  -0.02  0.01  0.00
+## RMWor   -0.13  -0.34   0.74  -0.29 -0.04 -0.29
+## RMWg     0.18  -0.60   0.24  -0.46 -0.05 -0.42
+## RMWc    -0.24  -0.25   0.61  -0.11  0.04 -0.31
+## CMA     -0.05   0.64  -0.14   0.92  0.06  0.00
+## WML      0.05  -0.24   0.03  -0.08  0.03 -0.26
+## Rm       0.28  -0.27  -0.24  -0.39 -0.08  0.00
+## SMB      0.99  -0.08  -0.35  -0.11 -0.05  0.01
+## FF.Rm    0.27  -0.27  -0.24  -0.39 -0.08  0.00
+## FF.SMB   1.00  -0.09  -0.35  -0.12 -0.05  0.00
+## FF.HML  -0.09   1.00   0.08   0.70  0.08  0.71
+## FF.RMW  -0.35   0.08   1.00  -0.03  0.00  0.00
+## FF.CMA  -0.12   0.70  -0.03   1.00  0.06  0.00
+## RF      -0.05   0.08   0.00   0.06  1.00  0.05
+## HMLo     0.00   0.71   0.00   0.00  0.05  1.00
 ```
 
 # Maximum Sharpe Ratio
@@ -235,7 +290,7 @@ sum.constraint = function(w, factor.mat, covar.mat){
 
 ```r
 factor.mat = f %>% select(FF.Rm, FF.SMB, FF.HML, RMWor, FF.CMA)
-factor.mat = factor.mat[1:630,]  # through 2015-12
+factor.mat = factor.mat
 
 R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
 covar.mat = cov(factor.mat)
@@ -280,7 +335,7 @@ rownames(RMWor) = c("Mkt, SMB, HML, RMWor, CMA")
 
 ```r
 factor.mat = f %>% select(FF.Rm, FF.SMB, FF.HML, RMWc, FF.CMA)
-factor.mat = factor.mat[1:630,]  # through 2015-12
+factor.mat = factor.mat
 
 R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
 covar.mat = cov(factor.mat)
@@ -316,7 +371,7 @@ res = rbind(RMWor, RMWc)
 
 ```r
 factor.mat = f %>% select(FF.Rm, FF.SMB, FF.HML, RMWg, FF.CMA)
-factor.mat = factor.mat[1:630,]  # through 2015-12
+factor.mat = factor.mat
 
 R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
 covar.mat = cov(factor.mat)
@@ -352,7 +407,7 @@ res = rbind(RMWor, RMWc, RMWg)
 
 ```r
 factor.mat = f %>% select(FF.Rm, FF.SMB, FF.HML, RMWor, FF.CMA, WML)
-factor.mat = factor.mat[1:630,]  # through 2015-12
+factor.mat = factor.mat
 
 R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
 covar.mat = cov(factor.mat)
@@ -404,7 +459,7 @@ colnames(res) = c("Sh2", "Mkt", "Size", "Val", "Prof", "Inv", "Mom")
 
 ```r
 factor.mat = f %>% select(FF.Rm, FF.SMB, FF.HML, RMWc, FF.CMA, WML)
-factor.mat = factor.mat[1:630,]  # through 2015-12
+factor.mat = factor.mat
 
 R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
 covar.mat = cov(factor.mat)
@@ -443,7 +498,7 @@ res = rbind(res, RMWc)
 
 ```r
 factor.mat = f %>% select(FF.Rm, FF.SMB, FF.HML, RMWg, FF.CMA, WML)
-factor.mat = factor.mat[1:630,]  # through 2015-12
+factor.mat = factor.mat
 
 R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
 covar.mat = cov(factor.mat)
@@ -482,7 +537,7 @@ res = rbind(res, RMWg)
 
 ```r
 factor.mat = f %>% select(FF.Rm, FF.SMB, HMLm, RMWor, FF.CMA, WML)
-factor.mat = factor.mat[1:630,]  # through 2015-12
+factor.mat = factor.mat
 
 R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
 covar.mat = cov(factor.mat)
@@ -533,7 +588,7 @@ res = rbind(res, RMWor)
 
 ```r
 factor.mat = f %>% select(FF.Rm, FF.SMB, HMLm, RMWc, FF.CMA, WML)
-factor.mat = factor.mat[1:630,]  # through 2015-12
+factor.mat = factor.mat
 
 R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
 covar.mat = cov(factor.mat)
@@ -567,12 +622,48 @@ res = rbind(res, RMWc)
 # round(res, 3)
 ```
 
+## Rm, SMB, HMLm, RMWc, WML
+
+
+```r
+factor.mat = f %>% select(FF.Rm, FF.SMB, HMLm, RMWc, WML)
+factor.mat = factor.mat
+
+R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
+covar.mat = cov(factor.mat)
+
+# Max Sharpe Ratio
+Sh2 = rbind(SR.sq.mat(R, covar.mat), sqrt(SR.sq.mat(R, covar.mat)[1]))[1]
+
+# Marginal contributions from spanning regression
+
+fit = lm(FF.Rm ~ FF.SMB + HMLm + RMWc + WML, data=factor.mat)
+Mkt = (coef(fit)["(Intercept)"] / sd(fit$residuals))^2
+
+fit = lm(FF.SMB ~ FF.Rm + HMLm + RMWc + WML, data=factor.mat)
+Size = (coef(fit)["(Intercept)"] / sd(fit$residuals))^2
+
+fit = lm(HMLm ~ FF.Rm + FF.SMB + RMWc + WML, data=factor.mat)
+Val = (coef(fit)["(Intercept)"] / sd(fit$residuals))^2
+
+fit = lm(RMWc ~ FF.Rm + FF.SMB + HMLm + WML, data=factor.mat)
+Prof = (coef(fit)["(Intercept)"] / sd(fit$residuals))^2
+
+fit = lm(WML ~ FF.Rm + FF.SMB + HMLm + RMWc, data=factor.mat)
+Mom = (coef(fit)["(Intercept)"] / sd(fit$residuals))^2
+
+RMWc = cbind(Sh2, Mkt, Size, Val, Prof, NA, Mom)
+rownames(RMWc) = c("Mkt, SMB, HMLm, RMWc, WML")
+res = rbind(res, RMWc)
+# round(res, 3)
+```
+
 ## Rm, SMB, HMLm, RMWg, CMA, WML
 
 
 ```r
 factor.mat = f %>% select(FF.Rm, FF.SMB, HMLm, RMWg, FF.CMA, WML)
-factor.mat = factor.mat[1:630,]  # through 2015-12
+factor.mat = factor.mat
 
 R = matrix(colMeans(factor.mat), nrow=ncol(factor.mat), ncol=1)
 covar.mat = cov(factor.mat)
@@ -615,8 +706,430 @@ round(res, 3) %>% as.data.frame
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Sh2"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Mkt"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Size"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Val"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Prof"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Inv"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Mom"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.154","2":"0.037","3":"0.010","4":"0.007","5":"0.094","6":"0.030","7":"NA","_rn_":"Mkt, SMB, HML, RMWor, CMA"},{"1":"0.250","2":"0.075","3":"0.021","4":"0.018","5":"0.190","6":"0.020","7":"NA","_rn_":"Mkt, SMB, HML, RMWc, CMA"},{"1":"0.116","2":"0.033","3":"0.000","4":"0.016","5":"0.056","6":"0.025","7":"NA","_rn_":"Mkt, SMB, HML, RMWg, CMA"},{"1":"0.182","2":"0.042","3":"0.008","4":"0.015","5":"0.083","6":"0.024","7":"0.028","_rn_":"Mkt, SMB, HML, RMWor, CMA, WML"},{"1":"0.265","2":"0.077","3":"0.018","4":"0.025","5":"0.166","6":"0.017","7":"0.014","_rn_":"Mkt, SMB, HML, RMWc, CMA, WML"},{"1":"0.157","2":"0.039","3":"0.000","4":"0.029","5":"0.057","6":"0.041","7":"0.014","_rn_":"Mkt, SMB, HML, RMWg, CMA, WML"},{"1":"0.263","2":"0.047","3":"0.008","4":"0.095","5":"0.113","6":"0.006","7":"0.106","_rn_":"Mkt, SMB, HMLm, RMWor, CMA, WML"},{"1":"0.356","2":"0.088","3":"0.018","4":"0.116","5":"0.207","6":"0.002","7":"0.097","_rn_":"Mkt, SMB, HMLm, RMWc, CMA, WML"},{"1":"0.246","2":"0.044","3":"0.000","4":"0.118","5":"0.097","6":"0.138","7":"0.097","_rn_":"Mkt, SMB, HMLm, RMWg, CMA, WML"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Sh2"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Mkt"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Size"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Val"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Prof"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Inv"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Mom"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.154","2":"0.035","3":"0.012","4":"0.006","5":"0.095","6":"0.032","7":"NA","_rn_":"Mkt, SMB, HML, RMWor, CMA"},{"1":"0.251","2":"0.072","3":"0.023","4":"0.017","5":"0.192","6":"0.022","7":"NA","_rn_":"Mkt, SMB, HML, RMWc, CMA"},{"1":"0.114","2":"0.031","3":"0.001","4":"0.014","5":"0.055","6":"0.026","7":"NA","_rn_":"Mkt, SMB, HML, RMWg, CMA"},{"1":"0.180","2":"0.040","3":"0.009","4":"0.013","5":"0.084","6":"0.026","7":"0.026","_rn_":"Mkt, SMB, HML, RMWor, CMA, WML"},{"1":"0.264","2":"0.075","3":"0.019","4":"0.022","5":"0.168","6":"0.018","7":"0.013","_rn_":"Mkt, SMB, HML, RMWc, CMA, WML"},{"1":"0.153","2":"0.038","3":"0.000","4":"0.026","5":"0.056","6":"0.039","7":"0.013","_rn_":"Mkt, SMB, HML, RMWg, CMA, WML"},{"1":"0.260","2":"0.045","3":"0.009","4":"0.093","5":"0.115","6":"0.006","7":"0.103","_rn_":"Mkt, SMB, HMLm, RMWor, CMA, WML"},{"1":"0.355","2":"0.085","3":"0.020","4":"0.114","5":"0.210","6":"0.002","7":"0.094","_rn_":"Mkt, SMB, HMLm, RMWc, CMA, WML"},{"1":"0.353","2":"0.084","3":"0.020","4":"0.204","5":"0.209","6":"NA","7":"0.128","_rn_":"Mkt, SMB, HMLm, RMWc, WML"},{"1":"0.242","2":"0.042","3":"0.000","4":"0.115","5":"0.096","6":"0.134","7":"0.128","_rn_":"Mkt, SMB, HMLm, RMWg, CMA, WML"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
+# Anomalies
+
+Downloaded from Dr. Kenneth French's
+[website](http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html#Research)
+
+Unconditional sorts (US)
+
+* 25 Size BM
+* 25 Size BMm
+* 25 Size OP
+* 25 Size GP
+* 25 Size CP
+* 25 Size INV
+* 25 Size Mom
+* 25 Size $\beta$
+* 35 Size Net Share Issues (quintiles plus 0 and negative NI)
+* 25 Size Variance
+* 25 Size Residual Variance
+* 25 Size Accruals
+* (25 BM OP)
+* (25 BM INV)
+* (25 OP INV)
+
+Conditional on Size sorts (US)
+
+* 32 Size BM OP
+* 32 Size BM INV
+* 32 Size OP INV
+
+
+```r
+a = fread("C:/Data/FrenchDartmouth/25_Portfolios_5x5.CSV")[i:j,]
+
+bmm = fread("C:/Data/Thesis/25_L1ME_BMM_Returns.CSV")[,-1]
+bmm$Date = as.integer(substr(bmm$Date, 1, 4))*100 + as.integer(substr(bmm$Date, 6, 7))
+a = left_join(a, bmm, by="Date")
+
+a = left_join(a, fread("C:/Data/FrenchDartmouth/25_Portfolios_ME_OP_5x5.CSV"), by="Date")
+
+gp = fread("C:/Data/Thesis/25_Size_GP_Returns.CSV")[,-1]
+gp$Date = as.integer(substr(gp$Date, 1, 4))*100 + as.integer(substr(gp$Date, 6, 7))
+a = left_join(a, gp, by="Date")
+
+cp = fread("C:/Data/Thesis/25_Size_CP_Returns.CSV")[,-1]
+cp$Date = as.integer(substr(cp$Date, 1, 4))*100 + as.integer(substr(cp$Date, 6, 7))
+a = left_join(a, cp, by="Date")
+
+a = left_join(a, fread("C:/Data/FrenchDartmouth/25_Portfolios_ME_INV_5x5.CSV"), by="Date")
+a = left_join(a, fread("C:/Data/FrenchDartmouth/25_Portfolios_ME_Prior_12_2.CSV"), by="Date")
+a = left_join(a, fread("C:/Data/FrenchDartmouth/25_Portfolios_ME_BETA_5x5.csv"), by="Date")
+a = left_join(a, fread("C:/Data/FrenchDartmouth/25_Portfolios_ME_NI_5x5.csv"), by="Date")
+a = left_join(a, fread("C:/Data/FrenchDartmouth/25_Portfolios_ME_VAR_5x5.csv"), by="Date")
+a = left_join(a, fread("C:/Data/FrenchDartmouth/25_Portfolios_ME_RESVAR_5x5.csv"), by="Date")
+a = left_join(a, fread("C:/Data/FrenchDartmouth/25_Portfolios_ME_AC_5x5.csv"), by="Date")
+#a = left_join(a, fread("C:/Data/FrenchDartmouth/25_Portfolios_BEME_OP_5x5.csv"), by="Date")
+#a = left_join(a, fread("C:/Data/FrenchDartmouth/25_Portfolios_BEME_INV_5x5.csv"), by="Date")
+#a = left_join(a, fread("C:/Data/FrenchDartmouth/25_Portfolios_OP_INV_5x5.csv"), by="Date")
+
+a = left_join(a, fread("C:/Data/FrenchDartmouth/32_Portfolios_ME_BEME_OP_2x4x4.CSV"), by="Date")
+a = left_join(a, fread("C:/Data/FrenchDartmouth/32_Portfolios_ME_BEME_INV_2x4x4.CSV"), by="Date")
+a = left_join(a, fread("C:/Data/FrenchDartmouth/32_Portfolios_ME_OP_INV_2x4x4.CSV"), by="Date")
+
+dim(a)
+```
+
+```
+## [1] 618 407
+```
+
+```r
+summary(a$Date)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  196400  197700  199000  199000  200300  201500
+```
+
+
+```r
+a = a[,-1]
+```
+
+## FF.Rm+FF.SMB+HMLo+FF.RMW+FF.CMA
+
+
+```r
+cs = c()
+ts = c()
+reg.resid = c()
+
+for (p in colnames(a)){  # not Date column
+    model = paste0("`", p, "` -RF ~ FF.Rm+FF.SMB+HMLo+FF.RMW+FF.CMA")
+    fit = lm(model, data=cbind(f, a))
+    cs = rbind(cs, coef(fit))
+    ts = rbind(ts, coef(summary(fit))[,3])
+    reg.resid = cbind(reg.resid, fit$residuals)
+}
+colnames(cs) = c("a", "Rm", "s", "h", "r", "c")
+colnames(ts) = c("a", "Rm", "s", "h", "r", "c")
+colnames(ts) = paste0("t(", colnames(ts), ")")
+
+regs = as.data.frame(cbind(cs, ts))
+rownames(regs) = colnames(a)
+write.csv(regs, "C:/Data/Thesis/FF-Rm_FF-SMB_HMLo_FF-RMW_FF-CMA_Anomalies.csv")
+round(summary(abs(regs$a)), 2)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    0.00    0.05    0.09    0.12    0.16    0.90
+```
+
+```r
+sum(abs(regs["t(a)"])>2)
+```
+
+```
+## [1] 129
+```
+
+```r
+# Sharpe squared intercepts
+SR.sq.mat(regs$a, cov(reg.resid))
+```
+
+```
+##          [,1]
+## [1,] 6.610133
+```
+
+```r
+# Average absolute intercepts
+(mean(abs(regs$a)))
+```
+
+```
+## [1] 0.1189032
+```
+
+## FF.Rm+FF.SMB+FF.HML+RMWor+FF.CMA
+
+
+```r
+cs = c()
+ts = c()
+reg.resid = c()
+
+for (p in colnames(a)){
+    model = paste0("`", p, "` -RF~ FF.Rm+FF.SMB+FF.HML+RMWor+FF.CMA")
+    fit = lm(model, data=cbind(f, a))
+    cs = rbind(cs, coef(fit))
+    ts = rbind(ts, coef(summary(fit))[,3])
+    reg.resid = cbind(reg.resid, fit$residuals)
+}
+colnames(cs) = c("a", "Rm", "s", "h", "r", "c")
+colnames(ts) = c("a", "Rm", "s", "h", "r", "c")
+colnames(ts) = paste0("t(", colnames(ts), ")")
+
+regs = as.data.frame(cbind(cs, ts))
+rownames(regs) = colnames(a)
+write.csv(regs, "C:/Data/Thesis/FF-Rm_FF-SMB_FF-HML_RMWor_FF-CMA_Anomalies.csv")
+round(summary(abs(regs$a)), 2)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    0.00    0.04    0.09    0.11    0.14    0.76
+```
+
+```r
+sum(abs(regs["t(a)"])>2)
+```
+
+```
+## [1] 96
+```
+
+```r
+# Sharpe squared intercepts
+SR.sq.mat(regs$a, cov(reg.resid))
+```
+
+```
+##          [,1]
+## [1,] 6.560016
+```
+
+```r
+# Average absolute intercepts
+(mean(abs(regs$a)))
+```
+
+```
+## [1] 0.1079267
+```
+
+## FF.Rm+FF.SMB+FF.HML+RMWc+FF.CMA
+
+
+```r
+cs = c()
+ts = c()
+reg.resid = c()
+
+for (p in colnames(a)){
+    model = paste0("`", p, "` -RF~ FF.Rm+FF.SMB+FF.HML+RMWc+FF.CMA")
+    fit = lm(model, data=cbind(f, a))
+    cs = rbind(cs, coef(fit))
+    ts = rbind(ts, coef(summary(fit))[,3])
+    reg.resid = cbind(reg.resid, fit$residuals)
+}
+colnames(cs) = c("a", "Rm", "s", "h", "r", "c")
+colnames(ts) = c("a", "Rm", "s", "h", "r", "c")
+colnames(ts) = paste0("t(", colnames(ts), ")")
+
+regs = as.data.frame(cbind(cs, ts))
+rownames(regs) = colnames(a)
+write.csv(regs, "C:/Data/Thesis/FF-Rm_FF-SMB_FF-HML_RMWc_FF-CMA_Anomalies.csv")
+round(summary(abs(regs$a)), 2)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    0.00    0.04    0.08    0.10    0.13    0.71
+```
+
+```r
+sum(abs(regs["t(a)"])>2)
+```
+
+```
+## [1] 74
+```
+
+```r
+# Sharpe squared intercepts
+SR.sq.mat(regs$a, cov(reg.resid))
+```
+
+```
+##          [,1]
+## [1,] 6.462473
+```
+
+```r
+# Average absolute intercepts
+(mean(abs(regs$a)))
+```
+
+```
+## [1] 0.100076
+```
+
+## FF.Rm+FF.SMB+HMLm+RMWg+FF.CMA+WML
+
+
+```r
+cs = c()
+ts = c()
+reg.resid = c()
+
+for (p in colnames(a)){
+    model = paste0("`", p, "` -RF~ FF.Rm+FF.SMB+HMLm+RMWg+FF.CMA+WML")
+    fit = lm(model, data=cbind(f, a))
+    cs = rbind(cs, coef(fit))
+    ts = rbind(ts, coef(summary(fit))[,3])
+    reg.resid = cbind(reg.resid, fit$residuals)
+}
+colnames(cs) = c("a", "Rm", "s", "h", "r", "c", "w")
+colnames(ts) = c("a", "Rm", "s", "h", "r", "c", "w")
+colnames(ts) = paste0("t(", colnames(ts), ")")
+
+regs = as.data.frame(cbind(cs, ts))
+rownames(regs) = colnames(a)
+write.csv(regs, "C:/Data/Thesis/FF-Rm_FF-SMB_HMLm_RMWg_FF-CMA_WML_Anomalies.csv")
+round(summary(abs(regs$a)), 2)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    0.00    0.04    0.08    0.10    0.13    0.95
+```
+
+```r
+sum(abs(regs["t(a)"])>2)
+```
+
+```
+## [1] 85
+```
+
+```r
+# Sharpe squared intercepts
+SR.sq.mat(regs$a, cov(reg.resid))
+```
+
+```
+##          [,1]
+## [1,] 6.571443
+```
+
+```r
+# Average absolute intercepts
+(mean(abs(regs$a)))
+```
+
+```
+## [1] 0.1041996
+```
+
+## FF.Rm+FF.SMB+HMLm+RMWc+FF.CMA+WML
+
+
+```r
+cs = c()
+ts = c()
+
+for (p in colnames(a)){
+    model = paste0("`", p, "` -RF~ FF.Rm+FF.SMB+HMLm+RMWc+FF.CMA+WML")
+    fit = lm(model, data=cbind(f, a))
+    cs = rbind(cs, coef(fit))
+    ts = rbind(ts, coef(summary(fit))[,3])
+}
+colnames(cs) = c("a", "Rm", "s", "h", "r", "c", "w")
+colnames(ts) = c("a", "Rm", "s", "h", "r", "c", "w")
+colnames(ts) = paste0("t(", colnames(ts), ")")
+
+regs = as.data.frame(cbind(cs, ts))
+rownames(regs) = colnames(a)
+write.csv(regs, "C:/Data/Thesis/FF-Rm_FF-SMB_HMLm_RMWc_FF-CMA_WML_Anomalies.csv")
+round(summary(abs(regs$a)), 2)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    0.00    0.04    0.09    0.11    0.14    0.80
+```
+
+```r
+sum(abs(regs["t(a)"])>2)
+```
+
+```
+## [1] 76
+```
+
+```r
+# Sharpe squared intercepts
+SR.sq.mat(regs$a, cov(reg.resid))
+```
+
+```
+##          [,1]
+## [1,] 6.746238
+```
+
+```r
+# Average absolute intercepts
+(mean(abs(regs$a)))
+```
+
+```
+## [1] 0.1063653
+```
+
+## FF.Rm+FF.SMB+HMLm+RMWc+WML
+
+
+```r
+cs = c()
+ts = c()
+reg.resid = c()
+
+for (p in colnames(a)){
+    model = paste0("`", p, "` -RF~ FF.Rm+FF.SMB+HMLm+RMWc+WML")
+    fit = lm(model, data=cbind(f, a))
+    cs = rbind(cs, coef(fit))
+    ts = rbind(ts, coef(summary(fit))[,3])
+    reg.resid = cbind(reg.resid, fit$residuals)
+}
+colnames(cs) = c("a", "Rm", "s", "h", "r", "w")
+colnames(ts) = c("a", "Rm", "s", "h", "r", "w")
+colnames(ts) = paste0("t(", colnames(ts), ")")
+
+regs = as.data.frame(cbind(cs, ts))
+rownames(regs) = colnames(a)
+write.csv(regs, "C:/Data/Thesis/FF-Rm_FF-SMB_HMLm_RMWc_WML_Anomalies.csv")
+round(summary(abs(regs$a)), 2)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    0.00    0.04    0.09    0.11    0.14    0.81
+```
+
+```r
+sum(abs(regs["t(a)"])>2)
+```
+
+```
+## [1] 78
+```
+
+```r
+# Sharpe squared intercepts
+SR.sq.mat(regs$a, cov(reg.resid))
+```
+
+```
+##          [,1]
+## [1,] 6.446134
+```
+
+```r
+# Average absolute intercepts
+(mean(abs(regs$a)))
+```
+
+```
+## [1] 0.1053299
+```
 
