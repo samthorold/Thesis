@@ -2,22 +2,99 @@
 Introduction
 ==========
 
-A five-factor model comprised of; market, size,  monthly value, cash profitibility and momentum factors gives a maximum monthly sharpe ratio of 0.35.
-Monthly value and cash profitability have similar marginal contributions to the sharpe ratio of around 0.2.
-The market and momentum contribute around 0.1 while size contributes 0.02.
+Elevator pitch and minimal description of model
+----------------------------------------------------------------
+
+A five-factor model comprised of; market, size,  value, cash profitability and momentum factors gives a maximum monthly sharpe ratio of 0.35.
+Value and cash profitability have similar marginal contributions to the sharpe ratio of 0.2.
+The market and momentum contribute 0.1 while size contributes 0.02.
 An investment factor contributes only 0.002 to the maximum sharpe ratio of a six-factor model and it is omitted for parsimony.
 The time series regression for the model is
 $$
-R_{it} = R_{Mt} + s_iSMB_t + h_iHML_{mt} + r_iRMW_{ct} + w_iWML_t
-$$ {#eq:regmodel}
+R_{it} = R_{Mt} + s_iSMB_t + h_iHML_t + r_iRMW_t + w_iWML_t
+$$ {#eq:mymodel}
 where;
 $R_{it}$ is the return on asset $i$ for month $t$ in excess of the risk free rate,
 $R_{Mt}$ is the return on the value-weighted portfolio of NYSE-AMEX-NASDAQ stocks in excess of the risk free rate,
 $SMB_t$ is the return on a portfolio long small stocks and short big stocks,
-$HML_{mt}$ is the return on a portfolio long stocks with high book to market equity and short stocks with low book to market equity,
-$RWM_{ct}$ is the return on a portfolio long stocks with high profits and short stocks with low profits and
+$HML_t$ is the return on a portfolio long stocks with high book to market equity and short stocks with low book to market equity,
+$RWM_t$ is the return on a portfolio long stocks with high accrual adjusted profits and short stocks with low accrual adjusted profits and
 $WML_t$ is the return on a portfolio long stocks with high returns over the last twelve months and short stocks with low returns over the past twelve months.
 Long-short portfolios are 2x3 sorts in the style of @fama1993common.
+Value is created in the style of @asness2013devil and profitability in the style of @ball2015deflating.
 Book-to-market and prior return portfolios are sorted every month while size and profitibility portfolios are sorted every June.
 
-@fama2016choosing find a sharpe ratio of 0.24 from a similar five-factor model comprised of; market, size, value, cash profitability and investment factors.
+
+Why sharpe ratio? What do we learn?
+----------------------------------------------------------
+
+**What are we saying when use a factor model?** Risk-return, mean-variance, risk story (?)
+
+The asset pricing challenge is to describe a small number of observable factors that can come close to spanning an efficient portfolio.
+This is equivalent to correctly pricing returns.
+Analysis of asset-pricing models typically focusses on the intercepts left in time series regressions.
+@jensen1968performance explains that a regression intercept represents an asset's deviation from an asset pricing model.
+This method makes it difficult to compare model specifications directly.
+How can we compare models which make improvements in some anomalies but perform worse in others?
+@barillas2016alpha show that increasing the maximum sharpe ratio of the factors minimizes the maximum sharpe ratio of the intercepts.
+Model $M_1$ composed of factors $f_1$ is preferable to model $M_2$ composed of factors $f_2$ if
+$$
+Sh^2(f_1, f_2, R) - Sh^2(f_1) < Sh^2(f_1, f_2, R) - Sh^2(f_2)
+$$
+Where $R$ represents test asset returns.
+Since both sides measure the improvement in squared sharpe ratio when adding a factor to the set of test asset returns and additional factors,
+we can simplify the condition to
+$$
+Sh^2(f_1, f_2) - Sh^2(f_1) < Sh^2(f_1, f_2) - Sh^2(f_2)
+$$
+We are able to directly compare nested models of factors by comparing the change in sharpe ratio when adding a factor.
+
+Tests should consider factors' ability to price *all* returns, not just those of another factor.
+In practice this means the stock returns available, including portfolio returns we can create with them, *and* the factors themselves.
+@barillas2016alpha show that sharpe ratios can be used to compare models of any specification, nested or non-nested.
+Our end goal is to minimize the sharpe ratio attainable from the intercepts in a time series regression of all asset returns on our factors.
+$$
+Sh^2(f, \Pi) - Sh^2(f) = Sh^2(\alpha)
+$$
+where $\Pi$ is the returns on all assets, $f$ is our set of factors and $\alpha$ is our intercepts.
+The returns on all assets includes our factors, so
+$$
+Sh^2(f, \Pi) - Sh^2(f) = Sh^2(\Pi) - Sh^2(f)
+$$
+We can minimize the sharpe ratio of the intercepts in a regression on all assets without knowing the returns on all assets by maximizing the sharpe ratio of our set of factors.
+
+
+A focus on the sharpe ratio of the factors breaks from previous research in three ways;
+models can be directly compared,
+we no longer emphasise the size of the intercepts but rather their covariance and
+we are concerned with a model's ability to explain the returns on all assets rather than a subset of assets.
+
+Similar work
+------------------
+
+@fama2016choosing conduct similar analysis and find a sharpe ratio of 0.24 from a similar five-factor model comprised of; market, size, value, cash profitability and investment factors.
+$$
+R_{it} = R_{Mt} + s_iSMB_t + h_iHML_t + r_iRMW_t + w_iCMA_t
+$$ {#eq:FF2016}
+where;
+$R_{Mt}$, $SMB_t$ and $RMW_t$ are defined as above while $CMA_t$ is the return on a portfolio long stocks with high growth in assets and short stocks with low growth in assets.
+$HML$ is created in the style of @fama1993common with annual rebalancing and lagged market equity.
+
+How is this different?
+-------------------------------
+
+Value and momentum are persistent global phenomenons (@asness2013value).
+Furthermore, value and momentum are negatively correlated (@asness1997interaction).
+Negative correlation makes the factors a natural hedge and accentuates their slopes when both included in regressions (@fama2015incremental).
+@asness2013devil shows that momentum predicts changes in future book value of equity.
+Using a monthly updated price in our calculation of book-to-market equity, we can remove stocks that appear cheap because their book values have not taken into account recent poor results (@kok2017facts). This reasoning leads to the model specified in +@eq:mymodel.
+
+
+Model                                                                   |$Sh^2$|$Mkt$|$Size$ |$Value$|$Prof$|$Inv$|$Mom$
+-----------------------------------------------------------------|----------:|---------:|---------:|----------:|---------:|--------:|---------:
+*@eq:mymodel                                                  |0.353|0.084 |0.020    |0.204   |0.209    |           |0.128
+*@eq:mymodel + CMA                                     |0.355|0.085 |0.020    |0.114   |0.210    |0.002 |0.094
+*@eq:FF2016                                                      |0.251| 0.072 |0.023   |0.017   |  0.192  | 0.032 |
+*@eq:FF2016 + WML                                         |0.264|0.075 |0.019    |0.022   |0.168    |0.018 |0.013
+
+Table: Max $Sh^2(f)$ and factor contributions, $(\frac{\alpha_i}{\sigma_i})^2$
