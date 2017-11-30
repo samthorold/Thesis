@@ -1,6 +1,6 @@
 
-@barillas2016alpha
-=================
+Why sharpe ratio? (@barillas2016alpha)
+------------------------------------------------------------
 
 @pastor2000comparing
 
@@ -62,6 +62,9 @@ By conventional measures the second model is then "worse" than the first model.
 The maximum sharpe ratio of the second model is higher than the maximum sharpe ratio for the first.
 Conventional asset pricing tests and maximum sharpe ratios do not always agree.
 
+If test asset and excluded-factor evidence contradict one another, we should favour excluded-factor evidence.
+Excluded-factor evidence considers the returns on all assets rather than a subset of all assets.
+Data mining is a problem for test assets (@lewellen2010skeptical) and factors (@harvey2016and).
 
 
 

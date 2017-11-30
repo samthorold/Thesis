@@ -122,6 +122,218 @@ round(as.data.frame(coef(summary(fit))), 2)
 cor(f) %>% round(2)
 ```
 
+# Spanning Regressions
+
+```{r}
+fit = lm(FF.CMA~FF.Rm+FF.SMB+HMLm+RMWc+WML, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(FF.CMA~FF.Rm+FF.SMB+HMLm+RMWg+WML, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(FF.CMA~FF.Rm+FF.SMB+FF.HML+RMWc, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(RMWc~FF.Rm+FF.SMB+FF.HML+RMWor+FF.CMA, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(RMWc~FF.Rm+FF.SMB+FF.HML+FF.RMW+FF.CMA, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(RMWg~FF.Rm+FF.SMB+FF.HML+FF.RMW+FF.CMA, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(RMWg~FF.Rm+FF.SMB+FF.HML+RMWor+FF.CMA, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(RMWg~FF.Rm+FF.SMB+FF.HML+RMWc+FF.CMA, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(WML~FF.Rm+FF.SMB+FF.HML+FF.RMW+FF.CMA, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(WML~FF.Rm+FF.SMB+FF.HML+RMWc+FF.CMA, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(WML~FF.Rm+FF.SMB+HMLm+RMWc+FF.CMA, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(WML~FF.Rm+FF.SMB+HMLm+RMWg+FF.CMA, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(WML~FF.Rm+FF.SMB+HMLm+RMWg, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(FF.HML~FF.Rm+FF.SMB+FF.RMW+FF.CMA, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(FF.HML~FF.Rm+FF.SMB+RMWc+FF.CMA, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(HMLm~FF.Rm+FF.SMB+FF.RMW+FF.CMA, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(HMLm~FF.Rm+FF.SMB+FF.RMW+FF.CMA+WML, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(HMLm~FF.Rm+FF.SMB+RMWc+FF.CMA+WML, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(HMLm~FF.Rm+FF.SMB+FF.HML+RMWc+FF.CMA+WML, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(RMWc~FF.Rm+FF.SMB+FF.HML+FF.RMW+RMWg+FF.CMA+WML, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(RMWc~FF.Rm+FF.SMB+FF.HML+HMLm+FF.RMW+RMWor+RMWg+FF.CMA+WML, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(RMWg~FF.Rm+FF.SMB+FF.HML+HMLm+FF.RMW+RMWor+RMWc+FF.CMA+WML, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(RMWor~FF.Rm+FF.SMB+FF.HML+HMLm+FF.RMW+RMWg+RMWc+FF.CMA+WML, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(HMLm~FF.Rm+FF.SMB+FF.HML+FF.RMW+RMWor+RMWg+RMWc+FF.CMA+WML, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(WML~FF.Rm+FF.SMB+FF.HML+FF.RMW+RMWor+RMWg+RMWc+FF.CMA, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(WML~FF.Rm+FF.SMB+FF.HML+HMLm+FF.RMW+RMWor+RMWg+RMWc+FF.CMA, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(FF.CMA~FF.Rm, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(FF.CMA~RMWc, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(FF.CMA~FF.Rm+RMWc, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(FF.CMA~WML, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(FF.CMA~HMLm, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(FF.CMA~HMLm+WML, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(FF.CMA~FF.Rm+HMLm+WML, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(FF.CMA~FF.Rm+FF.SMB+HMLm+WML, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(FF.CMA~FF.Rm+FF.SMB+HMLm+RMWc+WML, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
 # Maximum Sharpe Ratio
 
 $$

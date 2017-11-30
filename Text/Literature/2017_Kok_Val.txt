@@ -1,6 +1,6 @@
 
-@kok2017facts
-=============
+Value (@kok2017facts)
+----------------------------------
 
 **Value investing** is buying securities  for a good value.
 It is not the quantitative strategies of @lakonishok1994contrarian nor @chan2004value which focus on ratios of common fundamental metrics such as book-to-market or price-earnings.
@@ -10,8 +10,7 @@ Quantitative strategy proponents claim to identify temporarily underpriced secur
 
 Instead of identifying underpriced securities, the fundamentals approach identifies securities with inflated accounting numbers.
 
-Brief History
-------------------
+**Brief History**
 
 @graham1934security said that investors should buy stocks that are trading at a significant discount to intrinsic value.
 Where intrinsic value is measured as future earnings power.
@@ -51,8 +50,7 @@ ln\left(\frac{F_{t+1}}{P_{t+1}}\right) =ln\left(\frac{F_t}{P_t}\right) +ln\left(
 $$
 The ending ratio value equals the beginning value plus the change in the fundamental metric minus the change in the price.
 
-Fundamental Value and Momentum
-------------------------------------------------------
+**Fundamental Value and Momentum**
 
 Positive momentum stocks exhibit less mean reversion.
 That is to say they exhibit smaller reductions in the fundamental metric.
