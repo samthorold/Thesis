@@ -85,7 +85,7 @@ combine.sources = function(crsp, comp){
     df$BMC[is.infinite(df$BMC)] = NA
     df$BMM[is.infinite(df$BMM)] = NA
 
-    return(df %>% filter(Date>as.Date("1963-06-30")))
+    return(df %>% filter(Date>as.Date("1962-06-30")))
 }
 ```
 
@@ -1351,7 +1351,7 @@ round(colMeans(decile.returns %>% select(-Date)) * 100, 2)
 
 ```{r, warning=FALSE}
 df = combine.sources(crsp, comp)
-df$INV = df$INV
+#df$INV = df$INV
 df = df %>% filter(!is.na(INV), !is.na(Size))
 ```
 
@@ -1406,6 +1406,13 @@ round(colMeans(decile.returns %>% select(-Date)) * 100, 2)
 
 ![French Website $INV$ Decile Returns](C:/Data/FrenchDartmouth/10_INV.JPG)
 
+### $ME$
+
+```{r}
+df %>% group_by(INV.B, Date) %>% summarise(avg.ME=mean(ME, na.rm=TRUE)) %>%
+    group_by(INV.B) %>% summarise(avg.ME=mean(avg.ME)) %>% round(2)
+```
+
 ### $Size$
 
 ```{r}
@@ -1439,6 +1446,20 @@ df %>% group_by(INV.B, Date) %>% summarise(avg.OP=mean(OP, na.rm=TRUE)) %>%
 ```{r}
 df %>% group_by(INV.B, Date) %>% summarise(avg.GP=mean(GP, na.rm=TRUE)) %>%
     group_by(INV.B) %>% summarise(avg.GP=mean(avg.GP)) %>% round(2)
+```
+
+### $CP$
+
+```{r}
+df %>% group_by(INV.B, Date) %>% summarise(avg.CP=mean(CP, na.rm=TRUE)) %>%
+    group_by(INV.B) %>% summarise(avg.CP=mean(avg.CP)) %>% round(2)
+```
+
+### $Acc$
+
+```{r}
+df %>% group_by(INV.B, Date) %>% summarise(avg.Acc=mean(Acc, na.rm=TRUE)) %>%
+    group_by(INV.B) %>% summarise(avg.Acc=mean(avg.Acc)) %>% round(2)
 ```
 
 ### $Prior$
@@ -1532,15 +1553,70 @@ df %>% group_by(Prior.B, Date) %>% summarise(avg.BMM=mean(BMM, na.rm=TRUE)) %>%
     group_by(Prior.B) %>% summarise(avg.BMM=mean(avg.BMM)) %>% round(2)
 ```
 
-## Accruals
+## $Acc$
 
 * Annual rebalance
 
 ```{r, warning=FALSE}
 df = combine.sources(crsp, comp)
+df = df %>% filter(!is.na(Acc), !is.na(Size))
+```
+
+### $Acc$ Decile Breakpoints
+
+```{r Acc.deciles}
+quantiles = 1:10/10
+
+nyse = df %>% filter(Exchange=="NYSE", Month==7) %>% select(Period, PERMNO, Acc)
+
+breakpoints = nyse %>% arrange(Period, Acc) %>% group_by(Period) %>% summarize(
+    D10=Acc[.1*n()], D20=Acc[.2*n()],
+    D30=Acc[.3*n()], D40=Acc[.4*n()],
+    D50=Acc[.5*n()], D60=Acc[.6*n()],
+    D70=Acc[.7*n()], D80=Acc[.8*n()],
+    D90=Acc[.9*n()], D100=Acc[n()]) %>% as.data.frame
+write.csv(breakpoints, "C:/Data/Thesis/Acc_Decile_Breakpoints.csv")
+
+breakpoints$Period = breakpoints$Period + 1
+
+breakpoints[, c("PERMNO", "Acc")] = NULL
+
+df = left_join(df, breakpoints, by=c("Period"))
+```
+
+```{r}
+df = assign.bkts(df, "Acc", quantiles)
+```
+
+```{r}
+df %>% group_by(Acc.B, Date) %>% summarize(N=n()) %>% group_by(Acc.B) %>%
+    summarise(avg.N=mean(N))
+```
+
+```{r}
+# df = ri.adj.Size(df)
+
+df = df %>% group_by(Acc.B, Date) %>% mutate(
+    adj.bkt.Size=sum(adj.Size, na.rm=TRUE)
+) %>% as.data.frame
+df$wt.ri = df$ri * df$adj.Size / df$adj.bkt.Size
 ```
 
 ### Returns
+
+```{r}
+decile.returns = df %>%
+    dcast(Date ~ Acc.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
+write.csv(decile.returns, "C:/Data/Thesis/Acc_Decile_Returns.csv")
+round(colMeans(decile.returns %>% select(-Date)) * 100, 2)
+```
+
+### $ME$
+
+```{r}
+df %>% group_by(Acc.B, Date) %>% summarise(avg.ME=mean(ME, na.rm=TRUE)) %>%
+    group_by(Acc.B) %>% summarise(avg.ME=mean(avg.ME)) %>% round(2)
+```
 
 ## $Vol$
 
@@ -2049,6 +2125,154 @@ df %>% group_by(L1.ME.B, Prior.B, Date) %>% summarise(rp=sum(wt.ri, na.rm=TRUE))
 
 ![French Website 25 $ME-Prior$ Returns](C:/Data/FrenchDartmouth/25_L1ME_Prior.JPG)
 
+## Value and Momentum
+
+* Monthly rebalance
+
+```{r, warning=FALSE}
+df = combine.sources(crsp, comp)
+df = df %>% filter(!is.na(L1.ME), !is.na(Prior), !is.na(L13.price), !is.na(L1.ri),
+                   !is.infinite(CP))
+```
+
+### Value Quintiles
+
+```{r value.quintiles}
+quantiles = 1:5/5
+
+nyse = df %>% filter(Exchange=="NYSE") %>% select(Date, PERMNO, BMM, Prior)
+
+breakpoints = nyse %>% arrange(Date, BMM) %>% group_by(Date) %>% summarize(
+    D10=BMM[.1*n()], D20=BMM[.2*n()],
+    D30=BMM[.3*n()], D40=BMM[.4*n()],
+    D50=BMM[.5*n()], D60=BMM[.6*n()],
+    D70=BMM[.7*n()], D80=BMM[.8*n()],
+    D90=BMM[.9*n()], D100=BMM[n()]) %>% as.data.frame
+# breakpoints$Period = breakpoints$Period + 1
+breakpoints[, c("PERMNO", "BMM")] = NULL
+df = left_join(df, breakpoints, by=c("Date"))
+df = assign.bkts(df, "BMM", quantiles)
+```
+
+### $Prior$ Quintiles
+
+```{r value.prior.quintiles}
+breakpoints = nyse %>% arrange(Date, Prior) %>% group_by(Date) %>% summarize(
+    D10=Prior[.1*n()], D20=Prior[.2*n()],
+    D30=Prior[.3*n()], D40=Prior[.4*n()],
+    D50=Prior[.5*n()], D60=Prior[.6*n()],
+    D70=Prior[.7*n()], D80=Prior[.8*n()],
+    D90=Prior[.9*n()], D100=Prior[n()]) %>% as.data.frame
+# breakpoints$Period = breakpoints$Period + 1
+breakpoints[, c("PERMNO", "Prior")] = NULL
+df = left_join(df, breakpoints, by=c("Date"))
+df = assign.bkts(df, "Prior", quantiles)
+```
+
+### ME
+
+```{r}
+df %>% group_by(BMM.B, Prior.B, Date) %>% summarise(Avg.ME=mean(ME, na.rm=TRUE)) %>%
+    dcast(BMM.B ~ Prior.B, fun.aggregate=mean, value.var="Avg.ME", na.rm=TRUE) %>%
+    select(-`NA`) %>% filter(!is.na(BMM.B)) %>% round(2)
+```
+
+### Investment
+
+```{r}
+df %>% group_by(BMM.B, Prior.B, Date) %>% summarise(Avg.INV=mean(INV, na.rm=TRUE)) %>%
+    dcast(BMM.B ~ Prior.B, fun.aggregate=mean, value.var="Avg.INV", na.rm=TRUE) %>%
+    select(-`NA`) %>% filter(!is.na(BMM.B)) %>% round(2)
+```
+
+### CP
+
+```{r}
+df %>% group_by(BMM.B, Prior.B, Date) %>% summarise(Avg.CP=mean(CP, na.rm=TRUE)) %>%
+    dcast(BMM.B ~ Prior.B, fun.aggregate=mean, value.var="Avg.CP", na.rm=TRUE) %>%
+    select(-`NA`) %>% filter(!is.na(BMM.B)) %>% round(2)
+```
+
+### Accruals
+
+```{r}
+df %>% group_by(BMM.B, Prior.B, Date) %>% summarise(Avg.Acc=mean(Acc, na.rm=TRUE)) %>%
+    dcast(BMM.B ~ Prior.B, fun.aggregate=mean, value.var="Avg.Acc", na.rm=TRUE) %>%
+    select(-`NA`) %>% filter(!is.na(BMM.B)) %>% round(4)
+```
+
+## $Acc$ and $INV$
+
+* Annual rebalance
+
+```{r, warning=FALSE}
+df = combine.sources(crsp, comp)
+df = df %>% filter(!is.na(Acc), !is.na(INV))
+```
+
+### $Acc$ Quintiles
+
+```{r Acc.quintiles}
+quantiles = 1:5/5
+
+nyse = df %>% filter(Exchange=="NYSE", Month==7) %>% select(Period, PERMNO, Acc, INV)
+
+breakpoints = nyse %>% arrange(Period, Acc) %>% group_by(Period) %>% summarize(
+    D10=Acc[.1*n()], D20=Acc[.2*n()],
+    D30=Acc[.3*n()], D40=Acc[.4*n()],
+    D50=Acc[.5*n()], D60=Acc[.6*n()],
+    D70=Acc[.7*n()], D80=Acc[.8*n()],
+    D90=Acc[.9*n()], D100=Acc[n()]) %>% as.data.frame
+breakpoints$Period = breakpoints$Period + 1
+breakpoints[, c("PERMNO", "Acc")] = NULL
+df = left_join(df, breakpoints, by=c("Period"))
+df = assign.bkts(df, "Acc", quantiles)
+```
+
+### $INV$ Quintiles
+
+```{r acc.inv.quintiles}
+breakpoints = nyse %>% arrange(Period, INV) %>% group_by(Period) %>% summarize(
+    D10=INV[.1*n()], D20=INV[.2*n()],
+    D30=INV[.3*n()], D40=INV[.4*n()],
+    D50=INV[.5*n()], D60=INV[.6*n()],
+    D70=INV[.7*n()], D80=INV[.8*n()],
+    D90=INV[.9*n()], D100=INV[n()]) %>% as.data.frame
+breakpoints$Period = breakpoints$Period + 1
+breakpoints[, c("PERMNO", "INV")] = NULL
+df = left_join(df, breakpoints, by=c("Period"))
+df = assign.bkts(df, "INV", quantiles)
+```
+
+```{r}
+df %>% group_by(Acc.B, INV.B, Date) %>% summarize(N=n()) %>% group_by(Acc.B, INV.B) %>%
+    dcast(Acc.B ~ INV.B, value.var="N", fun.aggregate=mean, na.rm=TRUE) %>%
+    round(0)
+```
+
+```{r}
+# df = ri.adj.Size(df)
+
+df = df %>% group_by(Acc.B, INV.B, Date) %>% mutate(
+    adj.bkt.Size=sum(adj.Size, na.rm=TRUE)
+) %>% as.data.frame
+df$wt.ri = df$ri * df$adj.Size / df$adj.bkt.Size
+```
+
+### Returns
+
+```{r}
+df$Acc.INV.B = interaction(df$Acc.B, df$INV.B)
+df$wt.ri = df$wt.ri * 100
+
+returns = df %>% dcast(Date ~ Acc.INV.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
+write.csv(returns, "C:/Data/Thesis/25_Acc_INV_Returns.csv")
+
+df %>% group_by(Acc.B, INV.B, Date) %>% summarise(rp=sum(wt.ri, na.rm=TRUE)) %>%
+    dcast(Acc.B ~ INV.B, fun.aggregate=mean, value.var="rp", na.rm=TRUE) %>%
+    select(-`NA`) %>% filter(!is.na(Acc.B)) %>% round(digits=2)
+```
+
 # Create Factors
 
 ## Market Excess Return, $R_M$
@@ -2095,6 +2319,10 @@ rm$rf = NULL
 ```{r, warning=FALSE}
 df = combine.sources(crsp, comp)
 df = df %>% filter(!is.na(BM), !is.na(Size), BE>0)
+```
+
+```{r}
+df %>% select(Date, PERMNO, Size, BM) %>% arrange(Date) %>% head
 ```
 
 ### $Size$ Median
@@ -2173,6 +2401,8 @@ returns = df %>% dcast(Date ~ Size.BM.B, fun.aggregate=sum, value.var="wt.ri", n
 #df %>% group_by(Size.B, BM.B, Date) %>% summarise(rp=sum(wt.ri, na.rm=TRUE)) %>%
 #    dcast(Size.B ~ BM.B, fun.aggregate=mean, value.var="rp", na.rm=TRUE) %>%
 #    select(-`NA`) %>% filter(!is.na(Size.B))
+
+returns = returns %>% filter(Date>as.Date("1963-06-30"))
 
 returns$HMLs = returns$SH - returns$SL
 returns$HMLb = returns$BH - returns$BL
@@ -2256,6 +2486,8 @@ df$L1.ME.BMM.B = interaction(df$L1.ME.B, df$BMM.B, sep="")
 df$wt.ri = df$wt.ri * 100
 
 returns = df %>% dcast(Date ~ L1.ME.BMM.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
+
+returns = returns %>% filter(Date>as.Date("1963-06-30"))
 
 returns$HMLms = returns$SHm - returns$SLm
 returns$HMLmb = returns$BHm - returns$BLm
@@ -2344,6 +2576,8 @@ df$wt.ri = df$wt.ri * 100
 
 returns = df %>% dcast(Date ~ Size.OP.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
 
+returns = returns %>% filter(Date>as.Date("1963-06-30"))
+
 returns$RMWos = returns$SRo - returns$SWo
 returns$RMWob = returns$BRo - returns$BWo
 returns$RMWo = (returns$SRo+returns$BRo)/2 - (returns$SWo+returns$BWo)/2
@@ -2425,6 +2659,8 @@ df$wt.ri = df$wt.ri * 100
 
 returns = df %>% dcast(Date ~ Size.OP.2.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
 
+returns = returns %>% filter(Date>as.Date("1963-06-30"))
+
 returns$RMWors = returns$SRor - returns$SWor
 returns$RMWorb = returns$BRor - returns$BWor
 returns$RMWor = (returns$SRor+returns$BRor)/2 - (returns$SWor+returns$BWor)/2
@@ -2503,6 +2739,8 @@ df$Size.GP.B = interaction(df$Size.B, df$GP.B, sep="")
 df$wt.ri = df$wt.ri * 100
 
 returns = df %>% dcast(Date ~ Size.GP.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
+
+returns = returns %>% filter(Date>as.Date("1963-06-30"))
 
 returns$RMWgs = returns$SRg - returns$SWg
 returns$RMWgb = returns$BRg - returns$BWg
@@ -2588,6 +2826,8 @@ df$wt.ri = df$wt.ri * 100
 
 returns = df %>% dcast(Date ~ Size.CP.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
 
+returns = returns %>% filter(Date>as.Date("1963-06-30"))
+
 returns$RMWcs = returns$SRc - returns$SWc
 returns$RMWcb = returns$BRc - returns$BWc
 returns$RMWc = (returns$SRc+returns$BRc)/2 - (returns$SWc+returns$BWc)/2
@@ -2670,6 +2910,8 @@ df$wt.ri = df$wt.ri * 100
 
 returns = df %>% dcast(Date ~ Size.INV.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
 
+returns = returns %>% filter(Date>as.Date("1963-06-30"))
+
 returns$CMAs = returns$SC - returns$SA
 returns$CMAb = returns$BC - returns$BA
 returns$CMA = (returns$SC+returns$BC)/2 - (returns$SA+returns$BA)/2
@@ -2746,6 +2988,8 @@ df$Size.INV.B = interaction(df$Size.B, df$INV.B, sep="")
 df$wt.ri = df$wt.ri * 100
 
 returns = df %>% dcast(Date ~ Size.INV.B, fun.aggregate=sum, value.var="wt.ri", na.rm=TRUE)
+
+returns = returns %>% filter(Date>as.Date("1963-06-30"))
 
 returns$CMAs = returns$SC - returns$SA
 returns$CMAb = returns$BC - returns$BA
@@ -2849,6 +3093,7 @@ write.csv(returns, "C:/Data/Thesis/25_L1ME_Prior_Returns.csv")
 
 
 
+
 # Summarise Factors
 
 ```{r}
@@ -2868,12 +3113,6 @@ stat.summary(
     )
 ) %>% round(2)
 
-stat.summary(
-    f[13:630,] %>% select(
-        -c(Date, SMB.HML, SMB.HMLm, SMB.RMWo, SMB.RMWor, SMB.RMWc, SMB.RMWg, SMB.CMA, SMB.WML)
-    )
-) %>% round(2)
-
 write.csv(f, "C:/Data/Thesis/factors.csv")
 ```
 
@@ -2885,63 +3124,8 @@ cor(
 ) %>% round(2) %>% as.data.frame
 ```
 
-```{r}
-summary(lm(SMB~Rm+HML+RMWor+CMA, data=f))
-```
 
-```{r}
-summary(lm(HML~Rm+SMB+RMWo+CMA, data=f))
-```
-
-```{r}
-summary(lm(RMWo~Rm+SMB+HML+CMA, data=f))
-```
-
-```{r}
-summary(lm(CMA~Rm+SMB+HML+RMWo, data=f))
-```
-
-```{r}
-summary(lm(RMWg~Rm+SMB+HML+CMA, data=f))
-```
-
-```{r}
-summary(lm(HML~Rm+SMB+RMWg+CMA, data=f))
-```
-
-```{r}
-summary(lm(HMLm~Rm+SMB+RMWo+CMA, data=f))
-```
-
-```{r}
-summary(lm(HMLm~Rm+SMB+RMWo+CMA+WML, data=f))
-```
-
-```{r}
-summary(lm(HMLm~Rm+SMB+RMWg+CMA, data=f))
-```
-
-```{r}
-summary(lm(HMLm~Rm+SMB+RMWg+CMA+WML, data=f))
-```
-
-```{r}
-summary(lm(HMLm~Rm+SMB+HML+RMWg+CMA+WML, data=f))
-```
-
-```{r}
-summary(lm(HML~Rm+SMB, data=f))
-```
-
-```{r}
-summary(lm(HMLm~Rm+SMB, data=f))
-```
-
-```{r}
-summary(lm(HML~Rm+SMB+WML, data=f))
-```
-
-Asness and Frazzini (2013) Exhibit 6 Regression 1
+# Asness and Frazzini (2013) Exhibit 6 Regression 1
 
 ```{r}
 summary(lm(HML~Rm+SMB+HMLm+WML, data=f))
@@ -2951,7 +3135,11 @@ summary(lm(HML~Rm+SMB+HMLm+WML, data=f))
 summary(lm(HMLm~Rm+SMB+WML, data=f))
 ```
 
-Asness and Frazzini (2013) Exhibit 6 Regression 4
+```{r}
+summary(lm(HMLm~Rm+SMB+HML+WML, data=f))
+```
+
+# Asness and Frazzini (2013) Exhibit 6 Regression 4
 
 ```{r}
 summary(lm(HMLm~Rm+SMB+HML+WML, data=f))

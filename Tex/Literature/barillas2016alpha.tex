@@ -1,0 +1,99 @@
+% !TeX root=../main.tex
+
+\subsection{Why Sharpe ratio? \cite{barillas2016alpha}}
+
+\cite{pastor2000comparing}
+\begin{quotation}
+  A set of benchmarks that is correct for pricing need not be correct for 
+  investing.
+\end{quotation}
+
+
+\cite{jensen1968performance} explains that a regression intercept represents 
+an asset's deviation from an asset pricing model.
+$SMB$, $HML$, etc. are traded factors while Consumption growth is not.
+\cite{breeden2005intertemporal} suggests that non-traded factors can be 
+replaced with mimicking traded ones.
+Significant $\alpha$ means that the maximum Sharpe ratio of the factors used 
+in the regression can be improved by a position in the asset being tested.
+
+The asset pricing challenge is to describe a small number of observable 
+factors that can come close to spanning an efficient portfolio. This is 
+equivalent to correctly pricing returns.
+Previous work tests factors' ability to price a small subset of returns, 
+typically ``anomalies."
+Tests should consider factors' ability to price \emph{all} returns.
+In practice this means the stock returns available, including portfolio 
+returns we can create with them, \emph{and} the factors themselves.
+
+It is interesting to note when tests of subsets of asset returns do not point 
+to the same combination of factors as tests involving a more complete set of 
+returns.
+
+\cite{gibbons1989test} demonstrate that the possible improvement in the 
+squared Sharpe ratio offered by test asset returns is given by the quadratic 
+form in the $\alpha$s.
+This measure of model misspecification shows that test assets are not 
+important when comparing models.
+
+Model $M_1$ composed of factors $f_1$ is preferable to model $M_2$ composed of 
+factors $f_2$ if
+\[
+Sh^2(f_1, f_2, R) - Sh^2(f_1) < Sh^2(f_1, f_2, R) - Sh^2(f_2)
+\]
+Where $R$ represents test asset returns.
+Since both sides measure the improvement in squared sharpe ratio when adding a 
+factor to the set of test asset returns and additional factors,
+we can simplify the condition to
+\[
+Sh^2(f_1, f_2) - Sh^2(f_1) < Sh^2(f_1, f_2) - Sh^2(f_2)
+\]
+\begin{quotation}
+  Thus, the mis-pricing that matters for model comparison is the mis-pricing 
+  of the factors in one model by the factors in the other model.
+\end{quotation}
+
+The condition can be simplified further to
+\[
+Sh^2(f_1)>Sh^2(f_2)
+\]
+Model comparison can be thought of in terms of investment opportunities.
+Whether the model with the highest squared Sharpe ratio is ``good" enough 
+depends on performance pricing test assets.
+
+A model, $M$, is a multi-factor linear regression
+\[
+R = \alpha + \beta\cdot f + \varepsilon
+\]
+\cite{gibbons1989test} show that
+\[
+\alpha ' \Omega^{-1}\alpha = Sh^2(f, R) - Sh^2(f)
+\]
+where $\Omega$ is the covariance matrix of $\varepsilon$.
+
+\begin{quotation}
+  The improvement in the squared Sharpe ratio equals the classic quadratic 
+  form in the $\alpha$s of the additional returns
+\end{quotation}
+
+It may seem that trying to find the highest maximum Sharpe ratio means adding 
+many factors.
+Additional factors do not necessarily improve model performance.
+For example, the three factor model of \cite{fama1993common} explains the 
+returns from sorts on size and accruals better than the five factor model 
+outlined in \cite{fama2015five}.
+Consider two models; $R_i=\alpha+\beta_MR_M$ and 
+$R_i=\alpha+\beta_MR_M+\beta_SSMB$ .
+If a test asset's CAPM $\alpha$ is the opposite sign to its loading on $SMB$ 
+then the $\alpha$ in the second model will be accentuated.
+By conventional measures the second model is then "worse" than the first model.
+The maximum Sharpe ratio of the second model is higher than the maximum Sharpe 
+ratio for the first.
+Conventional asset pricing tests and maximum sharpe ratios do not always agree.
+
+If test asset and excluded-factor evidence contradict one another, we should 
+favour excluded-factor evidence.
+Excluded-factor evidence considers the returns on all assets rather than a 
+subset of all assets.
+Data mining is a problem for test assets (\cite{lewellen2010skeptical}) and 
+factors (\cite{harvey2016and}).

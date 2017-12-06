@@ -1,4 +1,4 @@
-pdflatex root -output-directory=".."
-biber root -output-directory ..
-pdflatex root -output-directory=".."
-pdflatex root -output-directory=".."
+pdflatex main
+biber main
+pdflatex main
+pdflatex main

@@ -46,8 +46,10 @@ library(dplyr)
 library(dtplyr)
 library(ggplot2)
 library(knitr)
+library(pander)
 library(rlang)
 library(Rsolnp)
+library(stargazer)
 ```
 
 ```{r define.stats.helpers}
@@ -58,14 +60,14 @@ t.stat = function(x) t.test(x)$statistic
 sr = function(x) mean(x, na.rm=TRUE) / sd(x, na.rm=TRUE)
 
 stat.summary = function(df){
-    return(
-        rbind(sapply(df, mean), sapply(df, se), sapply(df, t.stat), sapply(df, sr))
-    )
+    stat.summ = rbind(sapply(df, mean), sapply(df, se), sapply(df, t.stat), sapply(df, sr))
+    row.names(stat.summ) = c("Mean", "StdErr", "t-Stat", "Sh")
+    return(stat.summ)
 }
 ```
 
 ```{r}
-i = 13   # 1964-07
+i = 1    # 1963-07
 j = 630  # 2015-12
 ```
 
@@ -80,20 +82,20 @@ f = f[i:j,]  %>% select(
     -c(V1, Date, SMB.HML, SMB.HMLm, SMB.RMWo, SMB.RMWor, SMB.RMWg, SMB.RMWc, SMB.CMA, SMB.WML)
 )
 
-rbind(sapply(f, mean), sapply(f, se), sapply(f, t.stat), sapply(f, sr))  %>% round(2)
+round(stat.summary(f), 2)
 ```
 
 # French Dartmouth Web Factors
 
 ```{r}
-ff = fread("C:/Data/FrenchDartmouth/FF_factors.csv")
-
-ff = ff[i:j,] %>% select(-c(Date))
+ff = fread("C:/Data/FrenchDartmouth/French_6_Factors_2x3.csv")
+summary(ff)
+ff = ff[i:j,] %>% select(-c(Month))
 setnames(ff,
-         c("Mkt-RF", "SMB", "HML", "RMW", "CMA"),
-         c("FF.Rm", "FF.SMB", "FF.HML", "FF.RMW", "FF.CMA"))
+         c("Rm", "SMB", "HML", "RMW", "CMA", "WML"),
+         c("FF.Rm", "FF.SMB", "FF.HML", "FF.RMW", "FF.CMA", "FF.WML"))
 
-rbind(sapply(ff, mean), sapply(ff, se), sapply(ff, t.stat))  %>% round(2)
+round(stat.summary(ff), 2)
 ```
 
 ```{r}
@@ -124,8 +126,13 @@ cor(f) %>% round(2)
 
 # Spanning Regressions
 
+Regressing CMA on the other factors shows that the intercept, size and profitability are insignificant.
+The market is significant but the coefficient is small.
+Value and momentum are significant and their coefficients are greater than 0.2.
+The combination of value and momentum absorbs the information in the investment factor.
+
 ```{r}
-fit = lm(FF.CMA~FF.Rm+FF.SMB+HMLm+RMWc+WML, data=f)
+fit = lm(FF.CMA~FF.Rm+FF.SMB+HMLm+RMWc+FF.WML, data=f)
 round(coef(summary(fit)), 2)
 #rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
 ```
@@ -138,6 +145,12 @@ round(coef(summary(fit)), 2)
 
 ```{r}
 fit = lm(FF.CMA~FF.Rm+FF.SMB+FF.HML+RMWc, data=f)
+round(coef(summary(fit)), 2)
+#rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+```{r}
+fit = lm(FF.CMA~FF.Rm+FF.SMB+FF.HML+RMWc+FF.WML, data=f)
 round(coef(summary(fit)), 2)
 #rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
 ```
@@ -332,6 +345,46 @@ round(coef(summary(fit)), 2)
 fit = lm(FF.CMA~FF.Rm+FF.SMB+HMLm+RMWc+WML, data=f)
 round(coef(summary(fit)), 2)
 #rbind(coef(summary(fit))[,1], coef(summary(fit))[,3]) %>% round(2)
+```
+
+# Useless CMA
+
+```{r, results='asis'}
+fit1 = lm(CMA ~ FF.Rm, data=f)
+fit2 = lm(CMA ~ RMWc, data=f)
+fit3 = lm(CMA ~ FF.Rm + RMWc, data=f)
+
+fit4 = lm(CMA ~ HMLm, data=f)
+fit5 = lm(CMA ~ FF.WML, data=f)
+fit6 = lm(CMA ~ HMLm + FF.WML, data=f)
+
+fit7 = lm(CMA ~ FF.HML, data=f)
+fit8 = lm(CMA ~ FF.HML + FF.WML, data=f)
+
+fit9 = lm(CMA ~ FF.Rm + FF.SMB + HMLm + RMWc + FF.WML, data=f)
+fit10 = lm(CMA ~ FF.Rm + FF.SMB + FF.HML + RMWc + FF.WML, data=f)
+```
+
+```{r}
+pander(list(m1=fit6, m2=fit9))
+```
+
+```{r}
+stargazer(fit1, fit2, fit3, fit4, fit5, fit6, fit7, fit8, fit9, fit10,
+          type="text", keep.stat=c("n", "rsq"), report="vcs",
+          order=c(7, 1, 2, 6, 4, 3, 5))
+```
+
+```{r}
+stargazer(fit4, fit5, fit6, fit9,
+          type="text", keep.stat=c("n", "rsq"), report="vcs",
+          order=c(6, 1, 2, 3, 4, 5))
+```
+
+```{r, results='asis'}
+stargazer(fit1, fit2, fit3, fit4, fit5, fit6, fit7, fit8, fit9, fit10,
+          type="html", keep.stat=c("n", "rsq"), report="vcs",
+          order=c(7, 1, 2, 6, 4, 3, 5))
 ```
 
 # Maximum Sharpe Ratio
@@ -794,7 +847,8 @@ res = rbind(res, RMWg)
 ## Results
 
 ```{r}
-round(res, 3) %>% as.data.frame
+kable(res, digits=3)
+kable(res, digits=3, format="markdown")
 ```
 
 # Anomalies

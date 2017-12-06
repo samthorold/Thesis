@@ -1,0 +1,118 @@
+% !TeX root=./main.tex
+
+\section{Introduction}
+
+Prices equal expected discounted payoffs,
+\begin{equation}
+\label{eq:pricing}
+p=E(mx)
+\end{equation}
+where; $p$ is the asset price, $m$ is the discount factor and $x$ the asset 
+payoff.
+If we are primarily concerned with asset returns, we can rewrite equation
+\ref{eq:pricing} as
+\begin{equation}
+\label{eq:returns}
+1=E(mR^i)
+\end{equation}
+where $R^i$ is the gross return on asset $i$.
+The discount factor and expected returns can vary across assets and with time 
+but expected discounted returns always equal 1.
+The discount factor, $m$, is the same for all assets.
+Asset returns' covariance with $m$ creates discount rates specific to each 
+asset.
+
+Factor pricing models are special cases of the consumption-based description 
+of the discount factor, $m=\beta\frac{u'(c_{t+1})}{u'(c_t)}$ where $\beta$ is 
+impatience and $u'(c)$ is marginal utility of consumption.
+Asset-pricing models have turned into an exercise in describing small subsets 
+of assets whose returns are difficult to price.
+I approach my model specification from the intuition in equation 
+\ref{eq:returns} that \emph{all} discounted returns equal 1.
+Subsets of assets should not be the main drivers of asset-pricing models.
+A model rooted in intuition that performs well when pricing all asset returns 
+can shed light on subsets of assets whose returns are difficult to price.
+
+\cite{graham1934security} tell us to buy quality stocks at a cheap price.
+A stock's book-to-market ratio tells us how much we have to pay for the book 
+assets of the stock.
+As we will see later, combining value and momentum gives a superior measure of 
+cheapness than value alone.
+The quality of a stock is measured by its profitability.
+The three factor model of \cite{fama1993common} combines market, size and 
+value factors.
+In papers too numerable to cite here, the model has been tested, confirmed and 
+denied in just about every way possible.
+I add a profitability factor and replace the pure book-to-market measure of 
+cheapness with the tandem factors of book-to-market and momentum.
+This results in a five-factor model of; the market, size, value, profitability 
+and momentum.
+\begin{equation}
+\label{eq:model}
+m_t= w_{Mkt} \cdot Mkt + w_{Size} \cdot Size +
+\left( w_{Val} \cdot Val + w_{Mtm} \cdot Mtm \right) + 
+w_{Prof} \cdot Prof
+\end{equation}
+
+We want to minimize the Euler equation error when substituting 
+(\ref{eq:model}) for $m$ in (\ref{eq:returns}).
+This is not possible if we cannot specify ``all" assets means.
+\cite{barillas2016alpha} say that minimizing the Euler error is the same as 
+maximizing the Sharpe ratio of the factors since
+\begin{equation}
+\label{eq:Sh2}
+Sh^2(\alpha) = Sh^2(R) - Sh^2(f)
+\end{equation}
+We can use the weights that maximize the Sharpe ratio of our factors to find a 
+time series of discount rates, $[m_0, m_1, \ldots, m_T]$.
+
+The traditional time series regression form of 
+(\ref{eq:model}) is
+\begin{equation}
+\label{eq:tsmodel}
+r_t^i - r_t^f= \alpha^i + \beta^i \cdot Mkt + s^i \cdot Size +
+\left( v^i \cdot Val + m^i \cdot Mtm \right) +
+p^i \cdot Prof
+\end{equation}
+If our factor specification for $m$ is correct, the $\alpha$ term in 
+(\ref{eq:tsmodel}) should be insignificant.
+This form of the model allows us to explore the behaviour of troublesome 
+portfolios.
+In particular, we are interested in factor loadings for those portfolios which 
+have significant alpha.
+Many problems in factor pricing models have negative loadings on the 
+profitability and investment factors of \cite{fama2016dissecting}.
+The two negative loadings have been theatrically named the ``lethal" 
+combination.
+Since Fama and French include an investment factor while I do 
+not, it is informative to compare differences in the factor loadings for the 
+two models.
+ 
+Work most similar to mine includes that of; \cite{fama2016choosing},
+... and ...
+My work is different because I use (\ref{eq:pricing}) to focus on pricing 
+\emph{all} asset returns from the beginning.
+I increase the maximum Sharpe ratio attainable from a set of factors.
+I use the different specifications of Fama and French and I to explore why the 
+``lethal" loading combination creates such problems.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
