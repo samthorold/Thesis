@@ -20,6 +20,9 @@ today for more consumption tomorrow.
 Equation \ref{eq:consumption} says that an investor will buy more of an asset 
 until their discounted marginal utility
 
+The consumption models performs poorly during significant downturns.
+Momentum experiences crashes (\parencite{daniel2016momentum}).
+
 ``Anomalous" portfolios are important.
 If nothing else, investors make gazillions of dollars each year from trading 
 on them.
@@ -35,11 +38,12 @@ $a'\Omega a$ can be nicer for asset pricing purposes (covariances of errors
 are important for asset-pricing models because this influences the maximum 
 Sharpe ratio that can be obtained from the errors).
 
-Motivated by the dividend discount model, \cite{fama2016choosing} 
+Motivated by the dividend discount model, \textcite{fama2016choosing} 
 suggest a five-factor model (FF2016) of; the market, size, value, 
 profitability.
 They find a maximum Sharpe ratio of 0.24 for their model.
-\cite{hou2015digesting} put forward a four-factor model of; the market, size, 
+\textcite{hou2015digesting} put forward a four-factor model of; the market, 
+size, 
 investment and return on equity.
 Their focus is not on maximizing the Sharpe ratio, although they report a 
 value in excess of 0.4.
@@ -50,7 +54,7 @@ series regressions of anomaly portfolios on their factors.
 
 Table \ref{tbl:Sh2} shows the maximum squared Sharpe ratios and marginal 
 contributions from each of the factors for my model and that of 
-\cite{fama2016choosing}.
+\textcite{fama2016choosing}.
 I include the missing investment and momentum factors where applicable to 
 highlight marginal contributions to the maximum Sharpe ratio.
 My model's maximum squared Sharpe ratio, 0.348, exceeds that of FF2016, 0.246, 
@@ -61,11 +65,12 @@ The market and momentum contribute 0.1 while size contributes 0.02.
 The investment factor contributes very little, 0.003, as investment's effects 
 are absorbed by the combination of value and momentum.
 Popular asset-pricing models\footnote{Such as the three-factor model of 
-  \cite{fama1993common}, the four factor model of \cite{hou2015digesting}, the 
-  five-factor model of \cite{fama2015five} and the cash profitability 
-  five-factor model of \cite{fama2016choosing}} omit the momentum factor, 
+  \textcite{fama1993common}, the four factor model of 
+  \textcite{hou2015digesting}, the 
+  five-factor model of \textcite{fama2015five} and the cash profitability 
+  five-factor model of \textcite{fama2016choosing}} omit the momentum factor, 
 despite 
-momentum's persistence as an anomaly (\cite{fama2016dissecting, 
+momentum's persistence as an anomaly (\parencite{fama2016dissecting, 
   fama2017international}).
 Including momentum in model FF2016 increases the Sharpe ratio from 0.246 
 to 0.26.

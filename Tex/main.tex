@@ -1,7 +1,10 @@
 \documentclass[a4paper, 12pt]{article}
 
 \usepackage{amsmath, amsthm}
-\usepackage[backend=biber, style=alphabetic, citestyle=authoryear]{biblatex}
+\usepackage[
+  backend=biber,
+  style=ieee-alphabetic
+]{biblatex}
 \usepackage{booktabs}       % tables
 \usepackage{dcolumn}        % table cells alignment
 \usepackage[margin=1in]{geometry}
@@ -23,15 +26,15 @@
 \maketitle
 
 \begin{abstract}
-A five-factor model of; market, size,  value, profitability and momentum 
-factors improves on the maximum Sharpe ratio of previous models. The largest 
-marginal contributions are from value and profitability. The combination of 
-value and momentum makes the investment factor unnecessary.
+  A five-factor model of; market, size,  value, momentum and profitability 
+  factors improves on the maximum Sharpe ratio of previous models. The largest 
+  marginal contributions are from value and profitability. The combination of 
+  value and momentum makes the investment factor unnecessary.
 \end{abstract}
 
 \import{./}{intro}
 
-\import{./}{literature}
+%\import{./}{literature}
 
 \printbibliography
 
