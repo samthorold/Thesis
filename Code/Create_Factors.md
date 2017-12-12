@@ -72,12 +72,10 @@ stat.summary = function(df){
 ```r
 combine.sources = function(crsp, comp){
 
-    df = left_join(
-        crsp,
-        comp %>% select(
-            PERMNO, Period, BE, D1.BE, OP, OP.2, OP.OK, CP, GP, Acc, INV, INV.ppe
-        ),
-        by=c("PERMNO", "Period"))
+    comp = comp %>% select(
+        PERMNO, Period, BE, D1.BE, OP, OP.2, OP.OK, CP, GP, Acc, INV, INV.ppe
+    )
+    df = left_join(crsp, comp, by=c("PERMNO", "Period"))
 
     df$BM = df$BE/df$M              # Annual, Lagged
     df$bm = log(df$BM)              # Log Annual, Lagged
@@ -1974,7 +1972,7 @@ round(colMeans(decile.returns %>% select(-Date)) * 100, 2)
 ##  1.11  1.11  1.08  0.96  0.97  0.89  0.91  0.82  0.88  0.78 -0.44
 ```
 
-### Assets
+### PPE
 
 
 ```r
@@ -2046,6 +2044,8 @@ round(colMeans(decile.returns %>% select(-Date)) * 100, 2)
 ##     1     2     3     4     5     6     7     8     9    10    NA 
 ##  1.05  0.97  0.93  0.92  0.94  0.95  0.89  0.97  0.79  0.81 -0.17
 ```
+
+### Assets
 
 
 ```r
@@ -2181,13 +2181,25 @@ df %>% group_by(INV.B, Date) %>% summarise(avg.BMM=mean(BMM, na.rm=TRUE)) %>%
 
 
 ```r
-df %>% group_by(INV.B, Date) %>% summarise(avg.OP=mean(OP, na.rm=TRUE)) %>%
+df[df$OP.OK, ] %>% group_by(INV.B, Date) %>% summarise(avg.OP=mean(OP, na.rm=TRUE)) %>%
     group_by(INV.B) %>% summarise(avg.OP=mean(avg.OP)) %>% round(2)
 ```
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["INV.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["avg.OP"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"NaN"},{"1":"2","2":"0.20"},{"1":"3","2":"0.12"},{"1":"4","2":"0.14"},{"1":"5","2":"0.24"},{"1":"6","2":"0.23"},{"1":"7","2":"0.22"},{"1":"8","2":"0.24"},{"1":"9","2":"0.32"},{"1":"10","2":"0.02"},{"1":"NA","2":"0.22"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["INV.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["avg.OP"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"-0.27"},{"1":"2","2":"0.20"},{"1":"3","2":"0.19"},{"1":"4","2":"0.21"},{"1":"5","2":"0.26"},{"1":"6","2":"0.26"},{"1":"7","2":"0.26"},{"1":"8","2":"0.28"},{"1":"9","2":"0.31"},{"1":"10","2":"0.15"},{"1":"NA","2":"0.11"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+
+```r
+df[df$BE>0, ] %>% group_by(INV.B, Date) %>% summarise(avg.OP=mean(OP, na.rm=TRUE)) %>%
+    group_by(INV.B) %>% summarise(avg.OP=mean(avg.OP)) %>% round(2)
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["INV.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["avg.OP"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"-0.27"},{"1":"2","2":"0.20"},{"1":"3","2":"0.19"},{"1":"4","2":"0.21"},{"1":"5","2":"0.26"},{"1":"6","2":"0.26"},{"1":"7","2":"0.26"},{"1":"8","2":"0.28"},{"1":"9","2":"0.31"},{"1":"10","2":"0.15"},{"1":"NA","2":"NaN"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
@@ -2209,13 +2221,25 @@ df %>% group_by(INV.B, Date) %>% summarise(avg.GP=mean(GP, na.rm=TRUE)) %>%
 
 
 ```r
-df %>% group_by(INV.B, Date) %>% summarise(avg.CP=mean(CP, na.rm=TRUE)) %>%
+df[df$OP.OK, ] %>% group_by(INV.B, Date) %>% summarise(avg.CP=mean(CP, na.rm=TRUE)) %>%
     group_by(INV.B) %>% summarise(avg.CP=mean(avg.CP)) %>% round(2)
 ```
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["INV.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["avg.CP"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"NaN"},{"1":"2","2":"0.31"},{"1":"3","2":"0.22"},{"1":"4","2":"0.15"},{"1":"5","2":"0.23"},{"1":"6","2":"0.24"},{"1":"7","2":"0.22"},{"1":"8","2":"0.24"},{"1":"9","2":"0.31"},{"1":"10","2":"-0.02"},{"1":"NA","2":"-0.47"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["INV.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["avg.CP"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"0.42"},{"1":"2","2":"0.33"},{"1":"3","2":"0.28"},{"1":"4","2":"0.23"},{"1":"5","2":"0.26"},{"1":"6","2":"0.28"},{"1":"7","2":"0.26"},{"1":"8","2":"0.29"},{"1":"9","2":"0.29"},{"1":"10","2":"0.11"},{"1":"NA","2":"-0.94"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+
+```r
+df[df$BE>0, ] %>% group_by(INV.B, Date) %>% summarise(avg.CP=mean(CP, na.rm=TRUE)) %>%
+    group_by(INV.B) %>% summarise(avg.CP=mean(avg.CP)) %>% round(2)
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["INV.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["avg.CP"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"0.42"},{"1":"2","2":"0.33"},{"1":"3","2":"0.28"},{"1":"4","2":"0.23"},{"1":"5","2":"0.26"},{"1":"6","2":"0.28"},{"1":"7","2":"0.26"},{"1":"8","2":"0.29"},{"1":"9","2":"0.29"},{"1":"10","2":"0.11"},{"1":"NA","2":"NaN"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
@@ -2979,6 +3003,96 @@ df %>% group_by(Size.B, INV.B, Date) %>% summarise(rp=sum(wt.ri, na.rm=TRUE)) %>
 </div>
 
 ![French Website 25 $Size-INV$ Returns](C:/Data/FrenchDartmouth/25_Size_INV.JPG)
+
+### $BM$
+
+
+```r
+df %>% group_by(Size.B, INV.B, Date) %>% summarise(avg.BM=mean(BM, na.rm=TRUE)) %>%
+    dcast(Size.B ~ INV.B, fun.aggregate=mean, value.var="avg.BM", na.rm=TRUE) %>%
+    select(-`NA`) %>% filter(!is.na(Size.B)) %>% round(digits=2)
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Size.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["1"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["3"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["4"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["5"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"1.09","3":"1.25","4":"1.14","5":"1.04","6":"0.77"},{"1":"2","2":"0.93","3":"0.93","4":"0.87","5":"0.76","6":"0.59"},{"1":"3","2":"0.87","3":"0.86","4":"0.78","5":"0.68","6":"0.52"},{"1":"4","2":"0.83","3":"0.81","4":"0.72","5":"0.62","6":"0.50"},{"1":"5","2":"0.77","3":"0.78","4":"0.65","5":"0.56","6":"0.45"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+### $BM_M$
+
+
+```r
+df %>% group_by(Size.B, INV.B, Date) %>% summarise(avg.BMM=mean(BMM, na.rm=TRUE)) %>%
+    dcast(Size.B ~ INV.B, fun.aggregate=mean, value.var="avg.BMM", na.rm=TRUE) %>%
+    select(-`NA`) %>% filter(!is.na(Size.B)) %>% round(digits=2)
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Size.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["1"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["3"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["4"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["5"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"1.13","3":"1.27","4":"1.14","5":"1.06","6":"0.91"},{"1":"2","2":"0.92","3":"0.89","4":"0.84","5":"0.73","6":"0.59"},{"1":"3","2":"0.80","3":"0.82","4":"0.74","5":"0.64","6":"0.51"},{"1":"4","2":"0.79","3":"0.78","4":"0.69","5":"0.59","6":"0.48"},{"1":"5","2":"0.72","3":"0.74","4":"0.63","5":"0.54","6":"0.43"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+### $OP$
+
+
+```r
+df[df$OP.OK, ] %>% group_by(Size.B, INV.B, Date) %>% summarise(avg.OP=mean(OP, na.rm=TRUE)) %>%
+    dcast(Size.B ~ INV.B, fun.aggregate=mean, value.var="avg.OP", na.rm=TRUE) %>%
+    select(-`NA`) %>% filter(!is.na(Size.B)) %>% round(digits=2)
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Size.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["1"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["3"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["4"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["5"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"-0.18","3":"0.13","4":"0.20","5":"0.21","6":"0.13"},{"1":"2","2":"0.25","3":"0.24","4":"0.25","5":"0.27","6":"0.25"},{"1":"3","2":"0.21","3":"0.27","4":"0.31","5":"0.32","6":"0.31"},{"1":"4","2":"0.28","3":"0.31","4":"0.31","5":"0.34","6":"0.33"},{"1":"5","2":"0.37","3":"0.36","4":"0.36","5":"0.35","6":"0.36"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+### $GP$
+
+
+```r
+df %>% group_by(Size.B, INV.B, Date) %>% summarise(avg.GP=mean(GP, na.rm=TRUE)) %>%
+    dcast(Size.B ~ INV.B, fun.aggregate=mean, value.var="avg.GP", na.rm=TRUE) %>%
+    select(-`NA`) %>% filter(!is.na(Size.B)) %>% round(digits=2)
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Size.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["1"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["3"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["4"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["5"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"0.31","3":"0.36","4":"0.36","5":"0.38","6":"0.34"},{"1":"2","2":"0.30","3":"0.31","4":"0.33","5":"0.37","6":"0.36"},{"1":"3","2":"0.30","3":"0.29","4":"0.32","5":"0.35","6":"0.36"},{"1":"4","2":"0.29","3":"0.28","4":"0.31","5":"0.34","6":"0.35"},{"1":"5","2":"0.30","3":"0.28","4":"0.31","5":"0.34","6":"0.36"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+### $CP$
+
+
+```r
+df[df$OP.OK, ] %>% group_by(Size.B, INV.B, Date) %>% summarise(avg.CP=mean(CP, na.rm=TRUE)) %>%
+    dcast(Size.B ~ INV.B, fun.aggregate=mean, value.var="avg.CP", na.rm=TRUE) %>%
+    select(-`NA`) %>% filter(!is.na(Size.B)) %>% round(digits=2)
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Size.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["1"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["3"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["4"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["5"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"0.43","3":"0.19","4":"0.22","5":"0.21","6":"0.09"},{"1":"2","2":"0.36","3":"0.30","4":"0.27","5":"0.30","6":"0.24"},{"1":"3","2":"0.07","3":"0.30","4":"0.32","5":"0.33","6":"0.30"},{"1":"4","2":"0.43","3":"0.33","4":"0.31","5":"0.34","6":"0.33"},{"1":"5","2":"0.51","3":"0.39","4":"0.38","5":"0.33","6":"0.33"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+### $Acc$
+
+
+```r
+df %>% group_by(Size.B, INV.B, Date) %>% summarise(avg.Acc=mean(Acc, na.rm=TRUE)) %>%
+    dcast(Size.B ~ INV.B, fun.aggregate=mean, value.var="avg.Acc", na.rm=TRUE) %>%
+    select(-`NA`) %>% filter(!is.na(Size.B)) %>% round(digits=2)
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Size.B"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["1"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["3"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["4"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["5"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"-0.15","3":"-0.02","4":"0.09","5":"0.06","6":"0.24"},{"1":"2","2":"-0.01","3":"-0.02","4":"0.03","5":"0.07","6":"0.17"},{"1":"3","2":"-0.31","3":"-0.02","4":"0.04","5":"0.07","6":"0.17"},{"1":"4","2":"-0.09","3":"0.01","4":"0.02","5":"0.04","6":"0.12"},{"1":"5","2":"-0.02","3":"0.00","4":"0.00","5":"0.05","6":"0.12"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 
 ## $Size$ and $Prior$
 

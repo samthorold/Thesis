@@ -68,12 +68,10 @@ stat.summary = function(df){
 ```{r define.combine.sources}
 combine.sources = function(crsp, comp){
 
-    df = left_join(
-        crsp,
-        comp %>% select(
-            PERMNO, Period, BE, D1.BE, OP, OP.2, OP.OK, CP, GP, Acc, INV, INV.ppe
-        ),
-        by=c("PERMNO", "Period"))
+    comp = comp %>% select(
+        PERMNO, Period, BE, D1.BE, OP, OP.2, OP.OK, CP, GP, Acc, INV, INV.ppe
+    )
+    df = left_join(crsp, comp, by=c("PERMNO", "Period"))
 
     df$BM = df$BE/df$M              # Annual, Lagged
     df$bm = log(df$BM)              # Log Annual, Lagged
@@ -1293,7 +1291,7 @@ write.csv(decile.returns, "C:/Data/Thesis/INV_Assets_Decile_Returns.csv")
 round(colMeans(decile.returns %>% select(-Date)) * 100, 2)
 ```
 
-### Assets
+### PPE
 
 ```{r, warning=FALSE}
 df = combine.sources(crsp, comp)
@@ -1348,6 +1346,8 @@ decile.returns = df %>%
 write.csv(decile.returns, "C:/Data/Thesis/INV_PPE_Decile_Returns.csv")
 round(colMeans(decile.returns %>% select(-Date)) * 100, 2)
 ```
+
+### Assets
 
 ```{r, warning=FALSE}
 df = combine.sources(crsp, comp)
@@ -1437,7 +1437,12 @@ df %>% group_by(INV.B, Date) %>% summarise(avg.BMM=mean(BMM, na.rm=TRUE)) %>%
 ### $OP$
 
 ```{r}
-df %>% group_by(INV.B, Date) %>% summarise(avg.OP=mean(OP, na.rm=TRUE)) %>%
+df[df$OP.OK, ] %>% group_by(INV.B, Date) %>% summarise(avg.OP=mean(OP, na.rm=TRUE)) %>%
+    group_by(INV.B) %>% summarise(avg.OP=mean(avg.OP)) %>% round(2)
+```
+
+```{r}
+df[df$BE>0, ] %>% group_by(INV.B, Date) %>% summarise(avg.OP=mean(OP, na.rm=TRUE)) %>%
     group_by(INV.B) %>% summarise(avg.OP=mean(avg.OP)) %>% round(2)
 ```
 
@@ -1451,7 +1456,12 @@ df %>% group_by(INV.B, Date) %>% summarise(avg.GP=mean(GP, na.rm=TRUE)) %>%
 ### $CP$
 
 ```{r}
-df %>% group_by(INV.B, Date) %>% summarise(avg.CP=mean(CP, na.rm=TRUE)) %>%
+df[df$OP.OK, ] %>% group_by(INV.B, Date) %>% summarise(avg.CP=mean(CP, na.rm=TRUE)) %>%
+    group_by(INV.B) %>% summarise(avg.CP=mean(avg.CP)) %>% round(2)
+```
+
+```{r}
+df[df$BE>0, ] %>% group_by(INV.B, Date) %>% summarise(avg.CP=mean(CP, na.rm=TRUE)) %>%
     group_by(INV.B) %>% summarise(avg.CP=mean(avg.CP)) %>% round(2)
 ```
 
@@ -2050,6 +2060,54 @@ df %>% group_by(Size.B, INV.B, Date) %>% summarise(rp=sum(wt.ri, na.rm=TRUE)) %>
 ```
 
 ![French Website 25 $Size-INV$ Returns](C:/Data/FrenchDartmouth/25_Size_INV.JPG)
+
+### $BM$
+
+```{r}
+df %>% group_by(Size.B, INV.B, Date) %>% summarise(avg.BM=mean(BM, na.rm=TRUE)) %>%
+    dcast(Size.B ~ INV.B, fun.aggregate=mean, value.var="avg.BM", na.rm=TRUE) %>%
+    select(-`NA`) %>% filter(!is.na(Size.B)) %>% round(digits=2)
+```
+
+### $BM_M$
+
+```{r}
+df %>% group_by(Size.B, INV.B, Date) %>% summarise(avg.BMM=mean(BMM, na.rm=TRUE)) %>%
+    dcast(Size.B ~ INV.B, fun.aggregate=mean, value.var="avg.BMM", na.rm=TRUE) %>%
+    select(-`NA`) %>% filter(!is.na(Size.B)) %>% round(digits=2)
+```
+
+### $OP$
+
+```{r}
+df[df$OP.OK, ] %>% group_by(Size.B, INV.B, Date) %>% summarise(avg.OP=mean(OP, na.rm=TRUE)) %>%
+    dcast(Size.B ~ INV.B, fun.aggregate=mean, value.var="avg.OP", na.rm=TRUE) %>%
+    select(-`NA`) %>% filter(!is.na(Size.B)) %>% round(digits=2)
+```
+
+### $GP$
+
+```{r}
+df %>% group_by(Size.B, INV.B, Date) %>% summarise(avg.GP=mean(GP, na.rm=TRUE)) %>%
+    dcast(Size.B ~ INV.B, fun.aggregate=mean, value.var="avg.GP", na.rm=TRUE) %>%
+    select(-`NA`) %>% filter(!is.na(Size.B)) %>% round(digits=2)
+```
+
+### $CP$
+
+```{r}
+df[df$OP.OK, ] %>% group_by(Size.B, INV.B, Date) %>% summarise(avg.CP=mean(CP, na.rm=TRUE)) %>%
+    dcast(Size.B ~ INV.B, fun.aggregate=mean, value.var="avg.CP", na.rm=TRUE) %>%
+    select(-`NA`) %>% filter(!is.na(Size.B)) %>% round(digits=2)
+```
+
+### $Acc$
+
+```{r}
+df %>% group_by(Size.B, INV.B, Date) %>% summarise(avg.Acc=mean(Acc, na.rm=TRUE)) %>%
+    dcast(Size.B ~ INV.B, fun.aggregate=mean, value.var="avg.Acc", na.rm=TRUE) %>%
+    select(-`NA`) %>% filter(!is.na(Size.B)) %>% round(digits=2)
+```
 
 ## $Size$ and $Prior$
 

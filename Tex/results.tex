@@ -1,0 +1,25 @@
+% !TeX root=./main.tex
+
+\section{Results} \label{sec:results}
+
+\import{./Tables/}{Sh2}
+
+Table \ref{tbl:Sh2} shows the maximum squared Sharpe ratio and the factor contributions for 
+the models in equation \ref{eq:tsmodel} and the cash-profitability model in 
+\textcite{fama2016choosing} (FF2016).
+For both models, $Prof$ refers to the cash profitability factor of \textcite{ball2016accruals}.
+For (\ref{eq:tsmodel}), $Val$ refers to the monthly, current value of 
+\textcite{asness2013devil}.
+$Prof$ and monthly, current $Val$ are created manually.
+All other factors are as specified in \textcite{fama2016dissecting} and straight from Ken 
+French's 
+website.
+The maximum Sharpe ratio is calculated as $Sh^2(f)=R'V^{-1}R$ where $R$ is the vector of mean 
+returns on the factors and $V$ is the covariance matrix for the returns on the factors.
+Contributions to the total Sharpe ratio are calculated as $(\alpha_i / \sigma_i)^2$ where 
+$\alpha_i$ is the intercept from regressing the factor $i$ on the remaining factors and 
+$\sigma_i$ is the standard deviation of the residuals from the same regression.
+
+The Sharpe ratio of (\ref{eq:tsmodel}), 0.348, is higher than that of FF2016, 0.246.
+The investment factor contributes only 0.003 to \ref{eq:model} while the momentum factor 
+contributes 0.014 to FF2016.
