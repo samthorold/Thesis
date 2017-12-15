@@ -51,10 +51,10 @@ CRSP Codes;
 
 \subsection{Variables} \label{sec:variables}
 
+\textbf{Monthly Return}
+\[RET = (1 + RET) * (1 + DLRET) - 1\]
 \textbf{Market Equity}
 \[ME = SHROUT \cdot abs(PRC) / 1000\]
-\textbf{Monthly Return}
-\[RET = (1 + RET) * (1 + DELRT) - 1\]
 \textbf{Book Equity}
 \[BE = seq + txditc - ps\]
 where $ps$ equals (in order of preference); $pstkrv$, $pstkl$ or $pstk$.
@@ -62,6 +62,10 @@ If all measures of preferred stock are missing,
 \[BE = ceq + upstk\]
 if we still do not have a value for $BE$,
 \[BE = at - lt\]
+\textbf{Book-to-Market}
+\[BE/ME\]
+where $ME$ is either from December, \textcite{fama1992cross} or month $t-1$, 
+\textcite{asness2013devil}.
 \textbf{Profitability}
 \[OP = (revt - cogs - xsga - xint)/BE\]
 \textcite{fama2016choosing} add back research and development costs to $OP$,
