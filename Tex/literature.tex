@@ -2,9 +2,45 @@
 
 \section{Literature Review}
 
-\import{./Literature/}{barillas2016alpha}
+\subsection{Today's ``state of the art"}
+The factor model closest to mine is that of \textcite{fama2016choosing}.
+They suggest a five-factor model with the time series regression form of
+\begin{equation}
+\label{eq:tsFF2016}
+r_t^i - r_t^f= \alpha^i + \beta^i \cdot Mkt + s^i \cdot Size + v^i \cdot Val + p^i \cdot Prof 
++ i^i \cdot Inv
+\end{equation}
+where; $Val$ is annually rebalanced using $ME$ from December of last year.
+The other factors are as specified in \ref{eq:tsmodel}.
+The dividend discount model, $p_t = \sum E(d_t)/R_t$, says that stock prices are the expected 
+discounted sum of their dividends.
+\textcite{fama2006profitability} explain that by assuming clean surplus accounting and 
+dividing each side by book-equity we find
+\begin{equation}
+\label{eq:ddm}
+\frac{ME_t}{BE_t} = \frac{\sum \frac{E(Prof_t-\Delta BE_t)}{R_t}}{BE_t}
+\end{equation}
+They use this relationship to make three intuitive points.
+All else the same;
+a lower $ME$ (and higher $BE/ME$) leads to a higher return,
+a higher profit leads to a higher return and
+a lower change in book-equity leads to a higher return.
+While (\ref{eq:ddm}) calls for change in book-equity, asset-growth is used as a proxy in 
+empirical work (See \textcite{fama2015five, fama2016choosing, fama2017international}).
+The choice to use asset-growth is not arbitrary, Fama and French argue this is a better 
+``picture" of what the dividend discount model implies $\Delta BE$ represents, 
+investment.
+
+\subsection{Momentum as a predictor of $\Delta BE$}
+We should not ignore $\Delta BE$.
+\textcite{kok2017facts} remind us that ``value" investing in its earliest form was different 
+to the quantitative fundamentals focus we use today.
 
 \import{./Literature/}{kok2017facts}
+
+\subsection{Comparing Models}
+
+\import{./Literature/}{barillas2016alpha}
 
 \subsection{Assorted Ramblings}
 
@@ -50,7 +86,7 @@ value in excess of 0.4.
 They concentrate on minimizing the absolute size of the intercepts in time 
 series regressions of anomaly portfolios on their factors.
 
-\input{Tables/Sh2}
+%\input{Tables/Sh2}
 
 Table \ref{tbl:Sh2} shows the maximum squared Sharpe ratios and marginal 
 contributions from each of the factors for my model and that of 
