@@ -1,0 +1,30 @@
+% !TeX root=../main.tex
+
+\subsection{\textcite{gibbons1989test}}
+
+If we accept that returns are produced by a multivariate linear equation
+\[
+r^i_t = a^i + b\cdot f + e^i
+\]
+where; $r^i_t$ is the return on asset $i$ at time $t$, $f$ is set of returns on our factors, 
+$b$ is set of coefficients from a regression of $r$ on $f$, $a$ is the intercept for asset $i$ 
+and $e$ is the residuals.
+Then all expected returns should equal the expected returns on the factors times by the 
+coefficients.
+\[
+E(r) = b\cdot E(f)
+\]
+This gives us a null hypothesis, $H_0$, that $a=0$ for all assets.
+
+We can test this joint hypothesis with Hotelling's rule.
+This gives us a non-central F-distribution.
+Blah...
+
+The point is that
+\[
+a'Ea = Sh^2(R, f) - Sh^2(f)
+\]
+This is way close to our
+\[
+a'Ea = Sh^2(R) - Sh^2(f)
+\]

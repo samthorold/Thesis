@@ -2,7 +2,60 @@
 
 \section{Literature Review}
 
+\subsection{Value and Momentum}
+
+\textcite{kok2017facts} argue  that fundamental value measures, such as the popular 
+book-to-market ratio, identify stocks that will experience a decrease in book value in the 
+next period.
+\[
+B_{t+1}/p_{t+1} = B_t/p_t \cdot B_{t+1}/B_t \cdot p_t/p_{t+1}
+\]
+taking logs
+\[
+log(B_{t+1}/p_{t+1}) = log(B_{t}/p_{t}) + log(B_{t+1}/B_{t}) - log(p_{t+1}/p_{t})
+\]
+Investors wish to identify those stocks that will increase in price, $R_{t+1}=p_{t+1}/p_{t}$.
+Book-to-market ratios are still useful, so long as we can separate stocks that will experience 
+a decrease in book values from those that will increase in price.
+They show that decreases in book-equity are lower for high momentum stocks.
+
+\import{./Literature/}{kok2017facts}
+
+\textcite{asness2013devil} show that momentum can forecast future changes in book equity.
+Combining value and momentum identifies high book-to-market stocks that will revert to their 
+mean fundamental value through an increase in price.
+This is true of the monthly, current measure of book-to-market without the presence of 
+momentum in a multi-factor regression.
+\textbf{Why include momentum then?}
+
+
+
+\subsection{Comparing Models with Sharpe Ratio}
+
+\textcite{gibbons1989test}
+\[
+r_t^i = a^i + b\cdot f + e^i
+\]
+\[
+a'V^ea = Sh^2(r,f) - Sh^2(f)
+\]
+where $V^e$ is the covariance matrix of $e$.
+Hotelling's non-central F-distribution.
+
+\textcite{barillas2016alpha}
+\[
+Sh^2(r,f) = Sh^2(f)
+\]
+if $r$ is the set of returns on all assets because the set of factors $f$ is in $r$.
+
+\import{./Literature/}{gibbons1989test}
+
+\import{./Literature/}{barillas2016alpha}
+
+
+
 \subsection{Today's ``state of the art"}
+
 The factor model closest to mine is that of \textcite{fama2016choosing}.
 They suggest a five-factor model with the time series regression form of
 \begin{equation}
@@ -31,16 +84,36 @@ The choice to use asset-growth is not arbitrary, Fama and French argue this is a
 ``picture" of what the dividend discount model implies $\Delta BE$ represents, 
 investment.
 
-\subsection{Momentum as a predictor of $\Delta BE$}
-We should not ignore $\Delta BE$.
-\textcite{kok2017facts} remind us that ``value" investing in its earliest form was different 
-to the quantitative fundamentals focus we use today.
+\textcite{ball2016accruals} suggest a similar model with the time series regression form
+\begin{equation}
+\label{eq:tsBall2016}
+r_t^i - r_t^f= \alpha^i + \beta^i \cdot Mkt + s^i \cdot Size + v^i \cdot Val + p^i \cdot Prof 
++ m^i \cdot Mom
+\end{equation}
 
-\import{./Literature/}{kok2017facts}
+\subsubsection{Three-factor model of \textcite{fama1993common}}
 
-\subsection{Comparing Models}
+Some intuition.
 
-\import{./Literature/}{barillas2016alpha}
+
+\subsection{The ``Lethal" Combination}
+
+\textcite{fama2015five, fama2016choosing, fama2017international} show that portfolios with 
+returns that behave like those of small, low profit but somehow aggressively investing stocks 
+are a problem.
+
+\subsection{Intuition vs. Statistics}
+
+\textcite{kozak2017interpreting} show that factor models composed of a small number of 
+principal-component (PC) factors performs similarly to our intuition-based factors in 
+regressions on the returns used to extract the components.
+This is a novel approach but it is harder to give PC-factor loadings intuitive meaning.
+\textcite{kozak2017interpreting} remark that the second and third components extracted from 25 
+size-value portfolios are similar to the size and value factors.
+We can only make this comparison because we have the intuition-based factors to compare with.
+Furthermore, it would be hard to improve the maximum Sharpe ratio of a set of factors in this 
+fashion.
+Completely statistics-based factors encourage data-mining.
 
 \subsection{Assorted Ramblings}
 
