@@ -31,8 +31,8 @@ small subsets of assets.
 
 Equation (\ref{eq:returns}) reminds us that \emph{all} discounted returns 
 should equal 1.
-\textcite{barillas2016alpha} show that we do not need to know the returns on 
-all assets to know how well a set of factors performs because
+\textcite{barillas2016alpha} show that we do not need to know all assets to
+measure the relative performance of different sets of factors because
 \begin{equation}
 \label{eq:maxsh}
 Sh^2(\alpha) = Sh^2(R) - Sh^2(f)
@@ -43,7 +43,7 @@ represents the returns on all assets and $f$ represents the returns on the
 factors.
 The set of factors with the highest Sharpe ratio is the set that performs best 
 when pricing all returns.
-Before attaching stories to tricky portfolios we must first use intuition to 
+Before attaching stories to tricky portfolios, we must first use intuition to 
 describe a set of factors that perform well pricing all returns.
 Our model can help us identify why the portfolios are so tricky, but its 
 composition should not be driven by mis-pricing in small subsets of assets.
@@ -89,8 +89,6 @@ p^i \cdot Prof
 \end{equation}
 where; $r_t^i$ is the return in period $t$ for asset $i$, $r_t^f$ is the 
 risk-free return and $\alpha_i$ is the intercept.
-Factor coefficients use the first letter of the name except for the market 
-which is $\beta$ to follow convention.
 If our factor specification for $m$ is correct, the $\alpha$ term in 
 (\ref{eq:tsmodel}) should be insignificant.
 Regression-based tests allow us to inspect factor loadings for those 
@@ -103,11 +101,13 @@ Since Fama and French include an investment factor while I do
 not, it is informative to compare differences in the factor loadings for the 
 two models.
 
-Work most similar to mine includes that of \textcite{fama2016choosing}, 
-\textcite{ball2016accruals} and \textcite{barillas2015comparing}.
-My work is different because I increase the maximum Sharpe ratio attainable 
-from a set of factors compared to that found by \textcite{fama2016choosing}.
-I use (\ref{eq:returns}) to focus on pricing \emph{all} asset returns from the 
-beginning, with emphasis on the roles of value and momentum.
-Different specifications of non-nested models are used to explore why the 
+\textcite{fama2016choosing} use the Sharpe ratio to compare models using the
+long and short sides of factors including a cash-profitability factor.
+\textcite{ball2016accruals} add a cash-profitability factor to the four-factor
+model of the market, size, value and momentum.
+\textcite{barillas2015comparing} use the Sharpe ratio to find a six-factor
+model including monthly value and momentum gives the best performance.
+Previous work does not combine cash-profitability, monthly value and momentum.
+I use non-nested models are used to explore why the 
 ``lethal" loading combination creates such problems.
+

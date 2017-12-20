@@ -5,8 +5,7 @@
 \subsection{Value and Momentum}
 
 \textcite{kok2017facts} argue  that fundamental value measures, such as the popular 
-book-to-market ratio, identify stocks that will experience a decrease in book value in the 
-next period.
+book-to-market ratio, are mean-reverting.
 \[
 B_{t+1}/p_{t+1} = B_t/p_t \cdot B_{t+1}/B_t \cdot p_t/p_{t+1}
 \]
@@ -14,39 +13,64 @@ taking logs
 \[
 log(B_{t+1}/p_{t+1}) = log(B_{t}/p_{t}) + log(B_{t+1}/B_{t}) - log(p_{t+1}/p_{t})
 \]
-Investors wish to identify those stocks that will increase in price, $R_{t+1}=p_{t+1}/p_{t}$.
-Book-to-market ratios are still useful, so long as we can separate stocks that will experience 
-a decrease in book values from those that will increase in price.
-They show that decreases in book-equity are lower for high momentum stocks.
+where; $B_t$ is a measure of book value at time $t$ and $p$ is market price.
+A high book-to-market ratio can revert to its mean through an increase price or
+a decrease in book equity.
+Investors wish to identify those stocks that will increase in price because
+$R_{t+1}=p_{t+1}/p_{t}$.
+Book-price measures are polluted by stocks that revert to mean values through
+decreases in book equity.
+Book-to-market ratios are useful, so long as we can separate stocks that will
+experience a decrease in book values from those that will increase in price.
+\textcite{kok2017facts} show that decreases in book-equity are lower for high
+momentum stocks.
 
 \import{./Literature/}{kok2017facts}
 
-\textcite{asness2013devil} show that momentum can forecast future changes in book equity.
-Combining value and momentum identifies high book-to-market stocks that will revert to their 
-mean fundamental value through an increase in price.
-This is true of the monthly, current measure of book-to-market without the presence of 
-momentum in a multi-factor regression.
+\textcite{asness2013devil} show that momentum can forecast future changes in
+book equity.
+Combining value and momentum identifies high book-to-market stocks that will
+revert to their mean fundamental value through an increase in price.
+This is true of the monthly, current measure of book-to-market without the
+presence of momentum in a multi-factor regression.
 \textbf{Why include momentum then?}
 
 
 
 \subsection{Comparing Models with Sharpe Ratio}
 
-\textcite{gibbons1989test}
+Following \textcite{jensen1968performance}, most tests of factor models include
+time series regressions of the form
 \[
 r_t^i = a^i + b\cdot f + e^i
 \]
+where;$r_t^i$ is the return on asset $i$ at time $t$ in excess of the risk free
+rate, $a$ is the regression intercept, $f$ is a set of factors and $e$ is the
+error terms.
+If our factors explain all of the variation in the returns on asset $i$, the
+regression intercept, $a$, should be 0.
+\textcite{gibbons1989test} show that for a set of assets, our null hypothesis
+that all intercepts are 0 follows an F-distribution.
+This provides a test statistic for whether a set of factors completely
+describes the returns on a set of test assets.
+In the literature, this is the ``GRS" statistic.
+They show that the squared Sharpe ratio of the intercepts is
 \[
-a'V^ea = Sh^2(r,f) - Sh^2(f)
+a'V_ea = Sh^2(r,f) - Sh^2(f)
 \]
-where $V^e$ is the covariance matrix of $e$.
-Hotelling's non-central F-distribution.
+where $V_e$ is the covariance matrix of $e$ and $Sh^2(\cdot)$ denotes squared
+Sharpe ratio.
+The Sharpe ratio of the intercepts is the increase in the Sharpe ratio when
+adding the test assets to the set of factors.
 
-\textcite{barillas2016alpha}
+\textcite{barillas2016alpha} make the brilliant and intuitive point that
 \[
-Sh^2(r,f) = Sh^2(f)
+Sh^2(r,f) = Sh^2(r)
 \]
-if $r$ is the set of returns on all assets because the set of factors $f$ is in $r$.
+if $r$ is the set of returns on all assets because the set of factors $f$ is
+included in $r$.
+We can minimize the Sharpe ratio of the unknown intercepts by maximizing the
+Sharpe ratio of the factors.
 
 \import{./Literature/}{gibbons1989test}
 
@@ -117,18 +141,6 @@ Completely statistics-based factors encourage data-mining.
 
 \subsection{Assorted Ramblings}
 
-Consumption-based models typically specify $m$ as the marginal rate of 
-substitution
-\begin{equation}
-\label{eq:consumption}
-m=\beta\frac{u'(c_{t+1})}{u'(c_t)}
-\end{equation}
-where $u'(c)$ is the marginal utility from one more unit of consumption.
-In this model, $m$ is the rate at which an investor will give up consumption 
-today for more consumption tomorrow.
-Equation \ref{eq:consumption} says that an investor will buy more of an asset 
-until their discounted marginal utility
-
 The consumption models performs poorly during significant downturns.
 Momentum experiences crashes (\parencite{daniel2016momentum}).
 
@@ -146,20 +158,6 @@ Hansen, $a'Ia$ is nice because it preserves stuff but
 $a'\Omega a$ can be nicer for asset pricing purposes (covariances of errors 
 are important for asset-pricing models because this influences the maximum 
 Sharpe ratio that can be obtained from the errors).
-
-Motivated by the dividend discount model, \textcite{fama2016choosing} 
-suggest a five-factor model (FF2016) of; the market, size, value, 
-profitability.
-They find a maximum Sharpe ratio of 0.24 for their model.
-\textcite{hou2015digesting} put forward a four-factor model of; the market, 
-size, 
-investment and return on equity.
-Their focus is not on maximizing the Sharpe ratio, although they report a 
-value in excess of 0.4.
-They concentrate on minimizing the absolute size of the intercepts in time 
-series regressions of anomaly portfolios on their factors.
-
-%\input{Tables/Sh2}
 
 Table \ref{tbl:Sh2} shows the maximum squared Sharpe ratios and marginal 
 contributions from each of the factors for my model and that of 
