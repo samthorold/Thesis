@@ -2,10 +2,10 @@ clear
 set more off
 
 capture log close
-log using C:/Users/samth/Dropbox/Thesis/Code/QUANTILES, replace text
+log using C:/Users/samth/Dropbox/Thesis/Code/Logs/QUANTILES, replace text
 
 *******************************************************************************
-* Quantiles														              *
+* Quantiles                                                                   *
 *******************************************************************************
 
 use C:/Data/Thesis/Returns
@@ -42,12 +42,7 @@ preserve
   save C:/Data/Thesis/PR_11_1_20Q, replace
 restore
 
-merge m:1 permno hp using C:/Data/Thesis/BookVars
-
-* We want all the stuff that was in the Return data but not anything new from
-* the book variables data
-drop if _merge==2
-drop _merge
+merge m:1 permno hp using C:/Data/Thesis/BookVars, nogen keep(match master)
 
 
 **********************

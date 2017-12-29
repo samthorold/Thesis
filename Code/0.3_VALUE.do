@@ -2,10 +2,10 @@ clear
 set more off
 
 capture log close
-log using C:/Users/samth/Dropbox/Thesis/Code/VALUE, replace text
+log using C:/Users/samth/Dropbox/Thesis/Code/Logs/VALUE, replace text
 
 *******************************************************************************
-* Value     												                  *
+* Value                                                                       *
 *******************************************************************************
 
 * Following Asness and Fazinni (2013), we will have three measures of value
@@ -18,13 +18,13 @@ log using C:/Users/samth/Dropbox/Thesis/Code/VALUE, replace text
 
 use C:/Data/Thesis/BookVars
 
-merge 1:1 permno hp using C:/Data/Thesis/Dec_ME
-
-drop if _merge==2
-drop _merge
+merge 1:1 permno hp using C:/Data/Thesis/Dec_ME, nogen keep(match master)
 
 gen bmal = be / dec_me
+label var bmal "Book-to-Market, Annual Formation with Lagged Market Equity"
+
 gen bmac = be / jun_me
+label var bmac "Book-to-Market, Annual Formation with Current Market Equity"
 
 describe
 summarize
@@ -35,12 +35,12 @@ save C:/Data/Thesis/BookVars, replace
 
 use C:/Data/Thesis/Returns, clear
 
-merge m:1 permno hp using C:/Data/Thesis/BookVars
-
-drop if _merge==2
-drop _merge
+merge m:1 permno hp using C:/Data/Thesis/BookVars, nogen keep(match master)
 
 gen bmmc = be / me
+label var bmmc "Book-to-Market, Monthly Formation with Current Market Equity"
+
+drop jun_me dec_me be op op_ok opr gp cp inv bmal bmac
 
 describe
 summarize

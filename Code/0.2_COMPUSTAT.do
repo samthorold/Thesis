@@ -2,10 +2,10 @@ clear
 set more off
 
 capture log close
-log using C:/Users/samth/Dropbox/Thesis/Code/COMPUSTAT, replace text
+log using C:/Users/samth/Dropbox/Thesis/Code/Logs/COMPUSTAT, replace text
 
 *******************************************************************************
-* COPMUSTAT Munging															  *
+* COPMUSTAT Munging                                                           *
 *******************************************************************************
 
 use C:/Data/CRSP/20171224_COMP_196001_201612
@@ -43,6 +43,7 @@ replace ps = pstkl if ps==.
 replace ps = pstk  if ps==.
 
 gen be = seq + txditc - ps
+label var be "Book Equity"
 
 replace be = ceq + upstk if be==.
 replace be = at - lt     if be==.
@@ -54,12 +55,14 @@ replace be = at - lt     if be==.
 ********************
 
 gen op_ok = (cogs!=. | xsga!=. | xint!=.) & be > 0
+label var op_ok "Operating Profit Meets Conditions"
 
 replace cogs = 0 if cogs==.
 replace xsga = 0 if xsga==.
 replace xint = 0 if xint==.
 
 gen op = (revt - cogs - xsga - xint) / be
+label var op "Operating Profit"
 
 
 ********************************************************
@@ -69,7 +72,7 @@ gen op = (revt - cogs - xsga - xint) / be
 replace xrd = 0 if xrd==.
 
 gen opr = (revt - cogs - (xsga-xrd) - xint) / be
-
+label var opr "Operating Profit less RnD Expense"
 
 
 ****************
@@ -79,7 +82,7 @@ gen opr = (revt - cogs - (xsga-xrd) - xint) / be
 replace gp = revt - cogs if gp==.
 
 replace gp = gp / at
-
+label var gp "Gross Profit"
 
 
 ***************
@@ -103,9 +106,10 @@ replace dap = 0 if dap==.
 replace dxacc = 0 if dxacc==.
 
 gen acc = - drect - dinvt - dxpp + ddrc + dap + dxacc
+label var acc "Balance Sheet Accruals"
 
 gen cp = (revt - cogs - (xsga-xrd) - xint + acc) / be
-
+label var cp "Operating Profit less RnD Expense and Balance Sheet Accruals"
 
 
 ****************
@@ -115,18 +119,16 @@ gen cp = (revt - cogs - (xsga-xrd) - xint + acc) / be
 sort lpermno fyear
 
 by lpermno: gen inv = (at[_n] - at[_n-1]) / at[_n-1]
-
-
+label var inv "Asset Growth"
 
 gen hp = fyear + 1
+label var hp "Holding Period"
 
 rename lpermno permno
 
-merge 1:1 permno hp using C:/Data/Thesis/Jun_ME
+merge 1:1 permno hp using C:/Data/Thesis/Jun_ME, nogen keep(match master)
 
-drop if _merge==2
-
-keep permno hp jun_me be op_ok op opr gp cp inv
+keep permno hp jun_me be op_ok op opr gp cp inv acc
 
 describe
 summarize
