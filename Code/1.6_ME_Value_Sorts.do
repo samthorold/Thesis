@@ -30,19 +30,54 @@ egen bkt = concat(jun_me_b bmal_b)
 
 replace ret = ret * 100
 
-preserve
+*preserve
 	drop jun_me_b bmal_b
 	reshape wide ret, i(date) j(bkt) string
+	gen HMLs = ret13 - ret11
+	gen HMLb = ret23 - ret21
+	gen HML = (HMLs + HMLb) / 2
+	gen SMB_HML = (ret11 + ret12 + ret13) / 3 - (ret21 + ret22 + ret23) / 3
+	save C:/Data/Thesis/ME_BM_al_6_Returns, replace
 	export delim using C:/Data/Thesis/ME_BM_al_6_Returns.csv, replace
-restore
+*restore
+
+
+*collapse (mean) ret=ret, by(jun_me_b bmal_b)
+*list, sep(10)
+
+
+use C:/Data/Thesis/Returns, clear
+
+merge m:1 permno hp using C:/Data/Thesis/Jun_ME_5B, nogen keep(match)
+merge m:1 permno hp using C:/Data/Thesis/BM_al_5B, nogen keep(match)
 
 preserve
-	collapse (mean) ret=ret, by(jun_me_b bmal_b)
-	list, sep(10)
+	collapse (sum) bkt_size=size, by(jun_me_b bmal_b date)
+	save C:/Data/Thesis/ME_BM_al_25B_Size, replace
 restore
 
+merge m:1 jun_me_b bmal_b date using C:/Data/Thesis/ME_BM_al_25B_Size, nogen keep(match)
+
+gen wt_ret = ret * size / bkt_size
+
+keep if hp>=1963 & year(date)<=2016
+
+collapse (sum) ret=wt_ret, by(date jun_me_b bmal_b)
+
+egen bkt = concat(jun_me_b bmal_b)
+
+replace ret = ret * 100
+
+*preserve
+	drop jun_me_b bmal_b
+	reshape wide ret, i(date) j(bkt) string
+	save C:/Data/Thesis/ME_BM_al_25_Returns, replace
+	export delim using C:/Data/Thesis/ME_BM_al_25_Returns.csv, replace
+*restore
 
 
+*collapse (mean) ret=ret, by(jun_me_b bmal_b)
+*list, sep(5)
 
 
 
@@ -72,6 +107,11 @@ replace ret = ret * 100
 preserve
 	drop jun_me_b bmac_b
 	reshape wide ret, i(date) j(bkt) string
+	gen HMLcs = ret13 - ret11
+	gen HMLcb = ret23 - ret21
+	gen HMLc = (HMLcs + HMLcb) / 2
+	gen SMB_HMLc = (ret11 + ret12 + ret13) / 3 - (ret21 + ret22 + ret23) / 3
+	save C:/Data/Thesis/ME_BM_ac_6_Returns, replace
 	export delim using C:/Data/Thesis/ME_BM_ac_6_Returns.csv, replace
 restore
 
@@ -118,6 +158,11 @@ replace ret = ret * 100
 preserve
 	drop l1_me_b l1_bmmc_b
 	reshape wide ret, i(date) j(bkt) string
+	gen HMLms = ret13 - ret11
+	gen HMLmb = ret23 - ret21
+	gen HMLm = (HMLms + HMLmb) / 2
+	gen SMB_HMLm = (ret11 + ret12 + ret13) / 3 - (ret21 + ret22 + ret23) / 3
+	save C:/Data/Thesis/ME_BM_mc_6_Returns, replace
 	export delim using C:/Data/Thesis/ME_BM_mc_6_Returns.csv, replace
 restore
 

@@ -1,0 +1,24 @@
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{lrrrrrrrrrr}
+  \toprule
+  =% var_name %= \textrightarrow & Low & 2 & 3 & 4 & High & Low & 2 & 3 & 4 & High \\ 
+  \toprule
+  \multicolumn{9}{l}{$=% title %=$} \\
+
+  -% for k in tbl %-
+      & \multicolumn{5}{c}{=% tbl[k][name] =%} & \multicolumn{5}{c}{t(=% tbl[k][name] %=)} \\
+    \cmidrule(r){2-6} \cmidrule(r){7-11}
+      Small -% for i in tbl[k]["coef"][1] %- & =% i %= -% endfor %- & -% for i in tbl[k]["tval"][1] %- & =% i %= -% endfor %- \\
+          2 -% for i in tbl[k]["coef"][2] %- & =% i %= -% endfor %- & -% for i in tbl[k]["tval"][2] %- & =% i %= -% endfor %- \\
+          3 -% for i in tbl[k]["coef"][3] %- & =% i %= -% endfor %- & -% for i in tbl[k]["tval"][3] %- & =% i %= -% endfor %- \\
+          4 -% for i in tbl[k]["coef"][4] %- & =% i %= -% endfor %- & -% for i in tbl[k]["tval"][4] %- & =% i %= -% endfor %- \\
+      Big   -% for i in tbl[k]["coef"][5] %- & =% i %= -% endfor %- & -% for i in tbl[k]["tval"][5] %- & =% i %= -% endfor %- \\
+  -% endfor %-
+
+  \bottomrule
+\end{tabular}
+\caption{=% caption %=} 
+\label{=% label %=}
+\end{table}

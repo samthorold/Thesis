@@ -40,6 +40,11 @@ replace ret = ret * 100
 preserve
 	drop l1_me_b pr_12_2_b
 	reshape wide ret, i(date) j(bkt) string
+	gen WMLs = ret13 - ret11
+	gen WMLb = ret23 - ret21
+	gen WML = (WMLs + WMLb) / 2
+	gen SMB_WML = (ret11 + ret12 + ret13) / 3 - (ret21 + ret22 + ret23) / 3
+	save C:/Data/Thesis/ME_PR_6_Returns, replace
 	export delim using C:/Data/Thesis/ME_PR_6_Returns.csv, replace
 restore
 

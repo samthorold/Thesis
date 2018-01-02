@@ -33,6 +33,11 @@ replace ret = ret * 100
 preserve
 	drop jun_me_b inv_b
 	reshape wide ret, i(date) j(bkt) string
+	gen CMAs = ret11 - ret13
+	gen CMAb = ret21 - ret23
+	gen CMA = (CMAs + CMAb) / 2
+	gen SMB_CMA = (ret11 + ret12 + ret13) / 3 - (ret21 + ret22 + ret23) / 3
+	save C:/Data/Thesis/ME_INV_6_Returns, replace
 	export delim using C:/Data/Thesis/ME_INV_6_Returns.csv, replace
 restore
 
