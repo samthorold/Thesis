@@ -56,4 +56,11 @@ drop u
 save C:/Data/Thesis/Factors, replace
 export delim using C:/Data/Thesis/Factors.csv, replace
 
+
+
+
+
+
+
+
 log close
