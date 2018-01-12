@@ -48,7 +48,11 @@ label var be "Book Equity"
 replace be = ceq + upstk if be==.
 replace be = at - lt     if be==.
 
+merge 1:1 lpermno fyear using C:/Data/Thesis/Hand_BE, nogen keep(match master)
 
+replace hand_be=. if hand_be==-99.99
+
+replace be = hand_be if hand_be!=.
 
 ********************
 * Operating Profit *

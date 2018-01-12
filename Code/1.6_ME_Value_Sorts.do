@@ -30,7 +30,7 @@ egen bkt = concat(jun_me_b bmal_b)
 
 replace ret = ret * 100
 
-*preserve
+preserve
 	drop jun_me_b bmal_b
 	reshape wide ret, i(date) j(bkt) string
 	gen HMLs = ret13 - ret11
@@ -39,11 +39,11 @@ replace ret = ret * 100
 	gen SMB_HML = (ret11 + ret12 + ret13) / 3 - (ret21 + ret22 + ret23) / 3
 	save C:/Data/Thesis/ME_BM_al_6_Returns, replace
 	export delim using C:/Data/Thesis/ME_BM_al_6_Returns.csv, replace
-*restore
+restore
 
 
-*collapse (mean) ret=ret, by(jun_me_b bmal_b)
-*list, sep(10)
+collapse (mean) ret=ret, by(jun_me_b bmal_b)
+list, sep(10)
 
 
 use C:/Data/Thesis/Returns, clear

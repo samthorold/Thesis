@@ -2,39 +2,120 @@
 
 \section{Results} \label{sec:results}
 
-\import{./Tables/}{Sh2}
+\subsection{Sharpe Ratio}
 
-Table \ref{tbl:Sh2} shows the maximum squared Sharpe ratio and the factor contributions for 
-the models in equation \ref{eq:tsmodel} and the cash-profitability model in 
-\textcite{fama2016choosing} (FF2016).
-For both models, $Prof$ refers to the cash profitability factor of \textcite{ball2016accruals}.
-For (\ref{eq:tsmodel}), $Val$ refers to the monthly, current value of 
-\textcite{asness2013devil}.
-$Prof$ and monthly, current $Val$ are created manually.
-All other factors are as specified in \textcite{fama2016dissecting} and straight from Ken 
-French's 
-website.
-The maximum Sharpe ratio is calculated as $Sh^2(f)=R'V^{-1}R$ where $R$ is the vector of mean 
-returns on the factors and $V$ is the covariance matrix for the returns on the factors.
-Contributions to the total Sharpe ratio are calculated as $(\alpha_i / \sigma_i)^2$ where 
-$\alpha_i$ is the intercept from regressing the factor $i$ on the remaining factors and 
-$\sigma_i$ is the standard deviation of the residuals from the same regression.
-The Sharpe ratio of (\ref{eq:tsmodel}), 0.348, is higher than that of FF2016, 0.246.
-The investment factor contributes only 0.003 to \ref{eq:model} while the momentum factor 
-contributes 0.014 to FF2016.
+\import{./Tables/}{Table1}
+
+Table \ref{tbl:Table1} panel A shows summary statistics for individual factors as well as the 
+BS2015 and FF2016b models.
+The market has a high average monthly return, 0.51\%, offset by a high standard deviation, 
+4.42, giving a modest Sharpe ratio of 0.12.
+Size, value and investment factors had similar average monthly returns and standard deviations 
+giving Sharpe ratios from 0.09 to 0.15.
+Momentum had the highest average monthly return at 0.66\%.
+This does not translate to a significantly higher Sharpe ratio, 0.16, as the standard 
+deviation is also high at 4.23.
+Cash profitability has the highest Sharpe ratio of the individual factors at 0.27.
+This is driven by the low standard deviation of 1.4 rather than a high average return, which 
+is modest at 0.37\%.
+The models do not improve the average monthly return, 0.42\% for BS2015 and 0.37\% for 
+FF2016b, but do lower the standard deviation of returns to 0.69 and 0.75.
+This results in significantly improved Sharpe ratios of 0.6 and 0.5.
+In the face of unimpressive monthly returns, we should keep in mind that models most 
+appropriate for pricing may not be the most appropriate for investing 
+\parencite{pastor2000comparing}.
+We are concerned with the way our models co-vary with all assets, not whether they 
+generate superior returns.
+
+Table \ref{tbl:Table1} panel B shows the intercepts, standard deviation of the residuals, 
+contribution to the maximum squared Sharpe ratio and the weight in the models for each factor.
+For BS2015, value and profit factors contribute similar amounts, 0.22 and 0.2, to the Sharpe 
+ratio.
+This is in-line with our intuition that fairly-priced, profitable stocks will generate higher 
+returns those relatively more expensive or less profitable.
+Value's large contribution is driven primarily by a large intercept, 1.11, while 
+profitability's contribution is driven by a low standard deviation of residuals, 1.16.
+The market and momentum also have large intercepts, 1.32 and  1.11, but the higher standard 
+deviation of residuals, 3.79 and 3.11, inhibit the factors' contributions to the BS2015 model, 
+0.11 and 0.13.
+Size contributes very little to the Sharpe ratio, 0.04.
+Despite value and profitability's similar contributions to the Sharpe ratio of the BS2015 
+model, the profit factor has a much higher weight than value, 0.45 compared to 0.23, in the 
+portfolio which generates the maximum Sharpe ratio.
+Other factor weights are in-line with contributions to Sharpe ratio.
+For FF2016b, the market intercept is 1.09 but the high standard deviation of residuals, 3.76, 
+drives a low contribution of 0.08.
+Despite investment's low standard deviation of residuals, 1.38, its low intercept, 0.14, 
+drives a negligible contribution of 0.01.
+Size and value contribute similar amounts, 0.03 and 0.04, thanks to modest intercepts, 0.47 
+and 0.36, coupled with modest standard deviations of residuals of 2.83 and 1.9.
+Profitability contributes the most at 0.19 driven by a low standard deviation of residuals at 
+1.19.
+The profitability factor has the largest weight, 0.54, in the portfolio which maximizes the 
+Sharpe ratio of FF2016b.
+Remaining factors are all weighted between 0.09 and 0.15.
+
+Factor contributions given the other four factors need not sum to the total model squared 
+Sharpe ratio because $(a/\sigma)^2$ is the amount the squared Sharpe ratio of the four other 
+factors is improved when the fifth is included.
+A factor's contribution depends on the amount of its mean return, $a$, and variation, 
+$\sigma$, that is left unexplained by the other factors.
+Unexplained mean return is the traditional alpha from a time series regression while the 
+unexplained variation is the standard deviation of the residuals from the same regression.
+The unexplained mean return represents the potential to add information to the other factors 
+in a model while the unexplained variation dampens the effect of unexplained factor return on 
+the model's Sharpe ratio \parencite{fama2016choosing}.
+
+
+
+
+
 
 \subsection{Value and Momentum}
 
 Value-weighted characteristics in sorts.
 Average characteristics in size sorts.
 
-\subsection{Selected Anomaly Time-Series Regressions}
+\subsection{Anomaly Time-Series Regressions}
 
-Investment, Volatility. \textbf{Differences between value-mom and investment loadings}.
+\import{./Tables/}{25_Size_Inv_196307_201612}
+We have established that the BS2015 model has a higher Sharpe ratio than the FF2016b model but 
+it is informative to see if we lose any performance in sorts on the excluded investment factor.
+Table \ref{tbl:25_Size_Inv} shows the performance of the FF2016b and BS2015 models when 
+explaining returns on size and investment sorts.
+BS2015 leaves fewer alphas than FF2016b\footnote{BS2015 also leaves fewer alphas than the 
+FF2015 and FF2016a models (see table \ref{tbl:25_Size_Inv_b} in appendix 
+\ref{sec:addl_results}).}.
+FF2016b struggles with the third investment quintile leaving alphas in the first and second 
+size quintiles, both 0.14.
+BS2015 struggles where the highest investment quintile meets the fourth highest size quintile, 
+leaving an alpha of 0.18.
+Both models leave an alpha the small-high investment portfolio.
+The values are -0.28 for FF2016b and -0.26 for BS2015.
 
-(\ref{eq:tsmodel}) performs worst in sorts on volatility, intercepts of 0.8, and large firms 
-with high investment, intercepts of 0.6.
-The model's poor performance in sorts on large stocks is not a complete surprise given value's 
-weak effect among large stocks.
-Where value is weak, it is driven by its relationship with momentum.
-Value and momentum are negatively correlated but in some sorts move in the same direction.
+Table \ref{tbl:25_Size_Inv} also shows the regression slopes on the value and investment or 
+value and momentum factors.
+For the FF2016b model, the investment slopes, $cma$, decrease as the investment quintiles 
+increase.
+We expect the returns on portfolios with higher investment characteristics to behave like the 
+returns on the factor constructed from a more coarse sort on the same variable.
+The spreads between the investment slopes increase as the size quintiles increase.
+The small quintile sees the slope fall from 0.47 for the lowest investment quintile to -0.24 
+for the highest.
+The big size quintile has investment slopes from 0.77 for the low quintile to -0.7 for the 
+highest.
+Value is fairly uniform across size and investment quintiles except for the negative slopes in 
+the highest investment quintile.
+For the BS2015 model, the value slopes are uniform for the smallest three investment 
+quintiles, except for the small-low investment intersection which is not significant.
+The slope becomes negative in the largest investment quintile.
+For the larger size quintiles this includes a gradual shift through the fourth largest 
+investment quintile.
+This suggests that returns on firms with high investment behave like those with a low 
+book-to-market ratio, growth firms.
+Despite momentum's small slopes, the factor is highly significant is almost all portfolios.
+Mirroring value, slopes are uniform for all investment quintiles except for the largest, where 
+slopes become negative.
+Negative momentum slopes suggest the returns on firms with large investments behave like those 
+with lower returns over the previous year.
+

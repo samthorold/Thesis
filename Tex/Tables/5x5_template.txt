@@ -1,6 +1,7 @@
 
 \begin{table}[!ht]
 \centering
+\caption{=% caption %=}
 \begin{tabular}{lrrrrrrrrrr}
   \toprule
   =% var_name %= $\rightarrow$ & Low & 2 & 3 & 4 & High & Low & 2 & 3 & 4 & High \\ 
@@ -21,6 +22,5 @@
 
   \bottomrule
 \end{tabular}
-\caption{=% caption %=} 
 \label{=% label %=}
 \end{table}

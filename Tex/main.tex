@@ -4,7 +4,7 @@
 \usepackage[backend=biber, style=authoryear]{biblatex}
 \usepackage{booktabs}       % tables
 \usepackage{dcolumn}        % table cells alignment
-\usepackage[margin=1in]{geometry}
+\usepackage[margin=.75in]{geometry}
 \usepackage{import}         % nested files
 \usepackage[utf8]{inputenc} % unsure
 
@@ -23,19 +23,20 @@
 \maketitle
 
 \begin{abstract}
-  A five-factor model of; market, size,  value, momentum and profitability 
-  factors improves on the maximum Sharpe ratio of previous models. The largest 
-  marginal contributions are from value and profitability. The combination of 
-  value and momentum makes the investment factor unnecessary.
+  A five-factor model of
+  market, size, value, momentum and profitability factors
+  has a maximum Sharpe ratio of 0.6.
+  The largest marginal contributions are from value and profitability.
+  Value and momentum interact to make investment unnecessary.
 \end{abstract}
 
 \import{./}{intro}
 
 \import{./}{literature}
 
-\import{./}{data}
+%\import{./}{data}
 
-\import{./}{method}
+%\import{./}{method}
 
 \import{./}{results}
 
@@ -44,6 +45,8 @@
 \printbibliography
 
 \appendix
+
+\import{./}{addl_results}
 
 \import{./}{datasuppl}
 

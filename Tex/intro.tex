@@ -8,106 +8,96 @@ The pricing equation says all expected discounted returns should equal 1
 1=E(mR^i)
 \end{equation}
 where $m$ is the discount rate and $R^i$ is the gross return on asset $i$.
-While $m$ is the same for all assets, covariance with $R^i$ leads to different 
-risk adjustments for each asset.
-Factor-based models replace $m$ with a linear combination of returns on 
-a small set of portfolios. These portfolios may try to capture the returns for 
+While $m$ is the same for all assets, covariance with $R^i$ leads to different risk 
+adjustments for each asset.
+Factor-based models replace $m$ with a linear combination of returns on a small set of 
+portfolios. These portfolios may try to capture the returns for 
 taking on risk or try to mimic a non-traded factor.
-Factor-based models are special cases of the consumption-based description 
-of the discount factor, $m=\beta\frac{u'(c_{t+1})}{u'(c_t)}$ where $\beta$ is 
-impatience and $u'(c)$ is marginal utility of consumption.
+Factor-based models are special cases of the consumption-based description of the discount 
+factor, $m=\beta\frac{u'(c_{t+1})}{u'(c_t)}$ where $\beta$ is impatience and $u'(c)$ is 
+marginal utility of consumption.
 
-Sets of factors are often chosen in response to some test portfolio that 
-proves tricky to price.
+Sets of factors are often chosen in response to some test portfolio that proves tricky to 
+price.
 This has lead to wide-spread data-mining.
-\textcite{harvey2016and} suggest that our obsession with churning out new 
-factors means many are insignificant and our thresholds for significance 
-should be increased.
+\textcite{harvey2016and} suggest that our obsession with churning out new factors means many 
+are insignificant and our thresholds for significance should be increased.
 The best defense against data-mining is intuition.
-Tricky or anomalous portfolios may have economic significance but their 
-existence should not cause us to abandon intuition in an effort to price them.
-Asset-pricing models have turned into an exercise in pricing the returns on 
-small subsets of assets.
+Tricky or anomalous portfolios may have economic significance but their existence should not 
+cause us to abandon intuition in an effort to price them.
+Asset-pricing models have turned into an exercise in pricing the returns on small subsets of 
+assets.
 
-Equation (\ref{eq:returns}) reminds us that \emph{all} discounted returns 
-should equal 1.
-\textcite{barillas2016alpha} show that we do not need to know all assets to
-measure the relative performance of different sets of factors because
+Equation (\ref{eq:returns}) reminds us that \emph{all} discounted returns should equal 1.
+\textcite{barillas2016alpha} show that we do not need to know all assets to measure the 
+relative performance of different sets of factors because
 \begin{equation}
 \label{eq:maxsh}
-Sh^2(\alpha) = Sh^2(R) - Sh^2(f)
+Sh^2(a) = Sh^2(R) - Sh^2(f)
 \end{equation}
-where; $Sh^2(\alpha)$ is the squared Sharpe ratio of the intercepts when 
-regressing the time series of all assets' returns on the factors, $R$ 
-represents the returns on all assets and $f$ represents the returns on the 
-factors.
-The set of factors with the highest Sharpe ratio is the set that performs best 
-when pricing all returns.
-Before attaching stories to tricky portfolios, we must first use intuition to 
-describe a set of factors that perform well pricing all returns.
-Our model can help us identify why the portfolios are so tricky, but its 
-composition should not be driven by mis-pricing in small subsets of assets.
+where; $Sh^2(a)$ is the squared Sharpe ratio of the intercepts when regressing the time series 
+of all assets' returns on the factors, $R$ represents the returns on all assets and $f$ 
+represents the returns on the factors.
+The set of factors with the highest Sharpe ratio is the set that performs best when pricing 
+all returns.
+Before attaching stories to tricky portfolios, we must first use intuition to describe a set 
+of factors that perform well pricing all returns.
+Our model can help us identify why the portfolios are so tricky, but its composition should 
+not be driven by mis-pricing in small subsets of assets.
 
 \textcite{graham1934security} tell us to buy good stocks at a fair price.
 ``Good and fair" is typically split into quality and cheapness.
 The quality of a stock is measured by its profitability.
-A stock's book-to-market ratio tells us how much we have to pay in the stock 
-market for the book equity of the stock.
-This measure is useful because we can compare the cheapness of 
-different size stocks relative to each other.
-As we will see later, combining book-to-market and momentum gives a superior 
-measure of cheapness than book-to-market alone.
-Beginning with \textcite{fama1992cross}, the literature has a history of 
-referring to book-to-market as value.
-This terminology allows us to use slightly different specifications of 
-value while referring to the same concept.
+A stock's book-to-market ratio tells us how much we have to pay in the stock market for the 
+book equity of the stock.
+This measure is useful because we can compare the cheapness of different size stocks relative 
+to each other.
+As we will see later, combining book-to-market and momentum gives a superior measure of 
+cheapness than book-to-market alone.
+Beginning with \textcite{fama1992cross}, the literature has a history of referring to 
+book-to-market as value.
+This terminology allows us to use slightly different specifications of value while referring 
+to the same concept.
 
-The three factor model of \textcite{fama1993common} combines market, size and
-value factors.
-In papers too numerable to cite here, the model has been tested, confirmed and
-denied in just about every way possible.
-The intuition is strong and the factors were chosen before the mass fishing 
-exercise described in \textcite{harvey2016and}.
-Based on the intuition of \textcite{graham1934security}, I add a profitability 
-factor and replace the pure book-to-market measure of
-value with the tandem factors of book-to-market and momentum.
-This gives a five-factor model of; the market, size, value, momentum and
-profitability. A linear combination of the factors gives
+The three factor model of \textcite{fama1993common} combines market, size and value factors.
+In papers too numerable to cite here, the model has been tested, confirmed and denied in just 
+about every way possible.
+The intuition is strong and the factors were chosen before the mass fishing exercise described 
+in \textcite{harvey2016and}.
+Based on the intuition of \textcite{graham1934security}, I add a profitability factor and 
+replace the pure book-to-market measure of value with the tandem factors of book-to-market and 
+momentum.
+This gives a five-factor model of; the market, size, value, momentum and profitability. A 
+linear combination of the factors gives
 \begin{equation}
 \label{eq:model}
-m_t= w_{Mkt} \cdot Mkt + w_{Size} \cdot Size +
-\left( w_{Val} \cdot Val + w_{Mtm} \cdot Mtm \right) + 
-w_{Prof} \cdot Prof
+m_t= w_{Mkt}Mkt + w_{Size}Size + \left( w_{Val}Val + w_{Mtm}Mtm \right) + w_{Prof}Prof
 \end{equation}
 where $w_{XXX}$ is the weight on a particular factor.
 The traditional time series regression form of (\ref{eq:model}) is
 \begin{equation}
 \label{eq:tsmodel}
-r_t^i - r_t^f= \alpha^i + \beta^i \cdot Mkt + s^i \cdot Size +
-\left( v^i \cdot Val + m^i \cdot Mtm \right) +
-p^i \cdot Prof
+r_t^i - r_t^f= a^i + \beta^i Mkt + s^iSize + \left( v^iVal + m^iMtm \right) + p^iProf
 \end{equation}
-where; $r_t^i$ is the return in period $t$ for asset $i$, $r_t^f$ is the 
-risk-free return and $\alpha_i$ is the intercept.
-If our factor specification for $m$ is correct, the $\alpha$ term in 
-(\ref{eq:tsmodel}) should be insignificant.
-Regression-based tests allow us to inspect factor loadings for those 
-portfolios which have significant alpha, the so-called ``anomaly" portfolios.
-Many problems in factor pricing models have negative loadings on the 
-profitability and investment factors of \textcite{fama2016dissecting}.
-The two negative loadings have been theatrically named the ``lethal" 
-combination.
-Since Fama and French include an investment factor while I do 
-not, it is informative to compare differences in the factor loadings for the 
-two models.
+where; $r_t^i$ is the return in period $t$ for asset $i$, $r_t^f$ is the risk-free return and 
+$\alpha_i$ is the intercept.
+If our factor specification for $m$ is correct, the $\alpha$ term in (\ref{eq:tsmodel}) should 
+be insignificant.
+Regression-based tests allow us to inspect factor loadings for those portfolios which have 
+significant alpha, the so-called ``anomaly" portfolios.
+Many problems in factor pricing models have negative loadings on the profitability and 
+investment factors of \textcite{fama2016dissecting}.
+The two negative loadings have been theatrically named the ``lethal" combination.
+Since Fama and French include an investment factor while I do not, it is informative to 
+compare differences in the factor loadings for the two models.
 
-\textcite{fama2016choosing} use the Sharpe ratio to compare models using the
-long and short sides of factors including a cash-profitability factor.
-\textcite{ball2016accruals} add a cash-profitability factor to the four-factor
-model of the market, size, value and momentum.
-\textcite{barillas2015comparing} use the Sharpe ratio to find a six-factor
-model including monthly value and momentum gives the best performance.
+\textcite{fama2016choosing} use the Sharpe ratio to compare models using the long and short 
+sides of factors including a cash-profitability factor.
+\textcite{ball2016accruals} add a cash-profitability factor to the four-factor model of the 
+market, size, value and momentum.
+\textcite{barillas2015comparing} use the Sharpe ratio to find a six-factor model including 
+monthly value and momentum gives the best performance.
 Previous work does not combine cash-profitability, monthly value and momentum.
-I use non-nested models are used to explore why the 
-``lethal" loading combination creates such problems.
+I use non-nested models are used to explore why the ``lethal" loading combination creates such 
+problems.
 

@@ -2,6 +2,10 @@
 
 \section{Literature Review}
 
+\import{./Literature/}{joint}
+
+\import{./Literature/}{errors}
+
 \subsection{Value and Momentum}
 
 \textcite{kok2017facts} argue  that fundamental value measures, such as the popular 
@@ -36,150 +40,23 @@ presence of momentum in a multi-factor regression.
 \textbf{Why include momentum then?}
 
 
-
-\subsection{Comparing Models with Sharpe Ratio}
-
-Following \textcite{jensen1968performance}, most tests of factor models include
-time series regressions of the form
-\[
-r_t^i = a^i + b\cdot f + e^i
-\]
-where;$r_t^i$ is the return on asset $i$ at time $t$ in excess of the risk free
-rate, $a$ is the regression intercept, $f$ is a set of factors and $e$ is the
-error terms.
-If our factors explain all of the variation in the returns on asset $i$, the
-regression intercept, $a$, should be 0.
-\textcite{gibbons1989test} show that for a set of assets, our null hypothesis
-that all intercepts are 0 follows an F-distribution.
-This provides a test statistic for whether a set of factors completely
-describes the returns on a set of test assets.
-In the literature, this is the ``GRS" statistic.
-They show that the squared Sharpe ratio of the intercepts is
-\[
-a'V_ea = Sh^2(r,f) - Sh^2(f)
-\]
-where $V_e$ is the covariance matrix of $e$ and $Sh^2(\cdot)$ denotes squared
-Sharpe ratio.
-The Sharpe ratio of the intercepts is the increase in the Sharpe ratio when
-adding the test assets to the set of factors.
-
-\textcite{barillas2016alpha} make the brilliant and intuitive point that
-\[
-Sh^2(r,f) = Sh^2(r)
-\]
-if $r$ is the set of returns on all assets because the set of factors $f$ is
-included in $r$.
-We can minimize the Sharpe ratio of the unknown intercepts by maximizing the
-Sharpe ratio of the factors.
-
-\import{./Literature/}{gibbons1989test}
-
 \import{./Literature/}{barillas2016alpha}
 
 
 
-\subsection{Today's ``state of the art"}
-
-The factor model closest to mine is that of \textcite{fama2016choosing}.
-They suggest a five-factor model with the time series regression form of
-\begin{equation}
-\label{eq:tsFF2016}
-r_t^i - r_t^f= \alpha^i + \beta^i \cdot Mkt + s^i \cdot Size + v^i \cdot Val + p^i \cdot Prof 
-+ i^i \cdot Inv
-\end{equation}
-where; $Val$ is annually rebalanced using $ME$ from December of last year.
-The other factors are as specified in \ref{eq:tsmodel}.
-The dividend discount model, $p_t = \sum E(d_t)/R_t$, says that stock prices are the expected 
-discounted sum of their dividends.
-\textcite{fama2006profitability} explain that by assuming clean surplus accounting and 
-dividing each side by book-equity we find
-\begin{equation}
-\label{eq:ddm}
-\frac{ME_t}{BE_t} = \frac{\sum \frac{E(Prof_t-\Delta BE_t)}{R_t}}{BE_t}
-\end{equation}
-They use this relationship to make three intuitive points.
-All else the same;
-a lower $ME$ (and higher $BE/ME$) leads to a higher return,
-a higher profit leads to a higher return and
-a lower change in book-equity leads to a higher return.
-While (\ref{eq:ddm}) calls for change in book-equity, asset-growth is used as a proxy in 
-empirical work (See \textcite{fama2015five, fama2016choosing, fama2017international}).
-The choice to use asset-growth is not arbitrary, Fama and French argue this is a better 
-``picture" of what the dividend discount model implies $\Delta BE$ represents, 
-investment.
-
-\textcite{ball2016accruals} suggest a similar model with the time series regression form
-\begin{equation}
-\label{eq:tsBall2016}
-r_t^i - r_t^f= \alpha^i + \beta^i \cdot Mkt + s^i \cdot Size + v^i \cdot Val + p^i \cdot Prof 
-+ m^i \cdot Mom
-\end{equation}
-
-\subsubsection{Three-factor model of \textcite{fama1993common}}
-
-Some intuition.
+\import{./Literature/}{similar}
 
 
 \subsection{The ``Lethal" Combination}
 
-\textcite{fama2015five, fama2016choosing, fama2017international} show that portfolios with 
-returns that behave like those of small, low profit but somehow aggressively investing stocks 
-are a problem.
+\textcite{fama2015five, fama2016choosing, fama2017international} show that portfolios with
+returns that behave like those of small, low profit but somehow aggressively investing
+stocks are a problem.
 
-\subsection{Intuition vs. Statistics}
-
-\textcite{kozak2017interpreting} show that factor models composed of a small number of 
-principal-component (PC) factors performs similarly to our intuition-based factors in 
-regressions on the returns used to extract the components.
-This is a novel approach but it is harder to give PC-factor loadings intuitive meaning.
-\textcite{kozak2017interpreting} remark that the second and third components extracted from 25 
-size-value portfolios are similar to the size and value factors.
-We can only make this comparison because we have the intuition-based factors to compare with.
-Furthermore, it would be hard to improve the maximum Sharpe ratio of a set of factors in this 
-fashion.
-Completely statistics-based factors encourage data-mining.
+\import{./Literature/}{intuition}
 
 \subsection{Assorted Ramblings}
 
 The consumption models performs poorly during significant downturns.
-Momentum experiences crashes (\parencite{daniel2016momentum}).
+Momentum experiences crashes \parencite{daniel2016momentum}.
 
-``Anomalous" portfolios are important.
-If nothing else, investors make gazillions of dollars each year from trading 
-on them.
-Nevertheless, ``anomalous" portfolios should not be the driving force behind 
-discovering or updating factors.
-The most effective defense against data-mining (since finance resolutely 
-refuses to embrace replication studies) is intuition-based models.
-
-How $1=E(mR^i)$ let's us say things about a model's performance pricing all 
-assets.
-Hansen, $a'Ia$ is nice because it preserves stuff but
-$a'\Omega a$ can be nicer for asset pricing purposes (covariances of errors 
-are important for asset-pricing models because this influences the maximum 
-Sharpe ratio that can be obtained from the errors).
-
-Table \ref{tbl:Sh2} shows the maximum squared Sharpe ratios and marginal 
-contributions from each of the factors for my model and that of 
-\textcite{fama2016choosing}.
-I include the missing investment and momentum factors where applicable to 
-highlight marginal contributions to the maximum Sharpe ratio.
-My model's maximum squared Sharpe ratio, 0.348, exceeds that of FF2016, 0.246, 
-by 0.102.
-For my model, value and cash profitability have similar marginal 
-contributions to the Sharpe ratio of 0.2.
-The market and momentum contribute 0.1 while size contributes 0.02.
-The investment factor contributes very little, 0.003, as investment's effects 
-are absorbed by the combination of value and momentum.
-Popular asset-pricing models\footnote{Such as the three-factor model of 
-  \textcite{fama1993common}, the four factor model of 
-  \textcite{hou2015digesting}, the 
-  five-factor model of \textcite{fama2015five} and the cash profitability 
-  five-factor model of \textcite{fama2016choosing}} omit the momentum factor, 
-despite 
-momentum's persistence as an anomaly (\parencite{fama2016dissecting, 
-  fama2017international}).
-Including momentum in model FF2016 increases the Sharpe ratio from 0.246 
-to 0.26.
-Momentum contributes a comparable amount, 0.014, to the Sharpe ratio 
-of FF2016 as the size factor, 0.017.
