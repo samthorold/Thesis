@@ -51,3 +51,20 @@ Other implications of GMM may use the identity matrix here but we are interested
 covariance of alphas not just the magnitude.
 For our purposes the residual covariance matrix makes more sense than the identity matrix 
 because we are concerned with the maximum Sharpe ratio that can be obtained from the errors.
+
+It may seem that trying to find the highest maximum Sharpe ratio means adding many factors.
+Additional factors do not necessarily improve model performance.
+For example, the three factor model of \textcite{fama1993common} explains the returns from 
+sorts on size and accruals better than the five factor model outlined in 
+\textcite{fama2015five}.
+Consider two models; $R_i=\alpha+\beta_MR_M$ and $R_i=\alpha+\beta_MR_M+\beta_SSMB$.
+If a test asset's CAPM $\alpha$ is the opposite sign to its loading on $SMB$ 
+then the $\alpha$ in the second model will be accentuated.
+By conventional measures the second model is then "worse" than the first model.
+The maximum Sharpe ratio of the second model is higher than the maximum Sharpe 
+ratio for the first.
+Conventional asset pricing tests and maximum Sharpe ratios do not always agree.
+If test asset and excluded-factor evidence contradict one another, we should favour 
+excluded-factor evidence.
+Excluded-factor evidence considers the returns on all assets rather than a subset of all 
+assets.

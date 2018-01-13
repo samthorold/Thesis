@@ -1,0 +1,48 @@
+% !TeX root=./main.tex
+
+\subsection{Value and Momentum}
+
+Quantitative factor strategies and research has given ``value" investing a different 
+definition than that originally laid out by \textcite{graham1934security}.
+Recent quantitative value strategies, like those of \textcite{lakonishok1994contrarian} and 
+\textcite{chan2004value}, focus only on fundamental ratios to try and identify cheap stocks.
+
+\textcite{kok2017facts} argue  that fundamental value measures, such as the popular 
+book-to-market ratio, are mean-reverting since
+$B_{t+1}/p_{t+1} = B_t/p_t \cdot B_{t+1}/B_t \cdot p_t/p_{t+1}$.
+Where $B_t$ is a measure of book value at time $t$ and $p$ is market price.
+Taking logs gives
+\[
+log(B_{t+1}/p_{t+1}) = log(B_{t}/p_{t}) + log(B_{t+1}/B_{t}) - log(p_{t+1}/p_{t})
+\]
+A high book-to-market ratio can revert to its mean through an increase price or
+a decrease in book equity.
+Investors wish to identify those stocks that will increase in price because
+$R_{t+1}=p_{t+1}/p_{t}$.
+Book-price measures are polluted by stocks that revert to mean values through
+decreases in book equity.
+Book-to-market ratios are useful, so long as we can separate stocks that will
+experience a decrease in book values from those that will increase in price.
+\textcite{kok2017facts} show that decreases in book-equity are lower for high
+momentum stocks.
+By using a combined fundamental value and momentum strategy one weeds out stocks that recently 
+had bad news that is not yet reflected in accounting numbers.
+A book-to-market measure is useful \emph{if} one can back out expected changes in book equity.
+Unfortunately this requires perfect foresight.
+HML-Momentum is a compromise.
+
+\textcite{asness2013devil} show that momentum can forecast future changes in
+book equity.
+Combining value and momentum identifies high book-to-market stocks that will
+revert to their mean fundamental value through an increase in price.
+This is true of the monthly, current measure of book-to-market without the
+presence of momentum in a multi-factor regression.
+\textbf{Why include momentum then?}
+
+Fundamental value has gotten weaker since publication \parencite{mclean2016does}.
+Returns to fundamental value is concentrated in small high-growth stocks with short sale 
+constraints \parencite{nagel2005short}.
+\textcite{asness2015fact}
+\begin{quotation}
+  There is no strong stand-alone value premium among large caps.
+\end{quotation}
