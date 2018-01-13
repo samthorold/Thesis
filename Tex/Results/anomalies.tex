@@ -5,49 +5,68 @@
 \subsubsection{Investment}
 
 \import{./Tables/}{25_Size_Inv_196307_201612}
-We have established that the BS2015 model has a higher Sharpe ratio than the FF2016b model but 
-it is informative to see if we lose any performance in sorts on the excluded investment factor.
-Table \ref{tbl:25_Size_Inv} shows the performance of the FF2016b and BS2015 models when 
-explaining returns on size and investment sorts.
-BS2015 leaves fewer alphas than FF2016b\footnote{BS2015 also leaves fewer alphas than the 
-FF2015 and FF2016a models (see table \ref{tbl:25_Size_Inv_b} in appendix 
-\ref{sec:addl_results}).}.
-FF2016b struggles with the third investment quintile leaving alphas in the first and second 
-size quintiles, both 0.14.
-BS2015 struggles where the highest investment quintile meets the fourth highest size quintile, 
-leaving an alpha of 0.18.
-Both models leave an alpha the small-high investment portfolio.
-The values are -0.28 for FF2016b and -0.26 for BS2015.
+We have established that the BS2015 model has a higher Sharpe ratio than the FF2016b model
+but  it is informative to see if we lose any performance in sorts on the excluded
+investment factor. Table \ref{tbl:25_Size_Inv} shows the performance of the FF2016b and
+BS2015 models when  explaining returns on size and investment sorts. BS2015 leaves fewer
+alphas than FF2016b\footnote{BS2015 also leaves fewer alphas than the  FF2015 and FF2016a
+models (see table \ref{tbl:25_Size_Inv_b} in appendix  \ref{sec:addl_results}).}. FF2016b
+struggles with the third investment quintile leaving alphas in the first and second  size
+quintiles, both 0.14. BS2015 struggles where the highest investment quintile meets the
+fourth highest size quintile,  leaving an alpha of 0.18. Both models leave an alpha the
+small-high investment portfolio. The values are -0.28 for FF2016b and -0.26 for BS2015.
 
-Table \ref{tbl:25_Size_Inv} also shows the regression slopes on the value and investment or 
-value and momentum factors.
-For the FF2016b model, the investment slopes, $cma$, decrease as the investment quintiles 
-increase.
-We expect the returns on portfolios with higher investment characteristics to behave like the 
-returns on the factor constructed from a more coarse sort on the same variable.
-The spreads between the investment slopes increase as the size quintiles increase.
-The small quintile sees the slope fall from 0.47 for the lowest investment quintile to -0.24 
-for the highest.
-The big size quintile has investment slopes from 0.77 for the low quintile to -0.7 for the 
-highest.
-Value is fairly uniform across size and investment quintiles except for the negative slopes in 
-the highest investment quintile.
-For the BS2015 model, the value slopes are uniform for the smallest three investment 
-quintiles, except for the small-low investment intersection which is not significant.
-The slope becomes negative in the largest investment quintile.
-For the larger size quintiles this includes a gradual shift through the fourth largest 
-investment quintile.
-This suggests that returns on firms with high investment behave like those with a low 
-book-to-market ratio, growth firms.
-Despite momentum's small slopes, the factor is highly significant is almost all portfolios.
-Mirroring value, slopes are uniform for all investment quintiles except for the largest, where 
-slopes become negative.
-Negative momentum slopes suggest the returns on firms with large investments behave like those 
-with lower returns over the previous year.
+Table \ref{tbl:25_Size_Inv} also shows the regression slopes on the value and investment
+or  value and momentum factors. For the FF2016b model, the investment slopes, $cma$,
+decrease as the investment quintiles  increase. We expect the returns on portfolios with
+higher investment characteristics to behave like the  returns on the factor constructed
+from a more coarse sort on the same variable. The spreads between the investment slopes
+increase as the size quintiles increase. The small quintile sees the slope fall from 0.47
+for the lowest investment quintile to -0.24  for the highest. The big size quintile has
+investment slopes from 0.77 for the low quintile to -0.7 for the  highest. Value is fairly
+uniform across size and investment quintiles except for the negative slopes in  the
+highest investment quintile. For the BS2015 model, the value slopes are uniform for the
+smallest three investment  quintiles, except for the small-low investment intersection
+which is not significant. The slope becomes negative in the largest investment quintile.
+For the larger size quintiles this includes a gradual shift through the fourth largest
+investment quintile. This suggests that returns on firms with high investment behave like
+those with a low  book-to-market ratio, growth firms. Despite momentum's small slopes, the
+factor is highly significant is almost all portfolios. Mirroring value, slopes are uniform
+for all investment quintiles except for the largest, where  slopes become negative.
+Negative momentum slopes suggest the returns on firms with large investments behave like
+those  with lower returns over the previous year.
 
 \subsubsection{Volatility}
 
 \import{./Tables/}{25_Size_Vol_BS2015_196307_201612}
-Table \ref{tbl:25_Size_Vol_BS2015} shows the performance of the FF2016b and BS2015 models
-when explaining returns on size and investment sorts.
+Table \ref{tbl:25_Size_Vol_BS2015} shows the performance of the BS2015 model when
+explaining returns on size and volatility sorts. Alphas are left in all of the small stock
+portfolios except for the fourth. For the smaller portfolios the alphas range from 0.26 to
+0.18. Value loadings are positive for these portfolios while momentum and profit
+contribute very little. The highest volatility portfolio has an unexplained average
+monthly return of -0.79. This tells us the BS2015 model considerably overestimates the
+returns to small-high volatility stocks. Value is insignificant while momentum and profit
+loadings are negative. This suggests the returns on small-high volatility stocks behave
+like those of low profit stocks with poor relative returns over the previous year.
+
+In general, value decreases with volatility quintile. The biggest size quintile has the
+smallest spread in slopes. This makes sense as the value effect is weakest among larger
+stocks \parencite{asness2015fact}. Momentum and profit slopes are similar. Magnitude is
+low or insignificant for all volatility quintiles except the highest, which has negative
+slopes for both factors. The momentum slope in the small-high volatility portfolio is
+-0.41. Typically, the magnitude of momentum slopes is not this high and suggests strong
+comovement between the returns of small-high volatility stocks and past losers. The
+momentum slope, -0.41, is much higher than that of the investment factor of the FF2016b
+model (See table \ref{tbl:25_Size_Vol_FF2016b} in appendix \ref{sec:addl_results}). The
+profit slope, -0.65, in the FF2016b model is higher the profit slope in the BS2015 model,
+-0.3. Value is insignificant in both models. Momentum alone seems to capture the
+information in investment and profitability. This is puzzling because value is
+insignificant in both models suggesting it is not the interaction between value and
+momentum, as in the case of the investment sorts, that is causing the differences in
+slopes. This could be a topic for future research.
+
+While the BS2015 model improves on the performance of the FF2016b model (See table
+\ref{tbl:25_Size_Vol_FF2016b} in appendix \ref{sec:addl_results}) when explaining returns
+to stocks sorted by size and volatility, the alpha of -0.79 for small-high volatility
+stocks is a large.
 
