@@ -4,6 +4,50 @@
 
 \import{./Tables/}{Inv_fmt}
 
+Table \ref{tbl:Inv} shows the investment factor regressed on other factors. Regression 1
+shows the combination of value and momentum explain the average return on the investment
+facor. The intercept, $a$, is insignificant with a t-statistic of -0.66. Both value and
+momentum slopes are positive and highly significant with coefficients of 0.5 and 0.25
+respectively. An insignificant intercept means that including an investment factor does
+not improve our BS2015 model \parencite{fama1998determining, barillas2016alpha,
+fama2016choosing}. Using the logic from table \ref{tbl:Table1}, an insignificant intercept
+means the contribution, $(a/\sigma)^2$, to the maximum squared Sharpe ratio of a model can
+only be zero.
+
+Regressions 2 and 3 show that neither value nor momentum alone explain the returns on the
+investment factor. Value is highly significant with a slope of 0.31 but still leaves 0.2\%
+average monthly return unexplained. Momentum is insignificant and leaves the total 0.31\%
+average monthly return from table \ref{tbl:Table1} unexplained. Regression 4 shows that
+the market and profitability factors increase the unexplained average return of the
+investment factor. The market and profitability are negatively correlated with investment
+and positively correlated with each other resulting in an increase in the unexplained
+average return. Regressions 5 and 6 show that neither value nor investment alone combine
+with other factors to explain the average return on the investment factor. This highlights
+the unique relationship between value and momentum. The two factors are positively
+correlated with many other factors and anomalies but negatively correlated with each
+other. Regression 7 shows that value and momentum have similar slopes when used in
+conjunction with all of the factors from BS2015 to explain the average return on the
+investment factor. In a statistical sense, the combination of value and momentum is a slam
+dunk because of the slope enhancement described in \textcite{fama2015incremental}.
+
+We are more interested in the economics behind the combination of value and momentum
+explaining the returns on the investment factor because of the problems with data-mining
+outlined in section \ref{sec:Literature}. Equation \ref{eq:ddm} uses the dividend discount
+model to show that changes in book equity (BE) may be related to stock returns. Typically,
+changes in total assets are used in place of changes in book equity, beginning with
+\parencite{fama2006profitability}. \textcite{kok2017facts} and \textcite{asness2013devil}
+show that value and momentum combine to identify stocks that will exhibit changes in BE in
+the future. Value stocks often exhibit decreases in book equity while high momentum stocks
+typically exhibit fewer of these decreases as there is less bad news to incorporate into
+book values in the future. Despite this, both regression slopes are positive. The returns
+on the investment factor behaves like the returns on high momentum, value stocks. Rather
+than being contradictory, we are identifying stocks that will likely have decreases in the
+future by using value and momentum to identify those that will not - high momentum, value
+stocks. This is similar to finding out if a coin is showing heads by asking if it is
+showing tails.
+
+
+
 Value-weighted characteristics in sorts. Average characteristics in size sorts. Spanning
 regressions showing it is value and momentum that kill investment. Investment is change in
 $BE$ from equation (\ref{eq:ddm}). Economics behind correlation/slope attenuation:
