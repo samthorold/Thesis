@@ -1,0 +1,38 @@
+% !TeX root=.../main.tex
+
+\subsubsection{Momentum}
+
+\import{./Tables/}{25_Size_Prior_B2016_196307_201612}
+
+Table \ref{tbl:25_Size_Prior_B2016} shows the performance of the BS2015 model when
+explaining returns on size and volatility sorts. The model struggles to explain the
+average returns on the small quintile with alphas ranging from -0.41 in the lowest
+momentum portfolio to 0.37 in the highest. The big-second lowest momentum portfolio also
+poses a problem with an alpha of 0.24. This is an improvement over the FF2016b model (See
+table \ref{tbl:25_Size_Prior_FF2016} in appendix \ref{sec:addl_results}). While it is not
+surprising that the BS2015 model leaves fewer alphas than the FF2016b model that does not
+include a momentum factor, it is puzzling that the model performs poorly playing ``at
+home." We would expect a model explaining finer sorts on one of the included factors to
+explain more of the average returns.
+
+The profitability slopes are small, rarely above 0.2 in magnitude, but significant in the
+extreme momentum quintiles. All significant intercepts are negative suggesting the returns
+on both low and high momentum stocks behave like the returns of stocks with low cash
+profits. Unsurprisingly, the momentum slopes increase with the momentum quintiles. There
+is a small increase in the maginitude of the slopes as the size quintile increases,
+although the increase is around 0.2 in magnitude for all momentum quintiles. Momentum
+slopes are most extreme in the lowest momentum quintile, -0.65 to -0.78. Value slopes are
+low in the low and high momentum quintiles as well as the big size quintile. This is
+puzzling because of the slope enhancement described in \textcite{fama2015incremental}.
+When momentum slopes are extreme we would expect value slopes to be enhanced. Most
+intriguingly, value is insignificant in the small-high momentum portfolio. Other value
+slopes in the small size quintile are around 0.3. Value's insignificance seems to
+contribute to the alpha of 0.37 in the small-high momentum portfolio. As high returns
+increase the price of a stock, our monthly book-to-market ratio will decrease. High
+momentum will flatten the value slopes in sorts on size and momentum limiting the
+effectivesness of value. This is the variable attentuation effect described in
+\textcite{fama2015incremental}.
+
+While the BS2015 model may improve the overall performance in sorts on size and momentum,
+the model's greatest strength may be its greatest weakness as the variable attentuation
+from the interaction between value and momentum outweighs the slope enhancement.

@@ -24,12 +24,11 @@ choices.
 I propose a five-factor model with the time series regression form
 \begin{equation}
 \label{eq:m1}
-r_t^i-r_t^f=a^i+b^i\left( r_t^M-r_t^f\right) +s^iSMB_t+h^iHML_t^m+w^iWML_t+p^iPMU_t
+R_t^i=a^i+b^iR_t^M+s^iSMB_t+h^iHML_t^m+w^iWML_t+p^iPMU_t
 \end{equation}
 where
-$r_t^i$ is the return on asset $i$ for time $t$,
-$r^M$ is the return on the market,
-$r^f$ is the risk-free return,
+$R_t^i$ is the excess return on asset $i$ for time $t$,
+$R^M$ is the excess return on the market,
 $a$ is the amount of unexplained return or ``alpha",
 $SMB$ is a size factor long small and short big stocks,
 $HML^m$ is a fundamental value factor long high book-to-market (B/M) and short low B/M stocks,
@@ -46,7 +45,7 @@ with inflated accounting numbers \textcite{kok2017facts}.
 \textcite{fama2016choosing} propose a similar model with the time series regression form
 \begin{equation}
 \label{eq:m2}
-r_t^i-r_t^f=a^i+b^i\left( r_t^M-r_t^f\right) +s^iSMB_t+h^iHML_t+p^iPMU_t+c^iCMA_t
+R_t^i=a^i+b^iR_t^M+s^iSMB_t+h^iHML_t+p^iPMU_t+c^iCMA_t
 \end{equation}
 where $CMA$ is an investment factor long conservatively and short aggressively investing
 stocks. All other factors are as in (\ref{eq:m1}) except for $HML$ which is rebalanced
