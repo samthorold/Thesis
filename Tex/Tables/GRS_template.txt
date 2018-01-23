@@ -1,0 +1,17 @@
+
+\begin{table}[!ht]
+\centering
+\caption{=% caption %=}
+\begin{tabular}{l-% for model in model_names %-r-% endfor %-}
+  \toprule
+    -% for model in model_names %- & =% model %= -% endfor %- \\
+  \midrule
+
+  -% for a in anomalies %-
+    =% a["name"] %= -% for model in model_names %- & =% a["GRS"][model] %= -% endfor %- \\
+  -% endfor %-
+
+  \bottomrule
+\end{tabular}
+\label{=% label %=}
+\end{table}

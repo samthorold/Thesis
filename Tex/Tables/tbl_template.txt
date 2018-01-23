@@ -1,0 +1,27 @@
+
+\begin{table}[!ht]
+\centering
+\caption{=% caption %=}
+\begin{tabular}{lrrrrrrrr}
+  \toprule
+    =% var_name %= $\rightarrow$ & Low & 2 & 3 & 4 & High & Low & 2 & 3 & 4 & High \\ 
+  \toprule
+  \multicolumn{=% K*j %=}{l}{$=% title %=$} \\
+
+  -% for name in coef_names %-
+    -% for K in A[name] %-
+      & \multicolumn{=% j %=}{c}{=% name %=} & \multicolumn{=% j %=}{c}{t(=% name %=)} \\
+      \cmidrule(r){2-=% 1+j %=} \cmidrule(r){=% 1+j+1 %=-=% 1+j+1+j %=}
+      -% for row in K %-
+        & =% b %= -% endfor %- -% for t in K[1]
+      Small -% for i in coef["coef"][0] %- & =% i %= -% endfor %- -% for i in coef["tval"][0] %- & =% i %= -% endfor %- \\
+          2 -% for i in coef["coef"][1] %- & =% i %= -% endfor %- -% for i in coef["tval"][1] %- & =% i %= -% endfor %- \\
+          3 -% for i in coef["coef"][2] %- & =% i %= -% endfor %- -% for i in coef["tval"][2] %- & =% i %= -% endfor %- \\
+      Big   -% for i in coef["coef"][4] %- & =% i %= -% endfor %- -% for i in coef["tval"][4] %- & =% i %= -% endfor %- \\
+    -% endfor %-
+  -% endfor %-
+
+  \bottomrule
+\end{tabular}
+\label{=% label %=}
+\end{table}

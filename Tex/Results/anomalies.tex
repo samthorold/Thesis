@@ -13,6 +13,8 @@ anomalies. As well as highlighting deficiencies in individual portfolios, anomal
 regressions will show where value and momentum slopes of BS2015 differ from the investment
 slopes of FF2016b.
 
+\import{./Tables/}{GRS_196307_201612}
+
 \subsubsection{Investment}
 
 \import{./Tables/}{25_Size_Inv_BS2015_196307_201612}
@@ -38,6 +40,43 @@ highly significant is almost all portfolios. Mirroring value, slopes are uniform
 investment quintiles except for the largest, where  slopes become negative. Negative
 momentum slopes suggest the returns on firms with large investments behave like those with
 lower returns over the previous year.
+
+\begin{landscape}
+\import{./Tables/}{32_Size_OP_Inv_BS2015_196307_201612}
+\end{landscape}
+
+Table \ref{tbl:32_Size_OP_Inv_BS2015} shows the performance of the BS2015 model when
+explaining returns on size, operating profitability and investment sorts. Small stocks
+that invest aggresively despite weak profits remain a problem with an alpha of -0.33\%.
+For small stocks, the only other alpha, 0.14\%, occurs in the second profitability and
+third investment portfolio. For big stocks, both alphas are in the lowest profitability
+quartile in the second, -0.26\%, and highest, 0.27\%, investment quartiles. The model
+performs similarly for small and big stocks. This is somewhat unexpected given value's
+poor performance in big stocks. Since value is taking up much of the slack left by
+investment, we would expect omitting a value factor to be detrimental to the model. As in
+the sorts on size and investment, BS2015 leaves fewer alphas than FF2016b, see table
+\ref{tbl:25_Size_OP_Inv_FF2016b} in appendix \ref{sec:addl_results}).
+
+For small stocks, the value slopes decrease with higher investment and increase with
+profitability. Within profitability quartiles, the returns on high investment stocks
+behave like those of stocks with lower B/M than low investment stocks. While the spread in
+the value slopes remain close to 0.5, the lowest profiability quartile has much lower
+value slopes than the three higher profitability quartiles.
+Given that we are replacing investment with value and momentum we would expect the 
+
+In the context of the divident
+discount model (eq. \ref{eq:ddm}), there are a couple of possible explanations for the
+negative relationship between the returns on high investment stocks and returns on high
+B/M stocks. First,  high B/M stocks, on average, exhibit decreases in book equity
+\parencite{kok2017facts} while investment is a proxy for increases in book equity. Second,
+high B/M stocks, when combined with momentum, will not exhibit changes in book equity.
+
+\subsubsection{Beta}
+
+\import{./Tables/}{25_Size_Beta_BS2015_196307_201612}
+\import{./Tables/}{25_Size_Beta_FF2015_196307_201612}
+\import{./Tables/}{25_Size_Beta_FF2016a_196307_201612}
+\import{./Tables/}{25_Size_Beta_FF2016b_196307_201612}
 
 \subsubsection{Volatility}
 
