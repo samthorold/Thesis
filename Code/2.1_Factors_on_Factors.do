@@ -89,8 +89,14 @@ estimates store BS2015_Inv
 reg cma HMLm wml
 estimates store inv1
 
+reg cma hml wml
+estimates store inv1b
+
 reg cma HMLm
 estimates store inv2
+
+reg cma hml
+estimates store inv2b
 
 reg cma wml
 estimates store inv3
@@ -98,11 +104,14 @@ estimates store inv3
 reg cma rm RMWc
 estimates store inv4
 
-reg cma rm HMLm RMWc
-estimates store inv5
+*reg cma rm HMLm RMWc
+*estimates store inv5
 
-reg cma rm wml RMWc
-estimates store inv6
+*reg cma rm wml RMWc
+*estimates store inv6
+
+reg cma rm smb hml wml RMWc
+estimates store inv7
 
 * Tables
 
@@ -116,6 +125,10 @@ esttab FF2016b*,  `table_options'
 
 esttab BS2015* using `path'BS2015_Spanning.tex, `table_options' replace
 
-esttab inv* BS2015_Inv using `path'Inv.tex,     `table_options' replace
+esttab inv* BS2015_Inv using `path'Inv.tex,     `table_options' order(rm smb hml HMLm wml RMWc) replace
+
+esttab inv* BS2015_Inv, `table_options' order(rm smb hml HMLm wml RMWc)
+
+estimates clear
 
 log close

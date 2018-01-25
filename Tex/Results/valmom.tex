@@ -2,33 +2,40 @@
 
 \subsection{Value and Momentum}
 
+\textbf{VW Characteristics from sorts on Size-Value-Momentum, esp. $\delta BE$.}
+
 \import{./Tables/}{Inv_fmt}
 
 Table \ref{tbl:Inv} shows the investment factor regressed on other factors. Regression 1
 shows the combination of value and momentum explain the average return on the investment
 facor. The intercept, $a$, is insignificant with a t-statistic of -0.66. Both value and
 momentum slopes are positive and highly significant with coefficients of 0.5 and 0.25
-respectively. An insignificant intercept means that including an investment factor does
-not improve our B2016 model \parencite{fama1998determining, barillas2016alpha,
+respectively. Regression 2 tells a similar story for annually rebalanced value and
+momentum. An insignificant intercept means that including an investment factor does not
+improve our B2016 model \parencite{fama1998determining, barillas2016alpha,
 fama2016choosing}. Using the logic from table \ref{tbl:Table1}, an insignificant intercept
 means the contribution, $(a/\sigma)^2$, to the maximum squared Sharpe ratio of a model can
 only be zero.
 
-Regressions 2 and 3 show that neither value nor momentum alone explain the returns on the
-investment factor. Value is highly significant with a slope of 0.31 but still leaves 0.2\%
-average monthly return unexplained. Momentum is insignificant and leaves the total 0.31\%
-average monthly return from table \ref{tbl:Table1} unexplained. Regression 4 shows that
-the market and profitability factors increase the unexplained average return of the
-investment factor. The market and profitability are negatively correlated with investment
-and positively correlated with each other resulting in an increase in the unexplained
-average return. Regressions 5 and 6 show that neither value nor investment alone combine
-with other factors to explain the average return on the investment factor. This highlights
-the unique relationship between value and momentum. The two factors are positively
-correlated with many other factors and anomalies but negatively correlated with each
-other. Regression 7 shows that value and momentum have similar slopes when used in
-conjunction with all of the factors from B2016 to explain the average return on the
-investment factor. In a statistical sense, the combination of value and momentum is a slam
-dunk because of the slope enhancement described in \textcite{fama2015incremental}.
+Regressions 3, 4 and 5 show that none of monthly value, annual value or momentum explain
+the returns on the investment factor on their own. Monthly value is highly significant
+with a slope of 0.31 but still leaves 0.2\% average monthly return unexplained. Annual
+value is also highly significant with a slope of 0.49 and leaving only 0.13\% unexplained
+return. Momentum is insignificant and leaves the total 0.31\% average monthly return from
+table \ref{tbl:Table1} unexplained. Regression 6 shows that the market and profitability
+factors increase the unexplained average return of the investment factor. The market and
+profitability are negatively correlated with investment and positively correlated with
+each other resulting in an increase in the unexplained average return. Regression 7 shows
+that annual value and momentum are not robust to including other factors. Investments
+negative correlation with the market and profitability means the intercept, 0.12, is
+significant in regression 7. The t-statistic of 1.99 means this result is far from the
+higher thresholds that \textcite{harvey2016and} call for. Nevertheless, the power of
+monthly value and momentum to explain the returns on the investment factor is greater than
+the power of annual value and momentum. Monthly value and momentum have similar slopes
+when used in conjunction with all of the factors from B2016 to explain the average return
+on the investment factor. In a statistical sense, the combination of monthly value and
+momentum is a slam dunk because of the slope enhancement described in
+\textcite{fama2015incremental}.
 
 We are more interested in the economics behind the combination of value and momentum
 explaining the returns on the investment factor because of the problems with data-mining
@@ -39,13 +46,20 @@ changes in book equity. \textcite{kok2017facts} and \textcite{asness2013devil} s
 value and momentum combine to identify stocks that will exhibit changes in BE in the
 future. Value stocks often exhibit decreases in book equity while high momentum stocks
 typically exhibit fewer of these decreases as there is less bad news to incorporate into
-book values in the future. Despite this, both regression slopes are positive. The returns
-on the investment factor behave like the returns on high momentum, value stocks. Rather
-than being contradictory, we are identifying stocks that will likely have decreases in the
-future by using value and momentum to identify those that will not - high momentum, value
-stocks. This is similar to finding out if a coin is showing heads by asking if it is
-showing tails. Using equation \ref{eq:ddm}, all else the same, lower changes in BE results
-in higher returns.
+book values in the future. High value, past winners correspond with conservatively
+investing stocks -- they indicate lower changes in BE. The slope on the annual value
+factor provides some resistence to this theory. If high value is an indicator of future
+changes in BE then the slope in regression 4 should be negative. The returns on a
+portfolio long low investment stocks should have a negative correlation with a portfolio
+long high value stocks. We should keep in mind that the dividend discount model is a lense
+through which to view statistical evidence from regressions. Factors are proxies for some
+true priced state variable. More than this, the factors I use are all \emph{mimicking}
+portfolios for the unknown state variables. It is possible that changes in BE have nothing
+to do with investment, value or momentum. We cannot get too carried away when trying to
+fit economic stories to statistical evidence. The economic intuition of value and momentum
+providing a better proxy for an unknown stat variable, changes in BE in the dividend
+discount model, coupled with statistical evidence is strong enough to not be thrown off by
+a positive regression slope between investment and annual value.
 
 
 \textbf{Value-weighted characteristics in sorts. Average characteristics in size sorts.}

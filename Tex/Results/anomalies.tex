@@ -19,32 +19,7 @@ explaining returns on these two anomalies. As well as highlighting deficiencies 
 individual portfolios, anomaly regressions will show where value and momentum slopes of
 B2016 differ from the investment slopes of FF2016.
 
-\import{./Tables/}{GRS_196307_201612}
-
-Table \ref{tbl:GRS} shows the GRS statistic for common anomaly sorts and popular factor
-models as well as the max $Sh^2$ that can be obtained from each model's factors. Contrary
-to \textcite{fama2016choosing}, I find the GRS and $Sh^2$ do not always line up. The four-
-factor model of \textcite{carhart1997persistence} with monthly rebalanced value has a
-higher $Sh^2$ than the original version with annualy rebalanced value, 0.157 vs 0.092. The
-GRS statistic using all anomaly sorts reports than the monthly value version can be
-improved more than the annual value version, 2.196 vs 2.15. The $Sh^2$ and GRS present
-conflicting evidence. I favour the $Sh^2$ since we want to price all assets and not just
-subsets of assets. The GRS is sensitive to the test assets being used.
-
-B2016 performs poorly in sorts on B/M, despite having the highest $Sh^2$. The ``All-BM"
-row reports the GRS for all of the anomalies including sorts on B/M. The B2016 model can
-be improved more than the FF2016 model in these sorts, GRS of 1.315 vs 1.228. The
-performance of B2016 is particularly poor in sorts on size-B/M-investment. The GRS of
-2.166 is worse than that of FF2016, 1.691, as well as the two variants of B2016 that use
-annual value, B2016b with 1.750, or omit the momentum factor, B2016c with 2.052. Examining
-regression slopes for this sort, table \ref{tbl:32_Size_BM_Inv_B2016}, shows the model
-fails to explain the returns across investment quartiles when value is kept constant
-(double sort on value and investment).
-
-B2016's problems with sorts on B/M may stem more from the monthly specification of value
-than omitting the investment factor or including the momentum factor. B2016b replaces the
-monthly value factor with an annual one and outperforms FF2016 in sorts on B/M, except for
-size-B/M-investment.
+\import{./Results/Anomalies/}{GRS}
 
 \import{./Results/Anomalies/}{Inv}
 
