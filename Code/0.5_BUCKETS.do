@@ -35,6 +35,22 @@ preserve
   save C:/Data/Thesis/BM_al_3B, replace
 restore
 
+* Quartiles
+replace bmal_b = .
+
+replace bmal_b = 1 if bmal <= bmal25
+replace bmal_b = 2 if bmal >  bmal25 & bmal <= bmal50
+replace bmal_b = 3 if bmal >  bmal50 & bmal <= bmal75
+replace bmal_b = 4 if bmal >  bmal75
+
+replace bmal_b = . if bmal==.
+drop if bmal_b==.
+
+preserve
+  keep permno hp bmal_b
+  save C:/Data/Thesis/BM_al_4B, replace
+restore
+
 * Quintiles
 replace bmal_b = .
 
@@ -600,6 +616,22 @@ preserve
   save C:/Data/Thesis/PR_3B, replace
 restore
 
+* Quartiles
+replace pr_11_1_b = .
+
+replace pr_11_1_b = 1 if pr_11_1 <= pr_11_125
+replace pr_11_1_b = 2 if pr_11_1 >  pr_11_125 & pr_11_1 <= pr_11_150
+replace pr_11_1_b = 3 if pr_11_1 >  pr_11_150 & pr_11_1 <= pr_11_175
+replace pr_11_1_b = 4 if pr_11_1 >  pr_11_175
+
+replace pr_11_1_b = . if pr_11_1==.
+drop if pr_11_1_b==.
+
+preserve
+  keep permno date pr_11_1_b
+  save C:/Data/Thesis/PR_4B, replace
+restore
+
 * Quintiles
 replace pr_11_1_b = .
 
@@ -664,6 +696,22 @@ drop if bmmc_b==.
 preserve
   keep permno date bmmc_b
   save C:/Data/Thesis/BM_mc_3B, replace
+restore
+
+* Quartiles
+replace bmmc_b = .
+
+replace bmmc_b = 1 if bmmc <= bmmc25
+replace bmmc_b = 2 if bmmc >  bmmc25 & bmmc <= bmmc50
+replace bmmc_b = 3 if bmmc >  bmmc50 & bmmc <= bmmc75
+replace bmmc_b = 4 if bmmc >  bmmc75
+
+replace bmmc_b = . if bmmc==.
+drop if bmmc_b==.
+
+preserve
+  keep permno date bmmc_b
+  save C:/Data/Thesis/BM_mc_4B, replace
 restore
 
 * Quintiles

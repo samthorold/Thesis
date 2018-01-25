@@ -54,6 +54,14 @@ replace hand_be=. if hand_be==-99.99
 
 replace be = hand_be if hand_be!=.
 
+sort lpermno fyear
+
+by lpermno: gen d_be = (be[_n] - be[_n-1]) / be[_n-1]
+label var d_be "Change in Book Equity"
+
+by lpermno: gen d1_be = (be[_n+1] - be[_n]) / be[_n]
+label var d1_be "Future Change in Book Equity"
+
 ********************
 * Operating Profit *
 ********************
@@ -132,7 +140,7 @@ rename lpermno permno
 
 merge 1:1 permno hp using C:/Data/Thesis/Jun_ME, nogen keep(match master)
 
-keep permno hp jun_me be op_ok op opr gp cp inv acc
+keep permno hp jun_me be d_be d1_be op_ok op opr gp cp inv acc
 
 describe
 summarize
