@@ -426,6 +426,22 @@ preserve
   save C:/Data/Thesis/INV_3B, replace
 restore
 
+* Quartiles
+replace inv_b = .
+
+replace inv_b = 1 if inv <= inv25
+replace inv_b = 2 if inv >  inv25 & inv <= inv50
+replace inv_b = 3 if inv >  inv50 & inv <= inv75
+replace inv_b = 4 if inv >  inv75
+
+replace inv_b = . if inv==.
+drop if inv_b==.
+
+preserve
+  keep permno hp inv_b
+  save C:/Data/Thesis/INV_4B, replace
+restore
+
 * Quintiles
 replace inv_b = .
 

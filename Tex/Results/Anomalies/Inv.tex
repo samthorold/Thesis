@@ -2,9 +2,10 @@
 
 \subsubsection{Investment}
 
-\import{./Tables/}{25_Size_Inv_B2016_196307_201612}
+%\import{./Tables/}{25_Size_Inv_B2016_196307_201612}
+\import{./Tables/}{25_Size_Inv_fmt}
 
-Table \ref{tbl:25_Size_Inv_B2016} shows the performance of the B2016 model when explaining
+Table \ref{tbl:25_Size_Inv} shows the performance of the B2016 model when explaining
 returns on size and investment sorts. B2016 leaves fewer alphas than FF2016, see table
 \ref{tbl:25_Size_Inv_FF2016} in appendix \ref{sec:addl_results}, supporting the view that
 value and momentum are a better proxy for changes in book equity. B2016 struggles where
@@ -22,46 +23,18 @@ portfolios. Momentum slopes are uniform for all investment quintiles except for 
 largest, where slopes become negative. Negative momentum slopes suggest the returns on
 firms with large investments behave like those of past losers.
 
+\newgeometry{margin=.25in}
 \afterpage{
 \clearpage
 \begin{landscape}
-\import{./Tables/}{32_Size_OP_Inv_B2016_196307_201612}
+%\import{./Tables/}{32_Size_BM_Inv_B2016_196307_201612}
+\import{./Tables/}{32_Size_BM_Inv_fmt}
 \end{landscape}
 \clearpage
 }
+\restoregeometry
 
-Table \ref{tbl:32_Size_OP_Inv_B2016} shows the performance of the B2016 model when
-explaining returns on size, operating profitability and investment sorts. Small stocks
-that invest aggresively despite weak profits remain a problem with an alpha of -0.33\%.
-For small stocks, the only other alpha, 0.14\%, occurs in the second profitability and
-third investment portfolio. For big stocks, both alphas are in the lowest profitability
-quartile in the second, -0.26\%, and highest, 0.27\%, investment quartiles. The model
-performs similarly for small and big stocks. This is somewhat unexpected given value's
-poor performance in big stocks. Since value is taking up much of the slack left by
-investment, we would expect omitting a value factor to be detrimental to the model. As in
-the sorts on size and investment, B2016 leaves fewer alphas than FF2016, see table
-\ref{tbl:32_Size_OP_Inv_FF2016} in appendix \ref{sec:addl_results}).
-
-
-
-For small and big stocks, the value slopes decrease with higher investment and increase
-with profitability. The shared story for small and big stocks is somewhat surprising given
-value's weakness in big stocks. Within profitability quartiles, the returns on high
-investment stocks behave like those of stocks with lower B/M than low investment stocks.
-While the spread in the value slopes remain close to 0.5, the lowest profiability quartile
-has much lower value slopes than the three higher profitability quartiles. As investment
-increases returns are behaving more like those of low value past losers. This makes sense
-given that high value, past winners exhibit fewer changes in BE.
-
-\afterpage{
-\clearpage
-\begin{landscape}
-\import{./Tables/}{32_Size_BM_Inv_B2016_196307_201612}
-\end{landscape}
-\clearpage
-}
-
-Table \ref{tbl:32_Size_BM_Inv_B2016} shows the performance of the B2016 model when
+Table \ref{tbl:32_Size_BM_Inv} shows the performance of the B2016 model when
 explaining returns on size, B/M and investment sorts. There are more alphas than in the
 sorts on size, operating profitability and investment sorts. This is because the value
 factor does not vary as much across investment portfolios when we control for value.
@@ -72,7 +45,5 @@ investment portfolio to -0.46 in the highest investment portfolio. The highest v
 quartile sees a similarly small decrease from 0.66 to 0.46. Value slopes increase as the
 value quartiles increase. Momentum slopes are also largely flat within value quartiles. By
 controlling for value we have limited B2016's ability to explain variations in investment.
-This is highlighted by the large decreases in value slopes as investment increases that we
-see in table \ref{tbl:32_Size_OP_Inv_B2016}.
 
 \textbf{Does annual value change with investment?}

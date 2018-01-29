@@ -4,14 +4,17 @@
 
 A factor-based asset-pricing model’s ability to price all assets is given by the max
 squared Sharpe ratio, $Sh^2$, of the factors. \textcite{gibbons1989test} explain that
-maximizing the $Sh^2$ of the factors minimizes the $Sh^2$ of the intercepts, all else the
-same. This relationship is given by $a'V_e^{-1}a=Sh^2(R, f) -Sh^2(f)$ where $a$ is
-the vector of intercepts, $V_e$ is the covariance matrix of the residuals, $R$ is the
-matrix of all assets’ excess returns and $f$ is the matrix of factor returns.
+maximizing the $Sh^2$ of the factors minimizes the $Sh^2$ of the intercepts from time
+series regressions of test assets on the factors. This relationship is given by
+$a'V_e^{-1}a=Sh^2(R, f) -Sh^2(f)$ where $a$ is the vector of intercepts, $V_e$ is the
+covariance matrix of the residuals, $R$ is the matrix of all assets’ excess returns and
+$f$ is the matrix of factor returns. The $Sh^2$ of the intercepts is the amount the $Sh^2$
+of the factors can be improved by including the test assets. If the $Sh^2$ of the factors
+is not improved by including the test assets, the model ``prices" the test assets.
 \textcite{barillas2016alpha} add that, since the factors are contained in all assets we
 can reduce the relationship to $a'V_e^{-1}a = Sh^2(R)-Sh^2(f)$. Without knowing all
 assets, we can compare relative model performance when pricing all assets by comparing the
-$Sh^2$ of the factors.
+$Sh^2$ of the factors alone.
 
 Following \textcite{jensen1968performance}, model analysis has typically focused on the
 intercepts from time series regressions of subsets of assets on a model’s factors.
@@ -31,10 +34,10 @@ $R_t^i$ is the excess return on asset $i$ for time $t$,
 $R^M$ is the excess return on the market,
 $a$ is the amount of unexplained return or ``alpha",
 $SMB$ is a size factor long small and short big stocks,
-$HML^m$ is a fundamental value factor long high book-to-market (B/M) and short low B/M stocks,
+$HML^m$ is a fundamental value factor long high and short low book-to-market (B/M) stocks,
 $WML$ is a momentum factor long past winners and short past losers and
 $PMU$ is a cash profitability factor long profitable and short unprofitable stocks.
-Size, momentum and profitability factors are rebalanced annually while value is rebalanced monthly.
+Size and profitability are rebalanced annually while value and momentum are rebalanced monthly.
 
 My factor choices are motivated by \textcite{graham1934security} who recommend buying
 quality stocks at a cheap price. I use a cash profitability factor in the style of

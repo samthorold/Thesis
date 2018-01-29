@@ -1,16 +1,12 @@
 % !TeX root=../main.tex
 
-\subsection{Value and Momentum}
-
-\textbf{VW Characteristics from sorts on Size-Value-Momentum, esp. $\delta BE$.}
-
-\import{./Tables/}{ValMomSort}
+\subsection{Investment explained by value and momentum}
 
 \import{./Tables/}{Inv_fmt}
 
 Table \ref{tbl:Inv} shows the investment factor regressed on other factors. Regression 1
 shows the combination of value and momentum explain the average return on the investment
-facor. The intercept, $a$, is insignificant with a t-statistic of -0.66. Both value and
+factor. The intercept, $a$, is insignificant with a t-statistic of -0.66. Both value and
 momentum slopes are positive and highly significant with coefficients of 0.5 and 0.25
 respectively. Regression 2 tells a similar story for annually rebalanced value and
 momentum. An insignificant intercept means that including an investment factor does not
@@ -28,7 +24,7 @@ table \ref{tbl:Table1} unexplained. Regression 6 shows that the market and profi
 factors increase the unexplained average return of the investment factor. The market and
 profitability are negatively correlated with investment and positively correlated with
 each other resulting in an increase in the unexplained average return. Regression 7 shows
-that annual value and momentum are not robust to including other factors. Investments
+that annual value and momentum are not robust to including other factors. Investment's
 negative correlation with the market and profitability means the intercept, 0.12, is
 significant in regression 7. The t-statistic of 1.99 means this result is far from the
 higher thresholds that \textcite{harvey2016and} call for. Nevertheless, the power of
@@ -43,25 +39,90 @@ We are more interested in the economics behind the combination of value and mome
 explaining the returns on the investment factor because of the problems with data-mining
 outlined in section \ref{sec:Literature}. Equation \ref{eq:ddm} uses the dividend discount
 model to show that changes in book equity (BE) may be related to stock returns. Beginning
-with \parencite{fama2006profitability}, changes in total assets are used in place of
-changes in book equity. \textcite{kok2017facts} and \textcite{asness2013devil} show that
-value and momentum combine to identify stocks that will exhibit changes in BE in the
-future. Value stocks often exhibit decreases in book equity while high momentum stocks
-typically exhibit fewer of these decreases as there is less bad news to incorporate into
-book values in the future. High value, past winners correspond with conservatively
-investing stocks -- they indicate lower changes in BE. The slope on the annual value
-factor provides some resistence to this theory. If high value is an indicator of future
-changes in BE then the slope in regression 4 should be negative. The returns on a
-portfolio long low investment stocks should have a negative correlation with a portfolio
-long high value stocks. We should keep in mind that the dividend discount model is a lense
-through which to view statistical evidence from regressions. Factors are proxies for some
-true priced state variable. More than this, the factors I use are all \emph{mimicking}
-portfolios for the unknown state variables. It is possible that changes in BE have nothing
-to do with investment, value or momentum. We cannot get too carried away when trying to
-fit economic stories to statistical evidence. The economic intuition of value and momentum
-providing a better proxy for an unknown stat variable, changes in BE in the dividend
-discount model, coupled with statistical evidence is strong enough to not be thrown off by
-a positive regression slope between investment and annual value.
+with \textcite{fama2006profitability}, changes in total assets are used in place of
+changes in book equity to proxy for ``investment". \textcite{kok2017facts} and
+\textcite{asness2013devil} show that value and momentum combine to identify stocks that
+will exhibit changes in BE in the future. Value stocks often exhibit decreases in book
+equity while high momentum stocks typically exhibit fewer of these decreases as there is
+less bad news to incorporate into book values in the future. High value, past winners
+correspond with conservatively investing stocks -- they indicate lower changes in BE.
 
+The slope on the annual value factor provides some resistence to this theory. If high
+value is an indicator of future changes in BE then the slope in regression 4 should be
+negative. The returns on a portfolio long low investment stocks should have a negative
+correlation with a portfolio long high value stocks. The summary characteristics in sorts
+on size, value and momentum in table \ref{tbl:32_Size_BM_Prior_Sorts} also suggest this
+relationship may not be true -- future changes in BE are lowest for low-value stocks.
 
-\textbf{Value-weighted characteristics in sorts. Average characteristics in size sorts.}
+\newgeometry{margin=.25in}
+\afterpage{
+\clearpage
+\begin{landscape}
+\import{./Tables/}{ValMomSort_fmt}
+\end{landscape}
+\clearpage
+}
+\restoregeometry
+
+Table \ref{tbl:32_Size_BM_Prior_Sorts} shows summary statistics from sorts on size, value
+and momentum. The left hand side uses the monthly rebalanced value factor, $HML^m$ while
+the right hand side uses the annually rebalanced value factor, $HML$. Comparing the two
+sorts highlights the differences in other characteristics caused by the alternative
+specifications of value.
+
+For monthly value, returns increase across value and momentum quartiles. Although, for
+high-momentum big stocks the value effect is less convincing. While for annual value,
+returns are more flat across value quartiles in the high momentum quartile and, for big
+stocks, more flat across momentum quartiles in the high value quartile. In sorts on
+monthly value, annual value is increasing with increasing momentum. The spread in annual
+value increases as monthly value increases. Holding the monthly value quartile constant, a
+stock must have much higher relative value to move through the momentum quartiles. As
+momentum increases, the monthly value measure will decrease due to the increasing market
+equity in the denominator of B/M. Annual value is not updated each month and so those
+stocks in the high-value and high-momentum portfolio have much higher annual value than
+those in the same value quartile with lower momentum. For annual value we see the opposite
+effect. Those stocks in the high-value and high-momentum portfolio are held in place by
+the annually rebalanced value. Even though we observe the decrease in monthly value driven
+by high-momentum, the same stocks are held in the intersection of the high portfolios by
+their previously high value.
+
+In both specifications of value, momentum is flat across value quartiles. With the
+exception of the highest momentum quartile, momentum characteristics are similar for small
+and big stocks.
+
+Investment characteristics are similar across both specifications of value for small and
+big stocks. Investment is decreasing as value increases with the exception of the low
+momentum quartile for big stocks which is increasing. Investment does not vary much with
+momentum although the lowest momentum quartile tends to have slightly higher levels of
+investment. The similar investment characteristics between specifications of value is
+consistent with the ability to explain returns on investment of both monthly and annual
+value combined with momentum. The strong interaction of monthly value and momentum means
+they remain robust to including other factors.
+
+Table \ref{tbl:32_Size_BM_Prior_Sorts} includes summaries for past and future changes in
+BE. This is necessary because I pin much of the economic intuition behind value and
+momentum explaining the returns on the investment factor on their ability to forecast
+changes in BE. The relationship is not as described by \textcite{kok2017facts}. I find
+that small, low-value stocks exhibit decreases in future BE, while they find high-value
+stocks exhibit decreases in BE. There is no clear pattern across momentum quartiles. This
+is not wholly unsurprising as the relationship between momentum and future changes in BE
+reported in \textcite{asness2013devil} significant but weak in magnitude. The summary
+statistics for future BE are not a total disaster. For big stocks, increases in future BE
+decrease as value increases. This is in-line with the returns on high-value stocks
+corresponding with the returns on conservatively investing stocks, if we continue to
+accept that both factors are proxying for changes in BE.
+
+In light of the evidence in tables \ref{tbl:Inv} and \ref{tbl:32_Size_BM_Prior_Sorts}, we
+should keep in mind that the dividend discount model is a lense through which to view
+statistical evidence from regressions. Factors are proxies for some true priced state
+variable. More than this, the factors I use are all \emph{mimicking} portfolios for the
+unknown state variables. It is possible that changes in BE have nothing to do with
+investment, value or momentum. We cannot get too carried away when trying to fit economic
+stories to statistical evidence. The economic intuition of value and momentum providing a
+better proxy for an unknown state variable, changes in BE in the dividend discount model,
+coupled with statistical evidence is strong enough to not be thrown off by a positive
+regression slope between investment and annual value. Furthermore, characteristic
+summaries from unconditional sorts on other characteristics are not the same as
+conditional regression slopes. It is not a contradiction to say that changes in BE are
+increasing in sorts on value while the returns on high-value stocks behave like the
+returns on stocks with low investment.
