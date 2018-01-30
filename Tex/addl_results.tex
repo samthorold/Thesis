@@ -3,9 +3,20 @@
 \section{Additional Results} \label{sec:addl_results}
 
 \begin{landscape}
+
+% https://tex.stackexchange.com/questions/47311/include-table-as-a-subfigure
+\begin{table}%
+  \scriptsize
+  \centering
+  \caption{32 Size, value and investment sorts -- 1963-07 through 2016-12}%
+  \subfloat[][$BM^m$]{\import{./Tables/}{AnnualValMomSort}}%
+  \qquad
+  \subfloat[][$BM$]{\import{./Tables/}{ValInvSort}}
+\end{table}
+
+\end{landscape}
+
+\begin{landscape}
 \import{./Tables/}{32_Size_BM_Prior_FF2016_196307_201612}
 \end{landscape}
 
-\import{./Tables/}{25_Size_Var_FF2016_196307_201612}
-
-\import{./Tables/}{25_Size_Prior_FF2016_196307_201612}

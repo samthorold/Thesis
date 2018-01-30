@@ -54,75 +54,85 @@ correlation with a portfolio long high value stocks. The summary characteristics
 on size, value and momentum in table \ref{tbl:32_Size_BM_Prior_Sorts} also suggest this
 relationship may not be true -- future changes in BE are lowest for low-value stocks.
 
-\newgeometry{margin=.25in}
-\afterpage{
-\clearpage
+\afterpage{\clearpage
 \begin{landscape}
-\import{./Tables/}{ValMomSort_fmt}
+
+% https://tex.stackexchange.com/questions/47311/include-table-as-a-subfigure
+\begin{table}%
+  \label{tbl:chars}%
+  \scriptsize
+  \centering
+  \caption{Average value-weighted characteristics -- 1963-07 through 2016-12}%
+  \subfloat[][$Size$-$BM^m$-$Prior$\label{tbl:valmomsort}]{\import{./Tables/}{ValMomSort}}%
+  \qquad
+  \subfloat[][$Size$-$BM$-$Inv$\label{tbl:valinvsort}]{\import{./Tables/}{AnnualValInvSort}}%
+\end{table}
+
 \end{landscape}
-\clearpage
-}
-\restoregeometry
+\clearpage}
 
-Table \ref{tbl:32_Size_BM_Prior_Sorts} shows summary statistics from sorts on size, value
-and momentum. The left hand side uses the monthly rebalanced value factor, $HML^m$ while
-the right hand side uses the annually rebalanced value factor, $HML$. Comparing the two
-sorts highlights the differences in other characteristics caused by the alternative
-specifications of value.
+Table \ref{tbl:valmomsort} shows value-weighted characteristics from sorts on size,
+monthly rebalanced value and momentum. Returns are increasing across value and momentum
+quartiles. The largest spreads across value are in the low momentum quartile while the
+largest spreads across momentum are in the low value quartile. This matches results from
+\textcite{asness1997interaction} who finds that the momentum effect is strongest among
+stocks with low value and vice versa. The value spreads are smaller among big stocks than
+small stocks. This matches results from \textcite{asness2015fact} and
+\textcite{kok2017facts}. Monthly value increases across value quartiles but remains flat
+across momentum quartiles. The spreads in monthly value characteristics are smaller for
+big stocks. Annual value is increasing across value and momentum quartiles. Consider a
+stock that is in the high-value, low-momentum bucket in July, this is when the monthly and
+annual value measures are most similar in terms of measurement date and therefore probably
+the most similar during the holding period. Assume the stock now exhibits high returns
+relative to other stocks. The stock will move up through the momentum quartiles each
+month. Monthly value will decrease as the high returns lead to an increase in market
+equity while annual value will remain constant. Those stocks that remain in the high-value
+quartile must have had very high value at the beginning of the period to have high value
+relative to other stocks after an increase in market equity. This very high beginning
+value is seen in annual value measure. Momentum increases across momentum quartiles and
+remains flat across value quartiles, except for the high-momentum quartile of small stocks
+which decreases slightly across value quartiles. Investment, Fama and French's proxy for
+increases in BE, decreases slightly across momentum quartiles. This matches
+\textcite{fama2016dissecting} but offers some resistence to \textcite{asness2013devil} who
+find that momentum from up to three years ago forecasts increases in BE. Investment
+decreases across value quartiles. This makes sense given the positive correlation between
+$CMA$ and $HML^m$. Future changes in BE do not vary across momentum quartiles. For small
+stocks, the lowest value quartile is interesting because the future changes in BE for
+these stocks is strongly negative. Compared to the lowest value quartile, the other
+quartiles show litle variation. For big stocks the relationship is reversed, low-value
+stocks have higher future changes in BE.
 
-For monthly value, returns increase across value and momentum quartiles. Although, for
-high-momentum big stocks the value effect is less convincing. While for annual value,
-returns are more flat across value quartiles in the high momentum quartile and, for big
-stocks, more flat across momentum quartiles in the high value quartile. In sorts on
-monthly value, annual value is increasing with increasing momentum. The spread in annual
-value increases as monthly value increases. Holding the monthly value quartile constant, a
-stock must have much higher relative value to move through the momentum quartiles. As
-momentum increases, the monthly value measure will decrease due to the increasing market
-equity in the denominator of B/M. Annual value is not updated each month and so those
-stocks in the high-value and high-momentum portfolio have much higher annual value than
-those in the same value quartile with lower momentum. For annual value we see the opposite
-effect. Those stocks in the high-value and high-momentum portfolio are held in place by
-the annually rebalanced value. Even though we observe the decrease in monthly value driven
-by high-momentum, the same stocks are held in the intersection of the high portfolios by
-their previously high value.
+Table \ref{tbl:valinvsort} shows value-weighted characteristics from sorts on size,
+annually rebalanced value and investment. We can compare the characteristics of stocks
+sorted on value and momentum with those sorted on value and investment. Returns are
+increasing across value quartiles. The value spreads are smaller among big stocks than
+small stocks but spreads do not change across investment quartiles. Returns decrease
+across investment quartiles. Those stocks with relatively lower asset growth, on average,
+make higher returns. The spreads in returns across investment quartiles are smaller than
+the spreads in returns across value quartiles. Both monthly and annual value increase
+across value quartiles but remain flat across investment quartiles, except for small
+stocks with low or high value. The spreads in monthly value characteristics are similar
+for small and big stocks. For small and big stocks, momentum exhibits a slight decrease
+across value quartiles but otherwise is flat across value and investment. Investment
+increases across investment quartiles. For big stocks, investment characteristics in the
+high-investment quartile increase across value quartiles. There are differences in future
+changes in BE compared to the sorts on size, value and momentum. For small stocks, future
+changes in BE are decreasing across value quartiles. This relationship is the opposite to
+that seen in table \ref{tbl:valmomsort}. For big stocks, this relationship is only
+noticeable in the low-investment quartile.
 
-In both specifications of value, momentum is flat across value quartiles. With the
-exception of the highest momentum quartile, momentum characteristics are similar for small
-and big stocks.
-
-Investment characteristics are similar across both specifications of value for small and
-big stocks. Investment is decreasing as value increases with the exception of the low
-momentum quartile for big stocks which is increasing. Investment does not vary much with
-momentum although the lowest momentum quartile tends to have slightly higher levels of
-investment. The similar investment characteristics between specifications of value is
-consistent with the ability to explain returns on investment of both monthly and annual
-value combined with momentum. The strong interaction of monthly value and momentum means
-they remain robust to including other factors.
-
-Table \ref{tbl:32_Size_BM_Prior_Sorts} includes summaries for past and future changes in
-BE. This is necessary because I pin much of the economic intuition behind value and
-momentum explaining the returns on the investment factor on their ability to forecast
-changes in BE. The relationship is not as described by \textcite{kok2017facts}. I find
-that small, low-value stocks exhibit decreases in future BE, while they find high-value
-stocks exhibit decreases in BE. There is no clear pattern across momentum quartiles. This
-is not wholly unsurprising as the relationship between momentum and future changes in BE
-reported in \textcite{asness2013devil} significant but weak in magnitude. The summary
-statistics for future BE are not a total disaster. For big stocks, increases in future BE
-decrease as value increases. This is in-line with the returns on high-value stocks
-corresponding with the returns on conservatively investing stocks, if we continue to
-accept that both factors are proxying for changes in BE.
-
-In light of the evidence in tables \ref{tbl:Inv} and \ref{tbl:32_Size_BM_Prior_Sorts}, we
-should keep in mind that the dividend discount model is a lense through which to view
-statistical evidence from regressions. Factors are proxies for some true priced state
-variable. More than this, the factors I use are all \emph{mimicking} portfolios for the
-unknown state variables. It is possible that changes in BE have nothing to do with
-investment, value or momentum. We cannot get too carried away when trying to fit economic
-stories to statistical evidence. The economic intuition of value and momentum providing a
-better proxy for an unknown state variable, changes in BE in the dividend discount model,
-coupled with statistical evidence is strong enough to not be thrown off by a positive
-regression slope between investment and annual value. Furthermore, characteristic
-summaries from unconditional sorts on other characteristics are not the same as
-conditional regression slopes. It is not a contradiction to say that changes in BE are
-increasing in sorts on value while the returns on high-value stocks behave like the
-returns on stocks with low investment.
+In light of the evidence in tables \ref{tbl:Inv}, \ref{tbl:valmomsort} and
+\ref{tbl:valinvsort}, we should keep in mind that the dividend discount model is a lense
+through which to view statistical evidence from regressions. Factors are proxies for some
+true priced state variable. More than this, the factors I use are all \emph{mimicking}
+portfolios for the unknown state variables. It is possible that changes in BE have nothing
+to do with investment, value or momentum. We cannot get too carried away when trying to
+fit economic stories to statistical evidence. The economic intuition of value and momentum
+providing a better proxy for an unknown state variable, changes in BE in the dividend
+discount model, coupled with statistical evidence is strong enough to not be thrown off by
+a positive regression slope between investment and annual value nor counterintuitive
+results from crude sorts on characteristics. Furthermore, characteristic summaries from
+unconditional sorts on other characteristics are not the same as conditional regression
+slopes. It is not a contradiction to say that changes in BE are increasing in sorts on
+value while the returns on high-value stocks behave like the returns on stocks with low
+investment.

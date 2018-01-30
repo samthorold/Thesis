@@ -1,5 +1,6 @@
 
 \begin{table}[!ht]
+\footnotesize
 \centering
 \caption{=% caption %=}
 \begin{tabular}{lrrrrrrrrrr}
