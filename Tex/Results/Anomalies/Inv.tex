@@ -2,40 +2,65 @@
 
 \subsubsection{Investment}
 
-%\import{./Tables/}{25_Size_Inv_B2016_196307_201612}
 \import{./Tables/}{25_Size_Inv_fmt}
 
-Table \ref{tbl:25_Size_Inv} shows the performance of the B2016 model when explaining
-returns on size and investment sorts. B2016 leaves fewer alphas than FF2016, see table
-\ref{tbl:25_Size_Inv_FF2016} in appendix \ref{sec:addl_results}, supporting the view that
-value and momentum are a better proxy for changes in book equity. B2016 struggles where
-the highest investment quintile meets the fourth highest size quintile, leaving an alpha
-of 0.18. Both models leave an alpha the small-high investment portfolio. The values are
--0.28 for FF2016 and -0.26 for B2016. FF2016 struggles with the third investment quintile
-leaving alphas in the first and second  size quintiles, both 0.14. For the B2016 model,
-the value slopes are uniform for the smallest two investment quintiles, except for the
-small-low investment intersection which is not significant. In the larger size quintiles,
-the slope decreases as the investment quintile increases. This suggests that returns on
-firms with high investment behave like those with a low B/M. This is consistent with our
-story that, controlling for momentum, higher B/M stocks exhibit fewer changes in BE.
-Despite momentum's small slopes, the factor is highly significant is almost all
-portfolios. Momentum slopes are uniform for all investment quintiles except for the
-largest, where slopes become negative. Negative momentum slopes suggest the returns on
-firms with large investments behave like those of past losers.
+Table \ref{tbl:25_Size_Inv} shows the performance of B2016 and FF2016 when explaining
+returns on size and investment sorts. This sort was not one of the problem sorts
+identified by a high GRS in table \ref{tbl:GRS}. In fact, B2016 outperforms FF2016 with a
+GRS of 1.97 compared with 2.46. The improved GRS performance is seen in the fewer alphas
+left by B2016 than FF2016. Nevertheless, we want to compare the slopes on value and
+mometum in B2016 with value and investment in FF2016.
 
-\newgeometry{margin=.25in}
-\afterpage{
-\clearpage
-\begin{landscape}
-%\import{./Tables/}{32_Size_BM_Inv_B2016_196307_201612}
-\import{./Tables/}{32_Size_BM_Inv_fmt}
-\end{landscape}
-\clearpage
-}
-\restoregeometry
+For B2016, value slopes decrease as investment quintiles increase. The returns on
+aggressively investing stocks behave like the returns on growth stocks. Spreads in value
+slopes across investment quintiles for B2016 are greater than spreads in value slopes for
+FF2016. Without the investment factor, value does the heavy lifting when explaining
+returns across investment quintiles. Spreads in value slopes in B2016 are smaller than
+spreads in investment slopes in FF2016. The remaining spread is picked up by momentum in
+B2016. While value and momentum are negatively correlated, they have the same sign in
+sorts on size and investment.
 
-Table \ref{tbl:32_Size_BM_Inv} shows the performance of the B2016 model when
-explaining returns on size, B/M and investment sorts. There are more alphas than in the
+Both value and momentum have positive slopes except for the highest investment quintile.
+This drop-off in slope suggest the returns to the investment factor are more to do with
+the poor performance of aggressively investing stocks than the strong performance of
+conservatively investing stocks. Profitability slopes support this view as they are
+negative for the highest investment quintile. The returns on aggressively investing stocks
+behave like the returns on unprofitable stocks. The poor performance of aggressively
+investing stocks is seen in the alpha of -0.26 for small-aggressively investing portfolio
+of B2016. This alpha is almost identical to that left by FF2016 of -0.28. Both models
+predict higher returns than actually observed. Table \ref{tbl:25_Size_Inv} confirms that
+performance in sorts on size and investment is not sacrificed by replacing the investment
+factor with a momentum factor. Value and momentum slopes in B2016 are similar to value and
+investment slopes in FF2016.
+
+Table \ref{tbl:32_Size_BM_Inv} shows the performance of the B2016 model when explaining
+returns on size, annual value and investment sorts. FF2016 explains the returns on big
+stocks better than B2016. This greater performance is seen in the single alpha of 0.18 in
+big stocks for FF2016 compared to three for B2016 ranging from 0.28 to -0.3. In short, the
+inability of the value factor to vary across investment quartiles within value quartiles
+results in poor performance for B2016.
+
+Value slopes increase as value quartiles increase for small and big stocks for both
+models. For B2016, value slopes across investment quartiles are flat in lower value
+quartiles of small stocks. For example, the lowest value quartile slopes are -0.27 for the
+lowest investment quartile and -0.46 for the highest investment quartile. Compare this to
+-0.55 to -0.3 for FF2016 in the same portfolios. Furthermore, we can see in the highest
+value quartile that the value slope relationship with invesment quartiles is reversed for
+the different models. B2016 value slopes are decreasing as investment quartiles increase
+while FF2016 value slopes are increasing. This is true of small and big stocks. Value
+slopes for small stocks do not match average value-weighted value characteristics in table
+\ref{tbl:valinvsort}. Monthly value characteristics within the lowest value quartile
+increase as investment increases while the value slope decreases. For big stocks, value
+characteristics are flatter than value slopes for the lowest and highest value quartiles.
+
+Momentum slopes are similar for small and big stocks. Slopes are flat across investment
+quartiles except for the lowest value quartile where the momentum slope drops in the
+highest investment quartile. The returns on stocks with high investment and low value
+behave like the returns on stocks with recent poor returns. Largely flat momentum slopes
+across investment quartiles matches the average value-weighted prior returns in table
+\ref{tbl:valinvsort}. Momentum slopes increase as value quartiles increase.
+
+There are more alphas than in the
 sorts on size, operating profitability and investment sorts. This is because the value
 factor does not vary as much across investment portfolios when we control for value.
 Alphas are in the low B/M and investment quartiles for both the small and big sorts.
@@ -46,4 +71,12 @@ quartile sees a similarly small decrease from 0.66 to 0.46. Value slopes increas
 value quartiles increase. Momentum slopes are also largely flat within value quartiles. By
 controlling for value we have limited B2016's ability to explain variations in investment.
 
-\textbf{Does annual value change with investment?}
+\newgeometry{margin=.25in}
+\afterpage{
+\clearpage
+\begin{landscape}
+\import{./Tables/}{32_Size_BM_Inv_fmt}
+\end{landscape}
+\clearpage
+}
+\restoregeometry
