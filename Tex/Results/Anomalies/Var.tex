@@ -2,42 +2,64 @@
 
 \subsubsection{Volatility}
 
-The poor returns to high volatility stocks is related to the flatter than aniticipated
+\newgeometry{margin=.25in}
+\afterpage{\clearpage
+\begin{landscape}
+
+% https://tex.stackexchange.com/questions/47311/include-table-as-a-subfigure
+\begin{table}%
+  \label{tbl:vol}%
+  \scriptsize
+  \centering
+  \caption{25-Size-Var Portfolios -- 1963-07 through 2016-12}%
+  \subfloat[][B2016\label{tbl:25_Size_Var_B2016}]{\import{./Tables/}{25_Size_Var_B2016_fmt}}%
+  \qquad
+  \subfloat[][FF2016\label{tbl:25_Size_Var_FF2016}]{\import{./Tables/}{25_Size_Var_FF2016_fmt}}%
+\end{table}
+
+\end{landscape}
+\clearpage}
+\restoregeometry
+
+The poor returns to high volatility stocks are related to the flatter than aniticipated
 relationship between market beta and returns. The flat-beta anomaly was first noted by
 \textcite{jensen1972capital} and futher documented by \textcite{fama1973risk}. Returns
 with lower volatility have less covariance with the market. Since market beta is driven by
 covariance with the market, the volatility and flat-beta anomalies are often used together
-as part of a ``defensive equity" strategy \parencite{frazzini2014betting}.
+as part of a ``defensive equity" strategy \parencite{frazzini2014betting}. The volatility
+portfolios from Dr. Kenneth French's website use conditional sorts on size and volatility.
+NYSE volatility breakpoints are set for each size group.
 
-\import{./Tables/}{25_Size_Var_fmt}
+Table \ref{tbl:25_Size_Var} shows the performance of B2016 and FF2016 when explaining
+returns on size and volatility sorts. These sorts feature the highest intercept in
+absolute value for B2016, -0.79 in the small-high volatility portfolio. Small-high
+volatility stocks underperform their peers and this is not captured by B2016 nor FF2016.
+In short, value and momentum explain most of the returns in all of the portfolios except
+for the high-volatility quintile. Value, momentum and profitability share honours for
+explaining returns in the high-volatility quintile. Where value disappears, in the small-
+high volatility portfolio, B2016 performs poorly.
 
-Table \ref{tbl:25_Size_Var} shows the performance of the B2016 model when
-explaining returns on size and volatility sorts. Alphas are left in all of the small stock
-portfolios except for the fourth. For the smaller portfolios the alphas range from 0.26 to
-0.18. Value loadings are positive for these portfolios while momentum and profit
-contribute very little. The highest volatility portfolio has an unexplained average
-monthly return of -0.79. This tells us the B2016 model considerably overestimates the
-returns to small-high volatility stocks. Value is insignificant while momentum and profit
-loadings are negative. This suggests the returns on small-high volatility stocks behave
-like those of low profit stocks with poor relative returns over the previous year.
+Beta slopes are included for the sorts on volatility because of the link between market
+beta and volatility. Betas increase as volatility increases with little sign of a size
+effect. Large beta spreads, 0.7 to 1.3, are unusual for anomaly sorts once other factors
+have been controlled for. For both models, value slopes are flat for the three lowest
+volatility quintiles, perhaps showing a small size effect in the largest size quintile.
+Value slopes decrease across the highest two volatility quintiles, becoming negative in
+the high-volatility quintile. Momentum slopes tell a similar story except negative slopes
+in the high-volatility quintile are much larger in magnitude than positive slopes in lower
+volatility quintiles. Unusually for momentum, smaller stocks exhibit larger spreads in
+momentum slopes. The momentum factor appears to capture the returns to low-volatility
+stocks as those alphas drop out in the B2016 model. Slopes on the momentum factor, 0.16 in
+the second size portfolio and 0.18 in the third, correspond to the reductions in alphas.
+For both models, profitability slopes are insignificant except for the high-volatility
+quintile. The profitability slopes of B2016 are consistently lower in magnitude than those
+of FF2016.
 
-In general, value decreases with volatility quintile. The biggest size quintile has the
-smallest spread in slopes. This makes sense as the value effect is weakest among larger
-stocks \parencite{asness2015fact}. Momentum and profit slopes are similar. Magnitude is
-low or insignificant for all volatility quintiles except the highest, which has negative
-slopes for both factors. The momentum slope in the small-high volatility portfolio is
--0.41. Typically, the magnitude of momentum slopes is not this high and suggests strong
-comovement between the returns of small-high volatility stocks and past losers. The
-momentum slope, -0.41, is much higher than that of the investment factor of the FF2016
-model (See table \ref{tbl:25_Size_Var_FF2016} in appendix \ref{sec:addl_results}). The
-profit slope, -0.65, in the FF2016 model is higher the profit slope in the B2016 model,
--0.3. Value is insignificant in both models. Momentum alone seems to capture the
-information in investment and profitability. This is puzzling because value is
-insignificant in both models suggesting it is not the interaction between value and
-momentum, as in the case of the investment sorts, that is causing the differences in
-slopes. This could be a topic for future research.
-
-While the B2016 model improves on the performance of the FF2016 model (See table
-\ref{tbl:25_Size_Var_FF2016} in appendix \ref{sec:addl_results}) when explaining returns
-to stocks sorted by size and volatility, the alpha of -0.79 for small-high volatility
-stocks is a large.
+Small, high-volatility stocks clearly pose a problem. There is no obvious difference
+between the slopes for B2016 and FF2016 besides FF2016 favouring profitability a little
+more than B2016. Noticeably, value is nowhere to be found when either model needs it most.
+We should keep in mind the implications of the sorts. Table \ref{tbl:vol} says that
+selling small, high-volatility stocks makes a 0.8\% returns a month, on average. To
+actually trade this strategy, we are reliant on people buying small, unprofitable stocks
+with poor recent returns. This is a tough sell for even the best salespeople. Perhaps
+volatility captures some of the liquidity risk described in \textcite{nagel2005short}.
