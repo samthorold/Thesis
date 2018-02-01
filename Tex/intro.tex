@@ -46,15 +46,26 @@ value and momentum provide a better indicator of truly cheap stocks as opposed t
 with inflated accounting numbers \textcite{kok2017facts}.
 
 \textcite{fama2016choosing} propose a similar model with the time series regression form
-\begin{equation} \label{eq:m2} R_t^i=a^i+b^iR_t^M+s^iSMB_t+h^iHML_t+p^iPMU_t+c^iCMA_t
-\end{equation} where $CMA$ is an investment factor long conservatively and short
-aggressively investing stocks. All other factors are as in (\ref{eq:m1}) except for $HML$
-which is rebalanced annually. They show that replacing the operating profitability factor
-of \textcite{fama2015five} with a cash profitability factor increases the $Sh^2$ of their
-five-factor model. \textcite{ball2016accruals} find that an accruals factor does not
-increase the $Sh^2$ of a five-factor model that contains a cash profitability factor.
-Their choice of factors is the same as (\ref{eq:m1}) except they rebalance value annually.
-I refer to the model in (\ref{eq:m1}) as B2016 and the model in (\ref{eq:m2}) as FF2016.
+\begin{equation}
+  \label{eq:m2}
+  R_t^i=a^i+b^iR_t^M+s^iSMB_t+h^iHML_t+p^iPMU_t+c^iCMA_t
+  \end{equation}
+where $CMA$ is an investment factor long conservatively and short aggressively investing
+stocks. All other factors are as in (\ref{eq:m1}) except for $HML$ which is rebalanced
+annually. Fama and French motivate their factors with the dividend discount model
+\begin{equation}
+  \label{eq:ddm}
+  \frac{M_t}{B_t}=\frac{\sum_{s=1}^\infty E(Y_{t+s}-\Delta B_{t+s})/R^s}{B_t}
+\end{equation}
+where $M_t$ is the market value of equity at time $t$, $B$ is the book value of equity,
+$Y_{t+s}$ is the income in a future period $t+s$, $\Delta B$ is the change in book equity
+and $R$ is the gross rate of return on the stock. They show that replacing the operating
+profitability factor of \textcite{fama2015five} with a cash profitability factor increases
+the $Sh^2$ of their five-factor model. \textcite{ball2016accruals} find that an accruals
+factor does not increase the $Sh^2$ of a five-factor model that contains a cash
+profitability factor. Their choice of factors is the same as (\ref{eq:m1}) except they
+rebalance value annually. I refer to the model in (\ref{eq:m1}) as B2016 and the model in
+(\ref{eq:m2}) as FF2016.
 
 I use the different specifications to make three points; B2016 increases the $Sh^2$ of
 FF2016 by replacing investment with momentum and rebalancing value monthly, value and

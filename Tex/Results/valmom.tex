@@ -2,7 +2,7 @@
 
 \subsection{Investment explained by value and momentum}
 
-\import{./Tables/}{Inv_fmt}
+%\import{./Tables/}{Inv_fmt}
 
 Table \ref{tbl:Inv} shows the investment factor regressed on other factors. Regression 1
 shows the combination of value and momentum explain the average return on the investment
@@ -36,11 +36,10 @@ momentum is a slam dunk because of the slope enhancement described in
 \textcite{fama2015incremental}.
 
 We are more interested in the economics behind the combination of value and momentum
-explaining the returns on the investment factor because of the problems with data-mining
-outlined in section \ref{sec:Literature}. Equation \ref{eq:ddm} uses the dividend discount
-model to show that changes in book equity (BE) may be related to stock returns. Beginning
-with \textcite{fama2006profitability}, changes in total assets are used in place of
-changes in book equity to proxy for ``investment". \textcite{kok2017facts} and
+explaining the returns on the investment factor. Equation \ref{eq:ddm} uses the dividend
+discount model to show that changes in book equity (BE) may be related to stock returns.
+Beginning with \textcite{fama2006profitability}, changes in total assets are used in place
+of changes in book equity to proxy for ``investment". \textcite{kok2017facts} and
 \textcite{asness2013devil} show that value and momentum combine to identify stocks that
 will exhibit changes in BE in the future. Value stocks often exhibit decreases in book
 equity while high momentum stocks typically exhibit fewer of these decreases as there is
@@ -51,25 +50,25 @@ The slope on the annual value factor provides some resistence to this theory. If
 value is an indicator of future changes in BE then the slope in regression 4 should be
 negative. The returns on a portfolio long low investment stocks should have a negative
 correlation with a portfolio long high value stocks. The summary characteristics in sorts
-on size, value and momentum in table \ref{tbl:32_Size_BM_Prior_Sorts} also suggest this
+on size, value and momentum in table \ref{tbl:valmomsort} also suggest this
 relationship may not be true -- future changes in BE are lowest for low-value stocks.
 
-\afterpage{\clearpage
-\begin{landscape}
+% \afterpage{\clearpage
+% \begin{landscape}
 
-% https://tex.stackexchange.com/questions/47311/include-table-as-a-subfigure
-\begin{table}%
-  \label{tbl:chars}%
-  \scriptsize
-  \centering
-  \caption{Average value-weighted characteristics -- 1963-07 through 2016-12}%
-  \subfloat[][$Size$-$BM^m$-$Prior$\label{tbl:valmomsort}]{\import{./Tables/}{ValMomSort}}%
-  \qquad
-  \subfloat[][$Size$-$BM$-$Inv$\label{tbl:valinvsort}]{\import{./Tables/}{AnnualValInvSort}}%
-\end{table}
+% % https://tex.stackexchange.com/questions/47311/include-table-as-a-subfigure
+% \begin{table}%
+%   \label{tbl:chars}%
+%   \scriptsize
+%   \centering
+%   \caption{Average value-weighted characteristics -- 1963-07 through 2016-12}%
+%   \subfloat[][$Size$-$BM^m$-$Prior$\label{tbl:valmomsort}]{\import{./Tables/}{ValMomSort}}%
+%   \qquad
+%   \subfloat[][$Size$-$BM$-$Inv$\label{tbl:valinvsort}]{\import{./Tables/}{AnnualValInvSort}}%
+% \end{table}
 
-\end{landscape}
-\clearpage}
+% \end{landscape}
+% \clearpage}
 
 Table \ref{tbl:valmomsort} shows value-weighted characteristics from sorts on size,
 monthly rebalanced value and momentum. Returns are increasing across value and momentum
