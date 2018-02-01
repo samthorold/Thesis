@@ -4,38 +4,48 @@
 
 % \import{./Tables/}{25_Size_Prior_fmt}
 
-Table \ref{tbl:25_Size_Prior} shows the performance of the BS2015 model when
-explaining returns on size and volatility sorts. The model struggles to explain the
-average returns on the small quintile with alphas ranging from -0.41 in the lowest
-momentum portfolio to 0.37 in the highest. The big-second lowest momentum portfolio also
-poses a problem with an alpha of 0.24. This is an improvement over the FF2016b model (See
-table \ref{tbl:25_Size_Prior_FF2016} in appendix \ref{sec:addl_results}). While it is not
-surprising that the BS2015 model leaves fewer alphas than the FF2016b model that does not
-include a momentum factor, it is puzzling that the model performs poorly playing ``at
-home." We would expect a model explaining finer sorts on one of the included factors to
-explain more of the average returns.
+Table \ref{tbl:25_Size_Prior} shows the performance of BS2016 and FF2016 when explaining
+returns on size and momentum sorts. B2016 struggles to explain the average returns on the
+small quintile, with alphas ranging from -0.41 in the lowest momentum portfolio to 0.37 in
+the highest, and the high-momentum quintile, with alphas ranging from 0.37 to 0.26. For
+all of the sorts that leave alphas, value works against momentum. Value and momentum's
+strong interaction comes back to bite in sorts on momentum.
 
-The profitability slopes are small, rarely above 0.2 in magnitude, but significant in the
-extreme momentum quintiles. All significant intercepts are negative suggesting the returns
-on both low and high momentum stocks behave like the returns of stocks with low cash
-profits. Unsurprisingly, the momentum slopes increase with the momentum quintiles. There
-is a small increase in the maginitude of the slopes as the size quintile increases,
-although the increase is around 0.2 in magnitude for all momentum quintiles. Momentum
-slopes are most extreme in the lowest momentum quintile, -0.65 to -0.78. Value slopes are
-low in the low and high momentum quintiles as well as the big size quintile. This is
-puzzling because of the slope enhancement described in \textcite{fama2015incremental}.
-When momentum slopes are extreme we would expect value slopes to be enhanced. Most
-intriguingly, value is insignificant in the small-high momentum portfolio. Other value
-slopes in the small size quintile are around 0.3. Value's insignificance seems to
-contribute to the alpha of 0.37 in the small-high momentum portfolio. As high returns
-increase the price of a stock, our monthly book-to-market ratio will decrease. High
-momentum will flatten the value slopes in sorts on size and momentum limiting the
-effectivesness of value. This is the variable attentuation effect described in
-\textcite{fama2015incremental}.
+For B2016, value slopes show a frown shape across momentum quintiles and little spread
+across size quintiles. Value offers little towards explaining returns at the extremes of
+momentum with -0.1 being the slope largest in maginitude. In fact, value works against
+momentum in the highest momentum quintile -- value slopes in the second and third size
+quintile are -0.1 while momentum slopes are 0.32 and 0.37. This divergence in slopes could
+be because we have not controlled for value and value and momentum are negatively
+correlated. Intuitively, those stocks with higher recent returns will have a lower measure
+of B/M as the market value is pushed up by higher returns. Those stocks with lower recent
+returns exhibit more decreases in book equity, pulling B/M down. Nevertheless, typically
+value and momentum slopes work together. The interaction of valuea and momentum is a
+disadvantage when playing ``at home" in sorts on momentum. Momentum slopes increase as
+momentum quintiles increase. The spread in slopes increases as size increase, -0.65 to
+0.31 for the small quintile and -0.78 to 0.47 for the large. Momentum's greater
+performance in large stocks partly explains the alphas in the small quintile.
+Profitability is only significant in the extremes of momentum and always negative. The
+returns on stocks with very low or very high returns behave like the returns on
+unprofitable stocks.
 
-While the BS2015 model may improve the overall performance in sorts on size and momentum,
-the model's greatest strength may be its greatest weakness as the variable attentuation
-from the interaction between value and momentum outweighs the slope enhancement.
+For FF2016, value slopes no longer show a frown but exhibit a drop in slope for the
+highest momentum quintile. The slopes on annual value do not drop in the lowest momentum
+quintile perhaps because the less timely version of value does not weed out those stocks
+that will exhibit a drop in BE in the future. In the absence of the momentum factor,
+profitability does most of the heavy lifting in the lower momentum quintiles. Slopes are
+large in magnitude ranging from -0.7 to -.54. Profitability slopes are positive but
+smaller in magnitude for high momentum stocks. Investment has little to offer except in
+the lowest momentum quintile where slopes range from -0.3 to -0.35. The returns on stocks
+with poor recent returns behave like the returns on aggressively investing stocks.
+
+Utlimately, the performance of B2016 is dissappointing given that the model is on home
+field explaining sorts on one of the factors included in the model. The relationship
+between value and momentum comes back to bite us as monthly value's negative correlation
+with momentum renders value useless in sorts on momentum. To explore the problem further I
+sort on size, value and momentum. This sort shows the spread in value across momentum
+quartiles and vice versa. Intuition says that high momentum will inhibit the positive slopes
+of value and low momentum will inhibit the negative slopes of value.
 
 % \afterpage{
 % \clearpage
@@ -44,3 +54,68 @@ from the interaction between value and momentum outweighs the slope enhancement.
 % \end{landscape}
 % \clearpage
 % }
+
+Table \ref{tbl:sizevalmom} shows the performance of BS2016 and FF2016 when explaining
+returns on size, monthly value and momentum sorts. Alphas are left in the extremes of
+momentum. Both models over-estimate the returns on past losers and under-estimate the
+returns on past winners. In short, the strong momentum effect in low-value stocks
+overrides the value effect preventing value from capturing returns in the extremes of
+momentum.
+
+For B2016, small-stock alphas are particularly large for the low-value quartile of the
+momentum extremes. The low-value, low-momentum portfolio has an alpha of -0.51 while the
+low-value, high-momentum has an alpha of 0.4. This symmetry in the alphas differs from the
+asymmetry seen in table \ref{tbl:vol}. If we believe the short-selling constraint story
+given for size-volatility alphas, we must conclude that past winners are as difficult to
+sell short as past losers. Big stock alphas are smaller in magnitude than small stock
+alphas, ranging from -0.25 in the second value, high-momentum portfolio to 0.27 in the
+third value, low-momentum portfolio. Unlike small stocks, the low-value, low- momentum
+alpha is insignificant. Value slopes are highly significant and exhibit large spreads. For
+small stocks, the spread across value quartiles is -0.41 for low-value to 0.5 for high-
+value in the low- momentum quartile rising to -0.42 to 1.03 for the high-momentum
+quartile. The increase in spread highlights the increasing role momentum plays as the
+momentum quartile increases. Just as in table \ref{tbl:valmomsort}, even though we are
+controlling for value when we look across the value rows, the value slopes become more
+extreme due to the increasing momentum. For low-value, moving from the third to the
+highest momentum quartile decreases the value slopes while for high-value, the opposite is
+true. This depressing of value by momentum could account for the 0.42\% that B2016 under-
+estimates the returns on low-value, high-momentum small stocks. This frown in value slopes
+for the low-value quartile mirrors the slopes in table \ref{tbl:vol}. For big stocks we
+see a similar effect although the implications for alpha are not a pronounced. Table
+\ref{tbl:valmomsort} shows that the monthly value characteristics exhibit a frown for
+small stocks but not for big stocks. This difference in characteristics could drive the
+difference in the importance of value slopes across big and small stocks. Momentum slopes
+increase across value quartiles for small and large stocks. For small stocks, the effect
+is less pronounced in the low-value quartile. The spread is largely consistent. For
+example, the momentum slopes in the small, high-momentum quartile rises from 0.13 to 0.41
+while the slopes in the big, low-momentum quartile rise from -0.73 to -0.48. Momentum
+slopes increase as momentum quintiles increase. Profitability does not have much to add in
+the presence of value and momentum.
+
+For FF2016, small-stock alphas are also particularly large for the low-value quartile of
+the momentum extremes. The low-value, low-momentum portfolio has an alpha of -0.86 while
+the low-value, high-momentum has an identical alpha to that of B2016 at 0.4. Big stock
+alphas resemble small stocks alphas much more closely than in B2016 with a low-value, low-
+momentum alpha of -0.32 and a low-value, high-momentum alpha of 0.34. Most notably, FF2016
+over-estimates low-value, low-momentum returns more than B2016. Value slopes are highly
+significant and exhibit large spreads, although not as large as monthly value in B2016.
+For small stocks, the spread across value quartiles is -0.08 for low-value to 0.6 for
+high-value in the low-momentum quartile rising to -0.46 to 0.7 for the high-momentum
+quartile. The increase in spread highlights the increasing role momentum plays as the
+momentum quartile increases. Characteristics do not completely match regression slopes as
+the spreads in the annual value characteristics are larger than the spreads in the monthly
+value characteristic as seen in table \ref{tbl:valmomsort}. We should keep in mind that
+unconditional characteristic sorts do not always match regression slopes, especially when
+the regression specifications are different across the two models. Value disappears in the
+low-value, low-momentum portfolio. In contrast, the value slope for B2016 is strongly
+negative at -0.41. Profitability plays a much larger role in explaining the returns on
+low-momentum stocks in the absence of the momentum factor. For small and big stocks,
+profitability slopes for past losers are strongly negative ranging from -0.61 to -0.79 for
+small stocks to -0.18 to -0.79 for big stocks. The returns on past losers behave like the
+returns on unprofitable stocks. For small stocks, the spread in profitability slopes is
+flat across value quartiles while for big stocks, profitability is decreasing as value
+quartiles increase. Investment also picsks up some of the slack in the absense of the
+momentum factor. Investment plays a role in the low-momentum quartiles with strongly
+negative slopes. The troublesome small, low-value and low-momentum portfolio shares the
+``lethal combination" described in \textcite{fama2015five} of negative profitability and
+investment slopes.
