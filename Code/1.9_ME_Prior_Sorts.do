@@ -27,7 +27,7 @@ restore
 
 merge m:1 l1_me_b pr_12_2_b date using C:/Data/Thesis/ME_PR_6B_Size, nogen keep(match)
 
-gen wt_ret = ret * size / bkt_size
+gen wt_ret = ret * l1_me / bkt_size
 
 keep if hp>=1963 & year(date)<=2016
 

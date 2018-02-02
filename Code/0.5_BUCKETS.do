@@ -771,6 +771,88 @@ restore
 
 
 
+***********************
+* Short Term Reversal *
+***********************
+
+* keep `vars'
+drop bm*
+
+merge m:1 date using C:/Data/Thesis/l1_ret_20Q, nogen keep(match master)
+
+* 30th and 70th percentile
+gen l1_ret_b = .
+
+replace l1_ret_b = 1 if l1_ret <= l1_ret30
+replace l1_ret_b = 2 if l1_ret >  l1_ret30 & l1_ret <= l1_ret70
+replace l1_ret_b = 3 if l1_ret >  l1_ret70
+
+replace l1_ret_b = . if l1_ret==.
+drop if l1_ret_b==.
+
+preserve
+  keep permno date l1_ret_b
+  save C:/Data/Thesis/l1_ret_3B, replace
+restore
+
+* Quartiles
+replace l1_ret_b = .
+
+replace l1_ret_b = 1 if l1_ret <= l1_ret25
+replace l1_ret_b = 2 if l1_ret >  l1_ret25 & l1_ret <= l1_ret50
+replace l1_ret_b = 3 if l1_ret >  l1_ret50 & l1_ret <= l1_ret75
+replace l1_ret_b = 4 if l1_ret >  l1_ret75
+
+replace l1_ret_b = . if l1_ret==.
+drop if l1_ret_b==.
+
+preserve
+  keep permno date l1_ret_b
+  save C:/Data/Thesis/l1_ret_4B, replace
+restore
+
+* Quintiles
+replace l1_ret_b = .
+
+replace l1_ret_b = 1 if l1_ret <= l1_ret20
+replace l1_ret_b = 2 if l1_ret >  l1_ret20 & l1_ret <= l1_ret40
+replace l1_ret_b = 3 if l1_ret >  l1_ret40 & l1_ret <= l1_ret60
+replace l1_ret_b = 4 if l1_ret >  l1_ret60 & l1_ret <= l1_ret80
+replace l1_ret_b = 5 if l1_ret >  l1_ret80
+
+replace l1_ret_b = . if l1_ret==.
+drop if l1_ret_b==.
+
+preserve
+  keep permno date l1_ret_b
+  save C:/Data/Thesis/l1_ret_5B, replace
+restore
+
+* Deciles
+replace l1_ret_b = .
+
+replace l1_ret_b = 1 if l1_ret <= l1_ret10
+replace l1_ret_b = 2 if l1_ret >  l1_ret10 & l1_ret <= l1_ret20
+replace l1_ret_b = 3 if l1_ret >  l1_ret20 & l1_ret <= l1_ret30
+replace l1_ret_b = 4 if l1_ret >  l1_ret30 & l1_ret <= l1_ret40
+replace l1_ret_b = 5 if l1_ret >  l1_ret40 & l1_ret <= l1_ret50
+replace l1_ret_b = 6 if l1_ret >  l1_ret50 & l1_ret <= l1_ret60
+replace l1_ret_b = 7 if l1_ret >  l1_ret60 & l1_ret <= l1_ret70
+replace l1_ret_b = 8 if l1_ret >  l1_ret70 & l1_ret <= l1_ret80
+replace l1_ret_b = 9 if l1_ret >  l1_ret80 & l1_ret <= l1_ret90
+replace l1_ret_b =10 if l1_ret >  l1_ret90
+
+replace l1_ret_b = . if l1_ret==.
+drop if l1_ret_b==.
+
+preserve
+  keep permno date l1_ret_b
+  save C:/Data/Thesis/l1_ret_10B, replace
+restore
+
+
+
+
 
 
 log close

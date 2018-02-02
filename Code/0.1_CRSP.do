@@ -86,6 +86,8 @@ sort permno date
 by permno: gen pr_ok = prc[_n-12]!=. & ret[_n]!=. & me[_n]!=.
 label var pr_ok "Prior Return (11,1) Meets Conditions"
 
+sort permno date
+by permno: gen l1_ret = ret[_n-1]
 
 ******************
 * Holding Period *

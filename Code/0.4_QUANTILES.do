@@ -42,6 +42,22 @@ preserve
   save C:/Data/Thesis/PR_11_1_20Q, replace
 restore
 
+***********************
+* Short Term Reversal *
+***********************
+
+preserve
+  collapse ///
+    (count) N=permno ///
+    (p5)  l1_ret05=l1_ret (p10) l1_ret10=l1_ret (p15) l1_ret15=l1_ret (p20) l1_ret20=l1_ret (p25) l1_ret25=l1_ret ///
+    (p30) l1_ret30=l1_ret (p35) l1_ret35=l1_ret (p40) l1_ret40=l1_ret (p45) l1_ret45=l1_ret (p50) l1_ret50=l1_ret ///
+    (p55) l1_ret55=l1_ret (p60) l1_ret60=l1_ret (p65) l1_ret65=l1_ret (p70) l1_ret70=l1_ret (p75) l1_ret75=l1_ret ///
+    (p80) l1_ret80=l1_ret (p85) l1_ret85=l1_ret (p90) l1_ret90=l1_ret (p95) l1_ret95=l1_ret (max) l1_ret100=l1_ret ///
+    if exchcd==1 & l1_ret!=., ///
+    by(date)
+  save C:/Data/Thesis/l1_ret_20Q, replace
+restore
+
 merge m:1 permno hp using C:/Data/Thesis/BookVars, nogen keep(match master)
 
 
