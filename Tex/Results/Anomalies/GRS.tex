@@ -5,18 +5,18 @@
 %\import{./Tables/}{GRS_fmt}
 
 Table \ref{tbl:GRS} shows the GRS statistic for common anomaly sorts and popular factor
-models as well as the max $Sh^2$ that can be obtained from each model's factors. C1997 is
-the four-factor model of \textcite{carhart1997persistence}. C1997b replaces annually
-rebalanced value with the monthly version. C1997b is the same as removing the
-profitability factor from B2016 and the $Sh^2$ of C1997b is lacking profitability's
-marginal contribution of 0.2 (see table \ref{tbl:Table1}). B2016b replaces monthly value
-with the annual version -- B2016b can also be thought of as replacing investment in FF2016
-with momentum. B2016c removes the momentum factor from B2016 and the $Sh^2$ of B2016c is
-lacking momentum's marginal contribution of 0.13 (see table \ref{tbl:Table1}). Comparing
+models as well as the max $Sh^2$ that can be obtained from each model's factors. Comparing
 the GRS statistic of different models shows where certain factors help or hinder when
-explaining returns on subsets of assets. C1997b and B2016b show where simply using monthly
-value over annual value improves the power to explain returns. Similarly, C1997b shows how
-much help we get from the profitability factor.
+explaining returns on subsets of assets. C1997 is the four-factor model of
+\textcite{carhart1997persistence}. C1997b replaces annually rebalanced value with the
+monthly version. C1997b is the same as removing the profitability factor from B2016 and
+the $Sh^2$ of C1997b is lacking profitability's marginal contribution of 0.2 (see table
+\ref{tbl:Table1}). B2016b replaces monthly value with the annual version -- B2016b can
+also be thought of as replacing investment in FF2016 with momentum. B2016c removes the
+momentum factor from B2016 and the $Sh^2$ of B2016c is lacking momentum's marginal
+contribution of 0.13 (see table \ref{tbl:Table1}). C1997b and B2016b show where simply
+using monthly value over annual value improves the power to explain returns. Similarly,
+C1997b shows how much help we get from the profitability factor.
 
 The GRS statistic, in general, lines up with the $Sh^2$. Those models with lower GRS
 statistics have higher $Sh^2$. B2016 has the highest $Sh^2$ of 0.36 and the lowest GRS for
@@ -35,7 +35,7 @@ consistently outperformed by FF2016. The GRS for all BM sorts, excluding
 $Size$-$BM$-$Prior$, is 1.31 for B2016 and 1.23 for FF2016. The $Sh^2$ of B2016 can be
 improved more than that of FF2016 by including in the factors portfolios formed by sorts
 on annual value. In absolute terms, sorts on momentum and volatility are the biggest
-problem for B2016. These sorts are where B2016 makes up the most ground on the other
+problem for B2016 but these sorts are where B2016 makes up the most ground on the other
 models. In sorts on size and residual variance, B2016 has a GRS of 4.64 while FF2016 has a
 GRS of 5.31. In sorts on size and momentum, B2016 has a GRS of 3.7 while FF2016 has a GRS
 of 4.22. B2016 does a better job of pricing some of the most puzzling anomalies
@@ -50,9 +50,16 @@ assets. C1997 is not outperformed in all sorts. For example, in sorts on size an
 profitability, The GRS of C1997, 2.32, is comparable to that of FF2016, 2.29. This strong
 performance is achieved without a profitability factor. Furthermore, the performance of
 ``defensive equity" portfolios, those formed on sorts on size and volatility and/or beta
-has been attributed to profitability \parencite{novy2014understanding}. Nevertheless,
-C1997b has an almost identical GRS, 4.83, to FF2016 and B2016b that both contain a
-profitability factor.
+has been attributed to profitability \parencite{novy2014understanding}. For sorts on
+$Size$-$Var$, C1997b has an almost identical GRS, 4.83, to FF2016 and B2016b that both
+contain a profitability factor. The comparable GRS statistics show the similar marginal
+contributions to $Sh^2$ of value and profitability from table \ref{tbl:Table1}. Omitting
+either the combination of value and momentum or profitability increases the GRS to an
+identical level. While this makes sense from a statistical perspective -- identical
+marginal contributions lead to identical increases in the amount of average return left
+unexplained by models that omit these factors -- it is less clear how to interpret the
+role of value and momentum in sorts on volatility. Individual regression slopes will shed
+some light on the relationship.
 
 C1997b's performance in sorts on size and volatility and beta show the benefits of the
 interaction between value and momentum. Comparing B2016 and B2016b shows the downsides.
@@ -60,6 +67,6 @@ B2016 is outperformed by B2016b in sorts on annual value. For all sorts on annua
 B2016b is comparable to FF2016 with an almost identical GRS of 1.24. Meanwhile, B2016 lags
 behind with a GRS of 1.31. B2016c, containing monthly value and omitting momentum,
 performs even worse with a GRS of 1.4 for all annual value sorts. Capturing price changes
-in our measure of value clearly adds information about the cross-section of stock returns
--- but this additional information comes at the expense of information in an annual
-measure of value. Overall, B2016 outperforms other models in tests of subsets of assets.
+in our measure of value clearly adds information about the cross-section of stock returns,
+but this additional information comes at the expense of information in an annual measure
+of value. Overall, B2016 outperforms other models in tests of subsets of assets.

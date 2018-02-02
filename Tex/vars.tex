@@ -1,0 +1,55 @@
+% !TeX root=./main.tex
+
+\section{Variables} \label{sec:vars}
+
+Characteristics are given by the following formulas
+\begin{itemize}
+  \item Monthly Return: $RET = (1 + RET)(1 + DLRET) - 1$
+  \item Market Equity: $ME = SHROUT \cdot abs(PRC) / 1000$
+  \item Book Equity: $BE = seq + txditc - ps$ where $ps$ equals (in order of preference);
+    $pstkrv$, $pstkl$ or $pstk$.
+    If all measures of preferred stock are missing, $BE = ceq + upstk$.
+    If we still do not have a value for $BE$, $BE = at - lt$
+  \item Book-to-Market: $BE/ME$ where $ME$ is either from December,
+    \textcite{fama1992cross} or month $t-1$, \textcite{asness2013devil}.
+  \item Profitability: $OP = (revt - cogs - xsga - xint)/BE$. \textcite{fama2016choosing}
+    add back research and development costs to $OP$,
+    $OP_r = (revt - cogs - xsga - xint + xrd)/BE$ and
+    $CP = (revt - cogs - xsga - xint + xrd + acc)/BE$ where \parencite{ball2016accruals}
+    $acc = -\Delta rect -\Delta invt -\Delta xpp +\Delta drc +\Delta ap +\Delta xacc$
+  \item Investment: $Inv = (at_t - at_{t-1})/at_{t-1}$
+\end{itemize}
+where the full description of the codes are
+(capital letters denote CRSP while lower-case letters denote COMPUSTAT)
+\begin{itemize}
+  \item \texttt{EXCHCD}: Exchange Code (1-NSYE, 2-AMEX, 3-NASDAQ)
+  \item \texttt{PRC}: Share Price
+  \item \texttt{SHROUT}: Number of Shares Outstanding
+  \item \texttt{RET}: Monthly Return
+  \item \texttt{DLRET}: De-listing Return
+  \item \texttt{at}: Total Assets
+  %\item \texttt{act}: Total Current Assets
+  %\item \texttt{ch}: Cash (not including Short-term Investments)
+  \item \texttt{xpp}: Prepaid Expenses
+  \item \texttt{invt}: Total Inventory
+  \item \texttt{rect}: Total Receivables
+  \item \texttt{lt}: Total Liabilities
+  %\item \texttt{lct}: Total Current Liabilities
+  \item \texttt{ap}: Accounts Payable - Trade
+  \item \texttt{drc}: Deferred Revenue
+  \item \texttt{xacc}: Accrued Expenses
+  %\item \texttt{dlc}: Current Portion of Long-term Debt
+  \item \texttt{seq}: Stockholder's Equity
+  \item \texttt{ceq}: Book Value of Common Equity
+  \item \texttt{txditc}: Deferred Taxes
+  \item \texttt{pstkrv}: Preferred Stock (PS), Redemption Value
+  \item \texttt{pstkl}: PS, Liquidation Value
+  \item \texttt{pstk}: PS, Book Value
+  \item \texttt{upstk}: PS, Par Value
+  \item \texttt{revt}: Total Revenue (This is the same as \texttt{sale} for US firms)
+  \item \texttt{cogs}: Cost of Goods Sold
+  \item \texttt{xsga}: Selling, General and Administrative
+  \item \texttt{xrd}: Research and Development Costs
+  \item \texttt{xint}: Total Interest Expenses
+\end{itemize}
+
