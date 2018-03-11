@@ -1,0 +1,40 @@
+% !TeX root=./main.tex
+
+\section{Analysis}
+
+I focus largely on the differences between two models, the five-factor model from
+\textcite{fama2016dissecting} which I refer to as F16, and a five-factor model similar to
+that of \textcite{ball2016accruals} which I refer to as B16. I focus on these models
+because they have the highest Sharpe ratio from the models I outlined earlier, and they
+are non-nested. Furthermore, F16 and earlier iterations have been studied extensively. The
+problems with F16 are well documented and provide a good benchmark to compare findings
+against.
+
+I begin by comparing the maximum Sharpe ratios of the factors for each model as well as
+the amount each factor contributes to the Sharpe ratio. Value and profitability are the
+biggest contributors for both models and this lines up with the intuition of buying cheap,
+profitable stocks. Comparing GRS evidence shows where B16 does not live up to the promise
+of its superior Sharpe ratio. I investigate where factors contribute little to lowering
+the GRS statistic in certain sorts by comparing different versions of B16 and F16. In
+isolation, more timely value is more a hindrance than a help in many sorts. Profitability
+is not as helpful in sorts on volatility as previous research
+\parencite{novy2014understanding} suggests it should be. For particularly disastrous
+performances, I investigate which individual sorts cause the most pain and compare the
+performance to F16. Where value is constrained, the value factor does not offer much help
+and the profitability factor is left to pick up the slack. In the extreme sorts,
+profitability alone cannot explain all the average return, although performance is
+superior to that of F16. Sorts where value and momentum work against each other are a
+problem. Comparing with F16 shows the troublesome sorts share the ``lethal" return
+behaviour of small, unprofitable stocks that invest aggressively.
+
+\import{./Analysis/}{replication}
+
+\import{./Analysis/}{bootstrap}
+
+%\import{./Analysis/}{contributions}
+
+%\import{./Analysis/}{future_BE}
+
+%\import{./Analysis/}{GRS}
+
+%\import{./Analysis/}{anomalies_group}

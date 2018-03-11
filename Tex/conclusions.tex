@@ -1,48 +1,49 @@
 % !TeX root=./main.tex
 
-\section{Omissions}
-
-\begin{itemize}
-  \item Bayesian ``learning" framework \textcite{nagel2013empirical} -- to what extent is
-    learning captured in the way risk exposures vary through time which is itself captured
-    by the varying returns on the factors.
-  \item Out-of-sample tests
-  \item Bootstrap
-  \item Equation \ref{eq:ddm} is just a structural relationship relying on clean surplus
-    accounting. It says nothing on the risk vs. behavioural story for returns.
-  \item Returns on investment factor more to do with low-investment allowing payouts to
-    shareholders than risk from high investment leading to external financing
-    \parencite{fama2008dissecting, daniel2006market, pontiff2008share}.
-  \item January effect 
-\end{itemize}
-
 \section{Conclusions}
 
-Nice surveys of anomalies;
-\textcite{nagel2013empirical, fama2016dissecting}.
+I motivate a five-factor model of market, size, value, momentum and profitability factors,
+B16, with buying cheap, profitable stocks. The intuition of pricing all assets means we
+should focus on the interaction between factors. Value and momentum interact strongly. At
+the same time, they have little interaction with profitability. Value, momentum and
+profitability drive the maximum Sharpe ratio of 0.56. Statistically, value and momentum
+are negatively correlated with each other but positively correlated with other portfolios
+leading to slope enhancement in regressions. The economics behind their relationship may
+be to do with identifying those stocks that will exhibit changes in book equity in the
+future. Value and momentum make investment redundant as a factor because it does not add
+anything to the maximum Sharpe ratio of the other five factors. Investment's lack of
+contribution is driven by explained average return rather than unexplained variation in
+returns through time.
 
-Nice surveys of intuition;
-\textcite{cochrane2009asset, cochrane2011presidential, nagel2013empirical}
+In anomaly sorts, the GRS statistic does not provide as strong evidence in favour of the
+B16 model as the maximum Sharpe ratio, although they agree B16 is the best model. Given
+our desire to price all assets and the sensitivity of the GRS to the choice of test
+assets, it is satisfactory that evidence was not as strong but still supportive of the B16
+model. Individual regression slopes show that when controlling for value, the value factor
+is not able to vary across investment portfolios and therefore the model does not perform
+as well in these sorts. Portfolios where value and momentum pull in opposite directions
+are a problem because these sorts negate the interaction between value and momentum. These
+problem sorts share the “lethal combination” of returns - small, unprofitable stocks that
+somehow invest aggressively.
 
-A five-factor model of market, size, value, momentum and profitability factors, B2016, has
-a maximum Sharpe ratio of 0.6. This is made possible by the interaction between value and
-momentum used in conjunction with cash profitability. Value and momentum are negatively
-correlated with each other but positively correlated with other portfolios leading to
-slope enhancement in regressions. The economics behind their relationship may be to do
-with identifying those stocks that will exhibit changes in BE in the future. Value and
-momentum make investment reduntant as a factor because it does not add anything to the max
-$Sh^2$ of the other five factors. Investment's lack of contribution is driven by explained
-average return rather than unexplained variation. In anomaly sorts, the GRS statistic does
-not provide as strong evidence in favour of the B2016 model as the max $Sh^2$, although
-they are in agreement that B2016 is the best model. Given our desire to price all assets
-and the sensitivity of the GRS to the choice of test assets, it is satisfactory that
-evidence was not as strong but still supportive of the B2016 model. Individual regression
-slopes show that when controlling for value, the value factor is not able to vary across
-investment portfolios and therefore the model does not perform as well in these sorts.
-Portfolios where value and momentum pull in opposite directions are a problem because
-these sorts negate the interaction between value and momentum. These problem sorts share
-the ``lethal combination" of returns -- small, unprofitable stocks that somehow invest
-aggressively. Like the GRS evidence, I treat the failings of the model in individual
-regressions as interesting and significant but not ultimately damning. The max $Sh^2$
-provides a clear winner, B2016. The test asset evidence shows we have a lot left to
-explain as to why the B2016 model deos not perform as strongly in anomaly sorts.
+Omissions include taking a stance on risk vs. behavioural stories, factor timing and
+volatility managed portfolios. We can only say factors describe returns rather than
+explain them if we do not take a stance on risk vs. behavioural stories for factors.
+Arguments are largely statistical without putting forward the drivers behind factor
+returns. I suggest future changes in book equity drive the interaction of value and
+momentum subsuming investment, but this does not clear up why value and momentum generate
+returns in the first place. Using many factors can be motivated by diversification to
+protect against prolonged poor runs for individual factors. In this case an investor gives
+up some of the upside of a factor to hedge another. From an investment perspective, it is
+preferable to “time” factors as we might time the market instead of relying on
+diversifying across factors. Dropping factors will lower the maximum Sharpe ratio of the
+model. Furthermore, timing factors somewhat misses the point in an asset-pricing context.
+Assets will have different exposures to different factors and to drop factors removes the
+ability to capture those exposures. Volatility is the biggest asset-pricing anomaly. We
+can use volatility when we weight stocks instead of relying on market equity. This
+approach avoids the problem and does not explain the drivers behind the returns to
+volatility.
+
+The maximum Sharpe ratio provides a clear winner, B16. Test asset evidence leaves the
+puzzle of why the model does not outperform other models to the extent the superior Sharpe
+ratio suggests it should.

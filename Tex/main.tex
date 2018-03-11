@@ -11,7 +11,7 @@
 \usepackage{import}         % nested files
 \usepackage[utf8]{inputenc} % unsure
 \usepackage{pdflscape}      % landscape pages
-\usepackage{setspace}       % double line spaceing but not in tables etc.
+\usepackage{setspace}       % double line spacing but not in tables etc.
 \usepackage{subfig}         % tables next to each other
 
 \addbibresource{references.bib}
@@ -28,7 +28,7 @@
 
 \begin{document}
 
-\maketitle
+%\maketitle
 
 \begin{abstract}
   A five-factor model of
@@ -42,26 +42,24 @@
 
 \import{./}{intro}
 
-\import{./}{literature}
+\import{./}{background_group}
 
 \import{./}{data}
 
-%\import{./}{method}
-
-\import{./}{results}
+\import{./}{analysis_group}
 
 \import{./}{conclusions}
 
+\setstretch{1.0}
+
 \printbibliography
+
+%\setstretch{2.0}
 
 \appendix
 
-\import{./}{tables}
-
-%\import{./}{addl_results}
+\import{./}{tables_group}
 
 \import{./}{vars}
-
-%\import{./}{replication}
 
 \end{document}
