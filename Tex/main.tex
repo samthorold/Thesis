@@ -3,15 +3,20 @@
 \usepackage{afterpage}
 \usepackage{amsmath, amsthm}
 \usepackage[backend=biber, style=authoryear]{biblatex}
-\usepackage{booktabs}       % tables
+\usepackage{bookmark}       % links w/in PDF
+\usepackage{booktabs}       % align tables by decimal point -- regression t-stats
 \usepackage{dcolumn}        % table cells alignment
-\usepackage[margin=1in]{geometry}
+\usepackage[margin=2.5cm]{geometry}
+%\usepackage{hyperref}      % links w/in PDF
 \usepackage{import}         % nested files
 \usepackage[utf8]{inputenc} % unsure
 \usepackage{pdflscape}      % landscape pages
+\usepackage{setspace}       % double line spaceing but not in tables etc.
 \usepackage{subfig}         % tables next to each other
 
 \addbibresource{references.bib}
+
+\setstretch{2.0}
 
 \title{
   {Asset-pricing models: Turtles all the way down}\\
@@ -28,7 +33,7 @@
 \begin{abstract}
   A five-factor model of
   market, size, value, momentum and profitability factors
-  has a maximum Sharpe ratio of 0.6.
+  has a maximum Sharpe ratio of 0.56.
   The largest marginal contributions are from value and profitability.
   Value and momentum interact to make investment unnecessary.
   Omitting investment does not hinder performance when explaining sorts on investment.
@@ -37,7 +42,7 @@
 
 \import{./}{intro}
 
-%\import{./}{literature}
+\import{./}{literature}
 
 \import{./}{data}
 

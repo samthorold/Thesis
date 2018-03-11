@@ -1,0 +1,50 @@
+
+\begin{table}[!ht]
+\label{tbl:replicated_factors}
+%\footnotesize
+\centering
+\caption{
+\scriptsize{
+Monthly averages, standard deviations, t-statistics and correlations with factors
+available from previous research for \emph{replicated} factor returns, July 1963 -
+December 2017 (654 months). At the end of each June, NYSE, AMEX, and NASDAQ stocks are
+allocated to two Size groups (small and big) using the NYSE median market-cap breakpoints.
+Stocks are allocated independently to three B/M groups (low to high), using NYSE
+30\textsuperscript{th} and 70\textsuperscript{th} percentile breakpoints. The
+intersections of the two sorts produce six value-weight Size-B/M portfolios. In the sort
+for June of year t, B is book equity at the end of the fiscal year ending in year t-1 and
+M is market cap at the end of December of year t-1. I use Compustat data to compute book
+equity, defined as (1) stockholders' equity (or the par value of preferred plus total
+common equity or assets minus liabilities, in that order) minus (2) the redemption,
+liquidation, or par value of preferred (in that order) plus (3) balance sheet deferred
+taxes. HML is the average of the returns on the two high B/M portfolios from the 2x3 sorts
+minus the average of the returns on the two low B/M portfolios. The profitability and
+investment factors, PMU (profitable minus unprofitable) and CMA (conservative minus
+aggressive), are formed in the same way as HML, except the second sort variable is
+operating profitability or investment. Operating profitability, used to create $PMU^{06}$,
+in the sort for June of year t is measured with accounting data for the fiscal year ending
+in year t-1 and is revenue minus the cost of goods sold, minus selling, general, and
+administrative expenses, minus interest expense, all divided by book equity. Adjusted
+operating profitability, $PMU^{16}$, is created similarly except research and development
+costs are added back in before dividing by book equity. Cash profitbality, $PMU$, is
+created by subtracting accruals before dividing by book equity. Investment, Inv, is the
+change in total assets from the fiscal year ending in year t-2 to the fiscal year ending
+in t-1, divided by t-2 total assets. The momentum factor, WML, is defined in the same way
+as HML, except the factor is updated monthly rather than annually. To form the six Size-
+Prior 2-12 portfolios at the end of month t-1, Size is the market cap of a stock at the
+end of t-1 and Prior 2-12 is its cumulative return for the 11 months from t-12 to t-2.
+Monthly value, $HML^m$, is defined in the same way as WML except book equity is only
+updated at the end of June.
+}
+}
+
+\begin{tabular}{lrrrrrrr}
+  \toprule
+         & $HML$  & $HML^m$&$PMU^{06}$&$PMU^{16}$&$PMU$& $CMA$ & $WML$ \\
+  Mean   &  0.31  &  0.35  &  0.28  &  0.34  &  0.36  &  0.22  &  0.58 \\
+  SD     &  2.80  &  3.43  &  2.11  &  1.67  &  1.40  &  1.78  &  3.96 \\
+  t-Stat &  2.84  &  2.60  &  3.38  &  5.21  &  6.63  &  3.24  &  3.78 \\
+  Corr   &  0.98  &  0.97  &  0.98  &    -   &    -   &  0.96  &  0.98 \\
+  \bottomrule
+\end{tabular}
+\end{table}

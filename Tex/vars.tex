@@ -7,16 +7,15 @@ Characteristics are given by the following formulas
   \item Monthly Return: $RET = (1 + RET)(1 + DLRET) - 1$
   \item Market Equity: $ME = SHROUT \cdot abs(PRC) / 1000$
   \item Book Equity: $BE = seq + txditc - ps$ where $ps$ equals (in order of preference);
-    $pstkrv$, $pstkl$ or $pstk$.
-    If all measures of preferred stock are missing, $BE = ceq + upstk$.
-    If we still do not have a value for $BE$, $BE = at - lt$
+    $pstkrv$, $pstkl$ or $pstk$. If all measures of preferred stock are missing,
+    $BE = ceq + upstk$. If we still do not have a value for $BE$, $BE = at - lt$
   \item Book-to-Market: $BE/ME$ where $ME$ is either from December,
     \textcite{fama1992cross} or month $t-1$, \textcite{asness2013devil}.
-  \item Profitability: $OP = (revt - cogs - xsga - xint)/BE$. \textcite{fama2016choosing}
-    add back research and development costs to $OP$,
-    $OP_r = (revt - cogs - xsga - xint + xrd)/BE$ and
-    $CP = (revt - cogs - xsga - xint + xrd + acc)/BE$ where \parencite{ball2016accruals}
-    $acc = -\Delta rect -\Delta invt -\Delta xpp +\Delta drc +\Delta ap +\Delta xacc$
+  \item Profitability: $OP = (revt - cogs - xsga - xint)/BE$.
+    \textcite{fama2016choosing} add back research and development costs to
+    $OP$, $OP_r = (revt - cogs - xsga - xint + xrd)/BE$ and
+    $CP = (revt - cogs - xsga - xint + xrd + acc)/BE$ where
+    \parencite{ball2016accruals} $acc = -\Delta rect -\Delta invt -\Delta xpp +\Delta drc +\Delta ap +\Delta xacc$
   \item Investment: $Inv = (at_t - at_{t-1})/at_{t-1}$
 \end{itemize}
 where the full description of the codes are

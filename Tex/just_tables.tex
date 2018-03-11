@@ -1,0 +1,76 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage{afterpage}
+\usepackage{amsmath, amsthm}
+\usepackage[backend=biber, style=authoryear]{biblatex}
+\usepackage{bookmark}       % links w/in PDF
+\usepackage{booktabs}       % align tables by decimal point -- regression t-stats
+\usepackage{dcolumn}        % table cells alignment
+\usepackage[margin=2.5cm]{geometry}
+%\usepackage{hyperref}       % links w/in PDF
+\usepackage{import}         % nested files
+\usepackage[utf8]{inputenc} % unsure
+\usepackage{pdflscape}      % landscape pages
+\usepackage{setspace}
+\usepackage{subfig}         % tables next to each other
+
+\setstretch{2.0}
+
+\title{
+  {Asset-pricing models: Turtles all the way down}\\
+  {\large Norwegian School of Economics}\\
+  {\large NOVA School of Business and Economics}
+}
+\author{Sam Thorold}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\import{./Tables/}{replicated_factors}
+
+Hopefully this text is double-spaced while the table captions and contents remain single-
+spaced.
+Table \ref{tbl:replicated_factors} shows summary statistics for \emph{replicated} factors
+created from CRSP data for the period July 1963 to December 2017.
+Where possible, I compare to data available online to compare the accuracy of my methods.
+All factors are within 5 basis points of the original factors with the exception of the
+investment factor, $CMA$, which is under the online version by 7 basis points.
+That being said, all factors have a correlation with their online counterparts of at least
+0.96.
+
+\begin{landscape}
+\import{./Tables/}{bootstrap}
+\end{landscape}
+
+\import{./Tables/}{contributions}
+
+\import{./Tables/}{GRS_196307_201712}
+
+\import{./Tables/}{25_Size_Inv_B16_196307_201712}
+
+%\afterpage{\clearpage
+\begin{landscape}
+\import{./Tables/}{32_Size_BM_Inv_B16_196307_201712}
+% https://tex.stackexchange.com/questions/47311/include-table-as-a-subfigure
+%\begin{table}%
+  %\scriptsize
+  %\centering
+  %\caption{Average value-weighted characteristics -- 1963-07 through 2016-12\label{tbl:chars}}%
+  %\subfloat[][$Size$-$BM^m$-$Prior$\label{tbl:valmomsort}]{\import{./Tables/}{ValMomSort}}%
+  %\qquad
+  %\subfloat[][$Size$-$BM$-$Inv$\label{tbl:valinvsort}]{\import{./Tables/}{AnnualValInvSort}}%
+%\end{table}
+
+\end{landscape}
+
+\import{./Tables/}{25_Size_Prior_B16_196307_201712}
+
+\begin{landscape}
+\import{./Tables/}{32_Size_BMm_Prior_B16_196307_201712}
+\end{landscape}
+
+\import{./Tables/}{25_Size_Var_B16_196307_201712}
+
+\end{document}

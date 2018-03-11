@@ -2,39 +2,4 @@
 
 \section{Data and Method}
 
-Where possible, data for factors and anomalies are taken from Dr. Kenneth French's
-website\footnote{mba.tuck.dartmouth.edu/pages/faculty/ken.french/}. I use data from the
-Centre for Research in Securities Prices (CRSP) and COMPUSTAT databases to construct
-missing factors. I use all stocks with a share code of 10 or 11 on the NYSE, AMEX or
-NASDAQ exchanges. I do not omit financial firms. The data not available from Dr. French's
-website are the monthly value and cash profitability factors as well as any sorts
-involving these variables. All factors are zero-investment long-short excess return
-factors constructed using 2 x 3 sorts on size and one other variable in the style of
-\textcite{fama1992cross}. To assign individual stocks into buckets, characteristics are
-compared to breakpoints from NYSE stocks only to prevent small stocks dominating results.
-The intersections of the two size buckets and three other characteristic buckets create
-six portfolios of stocks with similar characteristics. The return on a factor is then the
-average of the spreads between low and high characteristics for small and big stocks.
-While the portfolios are value-weighted, taking the average of the small and large stock
-spreads in effect overweights the importance of the small stock returns compared to value-
-weighting.
-
-To create the cash profitability factor I do the following. The market equity, ME, from
-June each year is assigned to the following twelve month holding period. I create the
-profitability characteristic, CP,  in the style of \textcite{ball2016accruals} (see also
-appendix \ref{sec:vars} forCRSP and COMPUSTAT datacodes). I assign the CP from last fiscal
-year, COMPUSTAT \texttt{fyear}, to the twelve month holding period from July to June. This
-lag in book values avoids look-ahead bias. Using NYSE stocks, I find the median ME as well
-as 30\textsuperscript{th} and 70\textsuperscript{th} percentiles for CP. All stocks are
-then assigned a bucket based on the NYSE percentile breakpoints. I find the value-weighted
-return at each month for the six unique combinations of ME and CP buckets;
-Small(S)-Unprofitable(U), S-Medium Profitability(M), S-Profitable(P), Big(B)-U, B-M, B-P.
-Then I find the spread between the returns on profitable and unprofitable firms for small
-and big stocks, PMU- small is the returns on SP less the returns on SU and PMU-big
-likewise for big stocks. The final return on the factor for each month is the average of
-the small and big spreads. While the number of shares of each stock is held constant for
-the holding period, the weight within a bucket will change from month to month as returns
-increase and decrease. The monthly value factor is created in the same way except I sort
-on $BM^m$ instead of CP and do not adjust the weight each month as the factor is
-rebalanced each month.
 
