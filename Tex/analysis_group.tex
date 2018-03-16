@@ -2,32 +2,29 @@
 
 \section{Analysis}
 
-I focus largely on the differences between two models, the five-factor model from
-\textcite{fama2016dissecting} which I refer to as F16, and a five-factor model similar to
-that of \textcite{ball2016accruals} which I refer to as B16. I focus on these models
-because they have the highest Sharpe ratio from the models I outlined earlier, and they
-are non-nested. Furthermore, F16 and earlier iterations have been studied extensively. The
-problems with F16 are well documented and provide a good benchmark to compare findings
-against.
+I begin by showing replicated factors are highly correlated with factors available online.
+The main analysis first presents the maximum $\text{Sh}^2$ for my proposed five-factor
+model as well other common models. I use a bootstrap procedure to enhance the reliability
+of the $\text{Sh}^2$ results and to show investment does not reliably improve the
+$\text{Sh}^2$ of the proposed model. Next I use spanning regressions to show that value
+and profitability add the most to the $\text{Sh}^2$ of my proposed model and that value
+and momentum combine to make investment redundant. Sorts on size-value-
+momentum/investment show this may be due to monthly value and momentum's ability to
+forecast future changes in book equity.
 
-I begin by comparing the maximum Sharpe ratios of the factors for each model as well as
-the amount each factor contributes to the Sharpe ratio. Value and profitability are the
-biggest contributors for both models and this lines up with the intuition of buying cheap,
-profitable stocks. Comparing GRS evidence shows where B16 does not live up to the promise
-of its superior Sharpe ratio. I investigate where factors contribute little to lowering
-the GRS statistic in certain sorts by comparing different versions of B16 and F16. In
-isolation, more timely value is more a hindrance than a help in many sorts. Profitability
-is not as helpful in sorts on volatility as previous research
-\parencite{novy2014understanding} suggests it should be. For particularly disastrous
-performances, I investigate which individual sorts cause the most pain and compare the
-performance to F16. Where value is constrained, the value factor does not offer much help
-and the profitability factor is left to pick up the slack. In the extreme sorts,
-profitability alone cannot explain all the average return, although performance is
-superior to that of F16. Sorts where value and momentum work against each other are a
-problem. Comparing with F16 shows the troublesome sorts share the ``lethal" return
-behaviour of small, unprofitable stocks that invest aggressively.
+Following the analysis of performance pricing \emph{all} assets and where this superior
+performance may stem from, I investigate anomaly performance to show that my proposed
+model reduces the GRS statistic for many common anomalies but struggles where value is
+constrained or where value and momentum cannot utilize their interaction. I compare
+anomaly regressions of my proposed model with the five-factor model of
+\textcite{fama2016dissecting} because these models have two of the highest $\text{Sh}^2$
+and they are non-nested. I show that value behaves similarly to investment in anomaly
+sorts. The choice of anomalies is motivated largely by GRS evidence. I include sorts on
+investment to show performance is not list by omitting the investment factor.
 
 \import{./Analysis/}{replication}
+
+\subsection{Pricing All Stocks}
 
 \import{./Analysis/}{bootstrap}
 
@@ -35,8 +32,10 @@ behaviour of small, unprofitable stocks that invest aggressively.
 
 \import{./Analysis/}{redundant_CMA}
 
-%\import{./Analysis/}{future_BE}
+\import{./Analysis/}{future_BE}
 
-%\import{./Analysis/}{GRS}
+\subsection{Pricing Subsets of Stocks}
+
+\import{./Analysis/}{GRS}
 
 %\import{./Analysis/}{anomalies_group}

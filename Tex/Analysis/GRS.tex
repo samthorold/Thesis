@@ -1,0 +1,29 @@
+% !TeX root=../main.tex
+
+Table \ref{tbl:GRS} shows the GRS statistic of \textcite{gibbons1989test} for the seven
+models in table \ref{tbl:bootstrap} across selected anomaly sorts. The main message of the
+table is that GRS evidence supports the $\text{Sh}^2$ evidence that B16, with a GRS
+statistic of 1.91, better describes the cross-section of stock returns than F17,  with a
+GRS statistic of 2.05. The table also shows that B16 struggles in sorts on annual value,
+BM, where the GRS statistic is above that of models that include annual value in place of
+monthly value. Furthermore, the sensitivity of the GRS test itself to the choice of test
+assets is highlighted by the impact of the size-$\text{BM}^m$-Prior sort that tilts the
+GRS evidence for value sorts in favour of B16.
+
+The GRS statistic gives a measure of how far from an ``efficient" portfolio the factors
+are in the context of the test assets. The GRS \emph{test} answers the question: do the
+factors span the portfolio that includes the test assets and factors? While the GRS
+\emph{statistic} gives a measure of \emph{how far} the factors are from spanning the
+portfolio that includes the test assets and factors. This means we can compare different
+models' ability to explain the returns on subsets of stocks. In general, the ability to
+price the returns on subsets of stocks matches the ability to price the returns on all
+stocks given by the maximum squared Sharpe ratio.
+
+B16 performs poorly in absolute terms in sorts on Size-Var, Size-RVar,
+Size-$\text{BM}^m$-Prior (monthly value and momentum) and Size-Prior (momentum). While the
+GRS statistic can identify sorts that cause problems for factors models, it does not help
+with why sorts cause problems. I examine individual intercepts and slopes from time series
+regressions for the portfolios from these sorts. Since I omit the investment factor, I
+include time series regressions for the Size-Inv (investment) and Size-OP-Inv
+(profitability from \textcite{fama2006profitability} and investment) to investigate how
+value and momentum slopes describe the returns on investment sorts.
