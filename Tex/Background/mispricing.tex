@@ -6,7 +6,7 @@ I use three measures of mis-pricing; the maximum squared Sharpe ratio, the GRS s
 and individual regression alphas. The maximum Sharpe ratio and GRS rely on the quadratic
 form of the alphas which emphasizes the importance of covariance of alphas. Individual
 regression slopes focus on the magnitude of alphas and help to identify which specific
-sorts cause problems leading to a high GRS (rejection that all alphas are jointly zero).
+sorts cause problems leading to a high GRS statistic.
 
 The level of mis-pricing for a set of test assets is given by the quadratic form in the
 alphas. This measure gives the amount the squared Sharpe ratio can be improved by
@@ -21,24 +21,20 @@ pricing model is not new, see Fama (1998), but Barillas and Shanken note that we
 price the returns on \emph{all} assets. This point means we can write the level of mis-
 pricing for all assets as $a'V_ea=Sh^2\left(R\right)-Sh^2\left(f\right)$ because our
 factors, $f$, are contained in the set of all assets, $R$. We do not need to identify all
-assets, $R$, to minimize the mis-pricing given by the quadratic form of the alphas. We
-only need to maximize the squared Sharpe ratio of the factors. Assuming the tangency
-portfolio lies on the positively sloped portion of the efficient frontier, this is
-analogous to maximizing the Sharpe ratio of the factors. We must focus on the interaction
-between factors rather than their average unexplained return.
+the components of $R$ to minimize the mis-pricing given by the quadratic form of the
+alphas. We only need to maximize the squared Sharpe ratio of the factors.
 
 The quadratic form in the alphas is a key part of the \textcite{gibbons1989test} (GRS)
 statistic of whether a portfolio is mean-variance efficient, i.e. it attains the maximum
 Sharpe ratio. The GRS is an F-test that all the alphas from the test assets are jointly
-zero. Invariably, the GRS rejects everything, and we are left to mourn yet another
-ineffective factor-model. Knowing that the GRS statistic is based on the quadratic form of
-the alphas, we can use it to rank the ability of different models to price subsets of
-assets. I use the GRS statistic, rather than the p-value, to highlight where certain
-factors help to explain the returns on certain test assets. Comparing the GRS, rather than
-the average absolute intercept or similar measures, captures a factor’s ability to explain
-the variation in returns and not just average return. GRS evidence does not always align
-with factor contribution to the overall Sharpe ratio of a model. I use the divergence of
-Sharpe ratio and GRS evidence to investigate where otherwise important factors disappear.
+zero. We can use the GRS statistic to rank the ability of different models to price
+subsets of assets because the GRS is based on the quadratic form of the alphas. I use the
+GRS statistic to highlight where certain factors help to explain the returns on certain
+test assets. Comparing the GRS, rather than the average absolute intercept or similar
+measures, captures a factor’s ability to explain the variation in returns and not just
+average return. GRS evidence does not always align with factor contribution to the overall
+Sharpe ratio of a model. I use the divergence of Sharpe ratio and GRS evidence to
+investigate where otherwise important factors disappear.
 
 I do not explicitly use the \textcite{hansen1997assessing} (HJ) distance. The HJ distance
 gives a measure of model misspecification that indicates how close our proposed stochastic
