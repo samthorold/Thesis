@@ -14,14 +14,15 @@ opposite relationship with future changes in book equity than value and investme
 
 An asset’s price equals its expected risk adjusted future payoff. The risk adjustment is
 driven by the covariance of asset payoffs with marginal utility. Under the Capital Asset
-Pricing Model (CAPM) of \textcite{sharpe1964capital}, \textcite{lintner1965valuation}
-and\textcite{black1972capital}, an investor would rather have an asset that pays well when
+Pricing Model (CAPM) of \textcite{sharpe1964capital}, \textcite{lintner1965valuation} and
+\textcite{black1972capital}, an investor would rather have an asset that pays well when
 marginal utility is high, when times are tough, than an asset that pays well when marginal
 utility is low, when times are good. Assets that do badly when times are tough have low
 prices (high returns). Times are tough when an investor’s other assets have done poorly,
 such as when the market performs poorly. Prices are low (returns are high) for assets that
-covary with the market portfolio. Return is compensation for risk where risk is measured
-as covariance with the market.
+covary strongly with the market portfolio relative to assets that covary weakly with the
+market portfolio. Return is compensation for risk where risk is measured as covariance
+with the market.
 
 The intertemporal CAPM (ICAPM) of \textcite{merton1973intertemporal} says that investors are
 not just concerned with the level of payoff in the future but also what consumption and
@@ -32,26 +33,26 @@ portfolio still plays an important role, but investors price additional state va
 
 Asset-pricing models that focus on stock returns use traded portfolios to mimic the
 returns on the unobserved priced state variables of the ICAPM. The factors are risk
-premiums. For example, the excess return on the market is the market risk premium and the
-Sharpe ratio of the market gives the market price of risk. Additional portfolios designed
-to capture priced state variables of interest to ICAPM investors are typically long/short
-spread factors, but the intuition is the same as the market portfolio.
+premiums. The excess return on the market is the market risk premium and the Sharpe ratio
+of the market gives the market price of risk. Portfolios designed to capture additional
+priced state variables of interest to ICAPM investors are typically long/short spread
+factors, but the intuition is the same as the market risk premium.
 
-Currently, the choice of factors is empirically motivated. An “anomaly”, a time series of
-returns not explained by a set of factors, is discovered and a couple of years later it
+Currently, the choice of factors is empirically motivated. A time series of returns not
+explained by a set of factors, an ``anomaly”, is discovered and a couple of years later it
 becomes a factor. Factors may be subsumed by other factors, but the list just keeps
-increasing. The explosion of factors has been so great that \textcite{harvey2016and}
-call for an increase in the usual confidence intervals used to class a new factor
-“discovered”. We are throwing darts at anomalies and, by focusing on driving individual
-regression intercepts to zero, not even throwing at the right board.
+increasing. The explosion of factors has been so great that \textcite{harvey2016and} call
+for an increase in the usual confidence intervals used to class a new factor “discovered”.
+We are throwing darts at anomalies and, by focusing on driving individual regression
+intercepts to zero, not even throwing at the right board.
 
-The ultimate goal of an asset-pricing model is to minimize mis-pricing for all assets. We
-are concerned with the covariance of pricing errors (alphas) as well as their magnitude
-since the level of mis-pricing is given by the quadratic form of the alphas.
+The ultimate goal of an asset-pricing model is to minimize mis-pricing for \emph{all}
+assets. We are concerned with the covariance of pricing errors (alphas) as well as their
+magnitude since the level of mis-pricing is given by the quadratic form of the alphas.
 \textcite{barillas2016alpha} explain that to minimize mis-pricing for all assets, we need
-only maximize the Sharpe ratio of the factors. We are concerned with the covariance of
-factors and not just the magnitude of the average return left unexplained by other
-factors.
+only maximize the Sharpe ratio of the factors. If we care about the covariance of alphas
+we must care equally about the covariance of factors and not just the magnitude of the
+average return left unexplained.
 
 Reducing the universe of assets to common stocks, we can use time-worn investing
 intuition, rather than throwing darts at empirical anomalies, to choose variables that are
@@ -62,26 +63,24 @@ equity (B/M). A high B/M indicates a cheap stock, a “value” stock, while a l
 indicates an expensive stock, a “growth” stock. B/M is a noisy measure of value that can
 be cleaned-up with momentum \parencite{kok2017facts, asness2013devil}. Momentum captures
 recent returns, typically over the previous year omitting the most recent month. I measure
-profitability as the accrual-adjusted operating income \parencite{ball2016accruals}. By
-creating mimicking portfolios for value, momentum and profitability, we capture state
-variables that intuition says investors price.
+profitability as the accrual-adjusted operating income \parencite{ball2016accruals}. The
+returns on portfolios based on value, momentum and profitability characteristics mimic
+state variables priced by investors.
 
-While the maximum Sharpe ratio of the factors tells us the best model, there may be sorts
-in which the best model performs poorly. The GRS statistic of \textcite{gibbons1989test}
-tells us whether a portfolio is mean-variance efficient in the context of a set of test
-assets. The null hypothesis of the test is that the Sharpe ratio of a set of factors
-cannot be improved by investing in the test assets. I compare the GRS statistics of
-different specifications of model across different test assets to show where a given
-factor helps or hinders when explaining the absolute size and covariance of alphas. The
-GRS evidence does not always match the maximum Sharpe ratio evidence, nor the literature.
-For example, adding the profitability factor to a model does not always reduce the GRS in
-sorts on volatility.
+While the maximum Sharpe ratio of the factors indicates the best overall model, there may
+be sorts creating subsets of assets for which the best overall model performs poorly. The
+GRS statistic of \textcite{gibbons1989test} indicates whether a portfolio is mean-variance
+efficient in the context of a set of test assets. The null hypothesis of the test is that
+the Sharpe ratio of a set of factors cannot be improved by investing in the test assets. I
+compare the GRS statistics of different specifications of model across different test
+assets to show where a given factor helps or hinders when explaining the absolute size and
+covariance of alphas. The GRS evidence does not always match the maximum Sharpe ratio
+evidence.
 
-After the GRS has identified sorts that cause problems for a model, we want to know why
-the model performs poorly. I use individual portfolio regressions to highlight the factor
-loadings for sorts that create problems. I compare non-nested specifications of model to
-show where value and momentum slopes differ from the subsumed investment slope. Regression
-slopes do not always match characteristic sorts. The model performs poorly where value is
-constrained or where value and momentum cannot utilize their interaction. The offending
-sorts share the “lethal” combination of small, unprofitable firms that somehow invest
-aggressively identified in \textcite{fama2015five}.
+I use individual portfolio regressions for problem sorts identified by the GRS to
+investigate the factor loadings that lead to problems. I compare non-nested specifications
+of model to show where value and momentum slopes differ from the subsumed investment
+slope. Regression slopes do not always match characteristic sorts. The model performs
+poorly where value is constrained or where value and momentum cannot utilize their
+interaction. The offending sorts share the ``lethal” combination of small, unprofitable
+firms that somehow invest aggressively identified in \textcite{fama2015five}.
