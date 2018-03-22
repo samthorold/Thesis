@@ -7,8 +7,8 @@
     -% for model in model_names %- & =% model %= -% endfor %- \\
   \midrule
   -% for a in anomalies %-
-    -% if a=="Size-BM" %-\multicolumn{8}{l}{Value constrained}-% endif %-
-    -% if a=="Size-$\\text{OP}^{06}$" %-\multicolumn{8}{l}{Selected anomalies}-% endif %-
+    -% if a=="Size-BM" %-\multicolumn{8}{l}{Value constrained} \\-% endif %-
+    -% if a=="Size-$\\text{OP}^{06}$" %-\multicolumn{8}{l}{Selected anomalies} \\-% endif %-
     =% a %= -% for model in model_names %- & =% anomalies[a]["GRS"][model] %= -% endfor %- \\
     -% if a in ["BM constrained", "Value constrained", "Selected anomalies"] %-[1em]-% endif %-
   -% endfor %-
