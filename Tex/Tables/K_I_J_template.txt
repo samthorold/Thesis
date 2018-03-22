@@ -1,0 +1,20 @@
+
+\begin{table}[!ht]
+\footnotesize
+\centering
+\caption{=% caption %=}
+\begin{tabular}{l-% for i in range(K*J*2) %-r-% endfor %-}
+  \toprule
+    =% var_name %= $\rightarrow$
+    -% for i in range(k) %--% for n in col_names %- & n-% endfor %--% for n in col_names %- & n-% endfor %--% endfor %-  \\ 
+  \midrule
+  \multicolumn{=% K*J*2 + 1 %=}{l}{$=% title %=$}  \\
+  -% for coef in coefs %-
+    -% for k in range(K) %- & \multicolumn{=% j %=}{c}{=% name %=} & \multicolumn{=% j %=}{c}{t(=% name %=)} -% endfor %-  \\
+    -% for k in range(K) %- \cmidrule(r){=% (k+1)*J+2-J %=-=% (k+1)*J+2-1 %=} \cmidrule(r){=% (k+2)*J+2-J %=-=% (k+2)*J+2-1 %=} -% endfor %-
+    -% for i in range(I) %-=% row_names[i] %= -% for k in range(K) %--% for j in range(J) %- & =% coef["coef"][k][i][j] %= -% endfor %--% for j in range(J) %- & =% coef["tstat"][k][i][j] %= -% endfor %--% endfor %-  \\
+  -% endfor %-
+  \bottomrule
+\end{tabular}
+\label{=% label %=}
+\end{table}
