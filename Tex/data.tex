@@ -1,5 +1,67 @@
 % !TeX root=./main.tex
 
-\section{Data and Method}
+\section{Data}
 
+Where possible, data are taken from previous research. Authors of previous research who
+make their data available online include Clifford Asness, Robert Novy-Marx  and Kenneth
+French\footnote{
+\url{https://www.aqr.com/library/data-sets},
+\url{http://rnm.simon.rochester.edu/data_lib/index.html},
+\url{http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html},
+respectively}.
+The data not available online are the cash profitability factor and sorts on size, value
+and momentum/investment. I use Center for Research in Securities Prices (CRSP) and
+COMPUSTAT data to construct missing factors and sorts. My sample includes all common
+stocks, CRSP share code 10 or 11, on the NYSE, AMEX or NASDAQ exchanges. Monthly returns
+are from CRSP beginning in July 1963 and ending in December 2017. Annual book values are
+from COMPUSTAT beginning in 1961 for lagged variables. I do not omit financial firms nor
+winsorize variables. See the data appendix for more complete definitions of variables and
+the data codes used to create each characteristic.
 
+I outline in my own words how I create the profitability factor below. Superior
+instructions are available on Kenneth French’s website. The missing profitability factor
+is created from independent sorts on size and cash profitability. Stocks are sorted into
+two size buckets and three profitability buckets. Size and profitability characteristics
+are updated at the end of June. The size for a given month is the market equity from the
+most recent June. For example, a firm’s size in July 1999 and June 2000 is the market
+equity from June 1999. Cash profitability for a given month is created using the balance
+sheet method of \textcite{ball2016accruals}. Balance sheet values are taken from the
+previous year. For example, profitability in July 2000 uses balance sheet values from
+1999. These values are not updated until the next July so profitability in June 2001 still
+uses balance sheet values from 1999. I use NYSE breakpoints to assign all stocks to
+buckets. The breakpoints are the median for size and the 30th and 70th percentiles for
+profitability. Stocks must meet the profitability requirements set out in
+\textcite{fama2015five} and missing accruals values are replaced with zero. While value,
+momentum and investment factors are available online, their respective characteristics for
+each stock are not. To create the timelier value characteristic, I use the market equity
+from the previous month and book equity from the previous year updated each July as with
+profitability. To create the momentum characteristic, I follow the instructions on Kenneth
+French’s website and sum the returns from twelve months ago to two months ago. To create
+the investment characteristic, I follow \textcite{fama2015five} and use the asset growth
+from the previous year. The intersections of the two size buckets and three profitability
+buckets gives six total buckets. The returns each month for each bucket are the value-
+weighted returns of the stocks assigned to each bucket. The bucket constituents are held
+constant for twelve months from July of year t to June of year t+1. Nevertheless, the
+weight each stock has within a bucket will change month-to-month as returns differ across
+stocks each month. While size is held constant for the entire holding period to keep a
+given stock in the correct bucket, the weight is adjusted for returns in the holding
+period. Using the small buckets, I find the spread between the high-profit and low-profit
+returns at each month giving a time series of returns representing the profitability risk
+premium for small stocks. I do the same for large stocks. The average of the risk premiums
+for small and large stocks gives the cash profitability factor. Using the average of the
+risk premiums for small and large stocks highlights the possible overweighting of small
+stocks embedded in this methodology. We take great pains to avoid size bias in the factors
+- using NYSE breakpoints, sorting on size, value-weighting returns - only to then take the
+simple average of the spreads from small and large stocks. Nevertheless, the time-series
+of returns methodology is extremely prevalent in the literature and has some clear
+benefits such as zero-investment portfolios and the intuitive interpretation of regression
+loadings. Three-way sorts differ slightly. Sorts on value and momentum/investment are
+independent of each other but performed within size buckets using NYSE quartile
+breakpoints to assign all stocks to buckets. Characteristics are value-weighted. For the
+size, timely value and momentum sorts this means using the previous month’s market equity
+because these portfolios are rebalanced monthly. For the size, annual value and investment
+sorts this means using the market equity from the most recent June as with the
+profitability factor because these portfolios are rebalanced annually. Again, for annually
+rebalanced portfolios we must adjust the weight for returns individual stocks make each
+month throughout the holding period. Stocks must have values for all the variables
+involved to be included in sorts.

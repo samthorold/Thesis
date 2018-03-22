@@ -1,0 +1,77 @@
+% !TeX root=../main.tex
+
+Table \ref{tbl:redundant_CMA} shows the investment factor regressed on other
+factors.
+The idea is similar to the spanning regressions from table
+\ref{tbl:contributions} except here I omit some factors to narrow down which
+specific factors subsume investment.
+The main message of the table is that value and momentum desribe the returns on
+the investment factor and that monthly value and momentum are more robust to
+including other factors.
+
+Regression 1 uses monthly value, $HML^m$, and momentum, $WML$, as independent
+variables.
+The intercept, -0.04, is insignificant with a t-statistic of -0.7.
+Monthly value and momentum describe returns on the investment factor.
+The value slope is 0.52 with a t-statistic of 23.24.
+Value is highly significant when describing returns on investment and this is
+to be expected given value and investment's correlation.
+The momentum slope is 0.26 with a t-statistic of 14.45.
+Momentum is also highly significant when describing returns on investment
+although this is probably more to do with the slope enhancement from value than
+momentum's relationship with investment.
+Regression 2 uses annual value, $HML$, and momentum, $WML$, as independent
+variables.
+The intercept, 0.08, is insignificant with a t-statistic of 1.32.
+Annual value and momentum also describe returns on the investment factor.
+The value slope is 0.51 with a t-statistic of 25.32.
+The momentum slope is 0.05 with a t-statistic of 3.9.
+While momentum is still significant when paired with annual value,
+the slope and significance are drastically reduced.
+This supports the idea that momentum's earlier large slope and high
+significance were due to the slope enhancement from monthly value.
+
+Regression 3 shows that investment regressed on the factors from the B16 model
+leaves very little unexplained return, 0.01\% per month.
+This is the same regression used to find investment's contribution the B16b
+model in table \ref{tbl:contributions}.
+The value slope is very similar to the slope in regression 1 at 0.49 and highly
+significant.
+The momentum slope also remains similar to regression 1 with a slope of 0.22.
+The market has a significant negative slope of -0.09 and
+profitability has a significant positive slope of 0.1.
+Size is not significant when describing the returns on investment.
+Regression 4 shows that investment regressed on the factors from the F17 model,
+without investment as this is the dependent variable,
+leaves 0.12\% per month unexplained return with a t-statistic of 2.01.
+This is a change from regression 2 where only annual value and momentum were
+used as independent variables and the intercept was insignificant.
+Monthly value and momentum are more robust to including other factors in the
+regression.
+This is the same regression used to find investment's contribution the F17
+model in table \ref{tbl:contributions}.
+The value slope is very similar to the slope in regression 2 at 0.48 and highly
+significant.
+The momentum slope also remains similar to regression 2 with a slope of 0.03.
+The market has a significant negative slope of -0.09 but
+profitability is insignificant.
+As with regression 3, we find size is not significant when describing the
+returns on investment.
+
+To say that value and momentum describe the returns on the investment factor
+does not help us say why this is the case nor why monthly value and momentum
+go together so well.
+Investment is used as a proxy for changes in book equity in the dividend
+discount model intuition of Fama and French.
+\textcite{kok2017facts} find monthly value helps to identify which high value
+stocks will exhibit changes in booke equity in the future.
+\textcite{asness2013devil} find that momentum has predictive power for changes
+in book equity.
+The higher momentum slope of regression 1 over regression 2 is partly
+statistical \parencite{fama2015incremental}, but may also be because monthly
+value and momentum combine to give a better proxy for changes in book equity
+than investment.
+With this in mind, I sort on size, monthly value and momentum and compare
+characteristics, future growth in book equity in particular, with sorts on
+size, annual value and investment.
+

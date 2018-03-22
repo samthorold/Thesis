@@ -1,0 +1,51 @@
+% !TeX root=../main.tex
+
+Table \ref{tbl:bootstrap} shows the maximum $\text{Sh}^2$ for seven models as well as the
+90\% confidence intervals for 100,000 bootstrap simulations of the difference in
+$\text{Sh}^2$ between the model in the row and the model in the column. The main message
+of the table is that adding the investment factor to market, size, monthly value, momentum
+and cash profitability factors, B16 model, does not reliably improve the Sharpe ratio of
+the factors (the 90\textsuperscript{th} percentile of
+$\text{Sh}^2(\text{B16b})-\text{Sh}^2(\text{B16})$ is 0). The table also shows the
+benefits of combining monthly value, momentum and cash profitability as both monthly value
+and momentum combined and cash profitability alone dramatically increase the $\text{Sh}^2$
+of the factors.
+
+Panel A shows the maximum $\text{Sh}^2$ of the modified \textcite{ball2016accruals} model
+I propose, B16, is 0.316. The $\text{Sh}^2$ is not improved by adding the investment
+factor, B16b, as it remains 0.316. Adding the momentum factor, F17, to the five-factor
+model of \textcite{fama2016choosing}, F16, improves the $\text{Sh}^2$ from 0.225 to 0.24.
+Modifying profitability to account for accruals as in the F16 model icreases the
+$\text{Sh}^2$ of the five- factor model of \textcite{fama2015five}, F15, from 0.099. To
+compare to non-nested models I also show the four-factor model of
+\textcite{carhart1997persistence}. The four-factor model combining annual value with
+momentum, C97, has a $\text{Sh}^2$ of 0.09. The four- factor model that combines monthly
+value with momentum has a $\text{Sh}^2$ of 0.136.
+
+Panel B shows the results in panel A are, for the most part, believable. Those models with
+higher $\text{Sh}^2$s than their peers in panel A have 90\% confidence intervals that are
+positive in panel B. By randomly drawing months with replacement in a bootstrap procedure
+I check that the time series of returns we have observed is not drastically different from
+those we might have observed in another universe. This is important because when analysing
+returns we do not have the benefit of seeing the distribution at each point in time, we
+see only the distribution across time. Running many bootstrap procedures gives a
+distribution of $\text{Sh}^2$s. The importance of the procedure is shown by any 90\%
+confidence intervals that cross zero. These intervals imply that $\text{Sh}^2(\text{Row})$
+is not reliably better than $\text{Sh}^2(\text{Column})$.
+
+F15 is not reliably better than either specification of the Carhart model. The confidence
+interval for $\text{Sh}^2(\text{F15})-\text{Sh}^2(\text{C97(b)})$ is not strictly
+positive. Value and momentum combine to perform similarly to profitability and investment.
+This is striking because profitability and investment are credited with reducing the
+number of anomalies and reducing the defining characteristics of many anomalies to small,
+unprofitable stocks that somehow invest aggressively \parencite{fama2015five,
+fama2016dissecting}.
+
+We can eyeball where the main contributions to model $\text{Sh}^2$ come from by comparing
+the $\text{Sh}^2$ of nested models, or close to nested. The biggest contributors to
+maximum $\text{Sh}^2$ appear to be cash profitability alone and monthly value coupled with
+momentum. Cash profitability pushes the squared Sharpe ratio for F15 from 0.099 to 0.225
+for F16. Monthly value and momentum push the squared Sharpe ratio for F17 from 0.24 to
+0.316 for B16(b). We can pull out the exact contributions each factor makes to the
+$\text{Sh}^2$s in panel A of table \ref{tbl:bootstrap} by examining individual spanning
+regressions.

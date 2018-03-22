@@ -11,12 +11,12 @@
 \usepackage{import}         % nested files
 \usepackage[utf8]{inputenc} % unsure
 \usepackage{pdflscape}      % landscape pages
-\usepackage{setspace}       % double line spaceing but not in tables etc.
+\usepackage{setspace}       % double line spacing but not in tables etc.
 \usepackage{subfig}         % tables next to each other
 
 \addbibresource{references.bib}
 
-\setstretch{2.0}
+\setstretch{1.5}
 
 \title{
   {Asset-pricing models: Turtles all the way down}\\
@@ -28,40 +28,40 @@
 
 \begin{document}
 
-\maketitle
+%\maketitle
 
 \begin{abstract}
   A five-factor model of
   market, size, value, momentum and profitability factors
   has a maximum Sharpe ratio of 0.56.
   The largest marginal contributions are from value and profitability.
-  Value and momentum interact to make investment unnecessary.
+  Value and momentum, through their relationship with book equity,
+  interact to make investment unnecessary.
   Omitting investment does not hinder performance when explaining sorts on investment.
   The model struggles most with sorts on volatility and momentum.
+  Poor performance is linked to the inability of value to describe certain sorts.
 \end{abstract}
 
 \import{./}{intro}
 
-\import{./}{literature}
+\import{./}{background_group}
 
 \import{./}{data}
 
-%\import{./}{method}
-
-\import{./}{results}
+\import{./}{analysis_group}
 
 \import{./}{conclusions}
 
+\setstretch{1.0}
+
 \printbibliography
+
+%\setstretch{2.0}
 
 \appendix
 
-\import{./}{tables}
-
-%\import{./}{addl_results}
+\import{./}{tables_group}
 
 \import{./}{vars}
-
-%\import{./}{replication}
 
 \end{document}

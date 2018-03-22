@@ -1,0 +1,46 @@
+% !TeX root=../main.tex
+
+\subsection{Measures of Mis-Pricing}
+
+I use three measures of mis-pricing; the maximum squared Sharpe ratio, the GRS statistic
+and individual regression alphas. The maximum Sharpe ratio and GRS rely on the quadratic
+form of the alphas which emphasizes the importance of covariance of alphas. Individual
+regression slopes focus on the magnitude of alphas and help to identify which specific
+sorts cause problems leading to a high GRS statistic.
+
+The level of mis-pricing for a set of test assets is given by the quadratic form in the
+alphas. This measure gives the amount the squared Sharpe ratio can be improved by
+investing in the test assets as well as the factors. This relationship is given by
+$a'V_ea=Sh^2\left(R,f\right)-Sh^2\left(f\right)$ where $a$ is the vector of alphas, $V_e$
+is the covariance matrix of the residuals, $Sh^2\left(\cdot\right)$ is the maximum squared
+Sharpe ratio, $R$ is the matrix of test asset excess returns and $f$ is the matrix of
+factor returns. The key insight in \textcite{barillas2016alpha} is that
+$Sh^2\left(R,f\right)=Sh^2\left(R\right)$ if $R$ is the returns on all assets. The idea
+that test assets are not always relevant to make statements about the quality of an asset-
+pricing model is not new, see Fama (1998), but Barillas and Shanken note that we want to
+price the returns on \emph{all} assets. This point means we can write the level of mis-
+pricing for all assets as $a'V_ea=Sh^2\left(R\right)-Sh^2\left(f\right)$ because our
+factors, $f$, are contained in the set of all assets, $R$. We do not need to identify all
+the components of $R$ to minimize the mis-pricing given by the quadratic form of the
+alphas. We only need to maximize the squared Sharpe ratio of the factors.
+
+The quadratic form in the alphas is a key part of the \textcite{gibbons1989test} (GRS)
+statistic of whether a portfolio is mean-variance efficient, i.e. it attains the maximum
+Sharpe ratio. The GRS is an F-test that all the alphas from the test assets are jointly
+zero. We can use the GRS statistic to rank the ability of different models to price
+subsets of assets because the GRS is based on the quadratic form of the alphas. I use the
+GRS statistic to highlight where certain factors help to explain the returns on certain
+test assets. Comparing the GRS, rather than the average absolute intercept or similar
+measures, captures a factor’s ability to explain the variation in returns and not just
+average return. GRS evidence does not always align with factor contribution to the overall
+Sharpe ratio of a model. I use the divergence of Sharpe ratio and GRS evidence to
+investigate where otherwise important factors disappear.
+
+I do not explicitly use the \textcite{hansen1997assessing} (HJ) distance. The HJ distance
+gives a measure of model misspecification that indicates how close our proposed stochastic
+discount factor (SDF) is to a valid SDF. Given a risk-free asset, \textcite{kan2008model}
+show that we can modify the HJ distance to require all SDFs to assign the same price to
+the risk-free asset. Their modified HJ distance compares the pricing-errors for excess
+returns. With traded factors, the modified HJ distance is the improvement in the squared
+Sharpe ratio of the factors given by the quadratic form of the alphas. Maximizing the
+Sharpe ratio of factors is the same as minimizing the modified HJ distance for all assets.
