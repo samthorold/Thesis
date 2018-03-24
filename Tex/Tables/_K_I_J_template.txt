@@ -5,7 +5,7 @@
 \caption{=% caption %=}
 \begin{tabular}{l-% for i in range(K*J*2) %-r-% endfor %-}
   \toprule
-    =% var_name %= $\rightarrow$
+    =% col_name %= $\rightarrow$
     -% for i in range(k) %--% for n in col_names %- & n-% endfor %--% for n in col_names %- & n-% endfor %--% endfor %-  \\ 
   \midrule
   \multicolumn{=% K*J*2 + 1 %=}{l}{$=% title %=$}  \\
