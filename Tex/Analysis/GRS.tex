@@ -1,13 +1,15 @@
 % !TeX root=../main.tex
 
-B16 performs poorly in absolute terms in sorts on Size-Var, Size-RVar,
-Size-$\text{BM}^m$-Prior (monthly value and momentum) and Size-Prior (momentum). While the
-GRS statistic can identify sorts that cause problems for factors models, it does not help
-with why sorts cause problems. I examine individual intercepts and slopes from time series
-regressions for the portfolios from these sorts. Since I omit the investment factor, I
-include time series regressions for the Size-Inv (investment) and Size-OP-Inv
-(profitability from \textcite{fama2006profitability} and investment) to investigate how
-value and momentum slopes describe the returns on investment sorts.
+B16 performs performs poorly, relative to F16/17, in sorts on annual value.
+In absolute terms, B16 performs poorly in sorts on momentum and variance,
+although B16 outperforms F16.
+To explore poor relative and absolute performance,
+I examine intercepts and coefficients from time-series regressions of the
+problem sorts on B16 and F16.
+The non-nested models show where value and momentum differ from investment
+slopes.
+I also include sorts on investment to explore how performance is not lost
+despite omitting the investment factor.
 
 Table \ref{tbl:GRS} shows the GRS statistic for selected anomaly sorts across
 the seven models from table \ref{tbl:bootstrap}.
@@ -16,10 +18,12 @@ $\text{Sh}^2$ evidence from table \ref{tbl:bootstrap} but my proposed model,
 B16, struggles where value is constrained by sorts on the value characteristic.
 Anomalies are chosen based on prior research.
 \textcite{fama2015five} test the five-factor model, F15, with finer sorts on
-the characteristics used to create the factors.
+the characteristics used to create the factors; $\text{HML}$,
+$\text{PMU}^{06}$ and $\text{CMA}$.
 \textcite{fama2016dissecting}, following intuion in
 \textcite{lewellen2010skeptical}, test the five-factor model with sorts on
-charatceristics not used to create the factors.
+charatceristics not used to create the factors, for example accruals
+\parencite{sloan1996stock} and volatility \parencite{ang2006cross}.
 The two-way sorts are independent 5$\times$5 sorts on size and one other
 characteristic giving 25 test portfolios.
 The three-way sorts first split the data in half based on size before making
@@ -33,7 +37,7 @@ test portfolios and the factors describe the returns on the portfolios.
 The table is split to make three points;
 constraining annual value hinders the ability of B16 to describe returns,
 constraining monthly value is far less disastrous for B16 than other models and
-in sorts on all variables that are not annual value, B16 outperforms F17.
+in sorts on all variables that are not annual value, B16 outperforms F16/17.
 The three sorts involving $BM$ at the top of table \ref{tbl:GRS} have a GRS of
 1.23 for F17 and 1.38 for B16.
 The smaller GRS for F17 than B16 means the $\text{Sh}^2$ of F17 can be improved
