@@ -1,0 +1,22 @@
+
+\begin{table}[!ht]
+=% font_size %=
+\centering
+\caption{=% caption %=}
+\begin{tabular}{l-% for i in range(K*J) %-r-% endfor %-}
+  \toprule
+    -% if K_hdrs %--% for hdr in K_hdrs %- & \multicolumn{=% J %=}{c}{=% hdr %=}-% endfor %-  \\
+    -% for k in range(K) %- \cmidrule(r){=% k*J+2 %=-=% k*J+J+2-1 %=}-% endfor %--% endif %-
+    =% col_name %= $\rightarrow$-% for i in range(K) %--% for n in col_names %- & =% n %=-% endfor %--% endfor %-  \\ 
+  \midrule
+  -% if regstr %-\multicolumn{=% K*J + 1 %=}{l}{$=% regstr %=$}  \\-% endif %-
+  -% for coef in coefs.values() %-
+    & \multicolumn{=% 2*J %=}{c}{=% coef["display"] %=}  \\
+    -% for k in range(K) %- \cmidrule(r){=% k*J+2 %=-=% k*J+J+2-1 %=}-% endfor %-
+    -% for i in range(I) %-=% row_names[i] %= -% for k in range(K) %--% for j in range(J) %- & =% coef["coef"][k][i][j] %= -% endfor %--% endfor %-  \\
+    -% endfor %-
+  -% endfor %-
+  \bottomrule
+\end{tabular}
+\label{=% label %=}
+\end{table}
