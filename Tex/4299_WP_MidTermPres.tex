@@ -1,6 +1,7 @@
 \documentclass{beamer}
 
 \usepackage{booktabs}
+\usepackage{dcolumn}
 \usepackage{graphicx}
 \usepackage[utf8]{inputenc}
 
@@ -8,9 +9,8 @@
 
 \title[Turtles]{Asset pricing models: turtles all the way down}
 \author[Thorold]{4299 Sam Thorold\\
-                 Supervisor: Andre Silva}
-\institute{NHH\\
-           NOVA}
+                 Supervisors: Francisco Santos and Andr\'e Silva}
+\institute{NHH and NOVA}
 \date[April 2018]{\today}
 
 \begin{document}
@@ -22,16 +22,95 @@
 \tableofcontents
 \end{frame}
 
-\section{Highest Sharpe Ratio}
+\section{Mkt, size, value, momentum and profitability factors have the highest
+Sharpe ratio}
 \begin{frame}
-\frametitle{Highest Sharpe Ratio}
+\frametitle{Highest Sharpe ratio}
 \resizebox{\linewidth}{!}{\input{Tables/bootstrap_pres_tbl}}
 \end{frame}
 
-\section{Contributions to Sharpe Ratio}
+\section{Value and profitability contribute the most to Sharpe ratio}
 \begin{frame}
-\frametitle{Contributions to Sharpe Ratio}
-\resizebox*{!}{\dimexpr\textheight-1.1cm\relax}{\input{Tables/contributions_pres_tbl}}
+\frametitle{Contributions to Sharpe ratio}
+\begin{center}
+\resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{
+    \input{Tables/contributions_pres_tbl}
+    }
+\end{center}
+\end{frame}
+
+\section{Value and momentum subsume investment}
+\begin{frame}
+\frametitle{Value and momentum subsume investment}
+\begin{center}
+\resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{
+    \input{Tables/redundant_inv_pres_tbl}
+    }
+\end{center}
+\end{frame}
+
+\section{Because they are a better proxy for changes in BE}
+\begin{frame}
+\frametitle{Size-BM-Inv sorts}
+\begin{center}
+\resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{
+    \input{Tables/Size_BM_Inv_chars_pres_tbl}
+    }
+\end{center}
+\end{frame}
+\begin{frame}
+\frametitle{Size-$\text{BM}^m$-Prior sorts}
+\begin{center}
+\resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{
+    \input{Tables/Size_BMm_Prior_chars_pres_tbl}
+    }
+\end{center}
+\end{frame}
+
+\section{But GRS shows problems with momentum and volatility sorts}
+\begin{frame}
+\frametitle{GRS statistic}
+\begin{center}
+\resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{
+    \input{Tables/GRS_pres_tbl}
+    }
+\end{center}
+\end{frame}
+
+\section{Small, unprofitable growth firms with poor recent returns
+behave like small, unprofitable firms that invest aggressively}
+\begin{frame}
+\frametitle{Individual sorts}
+\begin{itemize}
+    \item Value does the work of investment
+    \item Sorts on momentum
+    \begin{itemize}
+        \item -ve profit slopes in the extremes of momentum -- volatility
+        \item Small, low-prior and small, high-prior buckets are the biggest
+        problems and value disappears here
+    \end{itemize}
+    \item Sorts on variance
+    \begin{itemize}
+        \item Small, high-variance is the biggest problem and value disappears
+        here
+    \end{itemize}
+    \item Small, unprofitable growth firms with poor recent returns
+    $\rightarrow$ -ve alpha
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Omissions due to time and intelligence constraints}
+\begin{itemize}
+    \item Momentum and volatility relationship
+    \item Why is value disappearing in the problem buckets
+    \item Volatility managed portfolios
+    \item BAB factor -- small contribution to $\text{Sh}^2$ (0.02) due to
+    unexplained volatility
+    \item QMJ factor -- small contribution to $\text{Sh}^2$ (0.05) due to low
+    unexplained average return
+    \item Stance on risk vs behavioural stories
+\end{itemize}
 \end{frame}
 
 \end{document}
