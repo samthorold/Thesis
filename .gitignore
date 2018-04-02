@@ -20,3 +20,6 @@ __pycache__
 *.xlsx
 *.csv
 *.pptx
+*.nav
+*.out
+*.snm
