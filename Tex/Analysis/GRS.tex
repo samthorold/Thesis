@@ -1,29 +1,47 @@
 % !TeX root=../main.tex
 
-Table \ref{tbl:GRS} shows the GRS statistic of \textcite{gibbons1989test} for the seven
-models in table \ref{tbl:bootstrap} across selected anomaly sorts. The main message of the
-table is that GRS evidence supports the $\text{Sh}^2$ evidence that B16, with a GRS
-statistic of 1.91, better describes the cross-section of stock returns than F17,  with a
-GRS statistic of 2.05. The table also shows that B16 struggles in sorts on annual value,
-BM, where the GRS statistic is above that of models that include annual value in place of
-monthly value. Furthermore, the sensitivity of the GRS test itself to the choice of test
-assets is highlighted by the impact of the size-$\text{BM}^m$-Prior sort that tilts the
-GRS evidence for value sorts in favour of B16.
+B16 performs performs poorly, relative to F16/17, in sorts on annual value.
+In absolute terms, B16 performs poorly in sorts on momentum and variance,
+although B16 outperforms F16.
+To explore poor relative and absolute performance,
+I examine intercepts and coefficients from time-series regressions of the
+problem sorts on B16 and F16.
+The non-nested models show where value and momentum differ from investment
+slopes.
+I also include sorts on investment to explore how performance is not lost
+despite omitting the investment factor.
 
-The GRS statistic gives a measure of how far from an ``efficient" portfolio the factors
-are in the context of the test assets. The GRS \emph{test} answers the question: do the
-factors span the portfolio that includes the test assets and factors? While the GRS
-\emph{statistic} gives a measure of \emph{how far} the factors are from spanning the
-portfolio that includes the test assets and factors. This means we can compare different
-models' ability to explain the returns on subsets of stocks. In general, the ability to
-price the returns on subsets of stocks matches the ability to price the returns on all
-stocks given by the maximum squared Sharpe ratio.
+Table \ref{tbl:GRS} shows the GRS statistic for selected anomaly sorts across
+the seven models from table \ref{tbl:bootstrap}.
+The main message of the table is that GRS evidence broadly lines up with
+$\text{Sh}^2$ evidence from table \ref{tbl:bootstrap} but my proposed model,
+B16, struggles where value is constrained by sorts on the value characteristic.
+Anomalies are chosen based on prior research.
+\textcite{fama2015five} test the five-factor model, F15, with finer sorts on
+the characteristics used to create the factors; $\text{HML}$,
+$\text{PMU}^{06}$ and $\text{CMA}$.
+\textcite{fama2016dissecting}, following intuion in
+\textcite{lewellen2010skeptical}, test the five-factor model with sorts on
+charatceristics not used to create the factors, for example accruals
+\parencite{sloan1996stock} and volatility \parencite{ang2006cross}.
+The two-way sorts are independent 5$\times$5 sorts on size and one other
+characteristic giving 25 test portfolios.
+The three-way sorts first split the data in half based on size before making
+independent 4$\times$4 sorts on two other characteristics giving 32 test
+portfolios.
+The GRS statistics are a measure of how much the $\text{Sh}^2$ of a model can
+be improved by investing in the test portfolios as well as the factors.
+If the $\text{Sh}^2$ cannot be improved, the factors are said to ``span" the
+test portfolios and the factors describe the returns on the portfolios.
 
-B16 performs poorly in absolute terms in sorts on Size-Var, Size-RVar,
-Size-$\text{BM}^m$-Prior (monthly value and momentum) and Size-Prior (momentum). While the
-GRS statistic can identify sorts that cause problems for factors models, it does not help
-with why sorts cause problems. I examine individual intercepts and slopes from time series
-regressions for the portfolios from these sorts. Since I omit the investment factor, I
-include time series regressions for the Size-Inv (investment) and Size-OP-Inv
-(profitability from \textcite{fama2006profitability} and investment) to investigate how
-value and momentum slopes describe the returns on investment sorts.
+The table is split to make three points;
+constraining annual value hinders the ability of B16 to describe returns,
+constraining monthly value is far less disastrous for B16 than other models and
+in sorts on all variables that are not annual value, B16 outperforms F16/17.
+The three sorts involving $BM$ at the top of table \ref{tbl:GRS} have a GRS of
+1.23 for F17 and 1.38 for B16.
+The smaller GRS for F17 than B16 means the $\text{Sh}^2$ of F17 can be improved
+less than that of B16 by investing in the portfolios constructed from sorts on
+$BM$.
+F17 describes the returns on sorts on $BM$ better than B16.
+

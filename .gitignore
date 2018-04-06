@@ -19,3 +19,7 @@ __pycache__
 *.zip
 *.xlsx
 *.csv
+*.pptx
+*.nav
+*.out
+*.snm

@@ -1,0 +1,22 @@
+
+\begin{table}[!ht]
+=% font_size %=
+\centering
+\caption{=% caption %=}
+\begin{tabular}{l-% for i in range(K*J*2) %-r-% endfor %-}
+  \toprule
+    -% if K_hdrs %--% for hdr in K_hdrs %- & \multicolumn{=% K*J %=}{c}{=% hdr %=}-% endfor %-  \\
+    -% for k in range(K) %- \cmidrule(r){=% 2*k*J+2 %=-=% 2*k*J+2*J+2-1 %=}-% endfor %--% endif %-
+    =% col_name %= $\rightarrow$-% for i in range(K) %--% for n in col_names %- & =% n %=-% endfor %--% for n in col_names %- & =% n %=-% endfor %--% endfor %-  \\ 
+  \midrule
+  \multicolumn{=% K*J*2 + 1 %=}{l}{$=% regstr %=$}  \\
+  -% for coef in coefs.values() %-
+    -% for k in range(K) %- & \multicolumn{=% J %=}{c}{=% coef["display"] %=} & \multicolumn{=% J %=}{c}{t(=% coef["display"] %=)} -% endfor %-  \\
+    -% for k in range(K) %- \cmidrule(r){=% 2*k*J+2 %=-=% 2*k*J+J+2-1 %=} \cmidrule(r){=% 2*k*J+J+2 %=-=% 2*k*J+2*J+2-1 %=} -% endfor %-
+    -% for i in range(I) %-=% row_names[i] %= -% for k in range(K) %--% for j in range(J) %- & =% coef["coef"][k][i][j] %= -% endfor %--% for j in range(J) %- & =% coef["tval"][k][i][j] %= -% endfor %--% endfor %-  \\
+    -% endfor %-
+  -% endfor %-
+  \bottomrule
+\end{tabular}
+\label{=% label %=}
+\end{table}
