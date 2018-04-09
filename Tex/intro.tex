@@ -1,86 +1,91 @@
 % !TeX root=./main.tex
 
-\section{Introduction}
+%\section{Introduction}
 
-I propose a five-factor model of market, size, value, momentum and profitability factors.
-This specification has a higher maximum squared Sharpe ratio of the factors than the
-recent five-factor model of \textcite{fama2015five}, including when momentum is added to
-the Fama and French specification. I show that the investment factor is made redundant by
-the interaction of value and momentum. While the benefits to regression slopes of
-negatively correlated factors are well known and intuitive
-\parencite{asness1997interaction, fama2015incremental}, I show why economically, rather
-than empirically, this may be the case for value and momentum. Value and momentum have an
-opposite relationship with future changes in book equity than value and investment.
+An asset’s price equals its expected risk adjusted future payoff. The risk
+adjustment is driven by the covariance of asset payoffs with marginal utility.
+The intertemporal CAPM (ICAPM) of \textcite{merton1973intertemporal} says that
+investors are not just concerned with the level of payoff in the future but
+also what consumption and investment opportunities are available to them when
+they receive the payoff. \textcite{fama1996multifactor} explains that ICAPM
+investors worry about the covariances of returns with not only the market but
+with multiple state variables.
 
-An asset’s price equals its expected risk adjusted future payoff. The risk adjustment is
-driven by the covariance of asset payoffs with marginal utility. Under the Capital Asset
-Pricing Model (CAPM) of \textcite{sharpe1964capital}, \textcite{lintner1965valuation} and
-\textcite{black1972capital}, an investor would rather have an asset that pays well when
-marginal utility is high, when times are tough, than an asset that pays well when marginal
-utility is low, when times are good. Assets that do badly when times are tough have low
-prices (high returns). Times are tough when an investor’s other assets have done poorly,
-such as when the market performs poorly. Prices are low (returns are high) for assets that
-covary strongly with the market portfolio relative to assets that covary weakly with the
-market portfolio. Return is compensation for risk where risk is measured as covariance
-with the market.
+Asset-pricing models that focus on stock returns use portfolios, ``factors", to
+mimic returns on the unobserved priced state variables of the ICAPM. The
+prevalence and quality of stock data can quickly lead to data-mining. Many
+factors are based largely on statistical anomalies rather than economic
+intuition. \textcite{harvey2016and} find more than 300 factors in the
+literature and call for an increase in the usual confidence intervals used to
+class a new factor as ``discovered”. \textcite{mclean2016does} find that the
+unexplained return on many factors is reduced following publication. Subsets of
+stocks that cannot be priced by a set of factors are important for academic and
+professional reasons, but statistical anomalies should not drive the choice of
+factors.
 
-The intertemporal CAPM (ICAPM) of \textcite{merton1973intertemporal} says that investors are
-not just concerned with the level of payoff in the future but also what consumption and
-investment opportunities are available to them when they receive the payoff.
-\textcite{fama1996multifactor} explains that ICAPM investors worry about the covariances
-of returns with not only the market but with multiple state variables. The market
-portfolio still plays an important role, but investors price additional state variables.
+The ultimate goal of an asset-pricing model is to minimize mis-pricing for
+\emph{all} assets.
+\textcite{barillas2016alpha} explain that to minimize mis-pricing for all
+assets, we need only maximize the Sharpe ratio of the factors.
+We can rank models using the Sharpe ratio of the factors before we begin to
+test performance in subsets of stocks. This top-down approach promotes economic
+intuition in favour of statistical anomalies.
 
-Asset-pricing models that focus on stock returns use traded portfolios to mimic the
-returns on the unobserved priced state variables of the ICAPM. The factors are risk
-premiums. The excess return on the market is the market risk premium and the Sharpe ratio
-of the market gives the market price of risk. Portfolios designed to capture additional
-priced state variables of interest to ICAPM investors are typically long/short spread
-factors, but the intuition is the same as the market risk premium.
+To make mimicking factors for priced state variables we can apply investing
+intuition in a diversified way. \textcite{graham1934security} advocate buying
+cheap, profitable stocks. I measure how cheap a stock is by the book-to-market
+ratio, BM. \textcite{kok2017facts, asness2013devil} show that updating B/M
+monthly and using the measure alongside momentum helps to identify those stocks
+that will exhibit a change in market equity, driving returns, rather than book
+equity. I measure momentum as the return over the previous year omitting the
+most recent month \parencite{fama2016dissecting}. I measure profitability as
+the accrual-adjusted operating income \parencite{ball2016accruals}.
 
-Currently, the choice of factors is empirically motivated. A time series of returns not
-explained by a set of factors, an ``anomaly”, is discovered and a couple of years later it
-becomes a factor. Factors may be subsumed by other factors, but the list just keeps
-increasing. The explosion of factors has been so great that \textcite{harvey2016and} call
-for an increase in the usual confidence intervals used to class a new factor “discovered”.
-We are throwing darts at anomalies and, by focusing on driving individual regression
-intercepts to zero, not even throwing at the right board.
+I propose a five-factor model of market, size, value, momentum and
+profitability factors with time series regression form
+\[
+R_t^i = a^i+b^iR^M+s^iSMB_t+v^iHML_t^m+m^iWML_t+p^iPMU_t 
+\]
+where $R_t^i$ is the excess return on test asset $i$ at time $t$,
+$a^i$ is the regression intercept and unexplained return left by the factors,
+$R^M$ is the excess return on the market,
+$SMB$ is the return on a portfolio long small stocks and short big stocks
+mimicking the size premium,
+$HML$ is a portfolio long value stocks and short growth stocks mimicking the
+value premium,
+$WML$ is a portfolio long past winners and short past losers mimicking the
+momentum premium and
+$PMU$ is a portfolio long profitable stocks and short unprofitable stocks
+mimicking the profitability premium.
+Lower-case letters are regression coefficients.
+This specification has a higher Sharpe ratio of the factors
+than the recent five-factor model of \textcite{fama2015five}, including when
+momentum is added to the Fama and French specification.
+I show that the investment factor is made redundant by
+the interaction of value and momentum through their ability to forecast
+future changes in book equity.
+Value and momentum are negatively correlated and this relationship is a
+statistical slam dunk in a regression context 
+\parencite{asness1997interaction, fama2015incremental}.
+Their relationship with book equity shows that value and
+momentum's interaction is more than just statistical.
 
-The ultimate goal of an asset-pricing model is to minimize mis-pricing for \emph{all}
-assets. We are concerned with the covariance of pricing errors (alphas) as well as their
-magnitude since the level of mis-pricing is given by the quadratic form of the alphas.
-\textcite{barillas2016alpha} explain that to minimize mis-pricing for all assets, we need
-only maximize the Sharpe ratio of the factors. If we care about the covariance of alphas
-we must care equally about the covariance of factors and not just the magnitude of the
-average return left unexplained.
+While the Sharpe ratio of the factors indicates the best overall model,
+there may be subsets of stocks for which the best overall model
+performs poorly.
+The GRS statistic of \textcite{gibbons1989test} indicates how much the Sharpe
+ratio of a set of factors can be improved by investing in the test assets.
+GRS evidence broadly, but not always, matches Sharpe ratio evidence.
+I compare the GRS statistics of different specifications of model across
+different test assets to highlight the problems caused by momentum and
+volatility.
 
-Reducing the universe of assets to common stocks, we can use time-worn investing
-intuition, rather than throwing darts at empirical anomalies, to choose variables that are
-priced by investors. To make mimicking factors for priced state variables we apply
-investing intuition in a systemic way. \textcite{graham1934security} advocate buying
-cheap, profitable stocks. I measure “cheapness” or “value” as a stock’s book-to-market
-equity (B/M). A high B/M indicates a cheap stock, a “value” stock, while a low B/M
-indicates an expensive stock, a “growth” stock. B/M is a noisy measure of value that can
-be cleaned-up with momentum \parencite{kok2017facts, asness2013devil}. Momentum captures
-recent returns, typically over the previous year omitting the most recent month. I measure
-profitability as the accrual-adjusted operating income \parencite{ball2016accruals}. The
-returns on portfolios based on value, momentum and profitability characteristics mimic
-state variables priced by investors.
-
-While the maximum Sharpe ratio of the factors indicates the best overall model, there may
-be sorts creating subsets of assets for which the best overall model performs poorly. The
-GRS statistic of \textcite{gibbons1989test} indicates whether a portfolio is mean-variance
-efficient in the context of a set of test assets. The null hypothesis of the test is that
-the Sharpe ratio of a set of factors cannot be improved by investing in the test assets. I
-compare the GRS statistics of different specifications of model across different test
-assets to show where a given factor helps or hinders when explaining the absolute size and
-covariance of alphas. The GRS evidence does not always match the maximum Sharpe ratio
-evidence.
-
-I use individual portfolio regressions for problem sorts identified by the GRS to
-investigate the factor loadings that lead to problems. I compare non-nested specifications
-of model to show where value and momentum slopes differ from the subsumed investment
-slope. Regression slopes do not always match characteristic sorts. The model performs
-poorly where value is constrained or where value and momentum cannot utilize their
-interaction. The offending sorts share the ``lethal” combination of small, unprofitable
-firms that somehow invest aggressively identified in \textcite{fama2015five}.
+I use individual portfolio regressions for problem sorts identified by the GRS
+statistic to investigate the factor loadings that lead to problems. I compare
+non-nested model specifications model to show where value and momentum slopes
+differ from the subsumed investment slope. Regression slopes do not always
+match characteristic sorts. The model performs poorly where value is
+constrained or disappears. The offending sorts share the ``lethal”
+combination of small, unprofitable stocks that somehow invest aggressively
+identified in \textcite{fama2015five, fama2016dissecting}. These sorts behave
+like small, unprofitable stocks with poor recent returns.
