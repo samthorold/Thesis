@@ -43,9 +43,9 @@ the accrual-adjusted operating income \parencite{ball2016accruals}.
 
 I propose a five-factor model of market, size, value, momentum and
 profitability factors with time series regression form
-\[
+\begin{equation} \label{eq:B16}
 R_t^i = a^i+b^iR^M+s^iSMB_t+v^iHML_t^m+m^iWML_t+p^iPMU_t 
-\]
+\end{equation}
 where $R_t^i$ is the excess return on test asset $i$ at time $t$,
 $a^i$ is the regression intercept and unexplained return left by the factors,
 $R^M$ is the excess return on the market,
@@ -58,6 +58,8 @@ momentum premium and
 $PMU$ is a portfolio long profitable stocks and short unprofitable stocks
 mimicking the profitability premium.
 Lower-case letters are regression coefficients.
+Value and momentum are rebalanced monthly while size and profitability are
+rebalanced annually.
 This specification has a higher Sharpe ratio of the factors
 than the recent five-factor model of \textcite{fama2015five}, including when
 momentum is added to the Fama and French specification.
