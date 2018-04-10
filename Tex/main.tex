@@ -2,6 +2,7 @@
 
 %\usepackage{afterpage}     % helps with landscape pages
 \usepackage{amsmath, amsthm}
+\usepackage{authblk}
 \usepackage[backend=biber, style=authoryear]{biblatex}
 %\usepackage{bookmark}      % links w/in PDF
 \usepackage{booktabs}       % align tables by decimal point -- regression t-stats
@@ -17,21 +18,23 @@
 \addbibresource{references.bib}
 
 \title{
-  {A top-down approach to factor models}\\
+  {A top-down approach to factor models}\\[1cm]
+  {\Large Sam Thorold\thanks{sam.thorold@gmail.com}}\\
+  {\large Finance Program}\\
 }
-\author{
-  {Sam Thorold -- 4299}\\[1cm]
-  {\normalsize Advisors: \large Francisco Santos \&
-                                Andr\'e Silva}\\
-  {\normalsize Norwegian School of Economics \&
-               NOVA School of Business and Economics}\\
-  {\normalsize Department of Finance}
-}
+
+\author[1]{Advisors: Francisco Santos}
+\affil[1]{Norwegian School of Economics}
+
+\author[2]{Andr\'e Silva}
+\affil[2]{NOVA School of Business and Economics}
+
 \date{\today}
 
 \begin{document}
 
 \maketitle
+
 
 \setstretch{1.5}
 
@@ -48,8 +51,6 @@
   The returns on small, unprofitable stocks that invest aggressively behave
   like the returns on small, unprofitable stocks with poor recent performance.
 \end{abstract}
-
-\pagebreak
 
 \import{./}{intro}
 
