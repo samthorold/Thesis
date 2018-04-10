@@ -2,41 +2,40 @@
 
 \section*{Analysis}
 
-I begin by showing replicated factors are highly correlated with factors available online.
-The main analysis first presents the maximum $\text{Sh}^2$ for my proposed five-factor
-model as well other common models. I use a bootstrap procedure to enhance the reliability
-of the $\text{Sh}^2$ results and to show investment does not reliably improve the
-$\text{Sh}^2$ of the proposed model. Next I use spanning regressions to show that value
-and profitability add the most to the $\text{Sh}^2$ of my proposed model and that value
-and momentum combine to make investment redundant. Sorts on size-value-
-momentum/investment show this may be due to monthly value and momentum's relationship with
-future changes in book equity.
+I begin by showing replicated factors are highly correlated with factors
+available online. The main analysis presents the maximum $\text{Sh}^2$ for
+model \ref{eq:B16} as well other common models. I use a bootstrap procedure to
+enhance the reliability of the $\text{Sh}^2$ results and to show investment
+does not reliably improve the $\text{Sh}^2$ of the proposed model. Next I use
+spanning regressions to show that value and profitability add the most to the
+$\text{Sh}^2$ of my proposed model and that value and momentum combine to make
+investment redundant. Sorts on size-value- momentum/investment that monthly
+value and momentum create variation in investment and changes in book equity
+characteristics. Investment moves in the opposite to changes in book equity for
+small, growth stocks.
 
-Following the analysis of performance pricing all assets and where this superior
-performance may stem from, I investigate anomaly performance to show that my proposed
-model reduces the GRS statistic for many common anomalies but struggles where value is
-constrained or where value and momentum cannot utilize their interaction. I compare
-anomaly regressions of my proposed model with the five-factor model of
-\textcite{fama2016dissecting} because these models have two of the highest $\text{Sh}^2$
-and they are non-nested. I show that value behaves similarly to investment in anomaly
-sorts. The choice of anomalies is motivated largely by GRS evidence. I include sorts on
-investment to show performance is not list by omitting the investment factor.
+I investigate anomaly performance to show that my proposed model reduces the
+GRS statistic for many common anomalies but struggles where value is
+constrained as well as sorts on momentum and volatility. I compare anomaly
+regressions of models \ref{eq:B16} and \ref{eq:F16} because they have two of
+the highest $\text{Sh}^2$ and they are non-nested. I show that value behaves
+similarly to investment in anomaly sorts. The choice of anomalies is motivated
+by high GRS statistics which indicate the Sharpe ratio of the factors can be
+improved by investing in the anomaly portfolios. I include sorts on investment,
+even though the GRS is comparatively low, to show performance is not list by
+omitting the investment factor.
 
 \import{./Analysis/}{replication}
 
 \subsection*{Pricing All Stocks}
 
 \import{./Analysis/}{bootstrap}
-
 \import{./Analysis/}{contributions}
-
 \import{./Analysis/}{redundant_CMA}
-
 \import{./Analysis/}{future_BE}
 
 \subsection*{Pricing Subsets of Stocks}
 
 \import{./Analysis/}{GRS}
-
 \import{./Analysis/}{anomalies_group}
 

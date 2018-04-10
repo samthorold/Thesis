@@ -1,19 +1,16 @@
 \documentclass[a4paper, 12pt]{article}
 
-%\usepackage{afterpage}     % helps with landscape pages
 \usepackage{amsmath, amsthm}
-\usepackage{authblk}
+\usepackage{authblk}        % handle author nonsense on titlepage
 \usepackage[backend=biber, style=authoryear]{biblatex}
-%\usepackage{bookmark}      % links w/in PDF
-\usepackage{booktabs}       % align tables by decimal point -- regression t-stats
+\usepackage{booktabs}       % align tables by decimal point, regression t-stats
 \usepackage{dcolumn}        % table cells alignment
+\usepackage{float}          % tables where I put them
 \usepackage[margin=2.5cm]{geometry}
-%\usepackage{hyperref}      % links w/in PDF
 \usepackage{import}         % nested files
 \usepackage[utf8]{inputenc} % unsure
 \usepackage{pdflscape}      % landscape pages
 \usepackage{setspace}       % double line spacing but not in tables etc.
-\usepackage{subfig}         % tables next to each other
 
 \addbibresource{references.bib}
 
@@ -35,7 +32,6 @@
 
 \maketitle
 
-
 \setstretch{1.5}
 
 \begin{abstract}
@@ -53,13 +49,9 @@
 \end{abstract}
 
 \import{./}{intro}
-
 \import{./}{literature}
-
 \import{./}{data}
-
 \import{./}{analysis_group}
-
 \import{./}{conclusions}
 
 \setstretch{1.0}
@@ -70,6 +62,6 @@
 
 \import{./}{tables_group}
 
-%\import{./}{vars}
+\import{./}{vars}
 
 \end{document}

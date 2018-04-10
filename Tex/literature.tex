@@ -3,58 +3,47 @@
 \section*{Prior Research}
 
 \textcite{fama2016choosing} show that adjusting profitability for accruals in
-the style of \textcite{ball2016accruals} improves the Sharpe ratio of the
-five-factor model of \textcite{fama2015five}.
-The model has the time series regression form
-\begin{equation} \label{eq:F16}
-R_t^i = a^i+b^iR^M+s^iSMB_t+v^iHML_t+p^iPMU_t+i^iCMA_t
-\end{equation}
-where $CMA$ is the return on a portfolio long conservatively investing stocks
-and short aggressively investing stocks mimicking the investment premium.
-The investment factor is rebalanced annually.
-The remaining factors are as described in model \ref{eq:B16} except value is
-rebalanced annually.
-Fama and French rely heavily on \textcite{barillas2016alpha} who explain we can
-compare the ability of a model to describe the returns on all assets by
-comparing the Sharpe ratio of the factors.
-The level of mis-pricing for a set of test assets is given by the quadratic
-form in the alphas.
-This measure gives the amount the squared Sharpe ratio can be improved by
-investing in the test assets as well as the factors.
-The relationship is given by
-$a'V_ea=Sh^2\left(R,f\right)-Sh^2\left(f\right)$
-where $a$ is the vector of alphas,
-$V_e$ is the covariance matrix of the residuals,
-$Sh^2\left(\cdot\right)$ is the maximum squared Sharpe ratio,
-$R$ is the matrix of test asset excess returns and $f$ is the matrix of factor
-returns.
-The key insight from Barillas and Shanken is that
+the style of \textcite{ball2016accruals} improves the Sharpe ratio of the five-
+factor model of \textcite{fama2015five}. The model has the time series
+regression form \begin{equation} \label{eq:F16} R_t^i =
+a^i+b^iR^M+s^iSMB_t+v^iHML_t+p^iPMU_t+i^iCMA_t \end{equation} where $CMA$ is
+the return on a portfolio long conservatively investing stocks and short
+aggressively investing stocks mimicking the investment premium. The investment
+factor is rebalanced annually. The remaining factors are as described in model
+\ref{eq:B16} except value is rebalanced annually. Fama and French rely heavily
+on \textcite{barillas2016alpha} who explain we can compare the ability of a
+model to describe the returns on all assets by comparing the Sharpe ratio of
+the factors. The level of mis-pricing for a set of test assets is given by the
+quadratic form in the alphas. This measure gives the amount the squared Sharpe
+ratio can be improved by investing in the test assets as well as the factors.
+The relationship is given by $a'V_ea=Sh^2\left(R,f\right)-Sh^2\left(f\right)$
+where $a$ is the vector of alphas, $V_e$ is the covariance matrix of the
+residuals, $Sh^2\left(\cdot\right)$ is the maximum squared Sharpe ratio, $R$ is
+the matrix of test asset excess returns and $f$ is the matrix of factor
+returns. The key insight from Barillas and Shanken is that
 $Sh^2\left(R,f\right)=Sh^2\left(R\right)$ if $R$ is the returns on all assets.
 We can write the level of mis-pricing for all assets as
 $a'V_ea=Sh^2\left(R\right)-Sh^2\left(f\right)$ because our factors, $f$, are
-contained in the set of all assets, $R$.
-We do not need to identify all the components of $R$ to minimize the
-mis-pricing given by the quadratic form of the alphas.
-We only need to maximize the squared Sharpe ratio of the factors.
+contained in the set of all assets, $R$. We do not need to identify all the
+components of $R$ to minimize the mis-pricing given by the quadratic form of
+the alphas. We only need to maximize the squared Sharpe ratio of the factors.
 Assuming the maximizing portfolio is on the positive portion of the efficient
-frontier, this is the same as maximizing the Sharpe ratio.
-I follow the bootstrap procedure of \textcite{fama2016choosing} to show the
-investment factor does not improve the Sharpe ratio of model \ref{eq:B16} and
-that model \ref{eq:B16} has a higher Sharpe ratio than model \ref{eq:F16}.
+frontier, this is the same as maximizing the Sharpe ratio. I follow the
+bootstrap procedure of \textcite{fama2016choosing} to show the investment
+factor does not improve the Sharpe ratio of model \ref{eq:B16} and that model
+\ref{eq:B16} has a higher Sharpe ratio than model \ref{eq:F16}.
 
 \textcite{fama2016dissecting}, following the advice of
-\textcite{lewellen2010skeptical}, test model \ref{eq:F16}'s ability to
-describe the returns on anomalies created from sorts on variables not used to
-create the factors.
-They find that many anomalies share the same factor loadings.
-The anomaly returns behave like the returns on small, unprofitable stocks that
-somehow invest aggressively.
-I find that such sorts behave like the returns on small, unprofitable stocks
-with poor recent performance.
+\textcite{lewellen2010skeptical}, test model \ref{eq:F16}'s ability to describe
+the returns on anomalies created from sorts on variables not used to create the
+factors. They find that many anomalies share the same factor loadings. The
+anomaly returns behave like the returns on small, unprofitable stocks that
+somehow invest aggressively. I find that such sorts behave like the returns on
+small, unprofitable stocks with poor recent performance.
 
 \textcite{fama2006profitability} use the dividend discount model to link the
-profitability and investment anomalies to firm value.
-With cleans surplus accounting, the dividend discount model sayd that market
+profitability and investment factors to firm value.
+With clean surplus accounting, the dividend discount model says that market
 equity equals discounted expected future earnings less the change in book
 equity,
 $ME_t = \sum_{s=1}^\infty E(Y_{t+s}-\Delta BE_{t+s})/R^s$
@@ -62,57 +51,47 @@ where $Y$ is earnings and $R$ is the gross discount rate.
 Fama and French use change in assets in place of change in book equity.
 With sorts on value and investment, I show that change in assets and change in
 book equity move in opposite directions for small, growth stocks.
+Investment is a poor proxy for changes in book equity for small, growth stocks.
 
-I use the value factor specification of \textcite{asness2013devil}.
-They propose a more timely measure of B/M than prior research and update the
-factor monthly.
-Consider a stock that has just had a positive return, all else the same, we
-expect the B/M to descrease.
-Annually rebalanced value will stay the same while monthly rebalanced value
-will reflect this change.
-The power of using a more timely measure is not simply more frequent updating.
-Both \textcite{asness2013devil} and \textcite{kok2017facts} find that monthly
-value has greater power to identify those stocks that will change B/M through
-a change in market equity, driving returns, than book equity.
-Monthly value has particular strength when combined with momentum.
-Momentum is the tendency of stocks with higher (lower) recent returns than
-their peers to continue to outperform (underperform) in the short term
-\parencite{jegadeesh1993returns} and has been found in markets all over the
-world \parencite{asness2013value}.
-I measure momentum as the previous year's return not including the most recent
-month \parencite{fama2016dissecting}.
-Value and momentum enhance each other's slopes in time series regressions.
-Any two variables that are negatively correlated with each other but positively
-correlated with the independent variable will exhibit this effect
-\parencite{fama2015incremental}.
-I use sorts on value and momentum to show their strength is not just
-statistical but also through their ability to forecast changes in book equity.
-Sorts on value and momentum create variation in investment and book equity
-characteristics.
-Value and momentum factors describe the returns on the investment anomaly
-better than value and investment factors.
+I use the value factor specification of \textcite{asness2013devil} who propose
+updating B/M monthly. Consider a stock that has just had a positive return, all
+else the same, we expect the B/M to descrease. Annually rebalanced value will
+stay the same while monthly rebalanced value will reflect this change. The
+power of using a more timely measure is not simply more frequent updating.
+\textcite{kok2017facts} find that monthly value has greater power to identify
+those stocks that will change B/M through a change in market equity, driving
+returns, than book equity. Monthly value has particular strength when combined
+with momentum. Momentum is the tendency of stocks with higher (lower) recent
+returns than their peers to continue to outperform (underperform) in the short
+term \parencite{jegadeesh1993returns} and has been found in markets all over
+the world \parencite{asness2013value}. I measure momentum as the previous
+year's return not including the most recent month
+\parencite{fama2016dissecting}. Value and momentum enhance each other's slopes
+in time series regressions. Any two variables that are negatively correlated
+with each other but positively correlated with the independent variable will
+exhibit this effect \parencite{fama2015incremental}. I use sorts on value and
+momentum to show their strength is not just statistical but also through their
+ability to forecast changes in book equity. Sorts on value and momentum create
+variation in investment and book equity characteristics. Value and momentum
+factors describe the returns on the investment anomaly better than value and
+investment factors.
 
 The specification of profitability is important as \textcite{ball2015deflating}
 show that the denominator can influence a ratio's predictive power as much as
-the numerator.
-\textcite{fama2006profitability} suggest net income scaled by book equity (OP).
-Their measure struggles to explain the returns on the accruals anomaly of
-\textcite{sloan1996stock}.
-\textcite{novy2013other} points out that net income contains accounting
-captions that are not strictly to do with firm profitability.
-For example, interest expenses contain information regarding firm structure.
-Novy-Marx suggests gross profits scaled by total assets (GP).
-He finds this measure interacts with value to provide a measure of quality.
-Combining B/M with GP helps to indicate stocks that are ``cheap" and ``good".
-\textcite{ball2016accruals} explain that investors are concerned with the cash
-flows to a firm.
-We return to OP but we adjust for accruals as these are the non-cash
-components of financial statements.
-They show that
-the Sharpe ratio of a five-factor model created by including CP in the
-four factor model of \textcite{carhart1997persistence} cannot be
-improved by an accruals factor.
-I use their balance sheet adjusted CP specification rather than the cash flow
+the numerator. \textcite{fama2006profitability} suggest net income scaled by
+book equity (OP). Their measure struggles to explain the returns on the
+accruals anomaly of \textcite{sloan1996stock}. \textcite{novy2013other} points
+out that net income contains accounting captions that are not strictly to do
+with firm profitability. For example, interest expenses contain information
+regarding firm structure. Novy-Marx suggests gross profits scaled by total
+assets (GP). He finds this measure interacts with value to provide a measure of
+quality. Combining B/M with GP helps to indicate stocks that are ``cheap" and
+``good". \textcite{ball2016accruals} explain that investors are concerned with
+the cash flows to a firm. They favour OP adjusted for accruals as these are the
+non-cash components of financial statements. They show that the Sharpe ratio of
+a five-factor model created by including CP in the four factor model of
+\textcite{carhart1997persistence} cannot be improved by an accruals factor. I
+use their balance sheet adjusted CP specification rather than the cash flow
 statement adjustment as balance sheet data is available for the entire sample.
 Ball et al. test a model similar to mine except they rebalance value annually.
 I take advantage of the interaction between monthly value and momentum.

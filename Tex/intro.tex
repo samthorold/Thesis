@@ -6,48 +6,47 @@ An asset’s price equals its expected risk adjusted future payoff. The risk
 adjustment is driven by the covariance of asset payoffs with marginal utility.
 The intertemporal CAPM (ICAPM) of \textcite{merton1973intertemporal} says that
 investors are not just concerned with the level of payoff in the future but
-also what consumption and investment opportunities are available to them when
-they receive the payoff. \textcite{fama1996multifactor} explains that ICAPM
-investors worry about the covariances of returns with not only the market but
-with multiple state variables.
+also what consumption and investment opportunities are available when they
+receive the payoff. \textcite{fama1996multifactor} explains that ICAPM
+investors worry about the covariances of returns with the market and multiple
+state variables.
 
 Asset-pricing models that focus on stock returns use portfolios, ``factors", to
-mimic returns on the unobserved priced state variables of the ICAPM. The
-prevalence and quality of stock data can quickly lead to data-mining. Many
-factors are based largely on statistical anomalies rather than economic
-intuition. \textcite{harvey2016and} find more than 300 factors in the
+mimic unobserved priced state variables of the ICAPM. The prevalence and
+quality of stock data can quickly lead to data-mining in the search for
+factors. Many factors are based largely on statistical anomalies rather than
+economic intuition. \textcite{harvey2016and} find more than 300 factors in the
 literature and call for an increase in the usual confidence intervals used to
 class a new factor as ``discovered”. \textcite{mclean2016does} find that the
-unexplained return on many factors is reduced following publication. Subsets of
-stocks that cannot be priced by a set of factors are important for academic and
-professional reasons, but statistical anomalies should not drive the choice of
-factors.
+unexplained return on many factors is reduced following publication suggesting
+the factors were not truly compensation for risk. Subsets of stocks that cannot
+be priced by a set of factors are important for academic and professional
+reasons, but statistical anomalies should not drive the choice of factors.
 
 The ultimate goal of an asset-pricing model is to minimize mis-pricing for
-\emph{all} assets.
-\textcite{barillas2016alpha} explain that to minimize mis-pricing for all
-assets, we need only maximize the Sharpe ratio of the factors.
-We can rank models using the Sharpe ratio of the factors before we begin to
-test performance in subsets of stocks. This top-down approach promotes economic
-intuition in favour of statistical anomalies.
+\emph{all} assets. \textcite{barillas2016alpha} explain that maximizing the
+Sharpe ratio of factors minimizes mis-pricing for all assets. Ranking models on
+Sharpe ratio of the factors before testing performance in subsets of stocks
+promotes a top-down approach favouring economic intuition over statistical
+anomalies.
 
-To make mimicking factors for priced state variables we can apply investing
-intuition in a diversified way. \textcite{graham1934security} advocate buying
-cheap, profitable stocks. I measure how cheap a stock is by the book-to-market
-ratio, BM. \textcite{kok2017facts, asness2013devil} show that updating B/M
-monthly and using the measure alongside momentum helps to identify those stocks
-that will exhibit a change in market equity, driving returns, rather than book
+I apply investing intuition in a diversified way to make mimicking factors for
+priced state variables. \textcite{graham1934security} advocate buying cheap,
+profitable stocks. I measure how cheap a stock is by the book-to-market ratio
+(B/M). \textcite{kok2017facts, asness2013devil} show that updating B/M monthly
+and using the measure alongside momentum helps to identify those stocks that
+will exhibit a change in market equity, driving returns, rather than book
 equity. I measure momentum as the return over the previous year omitting the
 most recent month \parencite{fama2016dissecting}. I measure profitability as
-the accrual-adjusted operating income \parencite{ball2016accruals}.
+the accrual- adjusted operating income \parencite{ball2016accruals}.
 
 I propose a five-factor model of market, size, value, momentum and
 profitability factors with time series regression form
 \begin{equation} \label{eq:B16}
 R_t^i = a^i+b^iR^M+s^iSMB_t+v^iHML_t^m+m^iWML_t+p^iPMU_t 
 \end{equation}
-where $R_t^i$ is the excess return on test asset $i$ at time $t$,
-$a^i$ is the regression intercept and unexplained return left by the factors,
+where $R_t^i$ is the excess return on asset $i$ at time $t$,
+$a$ is the regression intercept and unexplained return left by the factors,
 $R^M$ is the excess return on the market,
 $SMB$ is the return on a portfolio long small stocks and short big stocks
 mimicking the size premium,
@@ -87,7 +86,7 @@ statistic to investigate the factor loadings that lead to problems. I compare
 non-nested model specifications model to show where value and momentum slopes
 differ from the subsumed investment slope. Regression slopes do not always
 match characteristic sorts. The model performs poorly where value is
-constrained or disappears. The offending sorts share the ``lethal”
-combination of small, unprofitable stocks that somehow invest aggressively
-identified in \textcite{fama2015five, fama2016dissecting}. These sorts behave
-like small, unprofitable stocks with poor recent returns.
+constrained or disappears. The offending sorts share the ``lethal” combination
+of small, unprofitable stocks that somehow invest aggressively identified in
+\textcite{fama2015five, fama2016dissecting}. I show these sorts behave like
+small, unprofitable stocks with poor recent returns.
