@@ -12,9 +12,9 @@ I construct the missing cash profitability factor and summary characteristics
 from Center for Research in Securities Prices (CRSP) and COMPUSTAT data. My
 sample includes all common stocks, CRSP share code 10 or 11, on the NYSE, AMEX
 or NASDAQ exchanges. All data begins in July 1963 and ends in December 2017. I
-do not omit financial firms nor winsorize variables. See the data appendix for
-more complete definitions of variables and the data codes used to create each
-characteristic.
+do not omit financial firms nor winsorize variables. See the variables appendix
+for more complete definitions of variables and the data codes used to create
+each characteristic.
 
 The missing profitability factor is created from independent sorts on size and
 cash profitability. Stocks are sorted into two size buckets and three
@@ -36,15 +36,6 @@ profit and low-profit returns at each month giving a time series of returns
 representing the profitability risk premium for small stocks. I do the same for
 large stocks. The average of the risk premiums for small and large stocks gives
 the cash profitability factor.
-
-Using the average of the risk premiums for small and large stocks highlights
-the possible overweighting of small stocks embedded in this methodology. We
-take great pains to avoid size bias in the factors - using NYSE breakpoints,
-sorting on size, value-weighting returns - only to then take the simple average
-of the spreads from small and large stocks. Nevertheless, the time-series of
-returns methodology is extremely prevalent in the literature and has some clear
-benefits such as zero-investment portfolios and the intuitive interpretation of
-regression loadings.
 
 While value, momentum and investment factors are available online, their
 respective summary characteristics are not. To create the timelier value
