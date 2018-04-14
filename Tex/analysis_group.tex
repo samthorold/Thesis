@@ -2,37 +2,34 @@
 
 \section*{Analysis}
 
-I begin by showing the maximum $\text{Sh}^2$ for model \ref{eq:B16} as well
-other common models. I use a bootstrap procedure to enhance the reliability of
-the $\text{Sh}^2$ results and to show investment does not reliably improve the
-$\text{Sh}^2$ of the proposed model. Next I use spanning regressions to show
-that value and profitability add the most to the $\text{Sh}^2$ of my proposed
-model and that value and momentum combine to make investment redundant. Sorts
-on size-value- momentum/investment that monthly value and momentum create
-variation in investment and changes in book equity characteristics. Investment
-moves in the opposite to changes in book equity for small, growth stocks.
+The maximum $\text{Sh}^2$ for model \ref{eq:B16} is higher than other common
+models. I use a bootstrap procedure to increase the reliability of the
+$\text{Sh}^2$ results and to show adding the investment factor does not improve
+model \ref{eq:B16}. I regress each factor on the other factors
+in each model to show that value and profitability add the most to the
+$\text{Sh}^2$ of model \ref{eq:B16} and that value and momentum combine to make
+investment redundant. Sorts on size, value and momentum or investment show that
+investment moves in the opposite direction to changes in book equity for small,
+growth stocks. Investment is not the best proxy for changes in book equity.
+Model \ref{eq:B16} reduces the GRS statistic for many common anomalies but
+struggles where value is constrained as well as in sorts on momentum and
+volatility. I compare anomaly regressions of models \ref{eq:B16} and
+\ref{eq:F16} because they have two of the highest $\text{Sh}^2$ and are
+non-nested.
+Individual time series regressions for investment, value, momentum and
+volatility sorts reveal that value picks up the slack in investment's absence.
+Given this additional workload, model \ref{eq:B16} performs poorly where value
+provides a poor description of returns. These stocks behave like small,
+unprofitable stocks with low recent returns.
 
-I investigate anomaly performance to show that my proposed model reduces the
-GRS statistic for many common anomalies but struggles where value is
-constrained as well as sorts on momentum and volatility. I compare anomaly
-regressions of models \ref{eq:B16} and \ref{eq:F16} because they have two of
-the highest $\text{Sh}^2$ and they are non-nested. I show that value behaves
-similarly to investment in anomaly sorts. The choice of anomalies is motivated
-by high GRS statistics which indicate the Sharpe ratio of the factors can be
-improved by investing in the anomaly portfolios. I include sorts on investment,
-even though the GRS is comparatively low, to show performance is not list by
-omitting the investment factor.
-
-%\import{./Analysis/}{replication}
-
-\subsection*{Pricing All Stocks}
+\subsection*{Performance pricing all stocks}
 
 \import{./Analysis/}{bootstrap}
 \import{./Analysis/}{contributions}
 \import{./Analysis/}{redundant_CMA}
 \import{./Analysis/}{future_BE}
 
-\subsection*{Pricing Subsets of Stocks}
+\subsection*{Performance pricing subsets of stocks}
 
 \import{./Analysis/}{GRS}
 \import{./Analysis/}{anomalies_group}
