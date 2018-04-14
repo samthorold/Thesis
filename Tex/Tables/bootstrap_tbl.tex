@@ -4,20 +4,49 @@
 \centering
 \caption{
 \scriptsize{
-90\% confidence intervals of the distributions of Sh2(Row)-Sh2(Column) from 100,000
-bootstrap simulations. Each bootstrap sample is 654 months drawn randomly with replacement
-from the 654 months of July 1963-December 2017. In each bootstrap sample Sh2(f) is
-computed for the seven models of Panel A. Panel B shows the matrix of the 5th and 95th
-percentiles (the 90\% confidence interval) of the bootstrap distributions of
-Sh2(Row)-Sh2(Column), the difference between Sh2(f) for the row model and Sh2(f) for the
-column model. When the 5th and 95th percentiles of the bootstrap distribution of
-Sh2(Row)-Sh2(Column) are positive, Sh2(Row) is greater than Sh2(Column) is at least 90\%
-of simulation runs, and the 1963-2017 actual Sh2(f) for the row model is reliably higher
-than the 1963-2017 actual Sh2(f) for the column model. When the 5\textsuperscript{th} and
-95\textsuperscript{th} percentiles of the bootstrap distribution of Sh2(Row)-Sh2(Column)
-are negative, Sh2(Row) is less than Sh2(Column) is at least 90\% of simulation runs, and
-the 1963-2017 actual Sh2(f) for the row model is reliably less than Sh2(f) for the column
-model.
+90\% confidence intervals of the distributions of Sh2(Row)-Sh2(Column) from
+100,000 bootstrap simulations. Each bootstrap sample is 654 months drawn
+randomly with replacement from the 654 months of July 1963-December 2017. In
+each bootstrap sample Sh2(f) is computed for the seven models of Panel A. Panel
+B shows the matrix of the 5th and 95th percentiles (the 90\% confidence
+interval) of the bootstrap distributions of Sh2(Row)-Sh2(Column), the
+difference between Sh2(f) for the row model and Sh2(f) for the column model.
+When the 5th and 95th percentiles of the bootstrap distribution of
+Sh2(Row)-Sh2(Column) are positive, Sh2(Row) is greater than Sh2(Column) is at
+least 90\% of simulation runs, and the 1963-2017 actual Sh2(f) for the row
+model is reliably higher than the 1963-2017 actual Sh2(f) for the column model.
+When the 5\textsuperscript{th} and 95\textsuperscript{th} percentiles of the
+bootstrap distribution of Sh2(Row)-Sh2(Column) are negative, Sh2(Row) is less
+than Sh2(Column) is at least 90\% of simulation runs, and the 1963-2017 actual
+Sh2(f) for the row model is reliably less than Sh2(f) for the column model. At
+the end of each June, NYSE, AMEX, and NASDAQ stocks are allocated to two Size
+groups (small and big) using the NYSE median market-cap breakpoints. Stocks are
+allocated independently to three B/M groups (low to high), using NYSE
+30\textsuperscript{th} and 70\textsuperscript{th} percentile breakpoints. The
+intersections of the two sorts produce six value-weight Size-B/M portfolios. In
+the sort for June of year t, B is book equity at the end of the fiscal year
+ending in year t-1 and M is market cap at the end of December of year t-1. I
+use Compustat data to compute book equity, defined as (1) stockholders' equity
+(or the par value of preferred plus total common equity or assets minus
+liabilities, in that order) minus (2) the redemption, liquidation, or par value
+of preferred (in that order) plus (3) balance sheet deferred taxes. HML is the
+average of the returns on the two high B/M portfolios from the 2x3 sorts minus
+the average of the returns on the two low B/M portfolios. The profitability and
+investment factors, PMU (profitable minus unprofitable) and CMA (conservative
+minus aggressive), are formed in the same way as HML, except the second sort
+variable is operating profitability or investment. Cash profitability, used to
+create PMU, in the sort for June of year t is measured with accounting data for
+the fiscal year ending in year t-1 and is revenue minus the cost of goods sold,
+minus selling, general, and administrative expenses, minus interest expense,
+plus research and development costs, minus accruals all divided by book equity.
+Investment, Inv, is the change in total assets from the fiscal year ending in
+year t-2 to the fiscal year ending in t-1, divided by t-2 total assets. The
+momentum factor, WML, is defined in the same way as HML, except the factor is
+updated monthly rather than annually. To form the six Size- Prior 2-12
+portfolios at the end of month t-1, Size is the market cap of a stock at the
+end of t-1 and Prior 2-12 is its cumulative return for the 11 months from t-12
+to t-2. Monthly value, $HML^m$, is defined in the same way as WML except book
+equity is only updated at the end of June.
 }
 }
 \begin{tabular}{lcccccc}
