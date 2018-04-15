@@ -1,22 +1,43 @@
 % !TeX root=../main.tex
 
-Table \ref{tbl:contributions} shows the spanning regression intercepts,
-$a$, standard deviation of residuals, $\sigma_e$ and contributions,
-$(a/\sigma_e)^2$ to $\text{Sh}^2$ for B16, B16b and F17 models.
-The main message of the table is that the intuition of buying cheap profitable
-stocks is supported by the equal contributions to $\text{Sh}^2(\text{B16})$ of
-value and momentum.
 
-The data for B16 shows the largest contributions to $\text{Sh}^2$ are from
-value and momentum at 0.18.
+Table \ref{tbl:contributions} shows the contributions of each factor to models
+\ref{eq:B16}, \ref{eq:B16}b and \ref{eq:F16} including momentum.
+The main message of the table is that the largest contributions to the
+$\text{Sh}^2$ of model \ref{eq:B16} are from the value and profitability
+factors. The large contributions support the intuition that
+cheapness and profitability proxy for state variables priced by investors.
+The average unexplained return of a factor, $a$, left by the other factors is
+given by the 
+intercept from the ``spanning" regression of the factor in
+question on the remaining
+factors in a model.
+The unexplained variation in returns of a factor, $\sigma_e$, left by the other
+factors is given by the standard deviation of the residuals from the same
+regression.
+The unexplained average return and variation in returns drive the contribution,
+$(a/\sigma_e)^2$, of a factor to the $\text{Sh}^2$ of a model.
+Large unexplained average return represents the potential to contribute
+to the $\text{Sh}^2$ of a model.
+The potential to contribute is dampened by the variation in returns that cannot
+be explained by the other factors.
+The quadratic form of the alphas, $a'V_ea$, emphasises the importance
+of covariance mis-pricing, not just the magnitude of individual alphas.
+The reduction in contribution to Sharpe ratio given by the unexplained
+variation of a factor emphasises the importance of the covariance between
+factors, not just large unexplained average return.
+
+
+The data for model \ref{eq:B16} shows the largest contributions to
+$\text{Sh}^2$ are from value and momentum at 0.18.
 The market and momentum have similar contributions, 0.1 and 0.11 respectively.
 Size makes a small contribution of 0.03.
 The contribution from value is driven by unexplained average return of 1\% per
 month dampened by unexplained variation of 2.36.
 The contribution from profitability is driven by low unexplained variation,
 1.17, rather than the modest unexplained average return of 0.5\% per month.
-
-The data for B16b shows the largest contribution is from profitability at 0.18.
+The data for model \ref{eq:B16}b shows the largest contribution is
+from profitability at 0.18.
 In the presence of investment, value, at 0.11, has a similar contribution to
 the market, 0.1, and momentum, 0.09.
 The reduction in value's contribution is driven by the lower unexplained
@@ -28,8 +49,8 @@ spillover effect for momentum seen in the small reductions to unexplained
 average returns and variation.
 The negligible contribution from investment is driven by the small unexplained
 average return of 0.01\% per month.
-
-The data for F17 shows the largest contribution is from profitability at 0.14.
+The data for model \ref{eq:F16} including momentum shows the largest
+contribution is from profitability at 0.14.
 The market and size maintain their contributions, at 0.08 and 0.03
 respectively, but value and momentum see large reductions in contribution to
 0.03 or below.
@@ -37,13 +58,7 @@ This reduction brings the factors inline with investment's contribution.
 Value and investment are strongly correlated and this drives the low
 unexplained average return of 0.33\% per month.
 Without the interaction between monthly value and momentum, the variables
-cannot benefit from slope enhancement that helps the contributions in B16 and
-B16b.
-
-Profitability has the highest contribution to $\text{Sh}^2$ in all three
-models.
-Given the low correlation between investment and profitability it is unlikely
-that profitability causes the investment factor to be redundant.
-I run time series regressions of investment on selected other factors to see
-which factors subsume investment.
-
+cannot benefit from slope enhancement that helps the contributions in
+models \ref{eq:B16} and \ref{eq:B16}b.
+The investment factor adds nothing to the Sharpe ratio of model \ref{eq:B16}.
+Next I investigate which factors specifically subsume investment.
