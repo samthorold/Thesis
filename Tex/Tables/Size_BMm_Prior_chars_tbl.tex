@@ -5,7 +5,27 @@
 \caption{
 \scriptsize{
 Value-weighted summary characteristics for sorts on size, monthly value and
-prior returns.
+momentum.
+At the end of June each year, stocks are allocated to two Size groups
+(Small and Big) using the NYSE median as the ME breakpoint.
+Small and big stocks are allocated independently to four value buckets (Low
+$\text{BM}^m$ to High $\text{BM}^m$) and four momentum buckets
+(Low Prior to High Prior), using NYSE $\text{BM}^m$ and Prior breakpoints for
+the small or big Size group.
+The intersections of the three sorts produce 32 Size-$\text{BM}^m$-Prior
+portfolios.
+Each month, characteristics are value-weighted using the previous month's ME
+because value and momentum are updated monthly.
+Summary characteristics are shown for
+gross return ($\text{r}^i$),
+monthly value ($\text{BM}^m$),
+annual value (BM),
+momentum (Prior),
+cash profitability (CP),
+future variance (Future Var),
+future investment (Future Inv) and
+future changes in BE (Future $\Delta$BE).
+Variance is defined as the variance in the prior month's daily returns.
 }
 }
 \begin{tabular}{lrrrrrrrr}
@@ -16,7 +36,7 @@ prior returns.
   \midrule
   
   
-    & \multicolumn{8}{c}{$\text{R}^i$}  \\
+    & \multicolumn{8}{c}{$\text{r}^i$}  \\
      \cmidrule(r){2-5} \cmidrule(r){6-9}
     Low Prior  & 0.09  & 0.76  & 0.98  & 1.01  & 0.55  & 0.75  & 0.95  & 0.96   \\
     2  & 0.69  & 1.07  & 1.24  & 1.51  & 0.64  & 0.82  & 0.9  & 1.1   \\
