@@ -13,8 +13,7 @@ from Center for Research in Securities Prices (CRSP) and COMPUSTAT data. My
 sample includes all common stocks, CRSP share code 10 or 11, on the NYSE, AMEX
 or NASDAQ exchanges. All data begins in July 1963 and ends in December 2017. I
 do not omit financial firms nor winsorize variables. See the variables appendix
-for more complete definitions of variables and the data codes used to create
-each characteristic.
+for more complete definitions of variables and data codes used.
 
 The missing profitability factor is created from independent sorts on size and
 cash profitability. Stocks are sorted into two size buckets and three
@@ -40,7 +39,11 @@ the cash profitability factor.
 While value, momentum and investment factors are available online, their
 respective summary characteristics are not. To create the timelier value
 characteristic, I use the market equity from the previous month and book equity
-from the previous year updated each July as with profitability. To create the
+This is not the same method used by AQR to construct the $\text{HML}^m$ factor.
+They use the book-to-price ratio at the stock level with price updated monthly.
+The intuition is the same for monthly book-to-market and monthly book-to-price.
+from the previous year updated each July as with profitability.
+To create the
 momentum characteristic, I follow the instructions on Kenneth French’s website
 and sum the returns from twelve months ago to two months ago. To create the
 investment characteristic, I follow \textcite{fama2015five} and use the asset
@@ -53,5 +56,5 @@ assign all stocks to buckets. Characteristics are value-weighted. For the size,
 timely value and momentum sorts this means using the previous month’s market
 equity because these portfolios are rebalanced monthly. For the size, annual
 value and investment sorts this means using the market equity from the most
-recent June as with the profitability factor because these portfolios are
+recent June, the same as the profitability factor, because these portfolios are
 rebalanced annually.
