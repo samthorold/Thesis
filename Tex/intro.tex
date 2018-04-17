@@ -12,14 +12,15 @@ investors worry about the covariances of returns with the market and multiple
 state variables.
 
 Asset-pricing models that focus on stock returns use portfolios, ``factors", to
-mimic unobserved priced state variables of the ICAPM. The prevalence and
+mimic unobserved priced state variables. The prevalence and
 quality of stock data can quickly lead to data-mining in the search for
 factors. Many factors are based largely on statistical anomalies rather than
 economic intuition. \textcite{harvey2016and} find more than 300 factors in the
 literature and call for an increase in the usual confidence intervals used to
 class a new factor as ``discovered”. \textcite{mclean2016does} find that the
 unexplained return on many factors is reduced following publication suggesting
-the factors were not truly compensation for risk. Subsets of stocks that cannot
+the factors were not truly priced by investors.
+Subsets of stocks that cannot
 be priced by a set of factors are important for academic and professional
 reasons, but statistical anomalies should not drive the choice of factors.
 
@@ -35,10 +36,11 @@ priced state variables. \textcite{graham1934security} advocate buying cheap,
 profitable stocks. I measure how cheap a stock is by the book-to-market ratio
 (B/M). \textcite{kok2017facts, asness2013devil} show that updating B/M monthly
 and using the measure alongside momentum helps to identify those stocks that
-will exhibit a change in market equity, driving returns, rather than book
+will revert to their mean value through a change in market equity
+, driving returns, rather than book
 equity. I measure momentum as the return over the previous year omitting the
 most recent month \parencite{fama2016dissecting}. I measure profitability as
-the accrual- adjusted operating income \parencite{ball2016accruals}.
+the accrual-adjusted operating income \parencite{ball2016accruals}.
 
 I propose a five-factor model of market, size, value, momentum and
 profitability factors with time series regression form
