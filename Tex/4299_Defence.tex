@@ -1,11 +1,14 @@
 \documentclass{beamer}
 
+\usepackage[backend=biber, style=authoryear]{biblatex}
 \usepackage{booktabs}
 \usepackage{dcolumn}
 \usepackage{graphicx}
 \usepackage[utf8]{inputenc}
 
 \usetheme{Madrid}
+
+\addbibresource{references.bib}
 
 \title[Asset-Pricing]{Top-down approach to factor models}
 \author[Thorold]{4299 Sam Thorold\\
@@ -21,6 +24,36 @@
 %\frametitle{What's on the cards}
 %\tableofcontents
 %\end{frame}
+
+
+\section{Intro}
+
+\begin{frame}
+  \frametitle{Current state of affairs}
+  \begin{itemize}
+    \item Characteristic sort cannot be explained by a model
+    \small{$<$insert Fama-French iteration here$>$}
+    \item A risk story is attached to the ``anomaly"
+    \item Anomaly is made into a factor
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Current state of affairs}
+  \begin{itemize}
+    \item Quality and prevalence of stock data means factor models are
+    particularly open to data-mining
+    \item Problem: no way to test models before turning to performance in
+    anomaly sorts
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Current state of affairs}
+  \begin{itemize}
+    \item \cite{harvey2016and}
+  \end{itemize}
+\end{frame}
 
 \section{Background}
 
@@ -225,6 +258,13 @@
     \item CRSP: PMU factor and all characteristics
 \end{itemize}
 \end{frame}
+
+\section{References}
+
+\begin{frame}[allowframebreaks]
+  \printbibliography
+\end{frame}
+
 
 \end{document}
 
