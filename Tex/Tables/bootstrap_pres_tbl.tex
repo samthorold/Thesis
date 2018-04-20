@@ -2,24 +2,23 @@
 \begin{tabular}{lcccccc}
   \toprule
   \multicolumn{7}{l}{Panel A: Model factors and maximum squared Sharpe ratios} \\
-  Code  & \multicolumn{2}{l}{Name}                         & \multicolumn{3}{l}{Factors}                                   & Sh2   \\
-  B16   & \multicolumn{2}{l}{Ball, et. al (2016)}          & \multicolumn{3}{l}{$R^M$, $SMB$, $HML^m$, $PMU$, $WML$}        & 0.316 \\
-  B16b  & \multicolumn{2}{l}{Ball, et. al (2016) w/ $CMA$} & \multicolumn{3}{l}{$R^M$, $SMB$, $HML^m$, $PMU$, $WML$, $CMA$} & 0.316 \\
-  F17   & \multicolumn{2}{l}{Fama and French (2017)}       & \multicolumn{3}{l}{$R^M$, $SMB$, $HML$, $PMU$, $WML$, $CMA$}   & 0.240 \\
-  F16   & \multicolumn{2}{l}{Fama and French (2016)}       & \multicolumn{3}{l}{$R^M$, $SMB$, $HML$, $PMU$, $CMA$}          & 0.225 \\
-  F15   & \multicolumn{2}{l}{Fama and French (2015)}       & \multicolumn{3}{l}{$R^M$, $SMB$, $HML$, $PMU^{06}$, $CMA$}     & 0.099 \\
-  C97   & \multicolumn{2}{l}{Carhart (1997)}               & \multicolumn{3}{l}{$R^M$, $SMB$, $HML$, $WML$}                 & 0.090 \\
-  C97b  & \multicolumn{2}{l}{Carhart (1997) w/ $HML^m$}    & \multicolumn{3}{l}{$R^M$, $SMB$, $HML^m$, $WML$}               & 0.136 \\
+        & \multicolumn{2}{l}{Name}                         & \multicolumn{3}{l}{Factors}                                   & Sh2   \\
+  1     & \multicolumn{2}{l}{Model 1}                      & \multicolumn{3}{l}{$R^M$, $SMB$, $HML^m$, $PMU$, $WML$}        & 0.316 \\
+  2     & \multicolumn{2}{l}{Model 1 + $CMA$}              & \multicolumn{3}{l}{$R^M$, $SMB$, $HML^m$, $PMU$, $WML$, $CMA$} & 0.316 \\
+  3     & \multicolumn{2}{l}{Fama and French (2017)}       & \multicolumn{3}{l}{$R^M$, $SMB$, $HML$, $PMU$, $WML$, $CMA$}   & 0.240 \\
+  4     & \multicolumn{2}{l}{Model 2}                      & \multicolumn{3}{l}{$R^M$, $SMB$, $HML$, $PMU$, $CMA$}          & 0.225 \\
+  5     & \multicolumn{2}{l}{Fama and French (2015)}       & \multicolumn{3}{l}{$R^M$, $SMB$, $HML$, $PMU^{06}$, $CMA$}     & 0.099 \\
+  6     & \multicolumn{2}{l}{Carhart (1997)}               & \multicolumn{3}{l}{$R^M$, $SMB$, $HML$, $WML$}                 & 0.090 \\
+  7     & \multicolumn{2}{l}{Carhart (1997) + $HML^m$}     & \multicolumn{3}{l}{$R^M$, $SMB$, $HML^m$, $WML$}               & 0.136 \\
   \midrule
   \multicolumn{7}{l}{Panel B: 90\% confidence interval for distributions of Sh2(Row) - Sh2(Column)} \\
-        &        B16b      &        F17       &        F16       &        F15       &        C97       &        C97b      \\
-  B16   & (-0.008,  0.000) & ( 0.039,  0.112) & ( 0.055,  0.138) & ( 0.156,  0.291) & ( 0.169,  0.299) & ( 0.127,  0.248) \\
-  B16b  & ( 0.000,  0.000) & ( 0.043,  0.115) & ( 0.058,  0.140) & ( 0.158,  0.294) & ( 0.170,  0.302) & ( 0.129,  0.250) \\
-  F17   & (-0.115, -0.043) & ( 0.000,  0.000) & ( 0.002,  0.048) & ( 0.095,  0.204) & ( 0.107,  0.212) & ( 0.052,  0.172) \\
-  F16   & (-0.140, -0.058) & (-0.048, -0.002) & ( 0.000,  0.000) & ( 0.081,  0.176) & ( 0.080,  0.197) & ( 0.028,  0.155) \\
-  F15   & (-0.294, -0.158) & (-0.204, -0.095) & (-0.176, -0.081) & ( 0.000,  0.000) & (-0.033,  0.052) & (-0.085,  0.012) \\
-  C97   & (-0.302, -0.170) & (-0.212, -0.107) & (-0.197, -0.080) & (-0.052,  0.033) & ( 0.000,  0.000) & (-0.071, -0.025) \\
-  C97b  & (-0.250, -0.129) & (-0.172, -0.052) & (-0.155, -0.028) & (-0.012,  0.085) & ( 0.025,  0.071) & ( 0.000,  0.000) \\
+        &        2         &        3         &        4         &        5         &        6         &        7         \\
+  1     & (-0.008,  0.000) & ( 0.039,  0.112) & ( 0.055,  0.138) & ( 0.156,  0.291) & ( 0.169,  0.299) & ( 0.127,  0.248) \\
+  2     &                  & ( 0.043,  0.115) & ( 0.058,  0.140) & ( 0.158,  0.294) & ( 0.170,  0.302) & ( 0.129,  0.250) \\
+  3     &                  &                  & ( 0.002,  0.048) & ( 0.095,  0.204) & ( 0.107,  0.212) & ( 0.052,  0.172) \\
+  4     &                  &                  &                  & ( 0.081,  0.176) & ( 0.080,  0.197) & ( 0.028,  0.155) \\
+  5     &                  &                  &                  &                  & (-0.033,  0.052) & (-0.085,  0.012) \\
+  6     &                  &                  &                  &                  &                  & (-0.071, -0.025) \\
   \bottomrule
 \end{tabular}
 

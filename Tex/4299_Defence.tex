@@ -10,7 +10,7 @@
 
 \addbibresource{references.bib}
 
-\title[Asset-Pricing]{Top-down approach to factor models}
+\title[Asset-Pricing]{A top-down approach to factor models}
 \author[Thorold]{4299 Sam Thorold\\
                  Supervisors: Francisco Santos and Andr\'e Silva}
 \institute{NHH and NOVA}
@@ -19,12 +19,6 @@
 \begin{document}
 
 \frame{\titlepage}
-
-%\begin{frame}
-%\frametitle{What's on the cards}
-%\tableofcontents
-%\end{frame}
-
 
 \section{Intro}
 
@@ -47,144 +41,134 @@
     many factors
     \item \textcite{linnainmaa2016history} find ``most" factors are spurious
     out of sample
-    \item \textbf{Problem}:
-    no way to test models before turning to performance in anomaly sorts
   \end{itemize}
 \end{frame}
 
-\section{Background}
+\begin{frame}
+  \frametitle{Barillas and Shanken to the rescue}
+  \begin{itemize}
+    \item \textbf{Problem}:
+    no way to test models before turning to performance in anomaly sorts
+    -- bottom-up approach
+    \item \textbf{Solution}:
+    \textcite{barillas2016alpha} show that we only need to compare the Sharpe
+    ratio of the factors in a model to compare mis-pricing for all assets
+    -- top-down approach
+  \end{itemize}
+\end{frame}
 
 \begin{frame}
-\frametitle{What makes a good model?}
+\frametitle{Maximizing Sharpe ratio minimizes mis-pricing for all assets}
 \begin{itemize}
-    \item<1-> We want our asset pricing models to minimize pricing errors for
+    \item We want our asset pricing models to minimize pricing errors for
     all assets
-    \item<1-> When we price returns, the pricing error is given by
+    \item When we price returns, the pricing error is given by
     \[
     \text{Sh}^2(a) = \text{Sh}^2(R, f) - \text{Sh}^2(f)
     \]
-    \item<2-> If $R$ is all assets then $\text{Sh}^2(R, f) = \text{Sh}^2(R)$
+    \item If $R$ is all assets then $\text{Sh}^2(R, f) = \text{Sh}^2(R)$
     \[
     \text{Sh}^2(a) = \text{Sh}^2(R) - \text{Sh}^2(f)
     \]
-    \item<2->Model with the highest Sharpe ratio of the factors is best
+    \item Model with the highest Sharpe ratio of the factors is best
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Which factors?}
-\begin{itemize}
-    \item<1-> ICAPM says investors care about their payoff in the future but
+  \frametitle{Choose factors before addressing anomalies}
+  \begin{itemize}
+    \item ICAPM of \textcite{merton1973intertemporal}
+    says investors care about their payoff in the future but
     also what they can do with it
-    \item<1-> Market + state variables
-    \item<1-> We do not know these state variables but we can make proxies
-    \item<2-> Investors want to identify \emph{cheap} and \emph{profitable} stocks
-\end{itemize}
+    \item Market + state variables
+    \item We do not observe the state variables but we can make proxies
+    \item Investors want to identify \emph{cheap} and \emph{profitable} stocks
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Proxies for cheap and profitable}
 \begin{itemize}
-    \item<1-> Cheap $\rightarrow$ Book-to-Market (BM)
-    \item<1-> Some problems here as we want to identify changes in BM due to
+    \item Cheap $\rightarrow$ Book-to-Market (BM)
+    \parencite{fama1993common}
+    \item Some problems here as we want to identify changes in BM due to
     changes in market equity rather than book equity
-    \item<1-> Monthly value + momentum
-    \item<2-> Profitable $\rightarrow$ Operating profit adjusted for accruals
+    \item Monthly value + momentum
+    \parencite{asness2013devil, kok2017facts}
+    \item Profitable $\rightarrow$ Operating profit adjusted for accruals
+    \parencite{ball2016accruals}
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Testing the model}
-\begin{itemize}
-    \item<1-> $R_t^i = a^i + b^iR_t^M + s^iSMB_t + v^iHML_t^m + m^iWML_t + p^iPMU_t$
-    \item<2-> Max Sharpe ratio of factors
-    \item<3-> Gibbons, Ross, Shanken (GRS) statistic that the Sharpe ratio
-    can be improved by investing in the test assets
-    \item<4-> Individual time series regressions of test assets on the factors
-\end{itemize}
+  \frametitle{Top-down approach}
+  \begin{itemize}
+    \item Given the best model based on Sharpe ratio evidence,
+    we can investigate the returns to different anomaly sorts
+    \item The model then provides a description of these anomalies
+    \item Problem sorts do not necessarily lead to new factors even if they
+    have significant alpha in time-series regressions
+    \item New factors must reliably improve the Sharpe ratio of the factors
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Preview of results}
+  \begin{itemize}
+    \item Highest Sharpe ratio:
+    \begin{equation}
+      R_t^i=a^i + b^iR_t^M + s^iSMB_t + v^iHML_t^m + m^iWML_t + p^iPMU_t
+    \end{equation}
+    \item Investment factor does not add to the Sharpe ratio nor do sorts on
+    investment pose any problems
+    \item Sorts on momentum and volatility or those sorts that constrain value
+    are a problem
+    \item The returns on the ``lethal combination" \parencite{fama2015five,
+    fama2016dissecting} of small, unprofitable stocks that somehow invest
+    aggressively behave like small, unprofitable stocks with poor recent
+    returns -- disappearance of value
+  \end{itemize}
+\end{frame}
+
+\section{Literature}
+
+\begin{frame}
+  \frametitle{Similar research}
+  \begin{itemize}
+    \item \textcite{fama2016choosing} rely heaviy on
+    \textcite{barillas2016alpha} to show the accrual-adjusted profitability
+    factor of \textcite{ball2016accruals} improves the Sharpe ratio of their
+    original five-factor model \parencite{fama2015five}
+    \begin{equation}
+      R_t^i=a^i + b^iR_t^M + s^iSMB_t + v^iHML_t + p^iPMU_t + i^iCMA_t
+    \end{equation}
+    \item \textcite{fama2016dissecting} follow the advice of
+    \textcite{lewellen2010skeptical} and test their original five-factor
+    model's performance in anomaly sorts constructed from variables not present
+    in the model
+    \item \textcite{ball2016accruals} present a model similar to the one I
+    propose to show an accruals factor does not improve the Sharpe ratio of a
+    five-factor model including their accrual-adjusted profitability factor
+  \end{itemize}
+\end{frame}
+
+\section{Data}
+
+\begin{frame}
+  \frametitle{Data}
+  \begin{itemize}
+    \item Factors: Ken French all except $\text{HML}^m$ which is from AQR
+    \item Sorts: Ken French all except size, value, investment/momentum
+    \item PMU factor and all characteristic sorts: CRSP and COMPUSTAT
+    \item U.S. stocks -- July 1963 through December 2017
+    \item I include financial firms and do not winsorize variables
+  \end{itemize}
 \end{frame}
 
 \section{Results}
 
 \begin{frame}
-\frametitle{Sharpe ratio results: Which model is best? (Why?)}
-\begin{itemize}
-    \item<1-> $\text{Sh}^2(R^M + SMB + HML^m + WML + PMU)=0.316$
-    \item<1-> $\text{Sh}^2(R^M + SMB + HML   + CMA + PMU)=0.225$
-    \item<2-> Investment factor is subsumed by value and momentum
-    \item<3-> $ME_t = \sum_{s=1}^\infty E\left( \text{Profit}_{t+s} - \Delta\text{BE}_{t+s}\right) /R^s$
-    \item<3-> Investment does not describe future $\Delta$BE for small, growth
-    stocks while sorts on value and momentum describe investment and future
-    $\Delta$BE
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{GRS results: Which sorts cause problems?}
-\begin{itemize}
-    \item<1-> Matches Sharpe ratio results broadly
-    \item<2-> Problems for my proposed model in sorts on BM compared to other
-    models (various Fama and French iterations)
-    \item<2-> Better in all other sorts compared to other models
-    \item<3-> Problems in sorts on momentum and variation for all models
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Momentum and variation sorts: Why problems?}
-\begin{itemize}
-    \item<1-> Momentum factor helps, but not much, in sorts on momentum
-    \item<1-> Something going on with momentum returns that is not to do with
-    momentum characteristics
-    \item<2-> Profit slopes are negative in the extremes of momentum
-    \item<2-> Defensive equity $\rightarrow$ beta and volatility
-    \item<3-> Sorts on beta pose the least problems
-    \item<4-> Sorts on variance are a big problem
-    \item<4-> Small, high-variance alpha of -0.66\% per month
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Momentum and variation sorts: Why problems?}
-\begin{itemize}
-    \item<1-> To take advantage of this alpha we need to sell small,
-    unprofitable stocks with poor recent returns
-    \item<2-> That's a tough sell $\rightarrow$ Liquidity
-    \item<3-> But, liquidity hard to approach from a cross-section perspective
-    \item<3-> Institutional ownership, Short-term reversal factor as a proxy
-    for market-maker's returns $\rightarrow$ market microstructure
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Momentum and variation sorts: Why problems?}
-\begin{itemize}
-    \item<1-> Cross-section perspective
-    \item<1-> High-volatility firms are much smaller
-    \item<1-> Small says high returns while high-volatility says low returns
-    \item<2-> Value disappears in the problem momentum and variance sorts
-    \item<2-> Normally, value and profitability do most of the heavy lifting
-\end{itemize}
-\end{frame}
-
-\section{Conclusions}
-
-\begin{frame}
-\frametitle{Conclusions}
-\begin{itemize}
-    \item<1-> Mkt, size, value, momentum and profitability factors have the
-    highest Sharpe ratio
-    \item<2-> Value and momentum subsume investment
-    \item<3-> ``Lethal combination" of small, unprofitable stocks that somehow
-    invest aggressively $\rightarrow$ small, unprofitable firms with poor
-    recent returns
-\end{itemize}
-\end{frame}
-
-\section{Tables}
-
-\begin{frame}
-\frametitle{Highest Sharpe ratio}
+\frametitle{Sharpe ratio}
 \resizebox{\linewidth}{!}{\input{Tables/bootstrap_pres_tbl}}
 \end{frame}
 
@@ -207,18 +191,32 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{Size-BM-Inv sorts}
-\begin{center}
-\resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{
-    \input{Tables/Size_BM_Inv_chars_pres_tbl}
-    }
-\end{center}
+\frametitle{Value and momentum proxy for changes in BE}
+\begin{itemize}
+    \item Investment factor is subsumed by value and momentum
+    \item $ME_t =
+    \sum_{s=1}^\infty E\left( \text{Profit}_{t+s}-
+    \Delta\text{BE}_{t+s}\right) /R^s$
+    \item Investment does not describe future $\Delta$BE for small, growth
+    stocks while sorts on value and momentum describe investment and future
+    $\Delta$BE
+\end{itemize}
 \end{frame}
+
 \begin{frame}
 \frametitle{Size-$\text{BM}^m$-Prior sorts}
 \begin{center}
 \resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{
     \input{Tables/Size_BMm_Prior_chars_pres_tbl}
+    }
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Size-BM-Inv sorts}
+\begin{center}
+\resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{
+    \input{Tables/Size_BM_Inv_chars_pres_tbl}
     }
 \end{center}
 \end{frame}
@@ -232,10 +230,61 @@
 \end{center}
 \end{frame}
 
+\begin{frame}
+\frametitle{Momentum and variance sorts}
+\begin{itemize}
+    \item Momentum factor helps, but not much, in sorts on momentum
+    \item Something going on with momentum returns that is not to do with
+    momentum characteristics
+    \item Profit slopes are negative in the extremes of momentum
+    \item Defensive equity $\rightarrow$ beta and volatility
+    \item Sorts on beta pose the least problems
+    \item Sorts on variance are a big problem
+    \item Small, high-variance alpha of -0.66\% per month
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Momentum and variance sorts}
+\begin{itemize}
+    \item To take advantage of this alpha we need to sell small,
+    unprofitable stocks with poor recent returns
+    \item That's a tough sell $\rightarrow$ Liquidity
+    \item But, liquidity hard to approach from a cross-section perspective
+    \item Institutional ownership, Short-term reversal factor as a proxy
+    for market-maker's returns $\rightarrow$ market microstructure
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Momentum and variance sorts}
+\begin{itemize}
+    \item Cross-section perspective
+    \item High-volatility firms are much smaller
+    \item Small says high returns while high-volatility says low returns
+    \item Value disappears in the problem momentum and variance sorts
+    \item Normally, value and profitability do most of the heavy lifting
+\end{itemize}
+\end{frame}
+
+\section{Conclusions}
+
+\begin{frame}
+\frametitle{Conclusions}
+\begin{itemize}
+    \item Mkt, size, value, momentum and profitability factors have the
+    highest Sharpe ratio
+    \item Value and momentum subsume investment
+    \item ``Lethal combination" of small, unprofitable stocks that somehow
+    invest aggressively $\rightarrow$ small, unprofitable firms with poor
+    recent returns
+\end{itemize}
+\end{frame}
+
 \section{Omissions}
 
 \begin{frame}
-\frametitle{``Big" Omissions}
+\frametitle{Omissions}
 \begin{itemize}
     \item BAB factor -- small contribution to $\text{Sh}^2$ (0.02) due to
     unexplained volatility
@@ -245,20 +294,10 @@
 \end{itemize}
 \end{frame}
 
-\section{Data}
-
-\begin{frame}
-\frametitle{Data}
-\begin{itemize}
-    \item Factors: Ken French all except $\text{HML}^m$ which is from AQR
-    \item Sorts: Ken French all except size, value, investment/momentum
-    \item CRSP: PMU factor and all characteristics
-\end{itemize}
-\end{frame}
-
 \section{References}
 
 \begin{frame}[allowframebreaks]
+  \frametitle{References}
   \printbibliography
 \end{frame}
 
