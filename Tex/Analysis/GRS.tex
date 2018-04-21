@@ -1,47 +1,65 @@
 % !TeX root=../main.tex
 
-B16 performs performs poorly, relative to F16/17, in sorts on annual value.
-In absolute terms, B16 performs poorly in sorts on momentum and variance,
-although B16 outperforms F16.
-To explore poor relative and absolute performance,
-I examine intercepts and coefficients from time-series regressions of the
-problem sorts on B16 and F16.
-The non-nested models show where value and momentum differ from investment
-slopes.
-I also include sorts on investment to explore how performance is not lost
-despite omitting the investment factor.
 
+Model \ref{eq:B16} performs best for all stocks but this does not necessarily
+mean the model performs best for all subsets of stocks.
+The GRS statistic gives a measure of how much the Sharpe ratio of a model can
+be improved by investing in the test assets as well as the factors.
+A lower GRS statistic indicates a better description of the returns on the
+test assets.
 Table \ref{tbl:GRS} shows the GRS statistic for selected anomaly sorts across
 the seven models from table \ref{tbl:bootstrap}.
-The main message of the table is that GRS evidence broadly lines up with
-$\text{Sh}^2$ evidence from table \ref{tbl:bootstrap} but my proposed model,
-B16, struggles where value is constrained by sorts on the value characteristic.
-Anomalies are chosen based on prior research.
-\textcite{fama2015five} test the five-factor model, F15, with finer sorts on
-the characteristics used to create the factors; $\text{HML}$,
-$\text{PMU}^{06}$ and $\text{CMA}$.
-\textcite{fama2016dissecting}, following intuion in
-\textcite{lewellen2010skeptical}, test the five-factor model with sorts on
-charatceristics not used to create the factors, for example accruals
-\parencite{sloan1996stock} and volatility \parencite{ang2006cross}.
-The two-way sorts are independent 5$\times$5 sorts on size and one other
-characteristic giving 25 test portfolios.
-The three-way sorts first split the data in half based on size before making
-independent 4$\times$4 sorts on two other characteristics giving 32 test
-portfolios.
-The GRS statistics are a measure of how much the $\text{Sh}^2$ of a model can
-be improved by investing in the test portfolios as well as the factors.
-If the $\text{Sh}^2$ cannot be improved, the factors are said to ``span" the
-test portfolios and the factors describe the returns on the portfolios.
+The anomalies are from Dr Kenneth French's website except for the size, monthly
+value and momentum  portfolios which are constructed from CRSP data.
+The anomalies represent a broad selection of historically troublesome sorts and
+include variables used to construct the factors as well as variables that do
+not feature in any of the seven models.
+As the number of anomaly portfolios increases, the test assets converge on
+all assets.
+Consequently, we would expect the GRS statistic evidence for all of the
+anomalies to match the Sharpe ratio evidence and this is largely the case.
+The main messages of table \ref{tbl:GRS} are that the GRS evidence matches the
+Sharpe ratio evidence and that momentum and volatility sorts are a problem for
+all models.
 
-The table is split to make three points;
-constraining annual value hinders the ability of B16 to describe returns,
-constraining monthly value is far less disastrous for B16 than other models and
-in sorts on all variables that are not annual value, B16 outperforms F16/17.
-The three sorts involving $BM$ at the top of table \ref{tbl:GRS} have a GRS of
-1.23 for F17 and 1.38 for B16.
-The smaller GRS for F17 than B16 means the $\text{Sh}^2$ of F17 can be improved
-less than that of B16 by investing in the portfolios constructed from sorts on
-$BM$.
-F17 describes the returns on sorts on $BM$ better than B16.
+Table \ref{tbl:GRS} includes the value, profitability and investment anomalies
+\parencite{fama2006profitability, fama2015five},
+the accruals, beta, net issues, momentum and volatility anomalues
+\parencite{fama2016dissecting} as well as a sort on size, monthly value and
+momentum.
+The anomalies are grouped to make three points;
+constraining annual value hinders the ability of model \ref{eq:B16} to describe
+returns,
+constraining monthly value is far least disastrous for model \ref{eq:B16} and
+in sorts on all variables that are not annual value
+model \ref{eq:B16} outperforms model \ref{eq:F16} (+ WML).
+
+The variation in characteristics seen in tables \ref{tbl:Size_BMm_Prior_chars}
+and \ref{tbl:Size_BM_Inv_chars} drive the results in table \ref{tbl:GRS}.
+For sorts on annual value (BM), the variation in the BM characteristic within
+monthly value ($\text{BM}^m$) buckets drives the disappointing GRS results for
+model \ref{eq:B16}.
+By sorting on value we are in effect controlling value.
+The sorts on monthly value show that the two specifications of value are
+sufficiently different that controlling for $\text{BM}^m$ is not the same as
+controlling for BM and there is undesired variation in BM within $\text{BM}^m$
+buckets.
+In contrast, BM is flat within BM buckets and model \ref{eq:F16}, GRS of 1.62,
+provides a better description of the returns to sorts on BM than model
+\ref{eq:B16}, GRS of 1.81.
+For sorts on $\text{BM}^m$ and momentum (Prior), model \ref{eq:B16} is
+``playing at home" in that the model contains factors for all sort variables.
+This creates variation in $\text{BM}^m$ and Prior not present in sorts on BM
+and investment (Inv). Model \ref{eq:B16}, GRS of 4.85, outperforms model
+\ref{eq:F16}, GRS of 6.52, for sorts on $\text{BM}^m$ and Prior.
+Model \ref{eq:B16} describes sorts on
+variables not used to contruct the factors better than model \ref{eq:F16}.
+For example, accruals, beta, net issues, and variance anomalies all
+increase the Sharpe ratio of model \ref{eq:B16} less than model \ref{eq:F16}.
+Part of the improvement can be attributed to statistics alone.
+Sorts on $\text{BM}^m$ and Prior create much greater variation in returns than
+sorts on BM and Inv.
+By construction, model \ref{eq:B16} will capture more variation in returns than
+model \ref{eq:F16}.
+
 
