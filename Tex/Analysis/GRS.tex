@@ -30,12 +30,14 @@ momentum.
 The anomalies are grouped to make three points;
 constraining annual value hinders the ability of model \ref{eq:B16} to describe
 returns,
-constraining monthly value is far least disastrous for model \ref{eq:B16} and
+constraining monthly value is far less disastrous for model \ref{eq:B16}
+than other models and
 in sorts on all variables that are not annual value
 model \ref{eq:B16} outperforms model \ref{eq:F16} (+ WML).
 
 The variation in characteristics seen in tables \ref{tbl:Size_BMm_Prior_chars}
-and \ref{tbl:Size_BM_Inv_chars} drive the results in table \ref{tbl:GRS}.
+and \ref{tbl:Size_BM_Inv_chars} drive the results in table \ref{tbl:GRS}
+for models \ref{eq:B16} and \ref{eq:F16}.
 For sorts on annual value (BM), the variation in the BM characteristic within
 monthly value ($\text{BM}^m$) buckets drives the disappointing GRS results for
 model \ref{eq:B16}.
@@ -61,5 +63,50 @@ Sorts on $\text{BM}^m$ and Prior create much greater variation in returns than
 sorts on BM and Inv.
 By construction, model \ref{eq:B16} will capture more variation in returns than
 model \ref{eq:F16}.
+Tables \ref{tbl:Size_BMm_Prior_chars} and \ref{tbl:Size_BM_Inv_chars} show that
+value and momentum provide a better proxy for changes in BE than value and
+investment.
+Value and momentum help to identify those portfolios constructed from sorts on
+accruals, beta, net issues and variance that will exhibit changes in BE in the
+future better than value and investment.
+Momentum sorts are more puzzling because model \ref{eq:B16}, GRS of 3.62,
+and model \ref{eq:F16}, GRS of 3.59, with the momentum factor perform poorly.
 
+GRS evidence across models adds colour to the Sharpe evidence in table
+\ref{tbl:bootstrap}.
+The biggest improvements for the four-factor model with monthly value over the
+original five-factor model come from sorts on accruals, GRS of 3.1 and 3.89
+respectively, and beta, GRS of 1.22 and 1.83.
+The four-factor model also describes sorts on momentum better than the original
+five-factor model and the five-factor model with cash profitability but this is
+expected given the four-factor model contains the momentum factor.
+The original four-factor model ourperforms the four-factor model with monthly
+momentum for sorts on annual value, constrained BM GRS of 2.31 and 2.69
+respectively.
+This supports the idea that undesired variation in $\text{BM}^m$ within BM
+buckets results in poor performance since the only difference in the models is
+the value specification.
+
+The largest problems for all models are caused by momentum and volatility
+sorts.
+Individual regression sorts can help explore why this may be the case by
+showing which particular sorts leave significant alpha.
+This analysis provides a more detailed description of problem sorts than simply
+the sort variable.
+The sign of factor regression slopes will show which end of the factor return
+spread problem portfolios behave like.
+For example, a negative profitability slope suggests returns behave like
+the returns on unprofitable stocks while a positive slope would indicate
+profitable stocks.
+Performance in sorts on investment is improved despite omitting the investment
+factor. Individual regression slopes will show which factors pick up the slack
+in investment's absence.
+Furthermore, since we have already seen the relationship between value,
+momentum and investment and that monthly value misbehaves within annual value
+buckets, we can confirm that model \ref{eq:B16} fails predictably.
+If value and investment are controlled for, the comparatively poor performance
+observed in sorts on value and investment should be due to a lack of variation
+in value slopes across investment buckets within value buckets.
+I focus on models \ref{eq:B16} and \ref{eq:F16} individual regression slopes
+because they have two of the highest Sharpe ratios and are not nested.
 
