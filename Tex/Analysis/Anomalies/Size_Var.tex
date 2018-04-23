@@ -1,62 +1,81 @@
 % !TeX root=../../main.tex
 
-Table \ref{tbl:25_Size_Var_B16} shows 25 time series regressions
-from size-variance sorts using B16 factors while table
-\ref{tbl:25_Size_Var_F16} shows the same regressions using F16 factors.
-The main message of the table is that the ``lethal combination" of small,
-unprofitable stocks that somehow invest aggressively is described by stocks
-whose returns behave like those of small, unprofitable stocks with recent poor
-performance.
-What is in this new description of problem sorts is just as important as what
-is not -- there is no value.
-Those sorts that create problems for B16 have returns that do not covary with
-the returns on the value factor.
+Table \ref{tbl:25_Size_Var_B16} shows 25 time series regressions from size-
+variance sorts for model \ref{eq:B16} while table \ref{tbl:25_Size_Var_F16}
+shows the same regressions for model \ref{eq:F16}. The main message of the
+table is that the ``lethal combination" of small, unprofitable stocks that
+somehow invest aggressively is described by stocks whose returns behave like
+those of small, unprofitable stocks with recent poor performance. What is in
+this new description of problem sorts is just as important as what is not --
+there is no value. Those sorts that create problems for \ref{eq:B16} have
+returns that do not covary with the returns on the value factor.
 
 I include the market and size slopes, despite their similarity across models,
-because they show volatility's relationship with market beta and size.
-Beta increases as volatility buckets increase and remains flat across size
-buckets.
+because they show volatility's relationship with market beta and size. Beta
+increases as volatility buckets increase and remains flat across size buckets.
 This relationship with beta makes sense given individual stock, or portfolio,
-variance drives covariance with the market.
-Size slopes increase with volatility buckets.
-In the smallest two size buckets, the variation in size slopes is extreme.
-The smallest size bucket slopes rise from 0.63 to 1.5.
-The second size bucket slopes rise from 0.51 to 1.18.
+variance drives covariance with the market. Size slopes increase with
+volatility buckets.
+In the smallest two size buckets, the variation in size
+slopes is extreme.
+For model \ref{eq:B16}, the smallest size bucket slopes rise from 0.63 to 1.5
+and the second size bucket slopes rise from 0.51 to 1.18.
 Value slopes are also similar across models.
-Low-variation stocks have positive value slopes.
-The returns on low-variation stocks behave like the returns on value-stocks.
-There is a drop in value slopes for the high-variation bucket.
-The returns on high-variation stocks behave like the returns on growth stocks.
-The value slope is insignificant in only one bucket for both models --
-small, high-variation.
-Profitability slopes tell a similar story across both models, although the
-profitability factor does much more of the heavy lifting for F16 in the absence
-of momentum.
-Profitability slopes are positive for the low-variation bucket and negative
-for the high-variation bucket.
-The returns on low-variation stocks behave like the returns on low-profit
-stocks.
+For both models, low-variance stocks have positive value slopes so
+the returns on low-variance stocks behave like the returns on value stocks.
+There is a drop in value slopes for the high-variance bucket so
+the returns on high-variance stocks behave like the returns on growth stocks.
+The value slope is insignificant in just one bucket for both models -- small,
+high-variance stocks.
+Profitability slopes tell a similar story across both models,
+although the profitability factor does much more of the heavy lifting for model
+\ref{eq:F16} in the absence of momentum.
+Profitability slopes are positive for the low-variance bucket and negative for
+the high-variance bucket.
+The returns on low-variance stocks behave like those of profitable stocks.
 This relationship is consistent with findings in
-\textcite{novy2014understanding} and our earlier findings that momentum sorts
+\textcite{novy2014understanding} and earlier findings that momentum sorts
 may be identifying volatile stocks through their profitability slopes.
-For B16, momentum slopes are negative for the high-variation bucket.
-The returns on high-variation stocks behave like the returns on stocks with
-poor recent returns.
-For F16, investment has very little to add for sorts on variation.
-The small, high-variation intercept is large for both models.
-The intercept is -0.66\% per month for B16 and -0.8\% per month for F16.
-The improvements for B16 are from the negative momentum factor slopes where the
-investment factor has nothing to add (t-stat=-1.25).
+For model \ref{eq:B16}, momentum slopes are negative for the high-variance
+bucket.
+The returns on high-variance stocks behave like the returns on stocks with poor
+recent returns. 
+For model \ref{eq:F16}, investment has very little to add for sorts on
+variance.
+The small, high-variance intercept is large for both models.
+The intercept is -0.66\% per month for model \ref{eq:B16} and -0.8\% per month
+for model \ref{eq:F16}.
+The improvements for model \ref{eq:B16} are from the negative momentum factor
+slopes where the investment factor has nothing to add (t-stat=-1.25) to model
+\ref{eq:F16}.
 
-To take advantage of the alpha in the small, low-value, low-prior bucket of
-table \ref{tbl:Size_BMm_Prior} and the small, high-variance bucket of table
+To take advantage of the alpha in the small, high-variance bucket of table
 \ref{tbl:25_Size_Var_B16} an investor has to sell stocks whose returns behave
 like those of small, unprofitable firms with poor recent performance.
+Intuitively, this is a tough sell.
 Such stocks are likely to be more illiquid than than big, profitable stocks
 with strong recent performance.
-\textcite{nagel2012evaporating} relates the short-term reversal premium to the
-VIX while \textcite{nagel2005short} ...
-Liquidity explanations often focus on market microstructure.
+Small stocks are likely to be held by fewer institutional investors or
+``market makers".
+\textcite{nagel2012evaporating} uses the short-term reversal strategy to proxy
+for the returns to market makers who represent the largest group of buyers for
+these ``problem" stocks.
+Furthermore, Nagel finds liquidity measured in this way is related to the
+aggregate level of volatility as proxied for by the VIX.
+\textcite{nagel2005short} ...
+These liquidity explanations are not satisfactory from a cross-section
+perspective and often focus on market microstructure, for example Nagel's
+measure of institutional ownership.
+Furthermore, \textcite{ang2006cross} test many possible liquidity
+explanations\footenote{for example, blah, blah and blah}
+for the volatility anomaly and find none help greatly to describe the returns
+on highly volatile stocks.
 
-Cross-section explanation -- size and variance slopes pull in opposite
-directions.
+\begin{itemize}
+  \item AQR -- level of surprise in the VIX paper, ``deep value" paper
+  \item Consumption and SDF
+  \item If I plot my SDF from optimal factor weightings what does it do in
+  downturns or periods of deep value?
+  \item If I plot the residuals from small, high-variance regression, what are
+  they doing in downturns or periods of deep value?
+\end{itemize}
