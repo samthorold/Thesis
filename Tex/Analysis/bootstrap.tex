@@ -2,59 +2,57 @@
 
 
 Table \ref{tbl:bootstrap} shows the maximum $\text{Sh}^2$ for models
-\ref{eq:B16} and \ref{eq:F16} as well as five other popular models. Additional
-models are based on the five-factor model of \textcite{fama2015five} or the
-four-factor model of \textcite{carhart1997persistence}. Nested models show
-incremental benefits to adding factors. I include non-nested models to
-highlight the importance of value and momentum and to provide contrast in
-Sharpe and GRS evidence.
-The main messages of table \ref{tbl:bootstrap} are that the
-Sharpe ratio of model \ref{eq:B16} is higher than that of \ref{eq:F16} and the
-Sharpe ratio of model \ref{eq:B16} cannot be improved by adding the investment
-factor. \textcite{barillas2016alpha} explain that the model with the highest
-Sharpe ratio has the smallest pricing error for all assets, so model
-\ref{eq:B16} describes the returns on all stocks better than other models
-tested.
+\ref{eq:B16} and \ref{eq:F16} as well as five other popular models.
+Additional models are based on the five-factor model of \textcite{fama2015five}
+or the four-factor model of \textcite{carhart1997persistence}.
+Nested models show incremental benefits to adding factors.
+I include non-nested models to highlight the importance of value and momentum
+and to provide contrast in Sharpe and GRS evidence.
+The main messages of table \ref{tbl:bootstrap} are that the Sharpe ratio of
+model \ref{eq:B16} is higher than that of \ref{eq:F16} and the Sharpe ratio of
+model \ref{eq:B16} cannot be improved by adding the investment factor.
+Model \ref{eq:B16} describes the returns on all stocks better than other the
+models tested.
 
 Panel A shows the $\text{Sh}^2$ of model \ref{eq:B16} is 0.316 and this
 is identical to the $\text{Sh}^2$ of model \ref{eq:B16}b that includes
-the investment factor. The $\text{Sh}^2$ of model \ref{eq:F16} is 0.225
-although this can be increased to 0.24 by including the momentum factor. The
-$\text{Sh}^2$ of the original Fama and French five-factor model is 0.099. The
-original Carhart four-factor model has a $\text{Sh}^2$ of 0.09 although this is
-increased to 0.136 by updating the value factor monthly. The combination of
-monthly value and momentum in the modified four-factor model
-gives a higher Sharpe ratio than the combination of
-value, operating profitability and investment in the original five-factor
-model.
-This is striking because
-profitability and investment are credited with reducing the number and
-maginitude of many common anomalies. Furthermore, profitability and investment
-slopes reduce the description of many anomalies to small, unprofitable stocks
-that somehow invest aggressively \parencite{fama2015five, fama2016dissecting}.
-The combination of monthly value
-and momentum provide a better description of the
-returns on all stocks than the profitability and investment factors that
-improved the description of the returns on many historical anomalies.
+the investment factor.
+The $\text{Sh}^2$ of model \ref{eq:F16} is 0.225 although this can be
+increased to 0.24 by including the momentum factor.
+The $\text{Sh}^2$ of the original Fama and French five-factor model is 0.099.
+The original Carhart four-factor model has a $\text{Sh}^2$ of 0.09 although
+this is increased to 0.136 by updating the value factor monthly.
+The combination of monthly value and momentum in the modified four-factor
+model gives a higher Sharpe ratio than the combination of value, operating
+profitability and investment in the original five-factor model.
+This is striking because profitability and investment are credited with
+reducing the number and maginitude of many common anomalies
+\parencite{fama2015five}.
+Furthermore, profitability and investment slopes reduce the description of
+anomalies not constructed from sorts on the factor variables to small,
+unprofitable stocks that somehow invest aggressively
+\parencite{fama2016dissecting}.
+The combination of monthly value and momentum provide a better description of
+the returns on all stocks than the profitability and investment factors that
+improved the description of the returns on many anomalies.
 
-Panel B shows,
-generally, those models with a higher $\text{Sh}^2$ than another model in panel
-A have 90\% confidence intervals that are
-strictly positive. For example, the 5\textsuperscript{th} percentile of
+Panel B shows, generally, those models with a higher $\text{Sh}^2$ than another
+model in panel A have 90\% confidence intervals that are strictly positive.
+For example, the 5\textsuperscript{th} percentile of
 $\text{Sh}^2(\text{model 1})-\text{Sh}^2(\text{model 2})$ is 0.055 and the
 95\textsuperscript{th} is 0.138. 90\% of values are within this range and we
 can conclude the $\text{Sh}^2$ of model \ref{eq:B16} is reliably higher
 than that of model \ref{eq:F16}.
 Any confidence intervals that cross zero imply that neither model is reliably
-better than the other. The time series of returns that are observed from July
-1963 to December 2017 and used to create the $\text{Sh}^2$s in panel A may not
-represent the ``true" ranking of the models.
-For example, the four-factor model
-model that rebalances value monthly may not be truely
-better than the original five-factor model, despite the superior $\text{Sh}^2$
-in panel A. The bootstrap procedure produced a significant number of
-combinations of months where the five-factor model
-outperformed the four-factor model.
+better than the other.
+The time series of returns that are observed from July 1963 to December 2017
+and used to create the $\text{Sh}^2$s in panel A may not represent the ``true"
+ranking of the models.
+For example, the four-factor model that rebalances value monthly may not be
+truly better than the original five-factor model, despite a higher
+$\text{Sh}^2$ in panel A.
+The bootstrap procedure produced a significant number of combinations of months
+where the five-factor model outperformed the four-factor model.
 Momentum goes through ``crashes" or periods of very poor performance
 \parencite{daniel2016momentum, barroso2015momentum}.
 The bootstrap procedure will produce combinations of months that include
@@ -64,8 +62,7 @@ monthly value's higher $\text{Sh}^2$
 in panel A, could drive the inconclusive confidence interval with the original
 five-factor model in panel B.
 There is no such uncertainty for models \ref{eq:B16} and \ref{eq:F16}
-even though
-model \ref{eq:B16}'s utilization of the same monthly value and momentum
+even though model \ref{eq:B16} utilizes the same monthly value and momentum
 relationship as the four-factor model with monthly value.
 Despite crashes in the momentum factor, model reliably \ref{eq:B16} provides
 the highest $\text{Sh}^2$.
