@@ -2,7 +2,7 @@
 
 Table \ref{tbl:Size_Inv} shows 25 time series regressions from size-investment
 portfolios for models \ref{eq:B16} and \ref{eq:F16}.
-The main message of the table is that value picks up most of the slack left by
+The main message of the table is that value picks up the slack left by
 omitting investment.
 For model \ref{eq:B16},
 value and momentum slopes are positive apart from the high-Inv bucket
@@ -14,11 +14,12 @@ The negative slopes show that the returns on aggressively investing stocks
 behave like unprofitable growth firms with poor recent returns.
 Importantly, value slopes vary across investment buckets ranging from ~0.2 in
 the low-Inv bucket to ~-0.3 in the high-Inv bucket.
-The \ref{eq:B16} model leaves three alphas in the high-Inv bucket,
+Model \ref{eq:B16} leaves three alphas in the high-Inv bucket,
 although their absolute value does not exceed 0.25\% per month.
-Comparing to the model \ref{eq:F16},
-\ref{eq:B16} performs better among small stocks where \ref{eq:F16}
-leaves more significant unexplained average returns.
-Value slopes are smaller for \ref{eq:F16} but this is expected given the
+%Model \ref{eq:F16} performs poorly for small stocks.
+Value slopes are smaller for model \ref{eq:F16} but this is expected given the
 presence of the investment factor.
+Given that value does most of the work in sorts on investment, sorting on value
+and investment should result in poor performance due to a locak variation in
+value slopes across investment buckets within value buckets.
 
