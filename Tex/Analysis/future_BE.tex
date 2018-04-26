@@ -11,15 +11,17 @@ increase. For annual value and investment, this relationship is reversed as the
 future growth in BE decreases from 0.59 to 0.4 as investment buckets increase.
 
 The variation in characteristics in table \ref{tbl:Size_BMm_Prior_chars} drive
-many of the results for subsets of stocks. Model \ref{eq:B16} will describe the
+many of the results for subsets of stocks. 
+A model has the potential to describe the
 returns on a given sort where the characteristics used to construct factors are
 able to create variation in the characteristic(s) used to construct the subset
 of stocks. If increasing one characteristic increases another, this will drive
 a positive and significant regression slope in time series regressions.
 Nevertheless, summary characteristics are not mathematically bound to
-regression slopes for returns constructed with those characteristics. The model
-will struggle where returns do not behave like the characteristics they are
-constructed from. These deviations are easy to identify because the change in
+regression slopes for returns constructed with those characteristics.
+A model will struggle where returns do not behave like the characteristics they
+are constructed from.
+These deviations are easy to identify because the change in
 regression slopes across buckets will not match the changes in the underlying
 characteristics across the same buckets. It is more difficult to identify
 \emph{why} returns do not follow the underlying characteristics.
@@ -40,15 +42,13 @@ Lower variation of returns across one characteristic in the extreme buckets of
 the other mirrors findinings in \textcite{asness2013devil}. The higher
 variation in returns for size, value and momentum sorts provides potential to
 describe the returns on more subsets of stocks than size, value, investment
-sorts. The results in table \ref{tbl:contributions} show the variation in
-returns left unexplained by the other factors is not so large that the
-additional potential is lost.
+sorts.
 
 For both size-$\text{BM}^m$-Prior and size-BM-Inv portfolios, $\text{BM}^m$ is
 flat across Prior/Inv buckets and increases uniformly as $\text{BM}^m$/BM
 buckets increase. $\text{BM}^m$ is negatively related to Prior because strong
 recent returns will push ME up. This is not reflected in the Prior buckets
-because portfolios are rebalanced monthly. $\text{BM}^m$ is negatively related
+because portfolios are rebalanced monthly. $\text{BM}^m$ is positively related
 to Inv as shown by the positive regression slopes in table
 \ref{tbl:redundant_CMA}. This is not reflected in the Inv buckets because value
 is controlled for by sorting on BM. For size-$\text{BM}^m$-Prior portfolios, BM
@@ -84,7 +84,7 @@ $\sim$0.2 to $\sim$0.1, with momentum/investment buckets but only in small
 stocks. For the most part, sorts on value and momentum/investment do not create
 variation in variance characteristics. Monthly value and momentum as well as
 annual value and investment will struggle to describe the returns on subsets of
-stocks constructed from sorts on variance of last month's returns.
+stocks constructed from sorts on variance.
 
 Future investment decreases across both $\text{BM}^m$ and Prior buckets for
 both small and large stocks. In contrast to returns, the effects of each
@@ -104,7 +104,8 @@ In size-$\text{BM}^m$-Prior sorts, future growth in BE in the low-$\text{BM}^m$
 bucket increases from 0.31 to 0.61 as Prior increases. In contrast, future
 growth in BE in the low-BM bucket increases as Inv decreases from 0.59 to 0.4
 in size-BM-Inv sorts. For both sorts, future growth in BE moves in the opposite
-direction to the Inv characteristic. For size-$\text{BM}^m$-Prior sorts, Inv
+direction to the Inv characteristic for small, growth stocks.
+For size-$\text{BM}^m$-Prior sorts, Inv
 increases while future growth in BE decreases while for size-BM-Inv sorts, Inv
 decreases while future growth in BE increases. Using the dividend discount
 model logic of Fama and French, Inv is used as a proxy for changes in BE. This
@@ -115,9 +116,9 @@ Other future growth in BE buckets are largely flat for both sorts. For the
 size-$\text{BM}^m$-Prior sorts, the high-$\text{BM}^m$ bucket has negative,
 future growth in BE, -0.1, for the low-Prior bucket rising to -0.03 for the
 high-Prior bucket. This mirrors findings in \textcite{kok2017facts} that
-high-$\text{BM}^m$ stocks are mean reverting. A high $\text{BM}^m$ value will
-generally decrease because of a future decrease in BE. Furthermore, the
-increase to -0.03 from -0.1
-for high-Prior mirrors their findings that momentum weeds out
+high-$\text{BM}^m$ stocks are mean reverting through a future decrease in BE.
+Furthermore, the increase to -0.03 for high-Prior stocks from -0.1
+for low-Prior mirrors their findings that momentum somewhat weeds out
 those high-$\text{BM}^m$ stocks that will exhibit decreases in BE in the
 future.
+
