@@ -8,7 +8,7 @@
 \usepackage{float}          % tables where I put them
 \usepackage[margin=2.5cm]{geometry}
 \usepackage{graphicx}       % rotated column headers
-\usepackage{import}         % nested files
+\usepackage{import}         % sane treatment of nested files
 \usepackage[utf8]{inputenc} % unsure
 \usepackage{pdflscape}      % landscape pages
 \usepackage{setspace}       % double line spacing but not in tables etc.
@@ -33,13 +33,12 @@
 
 \maketitle
 
-\setstretch{1.5}
+%\setstretch{1.5}
 
 \begin{abstract}
   A five-factor model of
   market, size, value, momentum and profitability factors
   has a maximum Sharpe ratio of 0.56.
-  The largest marginal contributions are from value and profitability.
   Value and momentum, through their relationship with book equity,
   interact to make investment unnecessary.
   Omitting the investment factor does not hinder performance when describing
@@ -48,6 +47,8 @@
   The returns on small, unprofitable stocks that invest aggressively behave
   like the returns on small, unprofitable stocks with poor recent performance.
 \end{abstract}
+
+\setstretch{2}
 
 \import{./}{intro}
 \import{./}{literature}
@@ -60,11 +61,9 @@
 \printbibliography
 
 \appendix
-
 \import{./}{tables_group}
-
 \import{./}{vars}
-
 \import{./}{replication}
 
 \end{document}
+
