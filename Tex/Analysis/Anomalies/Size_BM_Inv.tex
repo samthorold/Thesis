@@ -2,29 +2,32 @@
 
 Table \ref{tbl:Size_BM_Inv} shows 32 time series regressions from Size-BM-Inv
 portfolios for models \ref{eq:B16} and \ref{eq:F16}.
-The main message of the table is that constraining value decreases performance
-in sorts on investment because value slopes cannot vary across investment
+The main message of the table is that constraining value decreases
+model \ref{eq:B16}'s performance value slopes cannot vary across investment
 buckets within value buckets.
-For F16, investment slopes vary considerably across investment buckets, ranging
-from 0.61 to -0.37 for the small, low-BM bucket and from 0.27 to -0.31 for the
-big, high-BM bucket.
+For model \ref{eq:F16}, investment slopes vary considerably across
+investment buckets, ranging from 0.61 to -0.37 for the small, low-BM bucket
+and from 0.27 to -0.31 for the big, high-BM bucket.
 Value varies similarly for both models but for model \ref{eq:B16} the variation
 in momentum or profitability does not make up for the missing investment
 factor.
 Model \ref{eq:B16}'s inferior performance to model \ref{eq:F16} in sorts on
 annual value and investment is not surprising because value is weak among
-big stocks and by sorting on value we constrain the variation in value slopes
+big stocks \parencite{asness2015fact}
+and by sorting on value we constrain the variation in value slopes
 across investment buckets.
 For model \ref{eq:F16}, value slopes increase as investment buckets increase
 across small and big stocks.
 This is counterinuitive given the positive correlation between value and
 investment factors.
 If the returns on high minus low value behave like the returns on conservative
-minus aggressive investment, we would expact value slopes to be decreasing as
-investment buckets.
+minus aggressive investment, we would expect value slopes to decrease as
+investment buckets increase.
 For model \ref{eq:B16}, value slopes behave more as expected and they decrease
 or exhibit a frown as investment buckets increase.
-Value took up most of the slack in sorts on size and investment and by
-isolating big stocks with independent sorts and constraining the variation in
+Value took up most of the slack in sorts on size and investment so by
+isolating big stocks with independent sorts within size buckets and
+constraining the variation in
 value slopes with value sorts we limit value's ability to capture average
 return across investment buckets.
+
