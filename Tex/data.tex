@@ -19,9 +19,9 @@ The missing profitability factor is created from independent sorts on size and
 cash profitability.
 Stocks are sorted into two size buckets and three profitability buckets.
 Size and profitability characteristics are updated at the end of June.
-The size for a given month is the market equity from the most recent June.
-For example, a firm’s size from July 1999 through June 2000 is the market
-equity from June 1999.
+%The size for a given month is the market equity from the most recent June.
+%For example, a firm’s size from July 1999 through June 2000 is the market
+%equity from June 1999.
 Cash profitability for a given month is created using the balance sheet method
 of \textcite{ball2016accruals}.
 Balance sheet values are taken from the previous year. 
@@ -30,21 +30,22 @@ The breakpoints are the median for size and the 30th and 70th percentiles for
 profitability.
 The intersections of the two size buckets and three profitability buckets
 gives six total buckets.
-The average of the spread between high-profit and low-profit returns for small
+The average spread between high-profit and low-profit returns for small
 and big stocks gives the return on the profitability factor.
 
 While value, momentum and investment factors are available online, their
-respective summary characteristics are not.
-To create the timelier value characteristic, I use the market equity from the
-previous month and book equity from the previous year.
+respective characteristics are not.
+To construct the timelier value characteristic,
+I use ME from the previous month and BE from the previous year.
 This is not the same method used by AQR to construct the $\text{HML}^m$ factor.
-They use the book-to-price ratio at the stock level with price updated monthly.
-The intuition is the same for monthly book-to-market and monthly book-to-price.
-To create the momentum characteristic, I follow the instructions on Kenneth
+They use the book-to-price ratio at the stock level with price updated monthly
+but the intuition is the same.
+To construct the momentum characteristic, I follow the instructions on Kenneth
 French’s website and sum the returns from twelve months ago to two months ago.
-To create the investment characteristic, I follow \textcite{fama2015five} and
-use the asset growth from the previous year.
-To create the variance characteristic, I follow
+To construct the investment characteristic,
+I follow \textcite{fama2015five} and use the asset growth from the previous
+year.
+To construct the variance characteristic, I follow
 \textcite{moreira2017volatility} and use the variance of daily returns from the
 previous month.
 Summary characteristic sorts are three-way sorts on size, value and momentum or
@@ -52,4 +53,3 @@ investment.
 Sorts on value and momentum or investment are independent of each other but
 performed within two size buckets using NYSE quartile breakpoints to assign all
 stocks to buckets.
-
