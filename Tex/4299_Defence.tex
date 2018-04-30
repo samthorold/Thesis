@@ -1,4 +1,4 @@
-\documentclass{beamer}
+\documentclass[notes]{beamer}  % remove "[notes]" to print only slides
 
 \usepackage[backend=biber, style=authoryear]{biblatex}
 \usepackage{booktabs}
@@ -13,7 +13,7 @@
 \title[Asset-Pricing]{A top-down approach to factor models}
 \author[Thorold]{4299 Sam Thorold\\
                  Supervisors: Francisco Santos and Andr\'e Silva}
-\institute{NHH and NOVA}
+\institute{NHH and Nova SBE}
 \date[June 2018]{\today}
 
 \begin{document}
@@ -22,56 +22,78 @@
 
 \section{Intro}
 
-\begin{frame}
-  \frametitle{Current state of affairs}
+\begin{frame} \frametitle{Goal}  % \framesubtitle{Goal}
+  \begin{itemize}
+    \item Price all stocks with some model
+    \item Describe the returns on all portfolios with a linear combination of
+    fewer portfolios (``factors")
+  \end{itemize}
+\end{frame}
+
+\note{
+  \begin{itemize}
+    \item Factors are long-short portfolios designed to
+    capture unobserved state variables priced by investors (ICAPM)
+  \end{itemize}
+  What the goal is not;
+  \begin{itemize}
+    \item Joint-hypothesis -- are markets inefficient or is the model wrong?
+    \item Generate alpha
+    \item ``Up and to the right" investment opportunity
+    \item Pricing $\neq$ investing
+  \end{itemize}
+}
+
+\begin{frame} \frametitle{Problem} \framesubtitle{Definition of ``all"}
+  \begin{itemize}
+    \item We do not know what ``all" portfolios are
+    \item Hard to choose to factors to minimize mis-pricing for all portfolios
+    \item Past research tests models within subsets of portfolios
+  \end{itemize}
+\end{frame}
+
+\begin{frame} \frametitle{Problem} \framesubtitle{Data-mining}
+  \begin{itemize}
+    \item The prevalence and quality of stock data can quickly lead to
+    data-mining in the search for mis-priced subsets of portfolios
+    \item \textcite{harvey2016and} document 300+ factors in the literature
+    \item \textcite{mclean2016does} find publication reduces the returns on
+    many factors
+    \item \textcite{linnainmaa2016history} claim ``most" factors are spurious
+    out of sample
+  \end{itemize}
+\end{frame}
+
+\note{
+  Lies, damned lies, and statistics -- If you want to find correlation, you can
   \begin{itemize}
     \item Characteristic sort cannot be explained by a model
     \item A risk story is attached to the ``anomaly"
     \item Anomaly is made into a factor
   \end{itemize}
-\end{frame}
+}
 
-\begin{frame}
-  \frametitle{Current state of affairs}
-  \begin{itemize}
-    \item Quality and prevalence of stock data means factor models are
-    particularly open to data-mining
-    \item \textcite{harvey2016and} document 300+ factors in the literature
-    \item \textcite{mclean2016does} find publication reduces the returns on
-    many factors
-    \item \textcite{linnainmaa2016history} find ``most" factors are spurious
-    out of sample
-  \end{itemize}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Barillas and Shanken to the rescue}
+\begin{frame} \frametitle{Solution}
   \begin{itemize}
     \item \textbf{Problem}:
     no way to test models before turning to performance in anomaly sorts
     -- bottom-up approach
     \item \textbf{Solution}:
     \textcite{barillas2016alpha} show that we only need to compare the Sharpe
-    ratio of the factors in a model to compare mis-pricing for all assets
+    ratio of the factors in models to compare mis-pricing for all portfolios
     -- top-down approach
   \end{itemize}
 \end{frame}
 
-\begin{frame}
-\frametitle{Maximizing Sharpe ratio minimizes mis-pricing for all assets}
-\begin{itemize}
-    \item We want our asset pricing models to minimize pricing errors for
-    all assets
-    \item When we price returns, the pricing error is given by
-    \[
-    \text{Sh}^2(a) = \text{Sh}^2(R, f) - \text{Sh}^2(f)
-    \]
-    \item If $R$ is all assets then $\text{Sh}^2(R, f) = \text{Sh}^2(R)$
-    \[
-    \text{Sh}^2(a) = \text{Sh}^2(R) - \text{Sh}^2(f)
-    \]
-    \item Model with the highest Sharpe ratio of the factors is best
-\end{itemize}
+\begin{frame} \frametitle{Top-down approach}
+  \begin{itemize}
+    \item Given the best model based on Sharpe ratio evidence,
+    we can investigate the returns to different anomaly sorts
+    \item The model provides a description of these anomalies
+    \item Problem sorts do not necessarily lead to new factors even if they
+    have significant alpha in time-series regressions
+    \item New factors must reliably improve the Sharpe ratio of the factors
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -83,6 +105,7 @@
     \item Market + state variables
     \item We do not observe the state variables but we can make proxies
     \item Investors want to identify \emph{cheap} and \emph{profitable} stocks
+    \parencite{graham1934securities}
   \end{itemize}
 \end{frame}
 
@@ -98,18 +121,6 @@
     \item Profitable $\rightarrow$ Operating profit adjusted for accruals
     \parencite{ball2016accruals}
 \end{itemize}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Top-down approach}
-  \begin{itemize}
-    \item Given the best model based on Sharpe ratio evidence,
-    we can investigate the returns to different anomaly sorts
-    \item The model then provides a description of these anomalies
-    \item Problem sorts do not necessarily lead to new factors even if they
-    have significant alpha in time-series regressions
-    \item New factors must reliably improve the Sharpe ratio of the factors
-  \end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -131,6 +142,23 @@
 \end{frame}
 
 \section{Literature}
+
+\begin{frame}
+\frametitle{Barillas and Shanken (2016)}
+\begin{itemize}
+    \item We want our asset pricing models to minimize pricing errors for
+    all assets
+    \item When we price returns, the pricing error is given by
+    \[
+    \text{Sh}^2(a) = \text{Sh}^2(R, f) - \text{Sh}^2(f)
+    \]
+    \item If $R$ is all assets then $\text{Sh}^2(R, f) = \text{Sh}^2(R)$
+    \[
+    \text{Sh}^2(a) = \text{Sh}^2(R) - \text{Sh}^2(f)
+    \]
+    \item Model with the highest Sharpe ratio of the factors is best
+\end{itemize}
+\end{frame}
 
 \begin{frame}
   \frametitle{Similar research}
@@ -158,9 +186,10 @@
   \frametitle{Data}
   \begin{itemize}
     \item Factors: Ken French all except $\text{HML}^m$ which is from AQR
+    and PMU
     \item Sorts: Ken French all except size, value, investment/momentum
-    \item PMU factor and all characteristic sorts: CRSP and COMPUSTAT
-    \item U.S. stocks -- July 1963 through December 2017
+    \item PMU factor and all characteristics: CRSP and COMPUSTAT
+    \item U.S. common stocks -- July 1963 through December 2017
     \item I include financial firms and do not winsorize variables
   \end{itemize}
 \end{frame}
@@ -170,15 +199,6 @@
 \begin{frame}
 \frametitle{Sharpe ratio}
 \resizebox{\linewidth}{!}{\input{Tables/bootstrap_pres_tbl}}
-\end{frame}
-
-\begin{frame}
-\frametitle{Contributions to Sharpe ratio}
-\begin{center}
-\resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{
-    \input{Tables/contributions_pres_tbl}
-    }
-\end{center}
 \end{frame}
 
 \begin{frame}
