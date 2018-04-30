@@ -34,6 +34,11 @@
   \begin{itemize}
     \item Factors are long-short portfolios designed to
     capture unobserved state variables priced by investors (ICAPM)
+    \item Characteristics used to construct factors are simply sorting
+    variables
+    \item Factor models price the returns to equity but the factors themselves
+    could be anything that creates a spread in the
+    returns to equity when stocks are sorted on that characteristic
   \end{itemize}
   What the goal is not;
   \begin{itemize}
@@ -105,7 +110,7 @@
     \item Market + state variables
     \item We do not observe the state variables but we can make proxies
     \item Investors want to identify \emph{cheap} and \emph{profitable} stocks
-    \parencite{graham1934securities}
+    \parencite{graham1934security}
   \end{itemize}
 \end{frame}
 
@@ -141,11 +146,11 @@
   \end{itemize}
 \end{frame}
 
-\section{Literature}
+\section{Prior research}
 
-\begin{frame}
-\frametitle{Barillas and Shanken (2016)}
+\begin{frame} \frametitle{Prior research} \framesubtitle{Sharpe ratio intution}
 \begin{itemize}
+    \item \textcite{barillas2016alpha}
     \item We want our asset pricing models to minimize pricing errors for
     all assets
     \item When we price returns, the pricing error is given by
@@ -160,8 +165,7 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Similar research}
+\begin{frame} \frametitle{Prior research} \framesubtitle{Sharpe ratio results}
   \begin{itemize}
     \item \textcite{fama2016choosing} rely heaviy on
     \textcite{barillas2016alpha} to show the accrual-adjusted profitability
@@ -170,13 +174,24 @@
     \begin{equation}
       R_t^i=a^i + b^iR_t^M + s^iSMB_t + v^iHML_t + p^iPMU_t + i^iCMA_t
     \end{equation}
+    \item \textcite{ball2016accruals} present a model similar to the one I
+    propose to show an accruals factor does not improve the Sharpe ratio of a
+    five-factor model including their accrual-adjusted profitability factor
+  \end{itemize}
+\end{frame}
+
+\begin{frame} \frametitle{Prior research} \framesubtitle{Anomaly results}
+  \begin{itemize}
     \item \textcite{fama2016dissecting} follow the advice of
     \textcite{lewellen2010skeptical} and test their original five-factor
     model's performance in anomaly sorts constructed from variables not present
     in the model
-    \item \textcite{ball2016accruals} present a model similar to the one I
-    propose to show an accruals factor does not improve the Sharpe ratio of a
-    five-factor model including their accrual-adjusted profitability factor
+    \item Including profit and investment factors is motivated by the dividend
+    discount model \parencite{fama2006profitability}
+    \[ME_t =
+    \sum_{s=1}^\infty E\left( \text{Profit}_{t+s}-
+    \Delta\text{BE}_{t+s}\right) /R^s\]
+    \item Change in assets is used instead of change in BE
   \end{itemize}
 \end{frame}
 
@@ -201,6 +216,16 @@
 \resizebox{\linewidth}{!}{\input{Tables/bootstrap_pres_tbl}}
 \end{frame}
 
+\note[itemize]{
+  \item Investment factor does not improve Sharpe ratio of model 1
+  \item Model 1 has higher Sharpe ratio than model 2 (+ momentum)
+  \item Original five-factor model does not have a reliably higher Sharpe ratio
+  than the four-factor model of Carhart
+  \item Interesting since profitability and investment are credited with
+  reducing the maginitude and number of descriptions of many common anomalies
+  \item Investment adds nothing, but which factors subsume it?
+}
+
 \begin{frame}
 \frametitle{Value and momentum subsume investment}
 \begin{center}
@@ -210,18 +235,11 @@
 \end{center}
 \end{frame}
 
-\begin{frame}
-\frametitle{Value and momentum proxy for changes in BE}
-\begin{itemize}
-    \item Investment factor is subsumed by value and momentum
-    \item $ME_t =
-    \sum_{s=1}^\infty E\left( \text{Profit}_{t+s}-
-    \Delta\text{BE}_{t+s}\right) /R^s$
-    \item Investment does not describe future $\Delta$BE for small, growth
-    stocks while sorts on value and momentum describe investment and future
-    $\Delta$BE
-\end{itemize}
-\end{frame}
+\note[itemize]{
+  \item Annual or monthly momentum subsume investment
+  \item Monthly value and momentum more robust to including other factors
+  \item Why do value and momentum subsume investment?
+}
 
 \begin{frame}
 \frametitle{Size-$\text{BM}^m$-Prior sorts}
@@ -232,6 +250,14 @@
 \end{center}
 \end{frame}
 
+\note[itemize]{
+  \item Large dispursion in returns -- potential to describe a lot of variation
+  \item Little variation in variance
+  \item Future investment and future changes in BE backwards for small, growth
+  stocks
+  \item Monthly value and investment capture variation on both
+}
+
 \begin{frame}
 \frametitle{Size-BM-Inv sorts}
 \begin{center}
@@ -239,6 +265,26 @@
     \input{Tables/Size_BM_Inv_chars_pres_tbl}
     }
 \end{center}
+\end{frame}
+
+\note[itemize]{
+  \item Less dispursion in returns
+  \item Little variation in variance
+  \item Future investment and future changes in BE backwards for small, growth
+  stocks
+  \item Problem because investment is a factor and so will not capture small,
+  growth stock's true relationship with future changes in BE
+}
+
+\begin{frame}
+  \begin{itemize}
+    \item Model 1 has the highest Sharpe ratio and so minimizes mis-pricing for
+    all portfolios
+    \item Value and momentum's relationship with future changes in BE makes the
+    investment factor redundant
+    \item Model 1 may be best for all portfolios but which portfolios cause
+    problems?
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -250,6 +296,13 @@
 \end{center}
 \end{frame}
 
+\note[itemize]{
+  \item Annual value a problem -- unwanted variation in BM within BMm buckets
+  \item All other sorts a wrap for Model 1
+  \item Investment factor adds nothing to subsets of stocks
+  \item Momentum and volatility biggest problems
+}
+
 \begin{frame}
   \frametitle{Size-investment sorts}
   \begin{center}
@@ -258,6 +311,10 @@
     }
   \end{center}
 \end{frame}
+
+\note[itemize]{
+  \item Value picks up investment slopes
+}
 
 \begin{frame}
   \frametitle{Size-BM-investment sorts}
@@ -268,6 +325,12 @@
   \end{center}
 \end{frame}
 
+\note[itemize]{
+  \item Constraining value results in worse performance (less variation within
+  investment buckets)
+  \item Model fails predictably
+}
+
 \begin{frame}
   \frametitle{Size-momentum sorts: Model 1}
   \begin{center}
@@ -276,6 +339,10 @@
     }
   \end{center}
 \end{frame}
+
+\note[itemize]{
+  \item Negative profitability slopes suggest defensive equity
+}
 
 \begin{frame}
   \frametitle{Size-momentum sorts: Model 2}
@@ -295,6 +362,10 @@
   \end{center}
 \end{frame}
 
+\note[itemize]{
+  \item But beta not a problem
+}
+
 \begin{frame}
   \frametitle{Size-Var sorts: Model 1}
   \begin{center}
@@ -303,6 +374,10 @@
     }
   \end{center}
 \end{frame}
+
+\note[itemize]{
+  \item Small, high-variance bucket a big problem
+}
 
 \begin{frame}
   \frametitle{Size-Var sorts: Model 2}
