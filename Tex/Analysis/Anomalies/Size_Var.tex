@@ -49,6 +49,7 @@ for model \ref{eq:F16}.
 The improvements for model \ref{eq:B16} are from the negative momentum factor
 slopes where the investment factor has nothing to add to model \ref{eq:F16}.
 
+% not liquidity
 To take advantage of the alpha in the small, high-variance bucket of table
 \ref{tbl:25_Size_Var_B16} an investor has to sell stocks whose returns behave
 like those of small, unprofitable firms with poor recent performance.
@@ -68,17 +69,34 @@ Liquidity explanations are not easy to tackle from a cross-section
 perspective and often focus on market microstructure.
 Furthermore, \textcite{ang2006cross} test many possible liquidity
 explanations\footnote{for example, bid-ask spreads, trading volume and
-turnover.} for the volatility anomaly and find none help greatly to describe
-the returns on highly volatile stocks.
+turnover.} for the volatility anomaly from a cross-section perspective
+and find none help greatly to describe the returns on highly volatile stocks.
 They also find that the aggregate level of volatility, proxied for by the VIX,
 does not drive out alphas in sorts on volatility.
 
-\textcite{asness2018deep} 
+% could be value
+Value disappears in the small, high-variance bucket.
+Controlling for other factors, the returns on small, high-variance stocks do
+not covary with the returns on the value factor.
+\textcite{asness2018deep} find that volatility increases during periods of
+``deep value".
+Deep value means the spread between the value characteristic of cheap and
+expensive stocks is large.
+During a deep value event, the returns on the spread between cheap and
+expensive stocks is higher, volatility is higher and the earnings of cheap
+stocks are particularly low compared to normal times.
+Asness et al. also find some illiquidity indicators are increased such as short
+interest and analysts revisions of forecasts.
+Given that these measures focus on market microstructure and Ang et al.'s
+findings that liquidity does not describe the returns on volatile stocks,
+it is unlikely deep value relates to volatility through liquidity.
 
+Stocks in the small, high-variance bucket are \emph{always} volatile.
+The bucket constituants may change but volatility remains high every month.
+In contrast, value only relates to volatility during periods of deep value.
 
 \begin{itemize}
   \item AQR -- level of surprise in the VIX paper, ``deep value" paper
-  \item Consumption and SDF
   \item If I plot my SDF from optimal factor weightings what does it do in
   downturns or periods of deep value?
   \item If I plot the residuals from small, high-variance regression, what are
