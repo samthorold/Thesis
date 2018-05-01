@@ -54,6 +54,8 @@ To take advantage of the alpha in the small, high-variance bucket of table
 \ref{tbl:25_Size_Var_B16} an investor has to sell stocks whose returns behave
 like those of small, unprofitable firms with poor recent performance.
 Intuitively, this is a tough sell.
+\textcite{nagel2005short} writes ``for mis-pricing to persist in the in the
+presence of [smart money], limits to arbtrage must exist".
 Such stocks are likely to be more illiquid than than big, profitable stocks
 with strong recent performance.
 Small stocks are likely to be held by fewer institutional investors or
@@ -63,8 +65,16 @@ for the returns to market makers who represent the largest group of buyers for
 these ``problem" stocks.
 Furthermore, Nagel finds liquidity measured in this way is related to the
 aggregate level of volatility as proxied for by the VIX.
-%\textcite{nagel2005short} "for mis-pricing to persist in the in the presence
-%of [smart money], limits to arbtrage must exist"
+\textcite{asness2018deep} find that volatility increases during periods of
+``deep value".
+Deep value means the spread between the value characteristic of cheap and
+expensive stocks is large.
+During a deep value event, the returns on the spread between cheap and
+expensive stocks is higher, volatility is higher and the earnings of cheap
+stocks are particularly low compared to normal times.
+Asness et al. also find illiquidity indicators such as short
+interest and analysts revisions of forecasts are increased during periods of
+deep value.
 Liquidity explanations are not easy to tackle from a cross-section
 perspective and often focus on market microstructure.
 Furthermore, \textcite{ang2006cross} test many possible liquidity
@@ -73,30 +83,21 @@ turnover.} for the volatility anomaly from a cross-section perspective
 and find none help greatly to describe the returns on highly volatile stocks.
 They also find that the aggregate level of volatility, proxied for by the VIX,
 does not drive out alphas in sorts on volatility.
+Aggregate volatility may be related to the returns to market makers and
+consequently to illiquidity, but this does not help describe the returns to
+volatile stocks.
 
-% could be value
-Value disappears in the small, high-variance bucket.
-Controlling for other factors, the returns on small, high-variance stocks do
-not covary with the returns on the value factor.
-\textcite{asness2018deep} find that volatility increases during periods of
-``deep value".
-Deep value means the spread between the value characteristic of cheap and
-expensive stocks is large.
-During a deep value event, the returns on the spread between cheap and
-expensive stocks is higher, volatility is higher and the earnings of cheap
-stocks are particularly low compared to normal times.
-Asness et al. also find some illiquidity indicators are increased such as short
-interest and analysts revisions of forecasts.
-Given that these measures focus on market microstructure and Ang et al.'s
-findings that liquidity does not describe the returns on volatile stocks,
-it is unlikely deep value relates to volatility through liquidity.
-
-Stocks in the small, high-variance bucket are \emph{always} volatile.
-The bucket constituants may change but volatility remains high every month.
-In contrast, value only relates to volatility during periods of deep value.
+% maybe size
+Value is a noisy proxy because BE and ME are imprecise ways to describe firms.
+Furthermore, BE and ME are explicitly part of other factors, for example
+profitability and size.
+Value can be ``cleaned up" with momentum but prior research finds there is more
+to value than simply BE and ME\footnote{
+\textcite{cohen2003value, daniel2006market, fama2008average}
+}.
+\textcite{gerakos2017decomposing} split value into ...
 
 \begin{itemize}
-  \item AQR -- level of surprise in the VIX paper, ``deep value" paper
   \item If I plot my SDF from optimal factor weightings what does it do in
   downturns or periods of deep value?
   \item If I plot the residuals from small, high-variance regression, what are
