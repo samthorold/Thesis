@@ -1,4 +1,4 @@
-\documentclass{beamer}
+\documentclass[notes]{beamer}  % remove "[notes]" to print only slides
 
 \usepackage[backend=biber, style=authoryear]{biblatex}
 \usepackage{booktabs}
@@ -13,7 +13,7 @@
 \title[Asset-Pricing]{A top-down approach to factor models}
 \author[Thorold]{4299 Sam Thorold\\
                  Supervisors: Francisco Santos and Andr\'e Silva}
-\institute{NHH and NOVA}
+\institute{NHH and Nova SBE}
 \date[June 2018]{\today}
 
 \begin{document}
@@ -22,56 +22,81 @@
 
 \section{Intro}
 
-\begin{frame}
-  \frametitle{Current state of affairs}
+\begin{frame} \frametitle{Goal}  % \framesubtitle{Goal}
+  \begin{itemize}
+    \item Price all stocks with some model
+    \item Describe the returns on all portfolios with a linear combination of
+    fewer portfolios (``factors")
+  \end{itemize}
+\end{frame}
+
+\note[itemize]{
+    \item Factors are long-short portfolios designed to
+    capture unobserved state variables priced by investors (ICAPM)
+    \item Characteristics used to construct factors are simply sorting
+    variables
+    \item Factor models describe the returns to equity but the factors
+    themselves could be anything that creates a spread in the
+    returns to equity when stocks are sorted on that characteristic
+    \item What the goal is not;
+    \begin{itemize}
+      \item Joint-hypothesis -- are markets inefficient or is the model wrong?
+      \item Generate alpha
+      \item ``Up and to the right" investment opportunity
+      \item Pricing $\neq$ investing
+    \end{itemize}
+}
+
+\begin{frame} \frametitle{Problem} \framesubtitle{Definition of ``all"}
+  \begin{itemize}
+    \item We do not know what ``all" portfolios are
+    \item Hard to choose to factors to minimize mis-pricing for all portfolios
+    \item Past research tests models within subsets of portfolios
+  \end{itemize}
+\end{frame}
+
+\begin{frame} \frametitle{Problem} \framesubtitle{Data-mining}
+  \begin{itemize}
+    \item The prevalence and quality of stock data can quickly lead to
+    data-mining in the search for mis-priced subsets of portfolios
+    \item \textcite{harvey2016and} document 300+ factors in the literature
+    \item \textcite{mclean2016does} find publication reduces the returns on
+    many factors
+    \item \textcite{linnainmaa2016history} claim ``most" factors are spurious
+    out of sample
+  \end{itemize}
+\end{frame}
+
+\note{
+  Lies, damned lies, and statistics -- If you want to find correlation, you can
   \begin{itemize}
     \item Characteristic sort cannot be explained by a model
     \item A risk story is attached to the ``anomaly"
     \item Anomaly is made into a factor
   \end{itemize}
-\end{frame}
+}
 
-\begin{frame}
-  \frametitle{Current state of affairs}
-  \begin{itemize}
-    \item Quality and prevalence of stock data means factor models are
-    particularly open to data-mining
-    \item \textcite{harvey2016and} document 300+ factors in the literature
-    \item \textcite{mclean2016does} find publication reduces the returns on
-    many factors
-    \item \textcite{linnainmaa2016history} find ``most" factors are spurious
-    out of sample
-  \end{itemize}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Barillas and Shanken to the rescue}
+\begin{frame} \frametitle{Solution}
   \begin{itemize}
     \item \textbf{Problem}:
     no way to test models before turning to performance in anomaly sorts
     -- bottom-up approach
     \item \textbf{Solution}:
     \textcite{barillas2016alpha} show that we only need to compare the Sharpe
-    ratio of the factors in a model to compare mis-pricing for all assets
+    ratio of the factors in models to compare mis-pricing for all portfolios
     -- top-down approach
   \end{itemize}
 \end{frame}
 
-\begin{frame}
-\frametitle{Maximizing Sharpe ratio minimizes mis-pricing for all assets}
-\begin{itemize}
-    \item We want our asset pricing models to minimize pricing errors for
-    all assets
-    \item When we price returns, the pricing error is given by
-    \[
-    \text{Sh}^2(a) = \text{Sh}^2(R, f) - \text{Sh}^2(f)
-    \]
-    \item If $R$ is all assets then $\text{Sh}^2(R, f) = \text{Sh}^2(R)$
-    \[
-    \text{Sh}^2(a) = \text{Sh}^2(R) - \text{Sh}^2(f)
-    \]
-    \item Model with the highest Sharpe ratio of the factors is best
-\end{itemize}
+\begin{frame} \frametitle{Top-down approach}
+  \begin{itemize}
+    \item Given the best model based on Sharpe ratio evidence,
+    we can investigate the returns to different anomaly sorts
+    \item The model provides a description of these anomalies
+    \item Problem sorts do not necessarily lead to new factors even if they
+    have significant alpha in time-series regressions
+    \item New factors must reliably improve the Sharpe ratio of the factors
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -83,6 +108,7 @@
     \item Market + state variables
     \item We do not observe the state variables but we can make proxies
     \item Investors want to identify \emph{cheap} and \emph{profitable} stocks
+    \parencite{graham1934security}
   \end{itemize}
 \end{frame}
 
@@ -98,18 +124,6 @@
     \item Profitable $\rightarrow$ Operating profit adjusted for accruals
     \parencite{ball2016accruals}
 \end{itemize}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Top-down approach}
-  \begin{itemize}
-    \item Given the best model based on Sharpe ratio evidence,
-    we can investigate the returns to different anomaly sorts
-    \item The model then provides a description of these anomalies
-    \item Problem sorts do not necessarily lead to new factors even if they
-    have significant alpha in time-series regressions
-    \item New factors must reliably improve the Sharpe ratio of the factors
-  \end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -130,25 +144,52 @@
   \end{itemize}
 \end{frame}
 
-\section{Literature}
+\section{Prior research}
 
-\begin{frame}
-  \frametitle{Similar research}
+\begin{frame} \frametitle{Prior research} \framesubtitle{Sharpe ratio intution}
+\begin{itemize}
+    \item \textcite{barillas2016alpha}
+    \item We want our asset pricing models to minimize pricing errors for
+    all assets
+    \item When we price returns, the pricing error is given by
+    \[
+    \text{Sh}^2(a) = \text{Sh}^2(R, f) - \text{Sh}^2(f)
+    \]
+    \item If $R$ is all assets then $\text{Sh}^2(R, f) = \text{Sh}^2(R)$
+    \[
+    \text{Sh}^2(a) = \text{Sh}^2(R) - \text{Sh}^2(f)
+    \]
+    \item Model with the highest Sharpe ratio of the factors is best
+\end{itemize}
+\end{frame}
+
+\begin{frame} \frametitle{Prior research} \framesubtitle{Sharpe ratio results}
   \begin{itemize}
-    \item \textcite{fama2016choosing} rely heaviy on
+    \item \textcite{fama2016choosing} rely heavily on
     \textcite{barillas2016alpha} to show the accrual-adjusted profitability
     factor of \textcite{ball2016accruals} improves the Sharpe ratio of their
     original five-factor model \parencite{fama2015five}
     \begin{equation}
       R_t^i=a^i + b^iR_t^M + s^iSMB_t + v^iHML_t + p^iPMU_t + i^iCMA_t
     \end{equation}
+    \item \textcite{ball2016accruals} present a model similar to the one I
+    propose to show an accruals factor does not improve the Sharpe ratio of a
+    five-factor model including their accrual-adjusted profitability factor
+  \end{itemize}
+\end{frame}
+
+\begin{frame} \frametitle{Prior research} \framesubtitle{Anomaly results}
+  \begin{itemize}
     \item \textcite{fama2016dissecting} follow the advice of
     \textcite{lewellen2010skeptical} and test their original five-factor
     model's performance in anomaly sorts constructed from variables not present
     in the model
-    \item \textcite{ball2016accruals} present a model similar to the one I
-    propose to show an accruals factor does not improve the Sharpe ratio of a
-    five-factor model including their accrual-adjusted profitability factor
+    \item Including profit and investment factors is motivated by the dividend
+    discount model \parencite{fama2006profitability}
+    \[ME_t =
+    \sum_{s=1}^\infty E\left( \text{Profit}_{t+s}-
+    \Delta\text{BE}_{t+s}\right) /R^s\]
+    \item Change in assets is used instead of change in BE
   \end{itemize}
 \end{frame}
 
@@ -158,9 +199,10 @@
   \frametitle{Data}
   \begin{itemize}
     \item Factors: Ken French all except $\text{HML}^m$ which is from AQR
+    and PMU
     \item Sorts: Ken French all except size, value, investment/momentum
-    \item PMU factor and all characteristic sorts: CRSP and COMPUSTAT
-    \item U.S. stocks -- July 1963 through December 2017
+    \item PMU factor and all characteristics: CRSP and COMPUSTAT
+    \item U.S. common stocks -- July 1963 through December 2017
     \item I include financial firms and do not winsorize variables
   \end{itemize}
 \end{frame}
@@ -172,14 +214,15 @@
 \resizebox{\linewidth}{!}{\input{Tables/bootstrap_pres_tbl}}
 \end{frame}
 
-\begin{frame}
-\frametitle{Contributions to Sharpe ratio}
-\begin{center}
-\resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{
-    \input{Tables/contributions_pres_tbl}
-    }
-\end{center}
-\end{frame}
+\note[itemize]{
+  \item Investment factor does not improve Sharpe ratio of model 1
+  \item Model 1 has higher Sharpe ratio than model 2 (+ momentum)
+  \item Original five-factor model does not have a reliably higher Sharpe ratio
+  than the four-factor model of Carhart
+  \item Interesting since profitability and investment are credited with
+  reducing the maginitude and number of descriptions of many common anomalies
+  \item Investment adds nothing, but which factors subsume it?
+}
 
 \begin{frame}
 \frametitle{Value and momentum subsume investment}
@@ -190,18 +233,11 @@
 \end{center}
 \end{frame}
 
-\begin{frame}
-\frametitle{Value and momentum proxy for changes in BE}
-\begin{itemize}
-    \item Investment factor is subsumed by value and momentum
-    \item $ME_t =
-    \sum_{s=1}^\infty E\left( \text{Profit}_{t+s}-
-    \Delta\text{BE}_{t+s}\right) /R^s$
-    \item Investment does not describe future $\Delta$BE for small, growth
-    stocks while sorts on value and momentum describe investment and future
-    $\Delta$BE
-\end{itemize}
-\end{frame}
+\note[itemize]{
+  \item Annual or monthly momentum subsume investment
+  \item Monthly value and momentum more robust to including other factors
+  \item Why do value and momentum subsume investment?
+}
 
 \begin{frame}
 \frametitle{Size-$\text{BM}^m$-Prior sorts}
@@ -212,6 +248,14 @@
 \end{center}
 \end{frame}
 
+\note[itemize]{
+  \item Large dispursion in returns -- potential to describe a lot of variation
+  \item Little variation in variance
+  \item Future investment and future changes in BE backwards for small, growth
+  stocks
+  \item Monthly value and investment capture variation on both
+}
+
 \begin{frame}
 \frametitle{Size-BM-Inv sorts}
 \begin{center}
@@ -219,6 +263,26 @@
     \input{Tables/Size_BM_Inv_chars_pres_tbl}
     }
 \end{center}
+\end{frame}
+
+\note[itemize]{
+  \item Less dispursion in returns
+  \item Little variation in variance
+  \item Future investment and future changes in BE backwards for small, growth
+  stocks
+  \item Problem because investment is a factor and so will not capture small,
+  growth stock's true relationship with future changes in BE
+}
+
+\begin{frame}
+  \begin{itemize}
+    \item Model 1 has the highest Sharpe ratio and so minimizes mis-pricing for
+    all portfolios
+    \item Value and momentum's relationship with future changes in BE makes the
+    investment factor redundant
+    \item Model 1 may be best for all portfolios but which portfolios cause
+    problems?
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -230,6 +294,13 @@
 \end{center}
 \end{frame}
 
+\note[itemize]{
+  \item Annual value a problem -- unwanted variation in BM within BMm buckets
+  \item All other sorts a wrap for Model 1
+  \item Investment factor adds nothing to subsets of stocks
+  \item Momentum and volatility biggest problems
+}
+
 \begin{frame}
   \frametitle{Size-investment sorts}
   \begin{center}
@@ -238,6 +309,10 @@
     }
   \end{center}
 \end{frame}
+
+\note[itemize]{
+  \item Value picks up investment slopes
+}
 
 \begin{frame}
   \frametitle{Size-BM-investment sorts}
@@ -248,6 +323,12 @@
   \end{center}
 \end{frame}
 
+\note[itemize]{
+  \item Constraining value results in worse performance (less variation within
+  investment buckets)
+  \item Model fails predictably
+}
+
 \begin{frame}
   \frametitle{Size-momentum sorts: Model 1}
   \begin{center}
@@ -256,6 +337,10 @@
     }
   \end{center}
 \end{frame}
+
+\note[itemize]{
+  \item Negative profitability slopes suggest defensive equity
+}
 
 \begin{frame}
   \frametitle{Size-momentum sorts: Model 2}
@@ -275,6 +360,10 @@
   \end{center}
 \end{frame}
 
+\note[itemize]{
+  \item But beta not a problem
+}
+
 \begin{frame}
   \frametitle{Size-Var sorts: Model 1}
   \begin{center}
@@ -283,6 +372,10 @@
     }
   \end{center}
 \end{frame}
+
+\note[itemize]{
+  \item Small, high-variance bucket a big problem
+}
 
 \begin{frame}
   \frametitle{Size-Var sorts: Model 2}
