@@ -22,146 +22,141 @@
 
 \section{Intro}
 
-\begin{frame} \frametitle{Goal}  % \framesubtitle{Goal}
+\begin{frame} \frametitle{Problem}
   \begin{itemize}
-    \item Price all stocks with some model
-    \item Describe the returns on all portfolios with a linear combination of
-    fewer portfolios (``factors")
+    \item \textbf{Goal:} Describe the returns on all portfolios with a linear
+    combination of fewer portfolios (``factors")
+    \item \textbf{Problem 1:} Cannot test this without knowing all portfolios
+    \item This leads to
+    \item \textbf{Problem 2:} Relying on mispricing for subsets of portfolios
+    (``anomalies") has given rise to significant data-mining issues
+    \begin{itemize}
+      \item Mispricing = Sharpe(test assets and factors) - Sharpe(factors)
+      \footnotesize{\textcite{gibbons1989test}}
+    \end{itemize}
   \end{itemize}
 \end{frame}
 
 \note[itemize]{
-    \item Factors are long-short portfolios designed to
-    capture unobserved state variables priced by investors (ICAPM)
-    \item Characteristics used to construct factors are simply sorting
-    variables
-    \item Factor models describe the returns to equity but the factors
-    themselves could be anything that creates a spread in the
-    returns to equity when stocks are sorted on that characteristic
-    \item What the goal is not;
-    \begin{itemize}
-      \item Joint-hypothesis -- are markets inefficient or is the model wrong?
-      \item Generate alpha
-      \item ``Up and to the right" investment opportunity
-      \item Pricing $\neq$ investing
-    \end{itemize}
-}
-
-\begin{frame} \frametitle{Problem} \framesubtitle{Definition of ``all"}
+  \item Factors are long-short portfolios designed to
+  capture unobserved state variables priced by investors (ICAPM)
+  \item Characteristics used to construct factors are simply sorting
+  variables
+  \item Factor models describe the returns to equity but the factors
+  themselves could be anything that creates a spread in the
+  returns to equity when stocks are sorted on that characteristic
+  \item What the goal is not;
   \begin{itemize}
-    \item We do not know what ``all" portfolios are
-    \item Hard to choose to factors to minimize mis-pricing for all portfolios
-    \item Past research tests models within subsets of portfolios
-  \end{itemize}
-\end{frame}
-
-\begin{frame} \frametitle{Problem} \framesubtitle{Data-mining}
-  \begin{itemize}
-    \item The prevalence and quality of stock data can quickly lead to
-    data-mining in the search for mis-priced subsets of portfolios
-    \item \textcite{harvey2016and} document 300+ factors in the literature
-    \item \textcite{mclean2016does} find publication reduces the returns on
-    many factors
-    \item \textcite{linnainmaa2016history} claim ``most" factors are spurious
-    out of sample
-  \end{itemize}
-\end{frame}
-
-\note{
-  Lies, damned lies, and statistics -- If you want to find correlation, you can
-  \begin{itemize}
-    \item Characteristic sort cannot be explained by a model
-    \item A risk story is attached to the ``anomaly"
-    \item Anomaly is made into a factor
+    \item Joint-hypothesis -- are markets inefficient or is the model wrong?
+    \item Generate alpha
+    \item ``Up and to the right" investment opportunity
+    \item Pricing $\neq$ investing
   \end{itemize}
 }
 
-\begin{frame} \frametitle{Solution}
+\note[itemize]{
+  \item The prevalence and quality of stock data can quickly lead to
+  data-mining in the search for mis-priced subsets of portfolios
+  \item \textcite{harvey2016and} document 300+ factors in the literature
+  \item \textcite{mclean2016does} find publication reduces the returns on
+  many factors
+  \item \textcite{linnainmaa2016history} claim ``most" factors are spurious
+  out of sample
+  \item Lies, damned lies, and statistics -- If you want to find correlation,
+  you can
+  \item Characteristic sort cannot be explained by a model
+  \item A risk story is attached to the ``anomaly"
+  \item Anomaly is made into a factor
+}
+
+\begin{frame} \frametitle{\textcite{barillas2016alpha}}
   \begin{itemize}
-    \item \textbf{Problem}:
-    no way to test models before turning to performance in anomaly sorts
-    -- bottom-up approach
-    \item \textbf{Solution}:
-    \textcite{barillas2016alpha} show that we only need to compare the Sharpe
-    ratio of the factors in models to compare mis-pricing for all portfolios
-    -- top-down approach
+    \item Ideally, the test assets would be all portfolios
+    \item In this case, the factors are contained in the set of all portfolios
+    \item Sharpe(all portfolios and factors) = Sharpe(all portfolios)
+    \item Mispricing = Sharpe(all portfolios) - Sharpe(factors)
+    \item \textbf{Solution 1:} Maximize the Sharpe ratio of the factors to
+    minimize mispricing for all portfolios
   \end{itemize}
 \end{frame}
+
+\note[itemize]{
+  \item The beautiful and simple new point here is that the Sharpe ratio of
+  the factors gives a measure of the ability of a model to describe
+  the returns on all portfolios
+}
 
 \begin{frame} \frametitle{Top-down approach}
   \begin{itemize}
-    \item Given the best model based on Sharpe ratio evidence,
-    we can investigate the returns to different anomaly sorts
-    \item The model provides a description of these anomalies
-    \item Problem sorts do not necessarily lead to new factors even if they
-    have significant alpha in time-series regressions
-    \item New factors must reliably improve the Sharpe ratio of the factors
+    \item \textbf{Solution 2:} Choice of factors drives the description
+    of anomalies rather than the description of anomalies driving choice
+    of factors
+    \item Does an anomaly add to the Sharpe ratio of the factors?
+    \begin{itemize}
+      \item Mispricing is not an automatic factor
+      \item Contribution to Sharpe ratio depends on unexplained variation
+      as well as average return
+    \end{itemize}
   \end{itemize}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Choose factors before addressing anomalies}
+\begin{frame} \frametitle{Model}
+  \begin{equation}
+    R_t^i=a^i + b^iR_t^M + s^iSMB_t + v^iHML_t^m + m^iWML_t + p^iPMU_t
+  \end{equation}
   \begin{itemize}
-    \item ICAPM of \textcite{merton1973intertemporal}
-    says investors care about their payoff in the future but
-    also what they can do with it
-    \item Market + state variables
-    \item We do not observe the state variables but we can make proxies
-    \item Investors want to identify \emph{cheap} and \emph{profitable} stocks
-    \parencite{graham1934security}
+    \item $\text{R}^M$: Excess return on the market
+    \item $SMB$: Size factor long small and short big stocks
+    \item $HML^m$: Value factor long cheap and short expensive stocks
+    \item $WML$: Momentum factor long recent winners and short recent losers
+    \item $PMU$: Profitability factor long profitable and short unprofitable stocks
   \end{itemize}
 \end{frame}
 
-\begin{frame}
-\frametitle{Proxies for cheap and profitable}
-\begin{itemize}
-    \item Cheap $\rightarrow$ Book-to-Market (BM)
-    \parencite{fama1993common}
-    \item Some problems here as we want to identify changes in BM due to
-    changes in market equity rather than book equity
-    \item Monthly value + momentum
-    \parencite{asness2013devil, kok2017facts}
-    \item Profitable $\rightarrow$ Operating profit adjusted for accruals
-    \parencite{ball2016accruals}
-\end{itemize}
-\end{frame}
+\note[itemize]{
+  \item ICAPM of \textcite{merton1973intertemporal}
+  says investors care about their payoff in the future but
+  also what they can do with it
+  \item Market + state variables
+  \item We do not observe the state variables but we can make proxies
+  \item Investors want to identify \emph{cheap} and \emph{profitable} stocks
+  \parencite{graham1934security}
+  \item Cheap $\rightarrow$ Book-to-Market (BM)
+  \parencite{fama1993common}
+  \item Some problems here as we want to identify changes in BM due to
+  changes in market equity rather than book equity
+  \item Monthly value + momentum
+  \parencite{asness2013devil, kok2017facts}
+  \item Profitable $\rightarrow$ Operating profit adjusted for accruals
+  \parencite{ball2016accruals}
+}
 
-\begin{frame}
-  \frametitle{Preview of results}
+\begin{frame} \frametitle{Preview}
   \begin{itemize}
-    \item Highest Sharpe ratio:
-    \begin{equation}
-      R_t^i=a^i + b^iR_t^M + s^iSMB_t + v^iHML_t^m + m^iWML_t + p^iPMU_t
-    \end{equation}
-    \item Investment factor does not add to the Sharpe ratio nor do sorts on
-    investment pose any problems
-    \item Sorts on momentum and volatility or those sorts that constrain value
-    are a problem
-    \item The returns on the ``lethal combination" \parencite{fama2015five,
-    fama2016dissecting} of small, unprofitable stocks that somehow invest
-    aggressively behave like small, unprofitable stocks with poor recent
-    returns -- disappearance of value
+    \item Solution 1 (all portfolios)
+    \begin{itemize}
+      \item A five-factor model of market, size, value, momentum and
+      profitability factors has a Sharpe ratio of $\sim$ 0.5
+      \item Value and momentum subsume investment
+    \end{itemize}
+    \item Solution 2 (subsets of portfolios)
+    \begin{itemize}
+      \item Omitting investment not a problem for describing sorts on investment
+      \item Volatility and momentum sorts are problematic
+      \item Returns on small, unprofitable stocks that invest
+      aggressively behave like returns on small, unprofitable recent losers
+    \end{itemize}
   \end{itemize}
 \end{frame}
+
+\note[itemize]{
+  \item The returns on the ``lethal combination" \parencite{fama2015five,
+  fama2016dissecting} of small, unprofitable stocks that somehow invest
+  aggressively behave like small, unprofitable stocks with poor recent
+  returns -- disappearance of value
+}
 
 \section{Prior research}
-
-\begin{frame} \frametitle{Prior research} \framesubtitle{Sharpe ratio intution}
-\begin{itemize}
-    \item \textcite{barillas2016alpha}
-    \item We want our asset pricing models to minimize pricing errors for
-    all assets
-    \item When we price returns, the pricing error is given by
-    \[
-    \text{Sh}^2(a) = \text{Sh}^2(R, f) - \text{Sh}^2(f)
-    \]
-    \item If $R$ is all assets then $\text{Sh}^2(R, f) = \text{Sh}^2(R)$
-    \[
-    \text{Sh}^2(a) = \text{Sh}^2(R) - \text{Sh}^2(f)
-    \]
-    \item Model with the highest Sharpe ratio of the factors is best
-\end{itemize}
-\end{frame}
 
 \begin{frame} \frametitle{Prior research} \framesubtitle{Sharpe ratio results}
   \begin{itemize}
