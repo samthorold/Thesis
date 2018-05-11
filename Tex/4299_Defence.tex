@@ -26,25 +26,18 @@
   \begin{itemize}
     \item \textbf{Goal:} Describe the returns on all portfolios with a linear
     combination of fewer portfolios (``factors")
-    \item \textbf{Problem 1:} Cannot test this without knowing all portfolios
-    \item This leads to
+    \item \textbf{Problem 1:} Cannot test this without knowing all portfolios\\
+    This leads to
     \item \textbf{Problem 2:} Relying on mispricing for subsets of portfolios
     (``anomalies") has given rise to significant data-mining issues
     \begin{itemize}
       \item Mispricing = Sharpe(test assets and factors) - Sharpe(factors)
-      \footnotesize{\textcite{gibbons1989test}}
+      \textcite{gibbons1989test}
     \end{itemize}
   \end{itemize}
 \end{frame}
 
 \note[itemize]{
-  \item Factors are long-short portfolios designed to
-  capture unobserved state variables priced by investors (ICAPM)
-  \item Characteristics used to construct factors are simply sorting
-  variables
-  \item Factor models describe the returns to equity but the factors
-  themselves could be anything that creates a spread in the
-  returns to equity when stocks are sorted on that characteristic
   \item What the goal is not;
   \begin{itemize}
     \item Joint-hypothesis -- are markets inefficient or is the model wrong?
@@ -52,11 +45,6 @@
     \item ``Up and to the right" investment opportunity
     \item Pricing $\neq$ investing
   \end{itemize}
-}
-
-\note[itemize]{
-  \item The prevalence and quality of stock data can quickly lead to
-  data-mining in the search for mis-priced subsets of portfolios
   \item \textcite{harvey2016and} document 300+ factors in the literature
   \item \textcite{mclean2016does} find publication reduces the returns on
   many factors
@@ -64,19 +52,20 @@
   out of sample
   \item Lies, damned lies, and statistics -- If you want to find correlation,
   you can
-  \item Characteristic sort cannot be explained by a model
-  \item A risk story is attached to the ``anomaly"
-  \item Anomaly is made into a factor
 }
 
-\begin{frame} \frametitle{\textcite{barillas2016alpha}}
+\begin{frame} \frametitle{Solution}
   \begin{itemize}
-    \item Ideally, the test assets would be all portfolios
-    \item In this case, the factors are contained in the set of all portfolios
-    \item Sharpe(all portfolios and factors) = Sharpe(all portfolios)
+    \item \textcite{barillas2016alpha} explain the factors are contained in
+    the set of all portfolios so\\
+    Sharpe(all portfolios and factors) = Sharpe(all portfolios)
     \item Mispricing = Sharpe(all portfolios) - Sharpe(factors)
     \item \textbf{Solution 1:} Maximize the Sharpe ratio of the factors to
-    minimize mispricing for all portfolios
+    minimize mispricing for all portfolios\\
+    This allows
+    \item \textbf{Solution 2:} Choice of factors drives the description
+    of anomalies rather than the description of anomalies driving choice
+    of factors -- Top-down approach
   \end{itemize}
 \end{frame}
 
@@ -86,39 +75,28 @@
   the returns on all portfolios
 }
 
-\begin{frame} \frametitle{Top-down approach}
-  \begin{itemize}
-    \item \textbf{Solution 2:} Choice of factors drives the description
-    of anomalies rather than the description of anomalies driving choice
-    of factors
-    \item Does an anomaly add to the Sharpe ratio of the factors?
-    \begin{itemize}
-      \item Mispricing is not an automatic factor
-      \item Contribution to Sharpe ratio depends on unexplained variation
-      as well as average return
-    \end{itemize}
-  \end{itemize}
-\end{frame}
-
 \begin{frame} \frametitle{Model}
-  \begin{equation}
-    R_t^i=a^i + b^iR_t^M + s^iSMB_t + v^iHML_t^m + m^iWML_t + p^iPMU_t
+  \begin{equation} \label{eq:B16}
+    R_t^i = a^i+b^iR^M+s^iSMB_t+
+    \underbrace{v^iHML_t^m+m^iWML_t}_\text{cheap}+
+    \underbrace{p^iPMU_t}_\text{profitable}
   \end{equation}
-  \begin{itemize}
-    \item $\text{R}^M$: Excess return on the market
-    \item $SMB$: Size factor long small and short big stocks
-    \item $HML^m$: Value factor long cheap and short expensive stocks
-    \item $WML$: Momentum factor long recent winners and short recent losers
-    \item $PMU$: Profitability factor long profitable and short unprofitable stocks
-  \end{itemize}
+  $\text{R}^M$: Excess return on the market\\
+  $SMB$: Size factor long small and short big stocks\\
+  $HML^m$: Value factor long cheap and short expensive stocks\\
+  $WML$: Momentum factor long recent winners and short recent losers\\
+  $PMU$: Profitability factor long profitable and short unprofitable stocks
 \end{frame}
 
 \note[itemize]{
-  \item ICAPM of \textcite{merton1973intertemporal}
-  says investors care about their payoff in the future but
-  also what they can do with it
-  \item Market + state variables
-  \item We do not observe the state variables but we can make proxies
+  \item Factors are long-short portfolios designed to
+  capture unobserved state variables priced by investors
+  (\textcite{merton1973intertemporal} ICAPM)
+  \item Characteristics used to construct factors are simply sorting
+  variables
+  \item Factor models describe the returns to equity but the factors
+  themselves could be anything that creates a spread in the
+  returns to equity when stocks are sorted on that characteristic
   \item Investors want to identify \emph{cheap} and \emph{profitable} stocks
   \parencite{graham1934security}
   \item Cheap $\rightarrow$ Book-to-Market (BM)
@@ -131,62 +109,56 @@
   \parencite{ball2016accruals}
 }
 
-\begin{frame} \frametitle{Preview}
+% \begin{frame} \frametitle{Preview}
+%   \begin{itemize}
+%     \item Solution 1 (all portfolios)
+%     \begin{itemize}
+%       \item A five-factor model of market, size, value, momentum and
+%       profitability factors has a Sharpe ratio of $\sim$ 0.5
+%       \item Value and momentum subsume investment
+%     \end{itemize}
+%     \item Solution 2 (subsets of portfolios)
+%     \begin{itemize}
+%       \item Omitting investment not a problem for describing sorts on investment
+%       \item Volatility and momentum sorts are problematic
+%       \item Returns on small, unprofitable stocks that invest
+%       aggressively behave like returns on small, unprofitable recent losers
+%     \end{itemize}
+%   \end{itemize}
+% \end{frame}
+
+% \note[itemize]{
+%   \item The returns on the ``lethal combination" \parencite{fama2015five,
+%   fama2016dissecting} of small, unprofitable stocks that somehow invest
+%   aggressively behave like small, unprofitable stocks with poor recent
+%   returns -- disappearance of value
+% }
+
+\section{Prior research}
+
+\begin{frame} \frametitle{Prior research}
   \begin{itemize}
-    \item Solution 1 (all portfolios)
-    \begin{itemize}
-      \item A five-factor model of market, size, value, momentum and
-      profitability factors has a Sharpe ratio of $\sim$ 0.5
-      \item Value and momentum subsume investment
-    \end{itemize}
-    \item Solution 2 (subsets of portfolios)
-    \begin{itemize}
-      \item Omitting investment not a problem for describing sorts on investment
-      \item Volatility and momentum sorts are problematic
-      \item Returns on small, unprofitable stocks that invest
-      aggressively behave like returns on small, unprofitable recent losers
-    \end{itemize}
+    \item Fama and French (2015, 2016a, 2016b)
+    \begin{equation} \label{eq:F16}
+      R_t^i=a^i + b^iR_t^M + s^iSMB_t + v^iHML_t + p^iPMU_t + i^iCMA_t
+    \end{equation}
+    $CMA$: Investment factor long conservatively and short aggressively
+    investing stocks
+    \item \textcite{fama2006profitability} motivate profitability and
+    investment factors with the dividend discount model
+    \[ME_t =
+    \sum_{s=1}^\infty E\left( \text{Profit}_{t+s}-
+    \Delta\text{BE}_{t+s}\right) /R^s\]
+    Change in assets is used instead of change in BE
   \end{itemize}
 \end{frame}
 
 \note[itemize]{
-  \item The returns on the ``lethal combination" \parencite{fama2015five,
-  fama2016dissecting} of small, unprofitable stocks that somehow invest
-  aggressively behave like small, unprofitable stocks with poor recent
-  returns -- disappearance of value
+  \item \textcite{fama2015five, fama2016choosing, fama2016dissecting}
+  \item \textcite{ball2016accruals} present a model similar to the one I
+  propose to show an accruals factor does not improve the Sharpe ratio of a
+  five-factor model including their accrual-adjusted profitability factor
 }
-
-\section{Prior research}
-
-\begin{frame} \frametitle{Prior research} \framesubtitle{Sharpe ratio results}
-  \begin{itemize}
-    \item \textcite{fama2016choosing} rely heavily on
-    \textcite{barillas2016alpha} to show the accrual-adjusted profitability
-    factor of \textcite{ball2016accruals} improves the Sharpe ratio of their
-    original five-factor model \parencite{fama2015five}
-    \begin{equation}
-      R_t^i=a^i + b^iR_t^M + s^iSMB_t + v^iHML_t + p^iPMU_t + i^iCMA_t
-    \end{equation}
-    \item \textcite{ball2016accruals} present a model similar to the one I
-    propose to show an accruals factor does not improve the Sharpe ratio of a
-    five-factor model including their accrual-adjusted profitability factor
-  \end{itemize}
-\end{frame}
-
-\begin{frame} \frametitle{Prior research} \framesubtitle{Anomaly results}
-  \begin{itemize}
-    \item \textcite{fama2016dissecting} follow the advice of
-    \textcite{lewellen2010skeptical} and test their original five-factor
-    model's performance in anomaly sorts constructed from variables not present
-    in the model
-    \item Including profit and investment factors is motivated by the dividend
-    discount model \parencite{fama2006profitability}
-    \[ME_t =
-    \sum_{s=1}^\infty E\left( \text{Profit}_{t+s}-
-    \Delta\text{BE}_{t+s}\right) /R^s\]
-    \item Change in assets is used instead of change in BE
-  \end{itemize}
-\end{frame}
 
 \section{Data}
 
@@ -309,12 +281,9 @@
   \item Value picks up investment slopes
 }
 
-\begin{frame}
-  \frametitle{Size-BM-investment sorts}
+\begin{frame} \frametitle{Size-BM-investment sorts}
   \begin{center}
-  \resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{
-    \input{Tables/Size_BM_Inv_pres_tbl}
-    }
+  \resizebox{\linewidth}{!}{\input{Tables/Size_BM_Inv_pres_tbl}}
   \end{center}
 \end{frame}
 
