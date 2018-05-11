@@ -6,47 +6,48 @@ Table \ref{tbl:Size_Var} shows 25 time series regressions from
 size-variance sorts for models \ref{eq:B16} and \ref{eq:F16}.
 The main message of the table is that stocks that share the
 ``lethal combination" of negative profitability and investment slopes behave
-like the returns on small, unprofitable stocks with poor recent performance.
+like unprofitable stocks with poor recent performance.
 What is in this new description of problem sorts is just as important as what
 is not -- value.
 Those sorts that create problems for model \ref{eq:B16} have returns that do
 not covary with the returns on the value factor.
 
-I include the market and size slopes, despite their similarity across models,
-because they show volatility's relationship with market beta and size.
+% I include the market and size slopes, despite their similarity across models,
+% because they show volatility's relationship with market beta and size.
 Beta increases as volatility buckets increase and remains flat across size
 buckets.
-This relationship with beta makes sense given individual stock, or portfolio,
+The relationship with beta makes sense given individual portfolio
 variance drives covariance with the market.
 Size slopes increase with volatility buckets.
 In the smallest two size buckets, the variation in size slopes is extreme.
 For model \ref{eq:B16}, the smallest size bucket slopes rise from 0.63 to 1.5
 and the second size bucket slopes rise from 0.51 to 1.18.
-Value slopes are also similar across models.
-For both models, low-variance stocks have positive value slopes so
+This is striking because even controlling for size,
+there is significant variation in size across variance buckets.
+% Value slopes are also similar across models.
+Low-variance stocks have positive value slopes so
 the returns on low-variance stocks behave like the returns on value stocks.
 There is a drop in value slopes for the high-variance bucket so
 the returns on high-variance stocks behave like the returns on growth stocks.
-The value slope is insignificant in only the small, high-variance bucket for
-both models.
-Profitability slopes tell a similar story across both models,
-although the profitability factor does much more of the heavy lifting for model
-\ref{eq:F16} in the absence of momentum.
+The value slope is insignificant in only the small, high-variance bucket.
+% Profitability slopes tell a similar story across both models,
+% although the profitability factor does much more of the heavy lifting for model
+% \ref{eq:F16} in the absence of momentum.
 Profitability slopes are positive for the low-variance bucket and negative for
 the high-variance bucket.
 The returns on low-variance stocks behave like those of profitable stocks.
-This relationship is consistent with findings in
-\textcite{novy2014understanding} and earlier findings that momentum sorts
-may be identifying volatile stocks through their profitability slopes.
-For model \ref{eq:B16}, momentum slopes are negative for the high-variance
+% This relationship is consistent with findings in
+% \textcite{novy2014understanding} and earlier findings that momentum sorts
+% may be identifying volatile stocks through their profitability slopes.
+Momentum slopes are negative for the high-variance
 bucket.
 The returns on high-variance stocks behave like the returns on stocks with poor
 recent returns. 
-For model \ref{eq:F16}, investment has very little to add for sorts on
-variance.
-The small, high-variance intercept is large for both models.
-The intercept is -0.66\% per month for model \ref{eq:B16} and -0.8\% per month
-for model \ref{eq:F16}.
+% For model \ref{eq:F16}, investment has very little to add for sorts on
+% variance.
+% The small, high-variance intercept is large for both models.
+The small, high-variance intercept is -0.66\% per month for model \ref{eq:B16}
+and -0.8\% per month for model \ref{eq:F16}.
 The improvements for model \ref{eq:B16} are from the negative momentum factor
 slopes where the investment factor has nothing to add to model \ref{eq:F16}.
 
@@ -66,6 +67,7 @@ for the returns to market makers who represent the largest group of buyers for
 these ``problem" stocks.
 Furthermore, Nagel finds liquidity measured in this way is related to the
 aggregate level of volatility as proxied for by the VIX.
+
 \textcite{asness2018deep} find that volatility increases during periods of
 ``deep value".
 Deep value means the spread between the value characteristic of cheap and
@@ -76,19 +78,25 @@ stocks are particularly low compared to normal times.
 Asness et al. also find illiquidity indicators such as short
 interest and analysts revisions of forecasts are increased during periods of
 deep value.
-Liquidity explanations are not easy to tackle from a cross-section
-perspective and often focus on market microstructure.
+
+Despite prior research,
+liquidity explanations are not easy to tackle from a cross-section
+perspective and often focus on market microstructure such as market makers and
+analysts' forecasts.
 Furthermore, \textcite{ang2006cross} test many possible liquidity
-explanations\footnote{for example, bid-ask spreads, trading volume and
-turnover.} for the volatility anomaly from a cross-section perspective
+explanations\footnote{Bid-ask spreads, trading volume, and
+turnover, among others.} for the volatility anomaly from a cross-section perspective
 and find none help greatly to describe the returns on highly volatile stocks.
 They also find that the aggregate level of volatility, proxied for by the VIX,
 does not drive out alphas in sorts on volatility.
 Aggregate volatility may be related to the returns to market makers and
-consequently to illiquidity, but this does not help describe the returns to
+consequently to illiquidity as Nagel finds,
+but this does not help describe the returns to
 volatile stocks.
 
 % maybe size
+I use value's disappearance as a starting point for a cross-section
+explanation for the problems with small, high-variance portfolios.
 Value is a noisy proxy because BE and ME are imprecise ways to describe firms.
 Furthermore, BE and ME are explicitly part of other factors, for example
 profitability and size.
@@ -99,7 +107,7 @@ to value than simply BE and ME\footnote{
 \textcite{gerakos2017decomposing} note that much of the value factor relates to
 changes in firm size and split the factor into size-driven value and
 non-size-driven (orthogonal) value.
-Gerakos and Linnainmaa find that not all high-BM firms make the value
+They find that not all high-BM firms make the value
 premium and some low-BM firms do make the value premium.
 This observation does not render the value factor useless but it does help to
 illustrate that the value premium is not the same as the ``empirical regularity
@@ -114,9 +122,9 @@ Small, high-variance firms have, on average, poor returns but the size factor
 slope pushes up the predicted return from the model.
 In keeping with the top-down approach,
 this does not mean the size factor should be removed from the model
-Rather, the model provides a description of the problem sort.
+Rather, the model provides a description of the problem.
 The returns on small, high-variance stocks behave like the returns on small,
 unprofitable stocks with poor recent performance.
-The problems seem to stem from firm size.
+The problems stem from firm size and not liquidity.
 This is evident directly through the size slope inflating the predicted return
 from the model as well as indirectly through value's disappearance.
