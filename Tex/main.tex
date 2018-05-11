@@ -1,5 +1,6 @@
 \documentclass[a4paper, 12pt]{article}
 
+\usepackage{afterpage}      % sensible text around landscape pages
 \usepackage{amsmath, amsthm}
 \usepackage{authblk}        % handle author nonsense on titlepage
 \usepackage[backend=biber, style=authoryear]{biblatex}
@@ -61,7 +62,7 @@
 \printbibliography
 
 \appendix
-\import{./}{tables_group}
+%\import{./}{tables_group}
 \import{./}{vars}
 \import{./}{replication}
 
