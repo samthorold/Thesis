@@ -189,25 +189,12 @@
   \item Interesting since profitability and investment are credited with
   reducing the maginitude and number of descriptions of many common anomalies
   \item Investment adds nothing, but which factors subsume it?
-}
-
-\begin{frame}
-\frametitle{Value and momentum subsume investment}
-\begin{center}
-\resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{
-    \input{Tables/redundant_inv_pres_tbl}
-    }
-\end{center}
-\end{frame}
-
-\note[itemize]{
   \item Annual or monthly momentum subsume investment
   \item Monthly value and momentum more robust to including other factors
   \item Why do value and momentum subsume investment?
 }
 
-\begin{frame}
-\frametitle{Size-$\text{BM}^m$-Prior sorts}
+\begin{frame} \frametitle{Size-$\text{BM}^m$-Prior characteristics}
 \begin{center}
 \resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{
     \input{Tables/Size_BMm_Prior_chars_pres_tbl}
@@ -223,8 +210,7 @@
   \item Monthly value and investment capture variation on both
 }
 
-\begin{frame}
-\frametitle{Size-BM-Inv sorts}
+\begin{frame} \frametitle{Size-BM-Inv characteristics}
 \begin{center}
 \resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{
     \input{Tables/Size_BM_Inv_chars_pres_tbl}
@@ -241,7 +227,7 @@
   growth stock's true relationship with future changes in BE
 }
 
-\begin{frame}
+\begin{frame} \frametitle{Solution 1}
   \begin{itemize}
     \item Model 1 has the highest Sharpe ratio and so minimizes mis-pricing for
     all portfolios
@@ -252,8 +238,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}
-\frametitle{GRS statistic}
+\begin{frame} \frametitle{GRS statistic}
 \begin{center}
 \resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{
     \input{Tables/GRS_pres_tbl}
@@ -268,8 +253,7 @@
   \item Momentum and volatility biggest problems
 }
 
-\begin{frame}
-  \frametitle{Size-investment sorts}
+\begin{frame} \frametitle{Size-investment sorts}
   \begin{center}
   \resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{
     \input{Tables/Size_Inv_pres_tbl}
@@ -281,23 +265,10 @@
   \item Value picks up investment slopes
 }
 
-\begin{frame} \frametitle{Size-BM-investment sorts}
-  \begin{center}
-  \resizebox{\linewidth}{!}{\input{Tables/Size_BM_Inv_pres_tbl}}
-  \end{center}
-\end{frame}
-
-\note[itemize]{
-  \item Constraining value results in worse performance (less variation within
-  investment buckets)
-  \item Model fails predictably
-}
-
-\begin{frame}
-  \frametitle{Size-momentum sorts: Model 1}
+\begin{frame} \frametitle{Size-momentum returns}
   \begin{center}
   \resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{
-    \input{Tables/B16_25_Size_Prior_pres_tbl}
+    \input{Tables/Size_Prior_pres_tbl}
     }
   \end{center}
 \end{frame}
@@ -306,17 +277,7 @@
   \item Negative profitability slopes suggest defensive equity
 }
 
-\begin{frame}
-  \frametitle{Size-momentum sorts: Model 2}
-  \begin{center}
-  \resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{
-    \input{Tables/F16_25_Size_Prior_pres_tbl}
-    }
-  \end{center}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Size-$\beta$ sorts}
+\begin{frame} \frametitle{Size-beta returns}
   \begin{center}
   \resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{
     \input{Tables/Size_Beta_pres_tbl}
@@ -328,11 +289,10 @@
   \item But beta not a problem
 }
 
-\begin{frame}
-  \frametitle{Size-Var sorts: Model 1}
+\begin{frame} \frametitle{Size-variance returns}
   \begin{center}
   \resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{
-    \input{Tables/B16_25_Size_Var_pres_tbl}
+    \input{Tables/Size_Var_pres_tbl}
     }
   \end{center}
 \end{frame}
@@ -340,15 +300,6 @@
 \note[itemize]{
   \item Small, high-variance bucket a big problem
 }
-
-\begin{frame}
-  \frametitle{Size-Var sorts: Model 2}
-  \begin{center}
-  \resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{
-    \input{Tables/F16_25_Size_Var_pres_tbl}
-    }
-  \end{center}
-\end{frame}
 
 \begin{frame} \frametitle{Momentum and variance sorts}
   \begin{itemize}
@@ -374,13 +325,13 @@
     for market-maker's returns $\rightarrow$ market microstructure
     \item Liquidity hard to approach from a cross-section perspective
     \item \textcite{ang2006cross} find no liquidity measure helps describe
-    total variance
+    total variance in the cross-section
   \end{itemize}
 \end{frame}
 
 \begin{frame} \frametitle{Volatility problems} \framesubtitle{Size}
   \begin{itemize}
-    \item Cross-section perspective
+    % \item Cross-section perspective
     \item High-volatility firms are much smaller
     \item Small says high returns while high-volatility says low returns
     \item Value disappears in the problem momentum and variance sorts
