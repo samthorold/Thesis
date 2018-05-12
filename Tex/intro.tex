@@ -2,38 +2,32 @@
 
 \section*{Introduction}
 
-%An asset’s price equals its expected risk adjusted future payoff. The risk
-%adjustment is driven by the covariance of asset payoffs with marginal utility.
-%The intertemporal CAPM (ICAPM) of \textcite{merton1973intertemporal} says that
-%investors are not just concerned with the level of payoff in the future but
-%also what consumption and investment opportunities are available when they
-%receive the payoff. \textcite{fama1996multifactor} explains that ICAPM
-%investors worry about the covariances of returns with the market and multiple
-%state variables.
+The goal of an asset-pricing model is to minimize mispricing for
+\emph{all} assets.
+We seek a few portfolios, ``factors", that fully describe all portfolios.
+The problem with this goal is that we cannot directly test all assets.
+This problem has led to data-mining as researchers have relied on minimizing
+mispricing for subsets of assets.
+Stock data is rich and a researcher can always construct some subset of stocks
+for which a model performs poorly, an ``anomaly".
+This subset of stocks provides the empirical basis for a new factor.
+\textcite{harvey2016and} document more than 300 factors and
+\textcite{linnainmaa2016history} find that many are spurious out of sample.
+% Subsets of stocks that cannot be priced by a set of factors are important for
+% academic and professional reasons, but statistical anomalies should not drive
+% the choice of factors.
 
-Asset-pricing models of stock returns use portfolios, ``factors", to mimic
-unobserved priced state variables.
-The prevalence and quality of stock data can quickly lead to data-mining in
-the search for factors.
-%Many factors are based largely on statistical anomalies rather than
-%economic intuition.
-\textcite{harvey2016and} document more than 300 factors and %call for more
-strict confidence intervals used to class a new factor as ``discovered".
-%\textcite{mclean2016does} find that the unexplained return on many factors is
-%reduced following publication suggesting the factors were not truly priced by
-%investors.
-\textcite{linnainmaa2016history} find that many% factors from prior research
-are spurious out of sample.
-Subsets of stocks that cannot be priced by a set of factors are important for
-academic and professional reasons, but statistical anomalies should not drive
-the choice of factors.
-
-The ultimate goal of an asset-pricing model is to minimize mis-pricing for
-\emph{all} assets. \textcite{barillas2016alpha} explain that maximizing the
-Sharpe ratio of factors minimizes mis-pricing for all assets. Ranking models on
-Sharpe ratio of the factors before testing performance in subsets of stocks
-promotes a top-down approach favouring economic intuition over statistical
-anomalies.
+\textcite{barillas2016alpha} elegantly solve both problems,
+the inability to test all assets and ensuing data-mining,
+by showing that maximizing the Sharpe ratio of factors minimizes
+mis-pricing for all assets.
+A top-down approach of testing models' performance for all assets before
+turning to performance for subsets of assets favours economic intuition over
+statistical anomalies.
+The model that performs best pricing all assets then provides a description
+of subsets of assets that cannot be fully priced,
+rather than subsets of assets driving the choice of factors used to price all
+assets.
 
 I apply investing intuition in a diversified way to make mimicking factors for
 priced state variables.
