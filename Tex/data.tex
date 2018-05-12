@@ -36,15 +36,22 @@ and big stocks gives the return on the profitability factor.
 While value, momentum and investment factors are available online, their
 respective characteristics are not.
 To construct the timelier value characteristic,
-I use ME from the previous month and BE from the previous year.
+I follow intuition in \textcite{asness2013devil}
+and use ME from the previous month and BE from the previous year.
 This is not the same method used by AQR to construct the $\text{HML}^m$ factor.
 They use the book-to-price ratio at the stock level with price updated monthly
 but the intuition is the same.
+To construct the annual value characteristic,
+I follow the instructions on Kenneth French's website and use BE from the
+previous year and ME from December of the same year used for BE.
 To construct the momentum characteristic, I follow the instructions on Kenneth
 French’s website and sum the returns from twelve months ago to two months ago.
 To construct the investment characteristic,
 I follow \textcite{fama2015five} and use the asset growth from the previous
 year.
+To construct the profitability characteristic, I follow
+\textcite{ball2016accruals} and remove accruals from operating profitability
+scaled by BE all from the previous year.
 To construct the variance characteristic, I follow
 \textcite{moreira2017volatility} and use the variance of daily returns from the
 previous month.
