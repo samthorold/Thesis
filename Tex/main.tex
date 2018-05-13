@@ -7,14 +7,18 @@
 \usepackage{booktabs}       % align tables by decimal point, regression t-stats
 \usepackage{dcolumn}        % table cells alignment
 \usepackage{float}          % tables where I put them
+\usepackage{fontspec}
 \usepackage[margin=2.5cm]{geometry}
 \usepackage{graphicx}       % rotated column headers
 \usepackage{import}         % sane treatment of nested files
 \usepackage[utf8]{inputenc} % unsure
 \usepackage{pdflscape}      % landscape pages
 \usepackage{setspace}       % double line spacing but not in tables etc.
+\usepackage[sf]{titlesec}   % section headers to sans-serif
 
 \addbibresource{references.bib}
+
+\setmainfont[Ligatures=TeX]{Times New Roman}
 
 \title{
   {A top-down approach to factor models}\\[1cm]
@@ -34,8 +38,6 @@
 
 \maketitle
 
-%\setstretch{1.5}
-
 \begin{abstract}
   A five-factor model of
   market, size, value, momentum and profitability factors
@@ -52,7 +54,8 @@
 
 \pagebreak
 
-\setstretch{2.0}
+% \setstretch{2.0}
+\doublespacing
 
 \import{./}{intro}
 \import{./}{literature}

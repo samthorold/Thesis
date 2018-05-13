@@ -1,5 +1,4 @@
-pdflatex main
+xelatex main
 biber main
-pdflatex main
-biber main
-pdflatex main
+xelatex main
+xelatex main
