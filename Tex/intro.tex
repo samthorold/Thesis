@@ -2,29 +2,33 @@
 
 \section*{Introduction}
 
-The goal of an asset-pricing model is to minimize mispricing for
-\emph{all} assets.
-We seek a few portfolios, ``factors", that fully describe all portfolios.
-The problem with this goal is that we cannot directly test all assets.
+The goal of an asset-pricing model of stock returns is to
+minimize mispricing for \emph{all} portfolios.
+We aim to describe the returns on all portfolios
+with a linear combination of a few portfolios, ``factors".
+% We seek a few portfolios, ``factors",
+% that describe the returns on all portfolios.
+The problem with this goal is that we cannot directly test
+mispricing for all portfolios.
 This problem has led to data-mining as researchers have relied on minimizing
-mispricing for subsets of assets.
-Stock data is rich and a researcher can always construct some subset of stocks
-for which a model performs poorly, an ``anomaly".
-This subset of stocks provides the empirical basis for a new factor.
+mispricing for subsets of portfolios.
+Stock data is rich and a researcher can always construct some portfolio for
+which a model performs poorly, an ``anomaly".
+This portfolio provides the empirical basis for a new factor.
 \textcite{harvey2016and} document more than 300 factors and
 \textcite{linnainmaa2016history} find that many are spurious out of sample.
 
 \textcite{barillas2016alpha} elegantly solve both problems,
-the inability to test all assets and ensuing data-mining,
+the inability to test all portfolios and ensuing data-mining,
 by showing that maximizing the Sharpe ratio of factors minimizes
-mis-pricing for all assets.
-A top-down approach of testing models' performance for all assets before
-turning to performance for subsets of assets favours economic intuition over
-statistical anomalies.
-The model that performs best pricing all assets then provides a description
-of subsets of assets that cannot be fully priced,
-rather than subsets of assets driving the choice of factors used to price all
-assets.
+mispricing for all portfolios.
+A top-down approach of testing a model's performance for all portfolios,
+before examining performance for subsets of portfolios,
+favours economic intuition over statistical anomalies.
+The model that performs best pricing all portfolios then provides a description
+of subsets of portfolios that cannot be fully priced,
+rather than subsets of portfolios driving
+the choice of factors used to price all portfolios.
 
 I propose a five-factor model of market, size, value, momentum and
 profitability factors with time series regression form
@@ -48,10 +52,10 @@ The combination of value and momentum identifies stocks that are truly ``cheap"
 \parencite{kok2017facts}.
 
 Model \ref{eq:B16} has a higher Sharpe ratio of the factors than the
-five-factor model of \textcite{fama2015five}, including when momentum is added
-to the Fama and French specification.
-The investment factor is made redundant by the interaction of value and
-momentum through their ability to forecast future changes in book equity.
+five-factor model of \textcite{fama2016dissecting}.
+% including when momentum is added to the Fama and French specification.
+The investment factor is made redundant by value and momentum
+through their ability to forecast future changes in book equity.
 % Value and momentum are negatively correlated and this relationship is a
 % statistical slam dunk in a regression context
 % \parencite{asness1997interaction, fama2015incremental}.
@@ -64,12 +68,14 @@ ratio of a set of factors can be improved by investing in the test portfolios
 as well as the factors.
 GRS evidence broadly, but not always, matches Sharpe ratio evidence.
 I compare the GRS statistics of different specifications of model across
-different test assets to highlight the problems caused by momentum and
+different test portfolios to highlight the problems caused by momentum and
 volatility.
 I use individual portfolio regressions for problem sorts identified by the GRS
 statistic to investigate the factor slopes that lead to problems.
-The model performs poorly where value is constrained or disappears.
-The offending sorts share the ``lethal" combination of small, unprofitable
+Model \ref{eq:B16} performs poorly where value is constrained or disappears.
+The offending portfolios share the ``lethal combination" of small, unprofitable
 stocks that somehow invest aggressively identified in
 \textcite{fama2015five, fama2016dissecting}.
-Problem sorts behave like small, unprofitable stocks with poor recent returns.
+Problem portfolios behave like small, unprofitable stocks with poor recent returns.
+This new description of problem sorts implies firm size, rather than liquidity,
+drives mispricing for volatile portfolios.
