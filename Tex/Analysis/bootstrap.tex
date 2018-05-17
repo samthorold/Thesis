@@ -14,14 +14,12 @@ Nested models show incremental benefits to adding factors.
 I include non-nested models to highlight the importance of value and momentum
 and to provide contrast in Sharpe and GRS evidence.
 The main messages of table \ref{tbl:bootstrap} are that the Sharpe ratio of
-model \ref{eq:B16} is higher than that of model \ref{eq:F16} and the Sharpe
-ratio of model \ref{eq:B16} cannot be improved by adding the investment factor.
-Model \ref{eq:B16} describes the returns on all stocks better than other the
-models tested.
+model \ref{eq:B16} is higher than that of model \ref{eq:F16} and
+cannot be improved by adding the investment factor.
+Model \ref{eq:B16} has the lowest mispricing for all portfolios.
 
 Panel A shows the $\text{Sh}^2$ of model \ref{eq:B16} is 0.316 and this
-is identical to the $\text{Sh}^2$ of model \ref{eq:B16}b that includes
-the investment factor.
+is not increased by adding the investment factor, CMA.
 The $\text{Sh}^2$ of model \ref{eq:F16} is 0.225 although this can be
 increased to 0.24 by including the momentum factor.
 The $\text{Sh}^2$ of the original Fama and French five-factor model is 0.099.
@@ -38,8 +36,8 @@ of anomalies not constructed from sorts on the factor variables.
 The returns on problem sorts behave like the returns on small,
 unprofitable stocks that somehow invest aggressively
 \parencite{fama2016dissecting}.
-The combination of monthly value and momentum provides a better description of
-the returns on all stocks than profitability and investment.
+The combination of monthly value and momentum has lower mispricing for
+the returns on all portfolios than profitability and investment.
 
 Panel B shows, generally, those models with a higher $\text{Sh}^2$ than another
 model in panel A have 90\% confidence intervals that are strictly positive.
@@ -62,7 +60,7 @@ where the five-factor model outperformed the four-factor model.
 Momentum goes through ``crashes" or periods of very poor performance
 \parencite{daniel2016momentum, barroso2015momentum}.
 The bootstrap procedure will produce combinations of months that include
-many of the ``crash" months for momentum.
+many of the crash months for momentum.
 The presence of enough momentum crashes, despite the four-factor model with
 monthly value's higher $\text{Sh}^2$ 
 in panel A, could drive the inconclusive confidence interval with the original

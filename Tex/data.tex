@@ -26,7 +26,7 @@ Cash profitability for a given month is created using the balance sheet method
 of \textcite{ball2016accruals}.
 Balance sheet values are taken from the previous year. 
 I use NYSE breakpoints to assign all stocks to buckets.
-The breakpoints are the median for size and the 30th and 70th percentiles for
+Breakpoints are the median for size and the 30th and 70th percentiles for
 profitability.
 The intersections of the two size buckets and three profitability buckets
 gives six total buckets.
@@ -38,9 +38,9 @@ respective characteristics are not.
 To construct the timelier value characteristic,
 I follow intuition in \textcite{asness2013devil}
 and use ME from the previous month and BE from the previous year.
-This is not the same method used by AQR to construct the $\text{HML}^m$ factor.
-They use the book-to-price ratio at the stock level with price updated monthly
-but the intuition is the same.
+% This is not the same method used by AQR to construct the $\text{HML}^m$ factor.
+% They use the book-to-price ratio at the stock level with price updated monthly
+% but the intuition is the same.
 To construct the annual value characteristic,
 I follow the instructions on Kenneth French's website and use BE from the
 previous year and ME from December of the same year used for BE.
@@ -55,8 +55,8 @@ scaled by BE all from the previous year.
 To construct the variance characteristic, I follow
 \textcite{moreira2017volatility} and use the variance of daily returns from the
 previous month.
-Summary characteristic sorts are three-way sorts on size, value and momentum or
-investment.
-Sorts on value and momentum or investment are independent of each other but
-performed within two size buckets using NYSE quartile breakpoints to assign all
-stocks to buckets.
+% Summary characteristic sorts are three-way sorts on size, value and momentum or
+% investment.
+% Sorts on value and momentum or investment are independent of each other but
+% performed within two size buckets using NYSE quartile breakpoints to assign all
+% stocks to buckets.
