@@ -3,34 +3,36 @@
 \import{./Tables/}{Size_BMm_Prior_chars_tbl}
 \import{./Tables/}{Size_BM_Inv_chars_tbl}
 
-Regressing investment on either specification of value and momentum
-leaves no average unexplained return (not shown).
 Value and momentum subsume investment and negate any contribution to
-$\text{Sh}^2$.
+$\text{Sh}^2(\text{model 1})$.
+This is shown by regressing investment on value, annual or monthly,
+and momentum (not shown).
+There is no intercept meaning there is no average unexplained return.
 To explore why this is the case, I sort on value and momentum as well as
-value and investment and interpret the variation in different firm
+value and investment and interpret the variation in different
 characteristics.
 Table \ref{tbl:Size_BMm_Prior_chars} shows average value-weighted
 characteristics for 32 size-$\text{BM}^m$-Prior portfolios and table
 \ref{tbl:Size_BM_Inv_chars} shows average value-weighted characteristics for 32
-size-BM-Inv portfolios. The main message of the tables is that monthly value
-and momentum's relationship with small, growth stocks' future growth in BE is
-the opposite that of annual value and investment. For monthly value and
-momentum, future growth in BE increases from 0.31 to 0.61 as momentum buckets
-increase. For annual value and investment, this relationship is reversed as the
-future growth in BE decreases from 0.59 to 0.4 as investment buckets increase.
-
+size-BM-Inv portfolios.
+The main message of the tables is that monthly value and momentum's
+relationship with small, growth stocks' future change in BE is the opposite
+that of annual value and investment.
+Monthly value and momentum are a better proxy for changes in BE than investment.
+For monthly value and momentum, small, growth stocks' future change in BE increases
+from 0.31 to 0.61 as momentum buckets increase.
+For annual value and investment, this relationship is reversed as small, growth stocks'
+future change in BE decreases from 0.59 to 0.4 as investment buckets increase.
 The variation in characteristics in table \ref{tbl:Size_BMm_Prior_chars} drive
-many of the results for subsets of stocks.
-A model has the potential to describe the
-returns on a given sort where the characteristics used to construct factors are
-able to create variation in the characteristic(s) used to construct the subset
-of stocks. If increasing one characteristic increases another, this will drive
+many of the results for models \ref{eq:B16} and \ref{eq:F16} in subsets of portfolios.
+A model has the potential to describe the returns on a given sort where the
+characteristic used to construct factors are able to create variation in the
+characteristic used to construct the subset of portfolios.
+If increasing one characteristic increases another, this will drive
 a positive and significant regression slope in time series regressions.
-Summary characteristics are not mathematically bound to
-regression slopes for returns constructed with those characteristics.
-A model will struggle where returns do not behave like the characteristics they
-are constructed from.
+% Summary characteristics are not bound to regression slopes and a model will
+% struggle where returns do not behave like the characteristics they are
+% constructed from.
 % These deviations are easy to identify because the change in
 % regression slopes across buckets will not match the changes in the underlying
 % characteristics across the same buckets. It is more difficult to identify
@@ -38,79 +40,88 @@ are constructed from.
 
 Returns across $\text{BM}^m$ and Prior buckets range from 0.09 in the small,
 low-$\text{BM}^m$ and low-Prior bucket to 2.04 in the small, high-$\text{BM}^m$
-and high-Prior bucket. Returns across BM and Inv buckets range from 1.01 in the
-big, low-BM and low-Inv bucket to 1.46 in the small, high-BM and low-Inv
-bucket. The greater variation in returns for size-$\text{BM}^m$-Prior
-portfolios is expected given the interaction between value and momentum. Their
-interaction is also visible in the variation in returns at each
-characteristic's extreme. For example, in low-$\text{BM}^m$ the variation in
-returns across Prior buckets is much larger, 0.09 to 1.47 for small stocks and
-0.55 to 0.96 for big stocks, than in high-$\text{BM}^m$ buckets, 1.01 to 2.04
-for small stocks and 1.21 to 1.42 for big stocks. The same is true of the
-variation in returns across $\text{BM}^m$ buckets in the extreme Prior buckets.
+and high-Prior bucket.
+Returns across BM and Inv buckets range from 1.01 in the big, low-BM and
+low-Inv bucket to 1.46 in the small, high-BM and low-Inv bucket. 
+The greater variation in returns for size-$\text{BM}^m$-Prior
+portfolios is expected given the interaction between value and momentum.
+Their interaction is also visible in the variation in returns at each
+characteristic's extreme.
+For example, in low-$\text{BM}^m$ the variation in returns across Prior buckets
+is much larger, 0.09 to 1.47 for small stocks and 0.55 to 0.96 for big stocks,
+than in high-$\text{BM}^m$ buckets, 1.01 to 2.04 for small stocks and 1.21 to
+1.42 for big stocks.
+The same is true of the variation in returns across $\text{BM}^m$ buckets in
+the extreme Prior buckets.
 Lower variation of returns across one characteristic in the extreme buckets of
-the other mirrors findinings in \textcite{asness2013devil}. The higher
-variation in returns for size, value and momentum sorts provides potential to
-describe the returns on more subsets of stocks than size, value, investment
-sorts.
+the other mirrors findinings in \textcite{asness2013devil}.
+Higher variation in returns for size, value and momentum sorts provides
+potential to price more variation in returns than size, value and investment sorts.
 
 % For both size-$\text{BM}^m$-Prior and size-BM-Inv portfolios, $\text{BM}^m$ is
 % flat across Prior/Inv buckets and increases uniformly as $\text{BM}^m$/BM
 % buckets increase. $\text{BM}^m$ is negatively related to Prior because strong
 % recent returns will push ME up. This is not reflected in the Prior buckets
 % because portfolios are rebalanced monthly.
-For size-$\text{BM}^m$-Prior portfolios, BM
-increases as Prior buckets increase. For example, in the high-$\text{BM}^m$
-bucket, BM increases from 1.48 to 2.88 for small stocks and from 1.07 to 1.54
-for big stocks. This makes sense if we consider a stock that is in the
-high-$\text{BM}^m$, high-Prior bucket in July i.e. just after annual BM is
-recalculated. At this point in the year, $\text{BM}^m$ and BM are probably at
-their most similar because the ME values
-used differ by six months as opposed to the
-maximum of eighteen. If a stock has relatively high returns in the following
-months, high Prior, its $\text{BM}^m$ will decrease as market equity increases
-while book equity is held constant by the lack of new financial statements. For
-a stock to remain in the high-$\text{BM}^m$, high-Prior bucket, it must have
-had particularly high BM in order for high returns not to drag the
+For size-$\text{BM}^m$-Prior portfolios, BM increases as Prior buckets increase.
+For example, in the high-$\text{BM}^m$ bucket, BM increases from 1.48 to 2.88
+for small stocks and from 1.07 to 1.54 for big stocks.
+Variation in BM within $\text{BM}^m$ buckets is undesirable because by sorting
+on value we should keep value characteristics consistent within value buckets.
+Consider a stock that is in the high-$\text{BM}^m$, high-Prior bucket in July,
+just after annual BM is recalculated.
+At this point in the year, $\text{BM}^m$ and BM are probably at their most
+similar because ME values differ by six months compared to the maximum of eighteen.
+If a stock has relatively high returns in the following months, high Prior,
+its $\text{BM}^m$ will decrease as market equity increases while book equity
+is held constant by a lack of new financial statements.
+For a stock to remain in the high-$\text{BM}^m$, high-Prior bucket,
+it must have had particularly high BM in order for high returns not to drag the
 $\text{BM}^m$ down sufficiently to take the stock out of the
-high-$\text{BM}^m$, high- Prior bucket. This effect is not seen in the
-size-BM-Inv sorts.
-For the size-$\text{BM}^m$-Prior sorts, Prior increases uniformly
-with Prior buckets and is flat across $\text{BM}^m$ buckets.
-For the size-BM-Inv sorts, there is little variation in Prior across either
-BM or Inv buckets.
-The lack of variation in momentum characteristics means annual value and
-investment will struggle to describe the returns on momentum
-sorts.
+high-$\text{BM}^m$, high- Prior bucket.
+% This effect is not seen in the size-BM-Inv sorts.
 
-% For both size-$\text{BM}^m$-Prior and size-BM-Inv portfolios,
-% growth firms are more profitable than value firms.
-% Within value buckets, aggressively investing firms are less profitable than
-% conservatively investing firms.
-% The small, low-value, low-investment bucket is much more profitable than any
-% other bucket with an average value-weighted profitability measure of 2.51.
-% Importantly, there is very little variation in CP characteristics across
-% momentum buckets within value buckets for size-$\text{BM}^m$-Prior sorts.
-% Controlling for value, momentum and profitability characteristics are unrelated
-% except for a frown in the small, growth bucket.
+For the size-$\text{BM}^m$-Prior portfolios, Prior increases uniformly with Prior
+buckets and is flat across $\text{BM}^m$ buckets.
+The spread in Prior is larger for small stocks than big stocks.
+In the small, growth bucket, Prior rises from -0.33 to 0.64.
+In the big, growth bucket, Prior rises from -0.11 to 0.49.
+For the size-BM-Inv portfolios, there is little variation in Prior across either
+BM or Inv buckets.
+Small stocks have higher average recent returns than big stocks with all small
+stock values close to 0.2 while big stock values are close to 0.15.
+The lack of variation in momentum characteristics means annual value and
+investment will struggle to price the returns on momentum sorts.
 
 Future variance is strongly related to size. Small stocks are more volatile
 than big stocks with the average level and variation in variance
-characteristics greater for small stocks. Variance decreases marginally, from
-$\sim$0.2 to $\sim$0.1, with momentum/investment buckets but only in small
-stocks. For the most part, sorts on value and momentum/investment do not create
-variation in variance characteristics. Monthly value and momentum as well as
-annual value and investment will struggle to describe the returns on subsets of
-stocks constructed from sorts on variance.
+characteristics greater for small stocks.
+Variance decreases marginally, from $\sim$0.2 to $\sim$0.1,
+with momentum/investment buckets but only in small stocks.
+For the most part, sorts on value and momentum/investment do not create
+variation in the variance characteristic.
+Monthly value and momentum as well as annual value and investment will struggle
+to price the returns on subsets of portfolios constructed from sorts on variance.
+The lack of variation in a characteristic designed to
+capture volatility is counter-intuitive.
+If anything, I would expect the variance characteristic to be too noisy,
+rather than not noisy enough, to capture variation in the variance
+characteristic.
+This may reflect problems with my specification of variance.
+I define variance as the variance of the prior month's daily returns.
+I could have used a longer window and perhaps omitted the most recent month as
+is common for constructing the momentum characteristic.
 
 \textcite{fama2006profitability} use the dividend discount model to link the
 profitability and investment factors to firm value.
 With clean surplus accounting, the dividend discount model says that market
-equity equals discounted expected future earnings less the change in book
-equity,
+equity equals discounted expected future earnings less the future change in BE,
 $ME_t = \sum_{s=1}^\infty E(Y_{t+s}-\Delta BE_{t+s})/R^s$
 where $Y$ is earnings and $R$ is the gross discount rate.
 Fama and French use change in assets in place of change in book equity.
+I examine investment and change in BE characteristics to check if
+investment is indeed a good proxy for changes in BE.
+
 Future investment decreases across both $\text{BM}^m$ and Prior buckets for
 both small and large stocks. In contrast to returns, the effects of each
 characteristic are similar in the extreme buckets of the other. For example, in
@@ -124,33 +135,25 @@ interaction of monthly value and momentum accounts for the variation in Inv in
 small and big stocks. In size-BM-Inv sorts, Inv increases uniformly across Inv
 buckets and remains flat across BM buckets.
 
-In size-$\text{BM}^m$-Prior sorts, future growth in BE in the low-$\text{BM}^m$
+In size-$\text{BM}^m$-Prior sorts, future change in BE in the low-$\text{BM}^m$
 bucket increases from 0.31 to 0.61 as Prior increases.
-In contrast, future growth in BE in the low-BM bucket increases as Inv
+In contrast, future change in BE in the low-BM bucket increases as Inv
 decreases from 0.59 to 0.4 in size-BM-Inv sorts.
-For both sorts, future growth in BE moves in the opposite direction to the
+For both sorts, future change in BE moves in the opposite direction to the
 Inv characteristic for small, growth stocks.
-For size-$\text{BM}^m$-Prior sorts, Inv increases while future growth in BE
-decreases while for size-BM-Inv sorts, Inv decreases while future growth in
+For size-$\text{BM}^m$-Prior sorts, Inv increases while future change in BE
+decreases while for size-BM-Inv sorts, Inv decreases while future change in
 BE increases.
-Value and momentum enhance each other's slopes in time series regressions.
-Any two variables that are negatively correlated with each other but positively
-correlated with the independent variable will exhibit this effect
-\parencite{fama2015incremental}.
-Sorts on value and momentum to show their strength is not just
-statistical but also economic through their ability to forecast changes in BE.
-Using the dividend discount model logic of Fama and French,
-Inv is used as a proxy for changes in BE.
-This divergence of logic and data suggests asset growth, Inv,
-is not the best proxy for changes in BE.
-% Other future growth in BE buckets are largely flat for both sorts.
-% For the
-% size-$\text{BM}^m$-Prior sorts, the high-$\text{BM}^m$ bucket has negative,
-% future growth in BE, -0.1, for the low-Prior bucket rising to -0.03 for the
-% high-Prior bucket. This mirrors findings in \textcite{kok2017facts} that
-% high-$\text{BM}^m$ stocks are mean reverting through a future decrease in BE.
-% Furthermore, the increase to -0.03 for high-Prior stocks from -0.1
-% for low-Prior mirrors their findings that momentum somewhat weeds out
-% those high-$\text{BM}^m$ stocks that will exhibit decreases in BE in the
-% future.
+Investment is not an appropriate proxy for changes in BE.
+Furthermore, value and momentum capture variation in investment and changes in BE.
 
+% Value and momentum enhance each other's slopes in time series regressions.
+% Any two variables that are negatively correlated with each other but positively
+% correlated with the independent variable will exhibit this effect
+% \parencite{fama2015incremental}.
+% Sorts on value and momentum to show their strength is not just
+% statistical but also economic through their ability to forecast changes in BE.
+% Using the dividend discount model logic of Fama and French,
+% Inv is used as a proxy for changes in BE.
+% This divergence of logic and data suggests asset growth, Inv,
+% is not the best proxy for changes in BE.

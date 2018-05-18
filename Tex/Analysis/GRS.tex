@@ -1,116 +1,88 @@
 % !TeX root=../main.tex
 
-Using a top-down approach, I find model \ref{eq:B16} performs best for all
-stocks.
-This does not necessarily mean the model performs best for all subsets of
-stocks.
-%The GRS statistic gives a measure of how much the Sharpe ratio of a model can
-%be improved by investing in the test assets as well as the factors.
-
 \import{./Tables/}{GRS_tbl}
 
-Table \ref{tbl:GRS} shows the GRS statistic for selected anomaly sorts across
+Tables \ref{tbl:Size_BMm_Prior_chars} and \ref{tbl:Size_BM_Inv_chars} show
+model \ref{eq:B16} has greater potential to price the returns on many
+characteristic sorts.
+Summary characteristics are not bound to regression slopes and a model will
+struggle where returns do not behave like the characteristics they are
+constructed from.
+Table \ref{tbl:GRS} shows the GRS statistic for selected anomalies across
 the seven models from table \ref{tbl:bootstrap}.
-A lower GRS statistic indicates a better description of the returns on the
-subset of stocks.
-%The anomalies are from Dr Kenneth French's website except for the size,
-%monthly value and momentum  portfolios which are constructed from CRSP data.
-As the number of anomaly portfolios increases, the subset of stocks converges
-on all stocks.
-Consequently, we would expect the GRS statistic evidence for all of the
-anomalies to match the Sharpe ratio evidence and this is largely the case.
+A lower GRS statistic indicates less mispricing.
+As the number of anomaly portfolios increases, the subset of portfolios converges
+on all portfolios.
+Consequently, we would expect the GRS statistic evidence for all
+anomalies to match the Sharpe ratio evidence and this is the case.
 The main messages of table \ref{tbl:GRS} are that the GRS evidence matches the
 Sharpe ratio evidence and that momentum and volatility sorts are a problem for
 all models.
-Table \ref{tbl:GRS} includes the value, profitability and investment anomalies
-\parencite{fama2006profitability, fama2015five},
-the accruals, beta, net issues, momentum and volatility anomalues
-\parencite{fama2016dissecting} as well as a sort on size, monthly value and
-momentum.
-The anomalies are grouped to make three points;
-constraining annual value hinders the ability of model \ref{eq:B16} to describe
-returns,
-constraining monthly value is far less disastrous for model \ref{eq:B16}
-than other models and
-in sorts on all variables that are not annual value
-model \ref{eq:B16} outperforms model \ref{eq:F16} (+ WML).
-The variation in characteristics seen in tables \ref{tbl:Size_BMm_Prior_chars}
-and \ref{tbl:Size_BM_Inv_chars} drive the results in table \ref{tbl:GRS}
-for models \ref{eq:B16} and \ref{eq:F16}.
 
+Table \ref{tbl:GRS} includes; value, profitability and investment anomalies
+\parencite{fama2006profitability, fama2015five};
+accruals, beta, net issues, momentum and volatility anomalues
+\parencite{fama2016dissecting}; and a sort on size, monthly value and
+momentum.
+The anomalies are grouped to illustrate that;
+constraining annual value hinders the ability of model \ref{eq:B16} to price returns,
+constraining monthly value is the least disastrous for model \ref{eq:B16}, and
+in sorts on all variables that are not annual,
+value model \ref{eq:B16} outperforms model \ref{eq:F16} (+ WML).
 % For sorts on annual value (BM), the variation in the BM characteristic within
 % monthly value ($\text{BM}^m$) buckets drives the disappointing GRS results for
 % model \ref{eq:B16}.
-% %By sorting on value we are in effect controlling value.
-% %The sorts on monthly value show that the two specifications of value are
-% %sufficiently different that controlling for $\text{BM}^m$ is not the same as
-% %controlling for BM and there is undesired variation in BM within $\text{BM}^m$
-% %buckets.
-% In contrast, BM is flat within BM buckets and model \ref{eq:F16}, GRS of 1.62,
-% provides a better description of the returns to sorts on BM than model
-% \ref{eq:B16}, GRS of 1.81.
-% For sorts on $\text{BM}^m$ and momentum (Prior), model \ref{eq:B16} is
-% ``playing at home" in that the model contains factors for all sort variables.
-% This creates variation in $\text{BM}^m$ and Prior not present in sorts on BM
-% and investment (Inv). Model \ref{eq:B16}, GRS of 4.85, outperforms model
-% \ref{eq:F16}, GRS of 6.52, for sorts on $\text{BM}^m$ and Prior.
-% The improvement in sorts on $\text{BM}^m$ and Prior provided by model
-% \ref{eq:B16} is enough to overcome the problems in sorts on BM.
-% Model \ref{eq:B16} performs best in sorts on value with a GRS of 2.83 compared
-% to the next best of 3.21 for model \ref{eq:F16}.
 
-Model \ref{eq:B16} describes sorts on
-variables not used to contruct the factors better than model \ref{eq:F16}.
-For example, accruals, beta, net issues, and variance anomalies all
-increase the Sharpe ratio of model \ref{eq:B16} less than model \ref{eq:F16}.
-% Part of the improvement can be attributed to statistics alone.
-% Sorts on $\text{BM}^m$ and Prior create much greater variation in returns than
-% sorts on BM and Inv.
-% By construction, model \ref{eq:B16} will capture more variation in returns than
-% model \ref{eq:F16}.
-Tables \ref{tbl:Size_BMm_Prior_chars} and \ref{tbl:Size_BM_Inv_chars} show that
-value and momentum provide a better proxy for changes in BE than value and
-investment.
-Value and momentum help to identify those portfolios constructed from sorts on
-accruals, beta, net issues and variance that will exhibit changes in BE in the
-future better than value and investment.
-Momentum sorts are more puzzling because model \ref{eq:B16}, GRS of 3.62,
-and model \ref{eq:F16}, GRS of 3.59, with the momentum factor both perform
-poorly.
+Value compensates for the missing investment factor in model \ref{eq:B16}.
+Constraining value limits the variation in value across other characteristics.
+Model \ref{eq:B16}, GRS of 1.81, has higher mispricing than model \ref{eq:F16},
+GRS of 1.58, for BM constrained sorts.
+This impact is particularly evident in size-BM-Inv sorts where the GRS increases
+from 1.49 for model \ref{eq:F16} to 2.13 for model \ref{eq:B16}.
+Comparing the GRS for the four-factor models confirms the specification of value,
+rather than including momentum, is the problem.
+The GRS for the original four-factor model with annual value, 2.31, is lower
+than the GRS for the four-factor model with monthly value, 2.69, for all sorts on BM.
+The only difference between the two models is the specification of value and
+this must drive any differences in mispricing.
 
-GRS evidence across models adds colour to the Sharpe evidence in table
-\ref{tbl:bootstrap}.
-Two of he biggest improvements for the four-factor model with monthly value
-over the original five-factor model come from sorts on accruals,
-GRS of 3.1 and 3.89 respectively, and beta, GRS of 1.22 and 1.83.
-The four-factor model also describes sorts on momentum better than the original
-five-factor model and the five-factor model with cash profitability but this is
-expected given the four-factor model contains the momentum factor.
-The original four-factor model ourperforms the four-factor model with monthly
-momentum for sorts on annual value, constrained BM GRS of 2.31 and 2.69
-respectively.
-This supports the idea that undesired variation in $\text{BM}^m$ within BM
-buckets results in poor performance since the only difference in the models is
-the value specification.
+The size-$\text{BM}^m$-Prior sort shows that monthly value and momentum are
+difficult to price for all models.
+The GRS for all models is highest for this sort for all models.
+Model \ref{eq:B16} struggles for the size-$\text{BM}^m$-Prior sort in an
+absolute sense, GRS of 4.85.
+Relative to other models, model \ref{eq:B16} performs well.
+Model \ref{eq:F16} has a GRS of 6.52 and the original five-factor model has
+a GRS of 7.55.
+Updating the measure of value monthly reduces mispricing more than including
+the momentum factor.
+This is shown by the improvement in the GRS, 7.26 to 5.91, from the original
+four-factor model to the modified four-factor model with monthly value.
+In contrast, adding momentum to model \ref{eq:F16} helps very little.
+The GRS drops from 6.52 to 6.51.
+
+For all sorts not involving BM, model \ref{eq:B16} has the lowest mispricing,
+GRS of 4.85 for size-$\text{BM}^m$-Prior and 2.23 for selected anomalies.
+This supports Sharpe evidence in table \ref{tbl:bootstrap} that model \ref{eq:B16}
+minimizes mispricing for all assets.
+The relatively poor performance of model \ref{eq:B16} compared to model \ref{eq:F16}
+for sorts on BM is not enough to cancel out the gains made in all other sorts.
+The GRS for all sorts is 2.23 for model \ref{eq:B16} and 2.44 for model \ref{eq:F16}.
+GRS evidence adds colour to the Sharpe ratio bootstrap evidence.
+For example, table \ref{tbl:bootstrap} shows Sharpe ratio of the modified
+four-factor model is not reliably higher than the Sharpe ratio of the
+original five-factor model but does not indicate why.
+Table \ref{tbl:GRS} shows Sharpe evidence is not clear beacuse the modified
+four-factor model has lower mispricing for accruals, beta, and momentum but
+otherwise underperforms the original five-factor model.
 
 The largest problems for all models are caused by momentum and volatility
 sorts.
 Individual regression sorts can help explore why this may be the case by
-showing which particular sorts leave significant alpha.
+showing which particular portfolios leave significant alpha.
 The sign of factor regression slopes will show which end of the factor return
 spread problem portfolios behave like.
-For example, a negative (postive) profitability slope suggests returns behave
-like the returns on unprofitable (profitable) stocks.
-%Performance in sorts on investment is improved despite omitting the investment
-%factor.
-%Individual regression slopes will show which factors pick up the slack
-%in investment's absence.
-%Furthermore, since we have already seen the relationship between value,
-%momentum and investment and that monthly value misbehaves within annual value
-%buckets, we can confirm that model \ref{eq:B16} fails predictably.
-%If value and investment are controlled for, the comparatively poor performance
-%observed in sorts on value and investment should be due to a lack of variation
-%in value slopes across investment buckets within value buckets.
-I focus on models \ref{eq:B16} and \ref{eq:F16} individual regression slopes
-because they have two of the highest Sharpe ratios and are not nested.
-
+For example, a negative profitability slope suggests returns behave
+like the returns on unprofitable stocks.
+I focus individual regression slopes for models \ref{eq:B16} and \ref{eq:F16}
+because they have two of the highest Sharpe ratios and are non-nested.
