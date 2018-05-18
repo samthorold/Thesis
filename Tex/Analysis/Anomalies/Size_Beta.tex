@@ -3,38 +3,48 @@
 \import{./Tables/}{Size_Beta_tbl}
 
 Table \ref{tbl:Size_Beta} shows 25 time series regressions from size-beta
-portfolios for models \ref{eq:B16} and \ref{eq:F16}. The main message of the
-table is that sorts on beta are not a problem for model \ref{eq:B16}. Momentum
-slopes pick up the slack left in model \ref{eq:F16} to drive out the alphas in
-the low-beta bucket. The shared story between momentum and beta points to a
-shared story between momentum and volatility. There is only one intercept in
-the 25 portfolios, in the big, third beta bucket. This does not have any
-apparent economic meaning and may be purely statistical. Looking at table
-\ref{tbl:GRS}, we see that the size-beta sorts cause the least problems of all
-the sorts. Beta's lack of mischief is important because of the historical
-stubbornness of the anomaly \parencite{jensen1972capital}
-and beta's relationship with volatility.
-For model \ref{eq:B16}, value slopes decrease as beta buckets increase and are
-largely flat as size buckets increase except for a drop in slopes for the
-biggest size bucket.
-The returns on high-beta stocks behave like the returns on growth firms.
-Momentum slopes exhibit a similar pattern.
-High-beta stocks behave like firms with poor recent returns.
-Momentum slopes do not exhibit smile across beta buckets as beta slopes did
-across momentum buckets.
-Low and high-momentum stocks behave like high-beta stocks but only low-beta
-stocks behave like high-momentum stocks.
-Profitability slopes are largely insignificant in the high-beta bucket and
-negative for the low-beta bucket.
-This relationship makes sense given profitability's role in describing the
-returns to defensive equity stocks.
+portfolios for models \ref{eq:B16} and \ref{eq:F16}.
+The main messages of the table are that sorts on beta are not a problem for model
+\ref{eq:B16} and value disappears in the small, high-beta bucket.
+The beta characteristics, and volatility characteristics tied to beta, do not drive
+mispricing in momentum sorts.
+Positive momentum slopes for model \ref{eq:B16} capture the mispricing for 
+model \ref{eq:F16} in the low-beta bucket.
+Where \textcite{fama2016dissecting} find that low-beta stocks behave like
+profitable, conservatively investing stocks, I find that low-beta stocks behave
+like unprofitable, growth stocks with strong recent returns.
 
-Low-beta stocks are a problem for model \ref{eq:F16} with three intercepts of
-$\sim$0.2\% per month in the small, third and fourth size buckets.
-% The investment factor does not have much to add here as the slopes are
-% insignificant.
-Model \ref{eq:B16} remedies the low-beta problems and shows that, while
-low-beta stocks are generally unprofitable, they have strong past returns as
-shown by the positive momentum slopes.
-Overall, beta sorts do not help to explain the poor performance in momentum
-sorts.
+Beta slopes increase with size and beta buckets.
+Big stocks behave more like the return on the market than small stocks.
+The spread in beta slopes is similar for small and big stocks,
+$\sim$0.7 to $\sim$1.3.
+Value slopes are flat across beta buckets except for a drop in the high-beta
+bucket.
+High-beta stocks behave like the returns on value stocks.
+Like the small, high-momentum portfolio, value disappears in the
+small, high-beta portfolio although, unlike momentum,
+this does not result in mispricing.
+There is a size effect in value slopes for the high-beta bucket with slopes
+decreasing from -0.06 for small stocks to -0.28 for big stocks.
+Momentum slopes decrease as beta buckets increase.
+Low-beta stocks behave like stocks with strong recent returns, while
+high-beta stocks behave like stocks with poor recent returns.
+This contradicts table \ref{tbl:Size_Prior} that shows that low \emph{and}
+high-momentum stocks behave like the returns on high-beta stocks.
+Like value, there is a size effect in momentum slopes for the high-beta bucket
+with slopes decreasing from -0.1 for small stocks to -0.24 for big stocks.
+Profitability slopes are largely insignificant except for the low-beta bucket
+and the small, high-beta portfolio.
+Profitability slopes are negative for the low-beta bucket and this makes sense
+given profitability's relationship with defensive equity.
+
+Beta and profitability slopes in table \ref{tbl:Size_Prior} point to a
+shared story for momentum and volatility.
+Table \ref{tbl:Size_Beta} shows that beta itself, and volatility tied to beta,
+is not the problem.
+In fact, table \ref{tbl:GRS} shows that sorts on beta cause the least problems
+of all sorts tested, GRS of 1.15 for model \ref{eq:B16}.
+Beta's lack of mischief is important because of the historical stubbornness of
+the anomaly \parencite{jensen1972capital}.
+Model \ref{eq:B16} drives out alphas in low-beta portfolios.
+Next, I investigate mispricing and factor slopes for sorts on variance.
