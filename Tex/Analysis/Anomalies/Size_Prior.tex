@@ -2,42 +2,53 @@
 
 \import{./Tables/}{Size_Prior_tbl}
 
-Tables \ref{tbl:Size_Prior} shows 25
-time series regressions from size-momentum portfolios for models
-\ref{eq:B16} and \ref{eq:F16}.
-Momentum is the tendency of stocks with higher (lower) recent returns than
-their peers to continue to outperform (underperform) in the short term
-\parencite{jegadeesh1993returns} and has been found in markets all over
-the world \parencite{asness2013value}.
-The main message of the table is that value is insignificant in the extremes
-of momentum.
-% Value's disappearance makes some sense for the high-Prior bucket as the value
-% effect is weakest among high-Prior stocks as shown in table
-% \ref{tbl:Size_BMm_Prior_chars}.
-% It is more of a puzzle why value is insignificant in the low-Prior bucket.
+Tables \ref{tbl:Size_Prior} shows 25 time series regressions from size-momentum
+portfolios for models \ref{eq:B16} and \ref{eq:F16}.
+Momentum is the tendency for stocks with higher recent returns than
+their peers to continue to earn higher returns in the short term
+\parencite{jegadeesh1993returns} and has been found in markets and
+asset classes throughout the world \parencite{asness2013value}.
+The main message of the table is that in the extremes of momentum,
+value is insignificant and profitability slopes are negative.
 
 Model \ref{eq:B16} struggles most with the high-Prior bucket with three
 significant intercepts out of five.
 Model \ref{eq:F16} has similar problems in the high-Prior bucket but also
 struggles with the small bucket with four significant intercepts out of five.
-Value exhibits a frown with coefficients remaining $\sim$0.3 in the middle
-momentum buckets but insignificant in the extreme momentum buckets.
+The small, low-Prior, -0.55, and small, high-Prior, 0.54, intercepts for
+model \ref{eq:F16} are reduced to -0.37 and 0.38 for model \ref{eq:B16}.
+Understandably, improvements in mispricing for model \ref{eq:B16} are due to
+the negative momentum slopes for low-Prior and positive momentum slopes for
+high-Prior.
+
+Beta slopes exhibit a smile across momentum buckets.
+The small bucket has a drop from 1.06 in the low-Prior bucket to 0.86 in the
+middle Prior bucket before returning to 1.02 in the high-Prior bucket.
+Similarly, the big bucket has a drop from 1.16 to 0.94 rising again to 1.09.
+The extremes of momentum behave like the returns on high-beta stocks.
+Value slopes exhibit a frown with coefficients remaining $\sim$0.3 in the
+middle momentum buckets but becoming insignificant in the extreme momentum
+buckets.
+The extremes of momentum do not covary with the returns on the value factor.
+Value does most of the heavy lifting along with profitability and
+there is mispricing in the buckets where value disappears.
 Momentum slopes increase uniformly from $\sim$-0.7 to $\sim$0.4 as momentum
-buckets increase.
+buckets increase although the spread in slopes is slightly larger for big
+stocks than small stocks.
 Profitability slopes also exhibit a frown but, in contrast to value, are
 negative and significant in the extremes of momentum but insignificant
 in the inner momentum buckets.
-The investment factor offers little to model \ref{eq:F16} with insignificant
-slopes.
-Beta slopes exhibit a smile across momentum buckets. Beta and variance are
-linked as a stock's variance drives its covariance with the market.
-Furthermore, profitability helps to describe the returns on ``defensive equity"
+
+Beta and variance are linked as a stock's variance drives its covariance with
+the market.
+The returns on the extremes of momentum, and subsequent mispricing, may be due
+to low and high-momentum identifying stocks with high volatility.
+Furthermore, the profitability slopes also point to high volatility stocks
+because profitability helps to describe the returns on ``defensive equity"
 strategies \parencite{novy2014understanding}.
 Such strategies often focus on low-beta, low-volatility stocks.
-The negative profitability slopes may be an indicator of high beta and/or
-high volatility in the extremes of momentum.
-Momentum's interaction with volatility, rather than momentum itself, could
-drive at least a portion of the returns in the extremes of momentum.
+Momentum's interaction with volatility characteristics, rather than momentum
+itself, could drive returns in the extremes of momentum.
 Value's puzzling weakness in the low-momentum bucket may stem from returns
 behaving like the returns on high-beta and/or high-volatility stocks,
 rather than low-momentum stocks.
