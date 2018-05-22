@@ -1,100 +1,34 @@
 
 \begin{tabular}{lrrrrrrr}
   \toprule
-     & \rotatebox{90}{Carhart (1997)} &
-       \rotatebox{90}{Carhart (1997) + $\text{HML}^m$} &
-       \rotatebox{90}{Fama and French (2015)} &
-       \rotatebox{90}{Model 2} &
-       \rotatebox{90}{Model 2 + WML} &
-       \rotatebox{90}{Model 1} &
-       \rotatebox{90}{Model 1 + CMA} \\
+     & \rotatebox{90}{\footnotesize{Carhart (1997)}} &
+       \rotatebox{90}{\footnotesize{Carhart (1997) + $\text{HML}^m$}} &
+       \rotatebox{90}{\footnotesize{Fama and French (2015)}} &
+       \rotatebox{90}{\textbf{\footnotesize{Model 2}}} &
+       \rotatebox{90}{\footnotesize{Model 2 + WML}} &
+       \rotatebox{90}{\textbf{\footnotesize{Model 1}}} &
+       \rotatebox{90}{\footnotesize{Model 1 + CMA}} \\
   \midrule
-  
-    \multicolumn{8}{l}{Value constrained} \\
-    
-    Size-BM  & 3.28  & 4.19  & 3.19  & 2.19  & 2.08  & 2.58  & 2.60  \\
-    
-  
-    
-    
+
+    % \multicolumn{8}{l}{Value constrained} \\
     Size-BM-Inv  & 2.58  & 3.44  & 2.32  & 1.56  & 1.49  & 2.13  & 2.13  \\
-    
-  
-    
-    
-    Size-BM-$\text{OP}^{06}$  & 2.22  & 3.19  & 2.15  & 1.15  & 1.15  & 1.57  & 1.67  \\
-    
-  
-    
-    
-    BM constrained  & 2.31  & 2.69  & 2.14  & 1.62  & 1.58  & 1.81  & 1.82  \\
+    BM constrained  & 2.31  & 2.69  & 2.14  & \textbf{1.62}  & 1.58  & \textbf{1.81}  & 1.82  \\
+    % [1em]
+    % Size-$\text{BM}^m$-Prior  & 7.26  & 5.91  & 7.55  & 6.52  & 6.51  & 4.85  & 4.85  \\
+    % Value constrained  & 3.95  & 3.67  & 3.74  & 3.21  & 3.22  & 2.83  & 2.83  \\
     [1em]
-  
-    
-    
-    Size-$\text{BM}^m$-Prior  & 7.26  & 5.91  & 7.55  & 6.52  & 6.51  & 4.85  & 4.85  \\
-    
-  
-    
-    
-    Value constrained  & 3.95  & 3.67  & 3.74  & 3.21  & 3.22  & 2.83  & 2.83  \\
-    [1em]
-  
-    
+
     \multicolumn{8}{l}{Selected anomalies} \\
-    Size-$\text{OP}^{06}$  & 2.27  & 2.75  & 2.21  & 2.12  & 2.03  & 2.05  & 2.05  \\
-    
-  
-    
-    
-    Size-Inv  & 3.82  & 3.40  & 3.45  & 2.43  & 2.31  & 2.02  & 2.02  \\
-    
-  
-    
-    
-    Size-$\text{OP}^{06}$-Inv  & 3.53  & 3.31  & 3.19  & 2.30  & 2.18  & 1.80  & 2.01  \\
-    
-  
-    
-    
-    Size-Acc  & 3.26  & 3.10  & 3.89  & 2.33  & 2.21  & 2.00  & 2.07  \\
-    
-  
-    
-    
-    Size-$\beta$  & 1.51  & 1.22  & 1.83  & 1.63  & 1.52  & 1.15  & 1.15  \\
-    
-  
-    
-    
-    Size-NI  & 3.67  & 3.42  & 3.35  & 2.26  & 2.13  & 1.84  & 1.84  \\
-    
-  
-    
-    
-    Size-Prior  & 3.96  & 3.89  & 4.43  & 3.94  & 3.59  & 3.62  & 3.66  \\
-    
-  
-    
-    
-    Size-RVar  & 5.79  & 5.84  & 5.53  & 4.69  & 4.75  & 4.46  & 4.48  \\
-    
-  
-    
-    
-    Size-Var  & 5.11  & 5.09  & 5.02  & 4.38  & 4.44  & 4.13  & 4.14  \\
-    
-  
-    
-    
+    Size-Inv  & 3.82  & 3.40  & 3.45  & \textbf{2.43}  & 2.31  & \textbf{2.02}  & 2.02  \\
+    % Size-Acc  & 3.26  & 3.10  & 3.89  & 2.33  & 2.21  & 2.00  & 2.07  \\
+    Size-$\beta$  & 1.51  & \textbf{1.22}  & \textbf{1.83}  & \textbf{1.63}  & 1.52  & \textbf{1.15}  & 1.15  \\
+    % Size-NI  & 3.67  & 3.42  & 3.35  & 2.26  & 2.13  & 1.84  & 1.84  \\
+    Size-Prior  & 3.96  & \textbf{3.89}  & \textbf{4.43}  & \textbf{3.94}  & 3.59  & \textbf{3.62}  & 3.66  \\
+    Size-Var  & 5.11  & 5.09  & 5.02  & \textbf{4.38}  & 4.44  & \textbf{4.13}  & 4.14  \\
     Selected anomalies  & 2.84  & 2.78  & 2.80  & 2.37  & 2.32  & 2.23  & 2.22  \\
     [1em]
-  
-    
-    
-    All  & 2.85  & 2.70  & 2.80  & 2.44  & 2.40  & 2.23  & 2.22  \\
-    
-  
+    All  & 2.85  & 2.70  & 2.80  & \textbf{2.44}  & 2.40  & \textbf{2.23}  & 2.22  \\
+
   \bottomrule
 \end{tabular}
 
