@@ -5,9 +5,12 @@
 \usepackage{booktabs}
 \usepackage{dcolumn}
 \usepackage{graphicx}
+\usepackage{helvet}
 \usepackage[utf8]{inputenc}
+\usepackage[normalem]{ulem}
 
-% \usetheme{Madrid}
+% \usetheme{Hannover}
+% \usefonttheme{serif}
 
 \addbibresource{references.bib}
 
@@ -23,73 +26,67 @@
 
 \section{Intro}
 
-\begin{frame} \frametitle{Problem}
-  \begin{itemize}
-    \item \textbf{Goal:} Minimize mispricing for the returns on all portfolios with a linear combination of the returns on fewer portfolios (``factors")
-    \item \textbf{Problem 1:} Cannot test mispricing for all portfolios without identifying all portfolios, which leads to
-    \item \textbf{Problem 2:} Relying on mispricing for subsets of portfolios (``anomalies") has given rise to significant data-mining issues
-  \end{itemize}
+\begin{frame} \frametitle{Goal}
+  Minimize mispricing for all portfolios with a few portfolios
 \end{frame}
 
-\note[itemize]{
-  \item The goal is not to \emph{generate} alpha,
-  pricing $\neq$ investing -- the model is not a strategy
-  \item \textcite{harvey2016and} document 300+ factors in the literature
-  \item \textcite{mclean2016does} find publication reduces the returns on many factors
-  \item \textcite{linnainmaa2016history} claim ``most" factors are spurious out of sample
-  \item Lies, damned lies, and statistics -- If you want to find correlation, you can
-}
+% \note[itemize]{
+%   \item The goal is not to \emph{generate} alpha, pricing $\neq$ investing -- the model is not a strategy
+% }
 
-\begin{frame} \frametitle{Mispricing Definition}
-  \begin{itemize}
-    \item GRS test of \textcite{gibbons1989test} -- mispricing is given by the quadratic form of the alphas
-      \begin{align*}
-        \text{Mispricing} &= \text{Sh}^2(\text{alphas})\\
-                          &= \text{Sh}^2(\text{test portfolios and factors}) - \text{Sh}^2(\text{factors})
-      \end{align*}
-    \item \textcite{barillas2016alpha} explain the factors are contained in the set of all portfolios so
-    $$
-      \text{Sh}^2(\text{all portfolios and factors}) = \text{Sh}^2(\text{all portfolios})
-    $$
-    and
-    $$
-      \text{Mispricing} = \text{Sh}^2(\text{all portfolios}) - \text{Sh}^2(\text{factors})
-    $$
-    \item I focus on $\text{Sh}^2(\text{factors})$ but the ultimate aim is to minimize $\text{Sh}^2(\text{alphas}$)
-  \end{itemize}
-\end{frame}
-
-\begin{frame} \frametitle{Solution: Top-down approach}
+\begin{frame} \frametitle{Problems}
   \begin{enumerate}
-    \item Maximize $\text{Sh}^2(\text{factors})$ to minimize mispricing for all portfolios -- no need identify all portfolios\\
-    % When the model is on the positive portion of the efficient frontier this is equivalent to maximizing the Sharpe ratio of the factors
-    \item Choice of factors gives description of anomalies, rather than description of anomalies driving choice of factors -- reduces data-mining
+    \item No direct test for all portfolios
+    \item Mispricing for subsets of portfolios $\rightarrow$ data-mining
   \end{enumerate}
 \end{frame}
 
-\begin{frame} \frametitle{Model}
-  \begin{equation} \label{eq:B16}
-    R_t^i = a^i+b^iR^M+s^iSMB_t+
-    \underbrace{v^iHML_t^m+m^iWML_t}_\text{cheap}+
-    \underbrace{p^iPMU_t}_\text{profitable}
-  \end{equation}
-  \begin{itemize}
-    \item $\text{R}^M$: Excess return on the market
-    \item $SMB$: Size factor long small and short big stocks
-    \item $HML^m$: Value factor long cheap and short expensive stocks
-    \item $WML$: Momentum factor long recent winners and short recent losers
-    \item $PMU$: Profitability factor long profitable and short unprofitable stocks
-  \end{itemize}
+\note[itemize]{
+  \item Stock data is rich, a researcher can find some subset of stocks that a given model cannot price (an ``anomaly") if they look hard enough
+  \item The anomaly then provides the empirical justification for a new factor
+  % \item If we are lucky a risk-story is attached later
+  \item \textcite{harvey2016and} document 300+ factors in the literature
+  % \item \textcite{mclean2016does} find publication reduces the returns on many factors
+  \item \textcite{linnainmaa2016history} claim ``most" factors are spurious out of sample
+}
+
+\begin{frame} \frametitle{``Mispricing"}
+  \textcite{gibbons1989test}
+  \[\text{Mispricing} \propto \text{Sh}^2(\text{test portfolios and factors}) - \text{Sh}^2(\text{factors})\]
+  \textcite{barillas2016alpha}
+  \[\text{Sh}^2(\text{all portfolios and factors}) = \text{Sh}^2(\text{all portfolios})\]
+  \[\text{Mispricing} \propto \text{Sh}^2(\text{all portfolios}) - \text{Sh}^2(\text{factors})\]
+\end{frame}
+
+% \note[itemize]{
+%   \item I focus on $\text{Sh}^2(\text{factors})$ but the ultimate aim is to minimize $\text{Sh}^2(\text{alphas}$)
+% }
+
+\begin{frame} \frametitle{Solution: Top-down approach}
+  \begin{enumerate}
+    \item Maximize $\text{Sh}^2(\text{factors})$  %  to minimize mispricing for all portfolios -- no need identify all portfolios
+    \item Model gives description of anomalies  % , rather than description of anomalies driving choice of factors -- reduces data-mining
+  \end{enumerate}
 \end{frame}
 
 \note[itemize]{
-  \item Factors are long-short portfolios designed to capture unobserved state variables priced by investors (ICAPM of \textcite{merton1973intertemporal})
-  \item Characteristics used to construct factors are simply sorting variables -- not necessarily to do with ROE
-  \item Investors want to identify \emph{cheap} and \emph{profitable} stocks \parencite{graham1934security}
-  \item Cheap $\rightarrow$ Book-to-Market (BM) \parencite{fama1993common}
-  \item Some problems here as we want to identify changes in BM due to changes in market equity rather than book equity
-  \item Monthly value + momentum \parencite{asness2013devil, kok2017facts}
-  \item Profitable $\rightarrow$ Operating profit adjusted for accruals \parencite{ball2016accruals}
+  \item Choice of factors not driven by anomalies
+  \item How to choose factors then?
+  \item Investors care about their payoff and what they can do with it \parencite{merton1973intertemporal, fama1996multifactor}
+  \item Factors are long-short portfolios designed to capture unobserved state variables priced by investors
+  \item Identify \emph{cheap} and \emph{profitable} stocks \parencite{graham1934security}
+}
+
+\begin{frame} \frametitle{Model}
+  \begin{equation} \label{eq:B16}
+    R_t^i = a^i+b^iR^M+s^iSMB_t+\underbrace{v^iHML_t^m+m^iWML_t}_\text{cheap}+\underbrace{p^iPMU_t}_\text{profitable}
+  \end{equation}
+\end{frame}
+
+\note[itemize]{
+  % \item Chars used to construct factors are simply sorting variables
+  % \item Profitable $\rightarrow$ Operating profit adjusted for accruals \parencite{ball2016accruals}
+  \item S for small, B for big, etc.
 }
 
 \section{Prior research}
@@ -100,19 +97,17 @@
     \begin{equation} \label{eq:F16}
       R_t^i=a^i + b^iR_t^M + s^iSMB_t + v^iHML_t + p^iPMU_t + i^iCMA_t
     \end{equation}
-    $CMA$: Investment factor long conservatively and short aggressively investing stocks
-    \item ``lethal combination": small, unprofitable stocks that somehow invest aggressively
-    \item \textcite{fama2006profitability} motivate profitability and investment factors with the dividend discount model
-    \[ME_t =
-    \sum_{s=1}^\infty E\left( \text{Profit}_{t+s}-
-    \Delta\text{BE}_{t+s}\right) /R^s\]
-    Change in assets is used instead of change in BE
+    \item \textcite{fama2006profitability}
+    \[ME_t = \sum_{s=1}^\infty E\left( \text{Profit}_{t+s}-\Delta\text{BE}_{t+s}\right) /R^s\]
+    \[\Delta\text{Assets}\approx \Delta\text{BE}\]
   \end{itemize}
 \end{frame}
 
 \note[itemize]{
-  \item \scriptsize{\parencite{fama2015five, fama2016choosing, fama2016dissecting}}
-  \item \textcite{ball2016accruals} present a model similar to the one I propose to show an accruals factor does not improve the Sharpe ratio of a five-factor model including their accrual-adjusted profitability factor
+  \item \parencite{fama2015five, fama2016choosing, fama2016dissecting}
+  \item $CMA$: Investment factor long conservatively and short aggressively investing stocks
+  \item ``Lethal combination" $\rightarrow$ small, unprofitable stocks that somehow invest aggressively
+  \item \textcite{ball2016accruals}
 }
 
 \section{Data}
@@ -120,11 +115,10 @@
 \begin{frame}
   \frametitle{Data}
   \begin{itemize}
-    \item Factors: Ken French all except $\text{HML}^m$, which is from AQR, and PMU
-    \item Sorts: Ken French all except size, value, investment/momentum
-    \item PMU factor and all characteristics: CRSP and COMPUSTAT
-    \item U.S. common stocks -- July 1963 through December 2017
-    \item I include financial firms and do not winsorize variables
+    \item $PMU$ and summary characteristics constructed from CRSP and COMPUSTAT
+    \item Remainder available from Dr. Ken French and AQR Capital Management
+    \item U.S. common stocks, 1963-07 -- 2017-12 (654 months)
+    % \item I include financial firms and do not winsorize/trim variables
   \end{itemize}
 \end{frame}
 
@@ -132,156 +126,197 @@
 
 \begin{frame}
 \frametitle{Sharpe ratio}
-\resizebox{\linewidth}{!}{\input{Tables/bootstrap_pres_tbl2}}
+\resizebox{\linewidth}{!}{\input{Tables/bootstrap_pres_tbl3}}
 \end{frame}
 
 \note[itemize]{
+  \item Model 1 has the highest Sh2. Adding CMA does not increase the Sh2
+  \item Further, replacing annual value with monthly value in the Carhart model increases the Sh2
   \item Bootstrap: 1 simulation is 654 draws w/ replacement\\
   100K simulations gives 100K values of Sh2(row)-Sh2(col)\\
   (5th percentile, 95th percentile) so 90\% of values in this range
-  \item Investment factor does not improve Sharpe ratio of model 1
-  \item Model 1 has higher Sharpe ratio than model 2 (+ momentum)
-  \item Original five-factor model does not have a reliably higher Sharpe ratio than the four-factor model of Carhart
-  \item Profitability and investment are credited with reducing the maginitude and number of descriptions of many common anomalies
+  \item Model 1 not reliably improved by including CMA
+  \item Monthly value reliably better than annual value for the Carhart model
   \item Annual or monthly value and momentum subsume investment (not shown)
-  \item Why do value and momentum subsume investment?
+  \item Why? I sort on size-value-momentum
 }
 
-\begin{frame} \frametitle{Inv poor proxy for $\Delta$BE: Size-$\text{BM}^m$-Prior characteristics}
+\begin{frame} \frametitle{$\Delta$Assets poor proxy for $\Delta$BE} \framesubtitle{Size-$\text{BM}^m$-Prior characteristics}
 \begin{center}
-\resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{\input{Tables/Size_BMm_Prior_chars_pres_tbl}}
+\resizebox{\linewidth}{!}{\input{Tables/Size_BMm_Prior_chars_pres_tbl}}
 \end{center}
 \end{frame}
 
 \note[itemize]{
+  \item Split stocks into two buckets based on the NYSE median size
+  \item w/in the size buckets, split the stocks into four value and four momentum buckets
+  \item the intersections of these buckets give 32 portfolios
   \item Avg monthly value-weighted chars
-  \item Large dispursion in returns -- potential to describe a lot of variation
-  \item Little variation in variance
   \item Future investment and future changes in BE backwards for small, growth stocks
   \item Monthly value and investment capture variation on both
+  \item I sort on size-value-investment to confirm
 }
 
-\begin{frame} \frametitle{Inv poor proxy for $\Delta$BE: Size-BM-Inv characteristics}
+\begin{frame} \frametitle{$\Delta$Assets poor proxy for $\Delta$BE} \framesubtitle{Size-BM-Inv characteristics}
 \begin{center}
-\resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{\input{Tables/Size_BM_Inv_chars_pres_tbl}}
+\resizebox{\linewidth}{!}{\input{Tables/Size_BM_Inv_chars_pres_tbl}}
 \end{center}
 \end{frame}
 
 \note[itemize]{
-  \item Avg monthly value-weighted chars
-  \item Less dispursion in returns
-  \item Little variation in variance
   \item Future investment and future changes in BE backwards for small, growth stocks
   \item Problem because investment is a factor and so will not capture small, growth stock's true relationship with future changes in BE
-  \item Value and momentum created variation in Inv and change in BE
 }
 
 \begin{frame} \frametitle{Part 1 of top-down approach summary}
   \begin{itemize}
-    \item Model 1 has the highest $\text{Sh}^2$, 0.316, and so leaves less mispricing for all portfolios than competing models
-    \item Value and momentum's relationship with future changes in BE makes the investment factor redundant
-    \item How does model 1 describe common anomalies? (Part 2 of top-down approach)
+    \item Model 1 $\text{Sh}^2$ 0.316 $>$ competing models
+    \item Value and momentum (\sout{investment})
+    \item Part 2: model 1 description of anomalies
   \end{itemize}
 \end{frame}
 
 \begin{frame} \frametitle{GRS statistic}
 \begin{center}
-\resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{\input{Tables/GRS_pres_tbl}}
+\resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{\input{Tables/GRS_pres_tbl2}}
 \end{center}
 \end{frame}
 
 \note[itemize]{
-  \item Anomalies from Ken French website
+  % \item Anomalies from Ken French website
+  \item \textbf{Main message}: Momentum and volatility biggest problems
   \item Annual value a problem -- unwanted variation in BM within BMm buckets (not shown)
-  \item All other sorts a wrap for Model 1 (GRS lower -- Sh2 improved less)
+  \item All other sorts a wrap for Model 1 (lower GRS so lower mispricing)
   \item Investment factor adds nothing to subsets of stocks
-  \item Momentum and volatility biggest problems
+  \item Model 1 description of momentum and volatility
 }
 
 \begin{frame} \frametitle{Size-momentum returns}
   \begin{center}
-  \resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{\input{Tables/Size_Prior_pres_tbl}}
+  \resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{\input{Tables/Size_Prior_pres_tbl2}}
   \end{center}
 \end{frame}
 
 \note[itemize]{
-  \item Beta smile -- high beta stocks in the extremes of momentum
-  \item Value insignificant in the extremes of momentum
-  \item Momentum helps but not completely
-  \item Negative profitability slopes suggest defensive equity, beta and vol}
+  \item Tables of this style show mispricing and selected factor slopes
+  \item Portfolios are independent sorts on size and another characteristic
+  \item Interested in the extreme buckets of the characteristic, what description does the model give these portfolios
+  \item In particular, where there is mispricing
+  \item Alphas for models 1 and 2: momentum helps but not completely
+  \item Extremes of momentum: value dies and negative prof slopes
+  \item Further, Beta smile -- high beta stocks in the extremes of momentum
+  \item Negative profitability slopes and high beta slopes suggest defensive equity, beta and vol \parencite{novy2014understanding}
+}
 
 \begin{frame} \frametitle{Size-beta returns}
   \begin{center}
-  \resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{\input{Tables/Size_Beta_pres_tbl}}
+  \resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{\input{Tables/Size_Beta_pres_tbl2}}
   \end{center}
 \end{frame}
 
 \note[itemize]{
+  \item No problems (except for random size3-beta2 portfolio)
+  \item Momentum makes the difference here
+  \item Previously problematic Low-beta stocks have a new description, unprofitable stocks with strong recent returns
   \item High-beta behave like growth stocks -- volatile behave like growth stocks
   \item Beta and volatility linked because stock vol drives covariance with the market
   \item But beta not a problem -- volatility associated with the market is not a problem
-  \item In fact, GRS showed beta caused the least problems of all
-}
+  \item In fact, GRS showed beta caused the least problems of all}
 
 \begin{frame} \frametitle{Size-variance returns}
   \begin{center}
-  \resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{\input{Tables/Size_Var_pres_tbl}}
+  \resizebox*{!}{\dimexpr\textheight-1.3cm\relax}{\input{Tables/Size_Var_pres_tbl2}}
   \end{center}
 \end{frame}
 
 \note[itemize]{
-  \item ``lethal" combo $\rightarrow$ unprofitable stocks with poor recent returns\\
-  AND value disappears
-  \item Size slopes pull ``predicted" returns in the opposite direction to other factors
-  \item Small, high-variance bucket a big problem, -0.75\% per month alpha
+  \item Large size effects within size buckets
+  \item ``Lethal" combo new description $\rightarrow$ unprofitable stocks with poor recent returns AND value disappears
+  \item Size slopes pull fitted returns in the opposite direction to other factors
+  \item Small, high-variance bucket a big problem, -0.75\% per month alpha}
+
+\begin{frame} \frametitle{Momentum and variance} \framesubtitle{Selected ``open items" from descriptions of problem sorts}
+  \begin{itemize}
+    \item Size-Prior: -ve profit slopes $\rightarrow$ beta and volatility
+    \item Size-Beta: no alpha $\rightarrow$ not aggregate volatility
+    \item Size-Var: small, high-var $\rightarrow$ high size slope and value dies
+    \item \textbf{Unifying description}: small, unprofitable stocks with poor recent returns
+  \end{itemize}
+\end{frame}
+
+\begin{frame} \frametitle{Volatility, size, and value}
+  \begin{itemize}
+    \item Value and changes in firm size \parencite{gerakos2017decomposing}
+    \item Removing size factor drives the alpha to 0
+    \item Ang et al. (2006) find illiquidity measures ineffective in the cross-section
+  \end{itemize}
+\end{frame}
+
+\note[itemize]{
+  \item Much of the value premium is to do with changes in firm size
+  \item This $HML^s$ is much more related to volatility than the component of value orthogonal to $HML^s$
+  \item Remove size factor: profitability slope $\sim$ -1.5 (highly unprofitable) and value slope $\sim$ -0.3 (growth) $\rightarrow$ just like high-beta
+  \item Top-down approach: do not remove size factor!
+  \begin{itemize}
+    \item Model provides description of anomalies but choice of factors is not driven by anomalies
+  \end{itemize}}
+
+\section{Contributions}
+
+\begin{frame} \frametitle{Contributions}
+  Top-down approach: choose factors based on $\text{Sh}^2$ then describe anomalies
+  \[R_t^i = a^i+b^iR^M+s^iSMB_t+\underbrace{v^iHML_t^m+m^iWML_t}_\text{cheap}+\underbrace{p^iPMU_t}_\text{profitable}\]
+  \begin{itemize}
+    \item Model 1 $\text{Sh}^2$ 0.316 $>$ competing models
+    \item Value and momentum (\sout{investment})
+    \item Unifying description $\rightarrow$ small, unprofitable stocks with poor recent returns
+    \item Volatility $\rightarrow$ size and value (\sout{illiquidity})
+  \end{itemize}
+\end{frame}
+
+\note[itemize]{
+  \item New description for the ``lethal combination" $\rightarrow$ small, unprofitable firms with poor recent returns (and value disappears)
+  \item New direction for mispricing in high-volatility portfolios beyond liquidity constraints $\rightarrow$ size and value story
+  \item Beta anomaly dead, low-beta are unprofitable firms with strong recent returns
+  \item Net-issues and accruals anomalies reduced}
+
+\begin{frame} \frametitle{Volatility discussion} \framesubtitle{Prior Research: Liquidity}
+  \begin{itemize}
+    \item Sell small, unprofitable stocks with poor recent returns $\rightarrow$ Liquidity \parencite{nagel2005short, nagel2012evaporating}
+    \item Institutional ownership, short-term reversal factor (+VIX) $\rightarrow$ market microstructure
+    \item Liquidity hard to approach from a cross-section perspective
+    \item Ultimately, ineffective \parencite{ang2006cross}
+  \end{itemize}
+\end{frame}
+
+\begin{frame} \frametitle{How to test models/choose factors discussion}
+  \begin{itemize}
+    \item Bayesian \parencite{barillas2015comparing}
+    \begin{itemize}
+      \item Data-mining issues not solved
+      \item Monthly updating best but no mention of \textbf{why}
+    \end{itemize}
+    \item Pure PCA \parencite{kozak2017interpreting}
+    \begin{itemize}
+      \item Statistical factors as good as ``reduced-form" factors
+      \item Interpretation is the magic
+    \end{itemize}
+    \item Behavioural stories
+    \begin{itemize}
+      \item Covariance? \parencite{cochrane2011presidential}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\note[itemize]{
+  \item You can't point to PC1 and say ``oh look, there is the size factor" without the size factor to compare to
 }
 
-\begin{frame} \frametitle{Momentum and variance sorts}
+\begin{frame} \frametitle{Cheapness, value, and momentum}
   \begin{itemize}
-    \item Momentum factor helps, but not much, in sorts on momentum
-    \item Momentum returns $\neq$ momentum characteristics
-    \item Profit slopes are negative in the extremes of momentum\\
-    Defensive equity $\rightarrow$ beta and volatility \parencite{novy2014understanding}
-    \item Sorts on beta pose the least problems\\
-    So volatility a problem, but not the part of volatility to do with aggregate volatility (covariance with the market)
-    \item Sorts on variance are a big problem\\
-    Small, high-variance alpha of -0.75\% per month
-  \end{itemize}
-\end{frame}
-
-\begin{frame} \frametitle{Volatility problems} \framesubtitle{Prior Research: Liquidity}
-  \begin{itemize}
-    \item To take advantage of this alpha we need to sell small, unprofitable stocks with poor recent returns
-    \item That's a tough sell $\rightarrow$ Liquidity
-    \parencite{nagel2005short, nagel2012evaporating}
-    \item Institutional ownership, Short-term reversal factor (+VIX) as a proxy for market-maker's returns $\rightarrow$ market microstructure
-    \item Liquidity hard to approach from a cross-section perspective
-    \item \textcite{ang2006cross} find no liquidity measure helps describe total variance in the cross-section
-  \end{itemize}
-\end{frame}
-
-\begin{frame} \frametitle{Volatility problems} \framesubtitle{Model Description: Size}
-  \begin{itemize}
-    % \item Cross-section perspective
-    % \item High-volatility firms are much smaller
-    \item Size slopes pull fitted return up
-    \item Value disappears in the problem sorts (momentum and volatility)
-    % \item Normally, value and profitability do most of the heavy lifting
-    \item \textcite{gerakos2017decomposing} say that much of the value premium is to do with changes in firm size\\
-    Further, the component of value associated with size is more correlated with variance than the component of value not to do with size
-    \item Removing the size factor drives the alpha to 0\\
-    Profitability slope $\sim$ -1.5 and negative value slope, similar to high-beta sorts that are not a problem
-  \end{itemize}
-\end{frame}
-
-\section{Conclusions}
-
-\begin{frame} \frametitle{Conclusions}
-  \begin{itemize}
-    \item I introduce mkt, size, value, momentum and profitability factor model and it has the highest $\text{Sh}^2$, 0.316
-    \item Value and momentum subsume popular investment factor through future changes in BE
-    \item New description for the ``lethal combination" of small, unprofitable stocks that somehow invest aggressively $\rightarrow$ small, unprofitable firms with poor recent returns
-    \item New direction for mispricing in high-volatility portfolios beyond liquidity constraints $\rightarrow$ size and value story
+    \item Cheap $\rightarrow$ book-to-market (BM) \parencite{fama1993common}
+    \item Identify $\Delta$BM due to $\Delta$M rather than $\Delta$B
+    \item Monthly value + momentum \parencite{asness2013devil, kok2017facts}
   \end{itemize}
 \end{frame}
 
